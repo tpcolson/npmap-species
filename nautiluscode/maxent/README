@@ -1,0 +1,10 @@
+Running maxent information
+
+Expected format for raw data file -- "speciesGreaterThanEqual30.csv"
+	is for a space separated file, not a comma separated file
+	vim command to change comma to spaces -- ":%s/,/ /g"
+
+NOTED ISSUE:
+	cv/make_folds will segmentation fault for a large number of species
+	program appears to successfully create test and training sets
+	perhaps an issue with number of species records expected vs. number created by preprocessing scripts
