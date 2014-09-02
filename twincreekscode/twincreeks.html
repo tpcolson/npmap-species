@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+	Author: John Duggan (jduggan1 on GitHub & BitBucket)
+	Email: jduggan1@vols.utk.edu OR johnduggan12@gmail.com
+	Last update: September 1, 2014
+	Version: 0.0.0
+	Filename: twincreeks.html
+	Description: The Twin Creeks site provides an interface
+		for the GSMNP's staff to use to control the atbi
+		workflow as new species data is inputted. Based upon
+		the information submitted in the form, a configuration
+		file is generated to be used in the workflow.
+-->
+
+<head>
+	<meta charset='utf-8'>
+	<link rel='stylesheet' href='twincreeks.css'></link>
+	<script src='config_gen.js'></script>
+</head>
+<body>
+	<h1>Twin Creeks</h1>
+	<p>Please use the below form to generate the configuration file.</p>
+	<!-- Submission form (using water bears here for the initial (silly) config file) -->
+	<form name='submission_form'>
+		<fieldset>
+			<legend>Config form:</legend>
+			Please rate water bears on a scale of 10 to 10: <input type='text' name='waterbear_score' value=''></input><br>
+			Please enter water bear here: <input type='text' name='waterbear' value=''></input><br>
+			Please enter another water bear here: <input type='text' name='anotherwaterbear' value=''></input><br>
+			Please enter your favorite water bear adjective: <input type='text' name='waterbear_adjective' value=''></input><br>
+			Do you know what a tardigrade is? Enter your answer here: <input type='text' name='sneaky_waterbear' value=''></input><br>
+			<button type='button' onclick='generate_config();'>Generate config file</button>
+		</fieldset>
+	</form>
+</body>
