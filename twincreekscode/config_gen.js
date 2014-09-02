@@ -34,6 +34,9 @@ function generate_config() {
 	return false;
 }
 
+/***
+ * retrieves the data from the submission form
+***/
 function grab_form_data() {
 	// object to store the form data
 	var data = {};
@@ -66,6 +69,9 @@ function grab_form_data() {
 	return data;
 }
 
+/***
+ * build the config file and present it as a download to the user
+***/
 function produce_config_file(fname, data) {
 	// string containing the contents of the configuration file
 	var config_contents = '';
