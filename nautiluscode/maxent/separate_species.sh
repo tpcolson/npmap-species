@@ -1,25 +1,14 @@
 #!/bin/sh
 
-# run this from the directory containing your records file;
-# given a records file (src) 
-#   for each unique species in src, this script will make a 
-#   separate csv file containing only the records for that species;
-#  places all new files into by_species/
+# separate_species.sh
+#
+# This should be run by preprocess.sh (which is created by do_run.sh).
 
-# src must be in format:
-#     Genus_species x y
-# (can have extra fields after these 3)
 
-# also prints to stdout:
-#     Genus_species num_of_records
-
-#if test $# -ne 1; then
-   #echo "usage:  separate_species.sh records_file"
-   #exit 1
-#fi
-
+# Create directory
 mkdir by_species
 
+# For each unique species name, make record file in by_species/
 for s in $(cut -d' ' -f1 $RECORD_FILE | sort -u); do
   if test ! -f by_species/$s.csv; then
      echo 'Species,x,y' > by_species/$s.csv

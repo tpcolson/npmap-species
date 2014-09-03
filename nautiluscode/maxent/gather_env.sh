@@ -7,27 +7,24 @@ sp=$1
 dir=maxent_results
 ENV_NUM=$(ls $ENV_DIR | wc -l)
 
-i=0
-
-while test $i -lt $ENV_NUM; do
-   mean=0.0
-   field=$(($i + 12))
-   eval "contribs=\$(grep \$sp \$dir/\$sp/maxentResults.csv | awk -F',' '{print \$$field}')"
-   for per in $contribs; do
-      mean=$(echo "scale=4; $mean + $per" | bc -q)
-   done
-
-   eval "mean=\$(echo \"scale=4; \$mean / $ENV_NUM.0\" | bc -q)"
-   eval "n$i=$mean"
-   i=$(($i+1))
-done
+env_cols=$(sed 's/,/\n/g' maxentResults.csv | grep -n contribution | cut -d':' -f1)
 
 i=0
-echo $1
-echo $1 > $dir/$sp/env_stats.txt
-while test $i -lt $ENV_NUM; do
-	eval "echo \$n$i >> \$dir/\$sp/env_stats.txt"
-	i=$(($i+1))
+for col in $env_cols;do
+    sum=0.0
+    eval "contribs=\$(grep \$sp maxentResults.csv | awk -F',' '{print \$$col}')"
+    for per in $contribs; do
+        sum=$(echo "scale=4; $mean + $per" | bc -q)
+    done
+    #eval "mean=\$(echo \"scale=4; \$mean / $ENV_NUM.0\" | bc -q)"
+    eval "sum$i=$sum"
+    i=$(($i+1))
 done
-
-#echo $1 $n0 $n1 $n2 $n3 $n4 $n5 $n6 $n7 $n8 $n9 $n10 $n11 > $dir/$sp/env_stats.txt
+    
+j=0
+while test $j -lt $i; do
+    eval "mean=\$(echo \"scale=4; \$sum$j / $i.0\" | bc -q)"
+	echo $mean >> env_stats.txt
+	j=$(($j+1))
+done
+    
