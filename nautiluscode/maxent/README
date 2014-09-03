@@ -1,1 +1,18 @@
 Scripts for preprocessing, running maxent jobs, and postprocessing.
+
+***************************************************************************
+
+Usage Instructions: Execute do_run.sh on NICS Nautilus.
+
+
+Workflow breadkdown.
+
+Preprocessing: preprocess.sh
+   separate.py input_file output_dir > counts.txt
+   setup_eden_folds.sh
+
+Maxent Jobs: maxent.sh
+   setup_eden_maxent.sh
+
+Postprocessing: 
+   ...

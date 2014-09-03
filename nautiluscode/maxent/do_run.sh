@@ -9,22 +9,23 @@
 #   run_gather.sh - post-processing and aggregation of maxent results
 #   visit.sh - runs visit scripts (via eden) for generating new pngs of sdms
 
-if test $# -ne 1; then
-   echo 'usage: do_run.sh records_file'
+if test $# -ne 2; then
+   echo 'usage: do_run.sh records_file num_folds'
    exit 1
 fi
 
 RUN_DIR=$(pwd)
 RECORD_FILE=$1
+CV_NUM_FOLDS=$2
+# TODO: Error check CV_NUM_FOLDS is an integer in [2-20]
 
 #------------------------------------------------------------------------
 # Configuration settings--SET APPROPRIATE PATHS HERE FOR YOUR ENVIRONMENT
-TOOL_DIR=/nics/d/home/simmerma/maxent_workflow/improved
-MAXENT_JAR=/nics/d/home/simmerma/maxent_workflow/improved/maxent2/maxent.jar
-ENV_DIR=/nics/d/home/simmerma/maxent_workflow/improved/maxent2/mxe
+TOOL_DIR=/lustre/medusa/lyu6/npmap-species/nautiluscode/maxent
+MAXENT_JAR=/lustre/medusa/lyu6/npmap-species/nautiluscode/maxent/maxent.jar
+ENV_DIR=/lustre/medusa/lyu6/npmap-species/nautiluscode/maxent/mxe
 ENV_PICK=all
 CV=true
-CV_NUM_FOLDS=10
 ACCOUNT=UT-TENN0033
 #------------------------------------------------------------------------
 
