@@ -4,7 +4,7 @@ INCLUDE = -I libfdr/include
 CFLAGS = -g $(INCLUDE)
 LIBS = -lpthread -lm
 PLANK_LIBS = -L libfdr/lib -lfdr
-EXECUTABLES = asc2bov ssi summarize make_cv_file convert_matrix convert_coords
+EXECUTABLES = asc2bov ssi summarize make_folds
 
 all: $(EXECUTABLES)
 
@@ -17,17 +17,8 @@ ssi: ssi.o
 summarize: summarize.o
 	$(CC) $(CFLAGS) -lm -o $@ summarize.o 
 
-make_cv_file: make_cv_file.o
-	$(CC) $(CFLAGS) -o $@ make_cv_file.o 
-
-convert_matrix: convert_matrix.o
-	$(CC) $(CFLAGS) -o $@ convert_matrix.o $(PLANK_LIBS)
-
-convert_coords: convert_coords.o
-	$(CC) $(CFLAGS) -o $@ convert_coords.o $(PLANK_LIBS)
-
-get_5env: get_5env.o
-	$(CC) $(CFLAGS) -o $@ get_5env.o $(LIBS) $(PLANK_LIBS)
+make_folds: make_folds.o
+	$(CC) $(CFLAGS) -o $@ make_folds.o $(PLANK_LIBS)
 
 clean:
 	rm -f core *.o $(EXECUTABLES)
