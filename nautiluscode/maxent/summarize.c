@@ -5,10 +5,6 @@
 #define ROWS 1302
 #define COLS 2899
 
-// NEED TO MAKE THIS CONFIGURABLE (NF = number of folds)
-#define NF 10
-#define NF_F 10.0
-
 void readfile(char *fname, float *map) {
    FILE *fp;
    int i, j;
@@ -51,28 +47,31 @@ int main(int argc, char **argv) {
    char *rundir, *gs;
    char fname[512];
    int i,j,total;
+   int nf;          // number of folds
    float **maps;
-   float *avg, *stddev;
-   float current[NF];
+   float *avg, *stddev, *current;
    float mean, sos;     // sos = sum of squares
    float sd_mean, sd_max;
 
-   // argv[1] is directory of run
-   //rundir = strdup(argv[1]);
-
-   // argv[2] is genus--species name
+   if(argc != 3) {
+       printf("usage: ./summarize Genus_species num_folds\n");
+       exit(1);
+    }
+   // argv[1] is Genus_species 
    gs = strdup(argv[1]);
+   sscanf(argv[2], "%d", &nf);
 
-   maps = (float **)malloc(sizeof(float *)*NF);
-   maps[0] = (float *)malloc(sizeof(float)*ROWS*COLS*NF);
-   for(i = 1; i < NF; i++) {
+   maps = (float **)malloc(sizeof(float *)*nf);
+   maps[0] = (float *)malloc(sizeof(float)*ROWS*COLS*nf);
+   for(i = 1; i < nf; i++) {
       maps[i] = maps[i-1] + (ROWS*COLS);
    }
    avg = (float *)malloc(sizeof(float)*ROWS*COLS);
    stddev = (float *)malloc(sizeof(float)*ROWS*COLS);
+   current = (float *)malloc(sizeof(float)*nf);
 
-   // read in 10 files
-   for(i = 0; i < NF; i++) {
+   // read in .dat files
+   for(i = 0; i < nf; i++) {
       //sprintf(fname, "%s/fold%d/%s.asc", rundir, i, gs);
       sprintf(fname, "fold%d/%s.dat", i, gs);
       readfile(fname, maps[i]);
@@ -91,22 +90,22 @@ int main(int argc, char **argv) {
          continue;
       }
       // get cell value from 10 maps
-      for(j = 0; j < NF; j++) {
+      for(j = 0; j < nf; j++) {
          current[j] = maps[j][i];
       }
       // first get average
       mean = 0.0;
-      for(j = 0; j < NF; j++) {
+      for(j = 0; j < nf; j++) {
          mean += current[j];
       }
-      mean = mean/NF_F;
+      mean = mean / (float)nf;
       avg[i] = mean;
       // get sum of squared deviations
       sos = 0.0;
-      for(j = 0; j < NF; j++) {
+      for(j = 0; j < nf; j++) {
          sos += ((mean - current[j]) * (mean - current[j]));
       }
-      stddev[i] = sqrtf(sos / NF_F);
+      stddev[i] = sqrtf(sos / (float)nf);
 
       // keep track of max and calculate average
       total++;
