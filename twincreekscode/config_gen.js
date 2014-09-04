@@ -93,7 +93,7 @@ function produce_config_file(fname, data) {
 	
 	config_contents += '{'
 	for(var key in data) {
-		config_contents = config_contents.concat('"' + key + '"' + ': ' + '"' + data[key] + '",'); 
+		config_contents = config_contents.concat('"' + key + '"' + ':' + '"' + data[key] + '",'); 
 	}
 	config_contents += '}'
 
