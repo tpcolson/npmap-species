@@ -2,8 +2,13 @@ Scripts for preprocessing, running maxent jobs, and postprocessing.
 
 ***************************************************************************
 
-Usage Instructions: Execute do_run.sh on NICS Nautilus.
+Installation Instructions: 
+   Execute ./libfdr/src/makefile
+   Execute ./makefile
 
+Usage Instructions: run.sh
+
+***************************************************************************
 
 Workflow breadkdown.
 
@@ -14,5 +19,5 @@ Preprocessing: preprocess.sh
 Maxent Jobs: maxent.sh
    setup_eden_maxent.sh
 
-Postprocessing: 
-   ...
+Postprocessing: postprocess.sh 
+   setup_eden-aggregate.sh

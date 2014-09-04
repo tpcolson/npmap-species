@@ -34,6 +34,7 @@
 # Fax: 865-974-4404
 
 INCLUDES = ../include
+LIBS = ../lib
 CFLAGS = -O -g -I$(INCLUDES)
 
 all: libfdr.a
@@ -42,10 +43,11 @@ OBJS = dllist.o fields.o jval.o jrb.o
 
 libfdr.a: $(OBJS)
 	ar ru libfdr.a $(OBJS)
-	ranlib libfdr.a 
+	ranlib libfdr.a
+	mv libfdr.a $(LIBS)
 
 clean:
-	rm -f core *.o libfdr.a
+	rm -f core *.o $(LIBS)/libfdr.a
 
 .SUFFIXES: .c .o
 .c.o:

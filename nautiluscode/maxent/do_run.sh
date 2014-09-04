@@ -15,6 +15,7 @@ if test $# -ne 2; then
 fi
 
 RUN_DIR=$(pwd)
+JOBID_FILE=current_eden_job.txt
 RECORD_FILE=$1
 CV_NUM_FOLDS=$2
 # TODO: Error check CV_NUM_FOLDS is an integer in [2-20]
@@ -22,13 +23,15 @@ CV_NUM_FOLDS=$2
 #------------------------------------------------------------------------
 # Configuration settings--SET APPROPRIATE PATHS HERE FOR YOUR ENVIRONMENT
 TOOL_DIR=/lustre/medusa/lyu6/npmap-species/nautiluscode/maxent
-MAXENT_JAR=/lustre/medusa/lyu6/npmap-species/nautiluscode/maxent/maxent.jar
-ENV_DIR=/lustre/medusa/lyu6/npmap-species/nautiluscode/maxent/mxe
+MAXENT_JAR=$TOOL_DIR/maxent.jar
+ENV_DIR=$TOOL_DIR/mxe
 ENV_PICK=all
 CV=true
 ACCOUNT=UT-TENN0033
 #------------------------------------------------------------------------
 
+# clean up previous run's output
+rm -rf eden* maxent_results by_species training test
 
 # make pre-process script
 echo "#!/bin/sh
@@ -50,7 +53,7 @@ else
    echo "echo 'Running setup_eden_folds.sh'" >> preprocess.sh
    echo "$TOOL_DIR/setup_eden_folds.sh" >> preprocess.sh
    echo "echo 'Running eden job in eden_folds/'" >> preprocess.sh
-   echo "eden eden_folds" >> preprocess.sh
+   echo "eden eden_folds > $JOBID_FILE" >> preprocess.sh
 fi
 
 chmod u+x preprocess.sh
@@ -73,10 +76,12 @@ if test $CV = false; then
 else
    echo "echo 'Running setup_eden_maxent_cv.sh'" >> maxent.sh
    echo "$TOOL_DIR/setup_eden_maxent_cv.sh" >> maxent.sh
+   echo "echo -n '#PBS -W depend=afterok:' >> eden_maxent/header.pbs" >> maxent.sh
+   echo "cat $JOBID_FILE | grep nics.utk.edu >> eden_maxent/header.pbs" >> maxent.sh
 
 fi
 echo "echo 'Running eden job in eden_maxent/'" >> maxent.sh
-echo "eden eden_maxent" >> maxent.sh
+echo "eden eden_maxent > $JOBID_FILE" >> maxent.sh
 chmod u+x maxent.sh
 
 
@@ -95,8 +100,11 @@ export CV_NUM_FOLDS=$CV_NUM_FOLDS
 
     echo "echo 'Running setup_eden_aggregate.sh'" >> postprocess.sh
     echo "$TOOL_DIR/setup_eden_aggregate.sh" >> postprocess.sh
+	echo "echo -n '#PBS -W depend=afterok:' >> eden_aggregate/header.pbs" >> postprocess.sh
+    echo "cat $JOBID_FILE | grep nics.utk.edu >> eden_aggregate/header.pbs" >> postprocess.sh
+	
     echo "echo 'Running eden job in eden_aggregate/'" >> postprocess.sh
-    echo "eden eden_aggregate" >> postprocess.sh
+    echo "eden eden_aggregate > $JOBID_FILE" >> postprocess.sh
 
     chmod u+x postprocess.sh
 fi
@@ -111,8 +119,10 @@ export ACCOUNT=$ACCOUNT
 if test $CV = true; then
    echo "$TOOL_DIR/make_filelist.sh > filelist" >> visit.sh
    echo "$TOOL_DIR/setup_eden_visit.sh" >> visit.sh
-   echo "eden eden_visit" >> visit.sh
+   echo "echo -n '#PBS -W depend=afterok:' >> eden_visit/header.pbs" >> visit.sh
+   echo "cat $JOBID_FILE | grep nics.utk.edu >> eden_visit/header.pbs" >> visit.sh
+   
+   echo "echo 'Running eden job in eden_visit/'" >> visit.sh
+   echo "eden eden_visit > eden_output" >> visit.sh
 fi
 chmod u+x visit.sh
-
-
