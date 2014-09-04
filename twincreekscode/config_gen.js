@@ -15,7 +15,7 @@
 ***/
 function generate_config() {
 	// filename for the configuration file
-	var config_fname = 'config.cfg'
+	var config_fname = 'config.json'
 
 	// object to contain the data grabbed from the form
 	var form_data;
@@ -79,15 +79,23 @@ function produce_config_file(fname, data) {
 	// blob object for presenting the resulting config file for download
 	var file;
 
-	// make sure the filename is valid (we guarantee that the data is valid)
+	// make sure the filename is valid
 	if(fname == null || fname.length == 0) {
 		alert('invalid configuration filename');
 		return false;
 	}
-
-	for(var key in data) {
-		config_contents = config_contents.concat(key + ': ' + data[key] + '\n'); 
+	
+	// make sure the form data is valid
+	if(data == null) {
+		alert('missing or invalid data')
+		return false;
 	}
+	
+	config_contents += '{'
+	for(var key in data) {
+		config_contents = config_contents.concat('"' + key + '"' + ': ' + '"' + data[key] + '",'); 
+	}
+	config_contents += '}'
 
 	/*** QUESTIONABLE CODE BELOW!!! ***/
 	// create the file
