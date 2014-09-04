@@ -1,8 +1,8 @@
 /***
  *	Author: John Duggan (jduggan1 on GitHub & BitBucket)
  *	Email: jduggan1@vols.utk.edu OR johnduggan12@gmail.com
- *	Last update: September 1, 2014
- *	Version: 0.0.0
+ *	Last update: September 4, 2014
+ *	Version: 0.1.0
  *	Filename: config_gen.js
  *	Description: This takes the form from the Twin Creeks
  *		site and transforms it into a config file which
