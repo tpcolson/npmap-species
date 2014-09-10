@@ -1,1 +1,8 @@
-json file here.
+{
+   "numfolds": 5,
+   "species":[
+      "dog",
+      "cat",
+      "waterbear"
+   ]
+}
