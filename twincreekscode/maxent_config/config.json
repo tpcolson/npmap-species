@@ -1,6 +1,5 @@
 {
-
-   "numfolds": 5,
+   "numfolds": 6,
    "species":[
       "dog",
       "cat",
