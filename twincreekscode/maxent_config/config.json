@@ -1,0 +1,8 @@
+{
+   "numfolds": 4,
+   "species":[
+      "dog",
+      "cat",
+      "waterbear"
+   ]
+}
