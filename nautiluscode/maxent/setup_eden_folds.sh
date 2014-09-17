@@ -16,16 +16,9 @@ while read line; do
    i=$(($i + 1))
 done < counts.txt
 
-# Cap ncpus at 32 so it will run on harpoon node
-if test $i -gt 32; then
-   ncpus=32
-else
-   ncpus=$i
-fi
-
 # Make PBS header file for eden run
-   echo "#!/bin/sh
-#PBS -l ncpus=$ncpus
+echo "#!/bin/sh
+#PBS -l ncpus=32
 #PBS -j oe
 #PBS -N eden_folds
 #PBS -A $ACCOUNT

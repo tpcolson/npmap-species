@@ -7,16 +7,15 @@
 mkdir eden_aggregate
 
 # Make command list for running aggregate.sh on each species.
-for sp in $(ls maxent_results);do
+for f in $(ls by_species); do
+   sp=$(echo $f | cut -d'.' -f1)
    echo "cd $RUN_DIR; export TOOL_DIR=$TOOL_DIR; export CV_NUM_FOLDS=$CV_NUM_FOLDS; $TOOL_DIR/aggregate.sh $sp" >> eden_aggregate/commands
 done 
 
-
 # Make PBS header file for eden run
-   echo "#!/bin/sh
+echo -n "#!/bin/sh
 #PBS -l ncpus=32
 #PBS -j oe
 #PBS -N eden_aggregate
 #PBS -A $ACCOUNT
 " > eden_aggregate/header.pbs
-

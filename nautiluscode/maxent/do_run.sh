@@ -6,8 +6,8 @@
 # It produces:
 #   preprocess.sh - creates species input files for cross-validation
 #   maxent.sh - sets up and runs maxent via eden
-#   run_gather.sh - post-processing and aggregation of maxent results
-#   visit.sh - runs visit scripts (via eden) for generating new pngs of sdms
+#   postprocess.sh - post-processing and aggregation of maxent results
+#   visit.sh - sets up  and runs visit via eden to generate new pngs of sdms
 
 if test $# -ne 2; then
    echo 'usage: do_run.sh records_file num_folds'
@@ -31,7 +31,7 @@ ACCOUNT=UT-TENN0033
 #------------------------------------------------------------------------
 
 # clean up previous run's output
-rm -rf eden* maxent_results by_species training test
+rm -rf eden* maxent_results by_species training test png
 
 # make pre-process script
 echo "#!/bin/sh
@@ -78,7 +78,8 @@ else
    echo "$TOOL_DIR/setup_eden_maxent_cv.sh" >> maxent.sh
    echo "echo -n '#PBS -W depend=afterok:' >> eden_maxent/header.pbs" >> maxent.sh
    echo "cat $JOBID_FILE | grep nics.utk.edu >> eden_maxent/header.pbs" >> maxent.sh
-
+   echo "cat eden_maxent/footer.pbs >> eden_maxent/header.pbs" >> maxent.sh
+   
 fi
 echo "echo 'Running eden job in eden_maxent/'" >> maxent.sh
 echo "eden eden_maxent > $JOBID_FILE" >> maxent.sh
@@ -117,12 +118,14 @@ export ACCOUNT=$ACCOUNT
 
 " > visit.sh
 if test $CV = true; then
-   echo "$TOOL_DIR/make_filelist.sh > filelist" >> visit.sh
+   #echo "echo 'Running make_filelist.sh'" >> visit.sh
+   #echo "$TOOL_DIR/make_filelist.sh > filelist" >> visit.sh
+   echo "echo 'Running setup_eden_visit.sh'" >> visit.sh
    echo "$TOOL_DIR/setup_eden_visit.sh" >> visit.sh
    echo "echo -n '#PBS -W depend=afterok:' >> eden_visit/header.pbs" >> visit.sh
    echo "cat $JOBID_FILE | grep nics.utk.edu >> eden_visit/header.pbs" >> visit.sh
    
    echo "echo 'Running eden job in eden_visit/'" >> visit.sh
-   echo "eden eden_visit > eden_output" >> visit.sh
+   echo "eden eden_visit > $JOBID_FILE" >> visit.sh
 fi
 chmod u+x visit.sh
