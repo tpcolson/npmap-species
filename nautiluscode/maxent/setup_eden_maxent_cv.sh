@@ -5,15 +5,15 @@
 # Sets up eden run in eden_maxent/.
 # MaxEnt output will go into maxent_results/
 
-samples_dir=$RUN_DIR/training
-output_dir=$RUN_DIR/maxent_results
-
 mkdir eden_maxent
 mkdir maxent_results
 
+samples_dir=$RUN_DIR/training
+output_dir=$RUN_DIR/maxent_results
+
 # Create commands list for running MaxEnt via eden
 i=0
-for f in $(ls by_species); do
+for f in $(ls $RECORDS_DIR); do
    species=$(echo $f | cut -d'.' -f1)
    fold=0
    while test $fold -lt $CV_NUM_FOLDS; do

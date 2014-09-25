@@ -7,7 +7,7 @@
 mkdir eden_aggregate
 
 # Make command list for running aggregate.sh on each species.
-for f in $(ls by_species); do
+for f in $(ls $RECORDS_DIR); do
    sp=$(echo $f | cut -d'.' -f1)
    echo "cd $RUN_DIR; export TOOL_DIR=$TOOL_DIR; export CV_NUM_FOLDS=$CV_NUM_FOLDS; $TOOL_DIR/aggregate.sh $sp" >> eden_aggregate/commands
 done 

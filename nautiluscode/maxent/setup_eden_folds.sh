@@ -4,7 +4,9 @@
 # when cross-validation is needed.
 
 # Create run directory for eden run
-mkdir eden_folds
+mkdir $RUN_DIR/test
+mkdir $RUN_DIR/training
+mkdir $RUN_DIR/eden_folds
 
 # Make command list for running make_folds on each species.
 #  Use info from counts.txt to produce correct arguments for make_folds.
@@ -12,9 +14,9 @@ i=0
 while read line; do
    sp=$(echo $line | cut -d' ' -f1)
    count=$(echo $line | cut -d' ' -f2)
-   echo "cd $RUN_DIR; $TOOL_DIR/make_folds $sp $count $CV_NUM_FOLDS" >> eden_folds/commands
+   echo "cd $RUN_DIR; $TOOL_DIR/make_folds $RECORDS_DIR/$sp.csv $count $CV_NUM_FOLDS" >> eden_folds/commands
    i=$(($i + 1))
-done < counts.txt
+done < $COUNTS_FILE
 
 # Make PBS header file for eden run
 echo "#!/bin/sh
