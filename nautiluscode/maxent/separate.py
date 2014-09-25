@@ -20,7 +20,8 @@
 def separate(input_file):
 
     # check format of filename
-    result = re.match('ATBI_records_(20[0-9][0-9]-[0-1][0-9]-[0-3][0-9])\.csv',
+    
+    result = re.match('.*/ATBI_records_(20[0-9][0-9]-[0-1][0-9]-[0-3][0-9])\.csv',
             input_file)
     if result == None:
         print 'Please use the following format for input filenames:'
@@ -40,7 +41,7 @@ def separate(input_file):
         for line in lines:
             # skip first header line
             if num_records > 0:
-               fields = line.split(',')
+               fields = line.split(' ')
                # capitalize() will uppercase first letter and lowercase the rest
                sp = fields[0].capitalize()
                if sp in species:

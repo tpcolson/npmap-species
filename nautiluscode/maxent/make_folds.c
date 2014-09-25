@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<time.h>
+#include<string.h>
 #include"fields.h"
 
 /************************************************************************
@@ -35,38 +36,38 @@ int main(int argc, char **argv) {
    int retries;
    Fold *folds;
    Coord *coords;
-   char sample_file[512];
    char test_file[512];
    char training_file[512];
+   char species_name[512];
+   char *str;
    FILE *test_fp, *training_fp;
    IS is;
 
    if(argc != 4) {
-      printf("usage: make_folds species_name num_records\n");
+      printf("usage: make_folds species_file num_records num_folds\n");
       exit(1);
    }
 
-   sprintf(sample_file, "by_species/%s.csv", argv[1], i);
+   is = new_inputstruct(argv[1]);
    sscanf(argv[2], "%d", &num_records);
    sscanf(argv[3], "%d", &num_folds);
+   
+   // Extract filename from species_file into species_name
+   if(strchr(argv[1], '/') == NULL) sprintf(species_name, "%s", strtok(argv[1], "."));
+   else{
+      for(str = strtok(argv[1], "/"); strchr(str, '.') == NULL; str = strtok(NULL, "/")) ;
+      sprintf(species_name, "%s", strtok(str, "."));
+   }
 
    coords = (Coord *)malloc(sizeof(Coord) * num_records);
-
-   is = new_inputstruct(sample_file);
+   
    get_line(is);                    // skip first line
-   i = 0;
-   while(get_line(is) >= 0) {
-      sscanf(is->fields[1], "%d", &coords[i].x);
-      sscanf(is->fields[2], "%d", &coords[i].y);
-      i++;
+   for(i = 0; get_line(is) >= 0; i++) {
+      strtok(is->fields[0], ",");
+      sscanf(strtok(NULL, ","), "%d", &coords[i].x);
+      sscanf(strtok(NULL, ","), "%d", &coords[i].y);
    }
    jettison_inputstruct(is);
-
-   /*
-   for(i = 0; i < num_records; i++) {
-      printf("%d %d\n", coords[i].x, coords[i].y);
-   }
-   */
 
    fold_size = num_records / num_folds;
    remainder = num_records % num_folds;
@@ -82,34 +83,28 @@ int main(int argc, char **argv) {
       folds[i].next = 0;
    }
 
-   for(i = 0; i < num_folds; i++) {
-      printf("fold %d: size is %d\n", i, folds[i].size);
-   }
    srand(time(NULL));
    
    // for each record, pick random fold for it to go in
    for(i = 0; i < num_records; i++) {
-      //printf("%d\n", rand()%num_folds);
-      retries = 0;
+      // printf("%d\n", rand()%num_folds);
       candidate = rand() % num_folds;
-      while(folds[candidate].next == folds[candidate].size) {
-         retries++;
+      for(retries = 0; folds[candidate].next == folds[candidate].size; retries++)
          candidate = rand() % num_folds;
-      }
       folds[candidate].members[folds[candidate].next] = i;
       folds[candidate].next++;
 
-      //printf("retries: %d\n", retries);
-      //printf("\n");
+      // printf("retries: %d\n", retries);
+      // printf("\n");
    }
 
    // now for each fold, make test file and training file
    // (test file contains only the 10% in the fold, training file contains
    //  all of the records EXCEPT the 10%)
    for(i = 0; i < num_folds; i++) {
-      sprintf(test_file, "test/%s_%d.csv", argv[1], i);
-      sprintf(training_file, "training/%s_%d.csv", argv[1], i);
-      //printf("%s  %s\n", test_file, training_file);
+      sprintf(test_file, "test/%s_%d.csv", species_name, i);
+      sprintf(training_file, "training/%s_%d.csv", species_name, i);
+      // printf("%s  %s\n", test_file, training_file);
       test_fp = fopen(test_file, "w");
       training_fp = fopen(training_file, "w");
       fprintf(test_fp, "Species,x,y\n");
@@ -118,22 +113,22 @@ int main(int argc, char **argv) {
       start = 0;
       for(j = 0; j < folds[i].next; j++) {
          for(k = start; k < folds[i].members[j]; k++) {
-            //printf("writing %d to training file\n", k);
-            fprintf(training_fp, "%s,%d,%d\n", argv[1], coords[k].x,
+            // printf("writing %d to training file\n", k);
+            fprintf(training_fp, "%s,%d,%d\n", species_name, coords[k].x,
                   coords[k].y);
 
          }
-         //printf("  writing %d to test file\n", k);
-         fprintf(test_fp, "%s,%d,%d\n", argv[1], coords[k].x, coords[k].y);
+         // printf("  writing %d to test file\n", k);
+         fprintf(test_fp, "%s,%d,%d\n", species_name, coords[k].x, coords[k].y);
          start = k + 1;
       }
       // get remainder
       for(k = start; k < num_records; k++) {
-         //printf("writing %d to training file\n", k);
-         fprintf(training_fp, "%s,%d,%d\n", argv[1], coords[k].x,
+         // printf("writing %d to training file\n", k);
+         fprintf(training_fp, "%s,%d,%d\n", species_name, coords[k].x,
                coords[k].y);
       }
-      //printf("\n");
+      // printf("\n");
       fclose(test_fp);
       fclose(training_fp);
 
