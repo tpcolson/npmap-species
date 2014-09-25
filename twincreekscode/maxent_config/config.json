@@ -1,8 +1,1 @@
-{
-   "numfolds": 4,
-   "species":[
-      "dog",
-      "cat",
-      "waterbear"
-   ]
-}
+{"folds":"test","species":["test","test2","test3"]}
