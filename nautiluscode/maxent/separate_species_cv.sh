@@ -7,16 +7,16 @@
 
 # Create directories
 echo '   Creating directories' >&2
-mkdir by_species
+mkdir $RECORD_DIR
 mkdir test
 mkdir training
 
-# For each unique species name, make record file in by_species/
-echo '   Making species record files in by_species/' >&2
+# For each unique species name, make record file in $RECORD_DIR/
+echo '   Making species record files in $RECORD_DIR/' >&2
 for s in $( cut -d' ' -f1 $RECORD_FILE | sort -u); do
   # this will produce fields separated by space (makes it easier for fields
   #  library in make_folds to process these files)
-  eval "grep '^$s ' \$RECORD_FILE | awk '{print \$1,\$2,\$3}' >> by_species/$s.csv"
-  echo $s $(( $(cat by_species/$s.csv | wc -l) - 1))
+  eval "grep '^$s ' \$RECORD_FILE | awk '{print \$1,\$2,\$3}' >> $RECORD_DIR/$s.csv"
+  echo $s $(( $(cat $RECORD_DIR/$s.csv | wc -l) - 1))
 done
 

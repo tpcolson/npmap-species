@@ -5,15 +5,15 @@
 # Sets up eden run in eden_maxent/.
 # MaxEnt output will go into maxent_results/
 
-samples_dir=$RUN_DIR/training
-output_dir=$RUN_DIR/maxent_results
-
 mkdir eden_maxent
 mkdir maxent_results
 
+samples_dir=$RUN_DIR/training
+output_dir=$RUN_DIR/maxent_results
+
 # Create commands list for running MaxEnt via eden
 i=0
-for f in $(ls by_species); do
+for f in $(ls $RECORDS_DIR); do
    species=$(echo $f | cut -d'.' -f1)
    fold=0
    while test $fold -lt $CV_NUM_FOLDS; do
@@ -43,16 +43,19 @@ done
 # calculate appropriate ncpus; cap at 256
 if test $i -gt 256; then
    ncpus=256
+elif test $i -gt 32; then
+   ncpus=$(( $i+ (8-$i)%8+8 ))
 else
-   ncpus=$i
+   ncpus=32
 fi
 
 # Create PBS header file for eden run
 echo "#!/bin/sh
-#PBS -l ncpus=$ncpus,walltime=3:00:00
+#PBS -l ncpus=$ncpus,walltime=6:00:00
 #PBS -j oe
 #PBS -N eden_maxent
 #PBS -A $ACCOUNT
-module load java
 " > eden_maxent/header.pbs
 
+# Create PBS footer file for eden run
+echo "module load java" > eden_maxent/footer.pbs
