@@ -55,6 +55,8 @@ echo "#!/bin/sh
 #PBS -j oe
 #PBS -N eden_maxent
 #PBS -A $ACCOUNT
+#PBS -m ae
+#PBS -M lyu6@vols.utk.edu
 " > eden_maxent/header.pbs
 
 # Create PBS footer file for eden run

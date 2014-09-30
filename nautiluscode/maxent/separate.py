@@ -20,7 +20,6 @@
 def separate(input_file):
 
     # check format of filename
-    
     result = re.match('.*/ATBI_records_(20[0-9][0-9]-[0-1][0-9]-[0-3][0-9])\.csv',
             input_file)
     if result == None:
