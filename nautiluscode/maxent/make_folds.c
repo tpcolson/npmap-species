@@ -49,6 +49,10 @@ int main(int argc, char **argv) {
    }
 
    is = new_inputstruct(argv[1]);
+   if(is == NULL){
+      printf("%s not found.\n", argv[1]);
+	  exit(1);
+   }
    sscanf(argv[2], "%d", &num_records);
    sscanf(argv[3], "%d", &num_folds);
    
