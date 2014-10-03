@@ -13,8 +13,10 @@ output_dir=$RUN_DIR/maxent_results
 
 # Create commands list for running MaxEnt via eden
 i=0
-for f in $(ls $RECORDS_DIR); do
-   species=$(echo $f | cut -d'.' -f1)
+while read line; do
+   # Skip first line
+   if test i -eq 0; then continue
+   species=$line
    fold=0
    while test $fold -lt $CV_NUM_FOLDS; do
 
@@ -30,7 +32,7 @@ removeduplicates=false \
 testsamplesfile=$RUN_DIR/test/${species}_${fold}.csv \
 autorun"
 
-	   maxent_cmd="java -Xms512m -Xmx512m -XX:-UsePerfData -jar $MAXENT_JAR environmentallayers=$ENV_DIR samplesfile=$samples_dir/${species}_$fold.csv outputdirectory=$output_dir/$species/fold$fold $flags"
+      maxent_cmd="java -Xms512m -Xmx512m -XX:-UsePerfData -jar $MAXENT_JAR environmentallayers=$ENV_DIR samplesfile=$samples_dir/${species}_$fold.csv outputdirectory=$output_dir/$species/fold$fold $flags"
       #echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd && cd $output_dir/$species/fold$fold && $TOOL_DIR/asc2bov $species.asc $species && rm $species.asc" >> eden_maxent/commands
       echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd && cd $output_dir/$species/fold$fold && $TOOL_DIR/asc2bov $species.asc $species" >> eden_maxent/commands
       #echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd" >> eden_maxent/commands
@@ -38,7 +40,7 @@ autorun"
       fold=$(($fold + 1))
       i=$(( $i + 1 ))
    done
-done
+done < $CONFIG_FILE
 
 # calculate appropriate ncpus; cap at 256
 if test $i -gt 256; then
@@ -51,12 +53,10 @@ fi
 
 # Create PBS header file for eden run
 echo "#!/bin/sh
-#PBS -l ncpus=$ncpus,walltime=6:00:00
+#PBS -l ncpus=$ncpus,walltime=24:00:00
 #PBS -j oe
 #PBS -N eden_maxent
 #PBS -A $ACCOUNT
-#PBS -m ae
-#PBS -M lyu6@vols.utk.edu
 " > eden_maxent/header.pbs
 
 # Create PBS footer file for eden run
