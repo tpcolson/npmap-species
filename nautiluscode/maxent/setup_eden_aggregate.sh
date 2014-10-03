@@ -9,7 +9,7 @@ mkdir eden_aggregate
 # Make command list for running aggregate.sh on each species.
 while read line; do
    # Skip first line
-   if test i -eq 0; then continue
+   if test $i -eq 0; then continue; fi
    species=$line
    echo "cd $RUN_DIR; export TOOL_DIR=$TOOL_DIR; export CV_NUM_FOLDS=$CV_NUM_FOLDS; $TOOL_DIR/aggregate.sh $species" >> eden_aggregate/commands
 done < $CONFIG_FILE

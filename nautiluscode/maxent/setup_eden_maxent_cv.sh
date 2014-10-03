@@ -12,10 +12,11 @@ samples_dir=$RUN_DIR/training
 output_dir=$RUN_DIR/maxent_results
 
 # Create commands list for running MaxEnt via eden
-i=0
+i=-1
 while read line; do
+   i=$(($i + 1))
    # Skip first line
-   if test i -eq 0; then continue
+   if test $i -eq 0; then continue; fi
    species=$line
    fold=0
    while test $fold -lt $CV_NUM_FOLDS; do
