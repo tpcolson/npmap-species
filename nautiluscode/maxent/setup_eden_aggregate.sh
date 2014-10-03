@@ -7,7 +7,9 @@
 mkdir eden_aggregate
 
 # Make command list for running aggregate.sh on each species.
+i=-1
 while read line; do
+   i=$(($i + 1))
    # Skip first line
    if test $i -eq 0; then continue; fi
    species=$line
