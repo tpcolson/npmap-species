@@ -1,0 +1,33 @@
+This directory holds ATBI species record files for use with MaxEnt.
+
+A master file (containing all species counts for ATBI at a particular time) 
+will be named with the following convention:
+   
+   ATBI_records.csv
+
+This file must have a single header line followed by lines of the form:
+
+   Genus_Species, LAT, LON, Taxa_Group
+
+Once we have this master csv, we run the provided python script (separate.py)
+to make individual per-species files.  The script must be run in this directory
+like so:
+
+   python separate.py ATBI_records.csv
+
+This will create a summary file (ATBI_counts.txt) listing the counts
+for each species with at least 30 records.  It also creates a directory
+called ATBI_files/ that holds individual record files for each species
+with at least 30 records.
+
+---------------------------------------------------------------------
+
+Master lists received so far:
+
+   ATBI_records_2013-03-15.csv
+   Received from Chuck Parker in March 2013.  Contains all species at that time
+   with 5 or more records.
+
+   ATBI_records_2013-07-16.csv
+   Another list from Chuck with only 30+ species.  According to Chuck, it may
+   be missing a few species due to problems with their database.
