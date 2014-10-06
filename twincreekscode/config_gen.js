@@ -15,7 +15,7 @@
 ***/
 function generate_config() {
 	// filename for the configuration file
-	var config_fname = 'config.json'
+	var config_fname = 'config.txt'
 
 	// object to contain the data grabbed from the form
 	var form_data;
@@ -63,21 +63,31 @@ function grab_form_data() {
 
 	// build up data array
 	for(var i = 0; i < inputs.length; i++) {
-		data[inputs[i].name] = inputs[i].value;
+		if(inputs[i].type == 'text') data[inputs[i].name] = inputs[i].value;
+		else if(inputs[i].type == 'checkbox') {
+			//make sure array is initialized
+			if(!('species' in data)) data['species'] = [];
+
+			//if checked, add species to the config file
+			if(inputs[i].checked == true) {
+				data['species'].push(inputs[i].name);
+			}
+		}
+		else {
+			alert('Invalid input element with name ' + inputs[i].name + ' of type ' + inputs[i].type);
+			return null;
+		}
 	}
 
 	return data;
 }
 
 /***
- * build the config file and present it as a download to the user
+ * build the config file and kick it to GitHub
 ***/
 function produce_config_file(fname, data) {
 	// string containing the contents of the configuration file
 	var config_contents = '';
-
-	// blob object for presenting the resulting config file for download
-	var file;
 
 	// make sure the filename is valid
 	if(fname == null || fname.length == 0) {
@@ -87,23 +97,29 @@ function produce_config_file(fname, data) {
 	
 	// make sure the form data is valid
 	if(data == null) {
-		alert('missing or invalid data')
+		alert('missing or invalid data');
 		return false;
 	}
 	
-	config_contents += '{'
-	for(var key in data) {
-		config_contents = config_contents.concat('"' + key + '"' + ':' + '"' + data[key] + '",'); 
+	// write the config file
+	config_contents += data['replicates'] + '\n';
+	for(var sp in data['species']) {
+		config_contents += data['species'][sp] + '\n';
 	}
-	config_contents += '}'
 
-	/*** QUESTIONABLE CODE BELOW!!! ***/
-	// create the file
-	file = new Blob([config_contents], { type : fname+'/plain' });
-
-	// present the file to the user for download
-	window.open(window.URL.createObjectURL(file));
-	/*** QUESTIONABLE CODE OVER!!! ***/
+	// kick to GitHub
+	post_config(config_contents);
 
 	return true;
+}
+
+/***
+ * kick the config file to github
+***/
+function post_config(contents) {
+	var socket = new WebSocket('ws://localhost:5678/websocket');
+
+	setTimeout(function() {
+		socket.send(contents);
+	}, 10000);
 }

@@ -11,3 +11,9 @@ body {
 	background-color:#111;
 	color:#eee;
 }
+
+input[type=checkbox] {
+	transform: scale(2);
+
+	-webkit-transform: scale(2);
+}
