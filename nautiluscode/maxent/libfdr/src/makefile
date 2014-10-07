@@ -44,10 +44,11 @@ OBJS = dllist.o fields.o jval.o jrb.o
 libfdr.a: $(OBJS)
 	ar ru libfdr.a $(OBJS)
 	ranlib libfdr.a
+	mkdir $(LIBS)
 	mv libfdr.a $(LIBS)
 
 clean:
-	rm -f core *.o $(LIBS)/libfdr.a
+	rm -rf core *.o $(LIBS)
 
 .SUFFIXES: .c .o
 .c.o:
