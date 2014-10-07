@@ -3,6 +3,9 @@
 #include <string.h>
 #include "fields.h"
 
+#define CELL_SIZE 30.0
+#define NODATA_VALUE -9999.0
+
 typedef struct grid
 {
 	float *data;
@@ -68,8 +71,8 @@ make_asc(GRID g)
 	printf("%-14s%d\n", "nrows", g->nrows);
 	printf("%-14s%lf\n", "xllcorner", g->xllcorner);
 	printf("%-14s%lf\n", "yllcorner", g->yllcorner);
-	printf("%-14s%f\n", "cellsize", 30.0);
-	printf("%-14s%f\n", "NODATA_value", -9999.0);
+	printf("%-14s%f\n", "cellsize", CELL_SIZE);
+	printf("%-14s%f\n", "NODATA_value", NODATA_VALUE);
 
 	// write data
 	int i, j, index;
