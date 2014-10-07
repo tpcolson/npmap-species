@@ -82,7 +82,6 @@ int main(int argc, char **argv) {
    sd_max = 0.0;
    total = 0;
    for(i = 0; i < ROWS*COLS; i++) {
-   //for(i = 300000; i < 330000; i++) {
       // skip this cell if NOVALUE (-9999)
       if(maps[0][i] < 0) {
          avg[i] = maps[0][i];
