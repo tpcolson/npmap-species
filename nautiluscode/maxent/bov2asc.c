@@ -37,7 +37,6 @@ read_file(char *filename)
 
 	// get cols and rows from bov file
 	is = new_inputstruct(bovfile);
-	printf("new inputstruct\n");
 	get_line(is);
 	get_line(is); // 2nd line
 	sscanf(is->fields[1], "%d", &ncols);
