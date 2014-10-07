@@ -1,97 +1,103 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include"fields.h
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "fields.h"
 
-typedef struct {
-   int *a;
-   int ncols;
-   int nrows;
-} grid;
+typedef struct grid
+{
+	float *data;
+	int ncols;
+	int nrows;
+	double xllcorner;
+	double yllcorner;
+} * GRID;
 
-grid *read_file(char *filename) {
+GRID
+read_file(char *filename)
+{
+	int ncols, nrows;
+	double xllcorner, yllcorner;
+	GRID g;
+	char bovfile[256], datfile[256];
+	IS is;
+	FILE *fp;
 
-    int ncols, nrows;
-    grid *g;
-    char bovfile[256], datfile[256];
-    IS is;
-    FILE *fp;
+	sprintf(bovfile, "%s.bov", filename);
+	sprintf(datfile, "%s.dat", filename);
 
-    sprintf(bovfile, "%s.bov", filename);
-    sprintf(datfile, "%s.dat", filename);
+	// get cols and rows from bov file
+	is = new_inputstruct(bovfile);
+	get_line(is);
+	get_line(is); // 2nd line
+	sscanf(is->fields[1], "%d", &ncols);
+	sscanf(is->fields[2], "%d", &nrows);
+	get_line(is);
+	get_line(is);
+	get_line(is);
+	get_line(is);
+	get_line(is); // 7th line
+	sscanf(is->fields[1], "%lf", &xllcorner);
+	sscanf(is->fields[2], "%lf", &yllcorner);
+	jettison_inputstruct(is);
 
-    // get cols and rows from bov file
-    is = new_inputstruct(bovfile);
-    get_line(is);
-    get_line(is);
-    sscanf(is->fields[1], "%d", &ncols);
-    sscanf(is->fields[2], "%d", &nrows);
-    jettison_inputstruct(is);
+	// fill out the grid header
+	g = (GRID) malloc(sizeof(struct grid));
+	g->data = (float *) malloc(sizeof(float) * ncols * nrows);
+	g->ncols = ncols;
+	g->nrows = nrows;
+	g->xllcorner = xllcorner;
+	g->yllcorner = yllcorner;
 
-    g = (grid *)malloc(sizeof(grid));
-    g->a = (int *)malloc(sizeof(int) * ncols * nrows);
-    g->ncols = ncols;
-    g->nrows = nrows;
+	// read data
+	fp = fopen(datfile, "rb");
+	if(fp == NULL) {
+		fprintf(stderr, "unable to open %s\n", filename);
+		exit(1);
+	}
+	fread(g->data, sizeof(float), ncols*nrows, fp);
+	fclose(fp);
 
-    fp = fopen(datfile, "rb");
-    if(fp == NULL) {
-       fprintf(stderr, "unable to open %s\n", filename);
-       exit(1);
-    }
-    fread(g->a, sizeof(int), ncols*nrows, fp);
-    fclose(fp);
-
-
-    return g;
+	return g;
 }
-/*
-void make_bov(grid *g, char *species) {
-   FILE *fp;
-   char dat[256];
-   char bov[256];
-   sprintf(dat, "%s.dat", species);
-   sprintf(bov, "%s.bov", species);
-   // write data to binary file
-   fp = fopen(dat, "wb");
-   fwrite((void *)g->a, sizeof(int), g->ncols * g->nrows, fp);
-   fclose(fp);
-   // write header file
-   fp = fopen(bov, "w");
-   fprintf(fp, "DATA_FILE: %s\n", dat);
-   fprintf(fp, "DATA_SIZE: %d %d 1\n", g->ncols, g->nrows);
-   fprintf(fp, "DATA_FORMAT: INT\n");
-   fprintf(fp, "VARIABLE: presence\n");
-   fprintf(fp, "DATA_ENDIAN: LITTLE\n");
-   fprintf(fp, "CENTERING: zonal\n");
-   fprintf(fp, "BRICK_ORIGIN: 0 0 0\n");
-   fprintf(fp, "BRICK_SIZE: %d %d 1\n", g->ncols, g->nrows);
-   fclose(fp);
+
+void
+make_asc(GRID g)
+{
+	// write header
+	printf("%-14s%d\n", "ncols", g->ncols);
+	printf("%-14s%d\n", "nrows", g->nrows);
+	printf("%-14s%lf\n", "xllcorner", g->xllcorner);
+	printf("%-14s%lf\n", "yllcorner", g->yllcorner);
+	printf("%-14s%f\n", "cellsize", 30.0);
+	printf("%-14s%f\n", "NODATA_value", -9999.0);
+
+	// write data
+	int i, j, index;
+	for(i = 0; i < g->ncols; i++) {
+		for(j = 0; j < g->nrows; j++) {
+			index = (i * g->nrows) + j;
+			printf("%f ", g->data[index]);
+		}
+		printf("\n");
+	}
 }
-*/
 
+int
+main(int argc, char **argv)
+{
+	char *fname;
+	GRID g;
 
-int main(int argc, char **argv) {
+	// parse arguments
+	if(argc != 2) {
+		fprintf(stderr, "usage: bov2asc input\n");
+		return 1;
+	}
+	fname = strdup(argv[1]);
 
-    int i,j,count;
-    char *file, *species;  
-    grid *g;
+	// read and convert file
+	g = read_file(fname);
+	make_asc(g);
 
-    if(argc != 2) {
-       printf("usage: bov2asc input\n");
-       return 1;
-    }
-    file = strdup(argv[1]);
-    //species = strdup(argv[2]);
-
-    g = read_file(file);
-
-    for(i=0;i<g->nrows;i++) {
-        for(j=0;j<g->ncols;j++) {
-            printf("%d ", g->a[i*g->ncols+j]);
-        }
-        printf("\n");
-    }
-
-    //make_bov(g, species);
-
-    return 0;
+	return 0;
 }
