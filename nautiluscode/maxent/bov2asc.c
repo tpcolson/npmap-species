@@ -1,3 +1,10 @@
+/*---------------------------------------------
+	bov2asc.c
+	Converts filename.bov to asc format and prints to stdout.
+	Usage example: bov2asc filename > filename.asc
+
+---------------------------------------------------*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +37,7 @@ read_file(char *filename)
 
 	// get cols and rows from bov file
 	is = new_inputstruct(bovfile);
+	printf("new inputstruct\n");
 	get_line(is);
 	get_line(is); // 2nd line
 	sscanf(is->fields[1], "%d", &ncols);
@@ -78,8 +86,8 @@ make_asc(GRID g)
 	int i, j, index;
 	for(i = 0; i < g->ncols; i++) {
 		for(j = 0; j < g->nrows; j++) {
-			index = (i * g->nrows) + j;
-			printf("%f ", g->data[index]);
+			index = i * g->nrows + j;
+			printf("%lf ", g->data[index]);
 		}
 		printf("\n");
 	}
@@ -93,7 +101,7 @@ main(int argc, char **argv)
 
 	// parse arguments
 	if(argc != 2) {
-		fprintf(stderr, "usage: bov2asc input\n");
+		fprintf(stderr, "usage: bov2asc filename\n");
 		return 1;
 	}
 	fname = strdup(argv[1]);
