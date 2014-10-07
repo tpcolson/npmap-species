@@ -4,9 +4,13 @@ INCLUDE = -I libfdr/include
 CFLAGS = -g $(INCLUDE)
 LIBS = -lpthread -lm
 PLANK_LIBS = -L libfdr/lib -lfdr
-EXECUTABLES = asc2bov ssi summarize make_folds
+EXECUTABLES = bov2asc asc2bov ssi summarize make_folds
 
 all: $(EXECUTABLES)
+
+.SUFFIXES: .c.o
+.c .o:
+	$(CC) $(CFLAGS) -c $*.c
 
 asc2bov: asc2bov.o
 	$(CC) $(CFLAGS) -o $@ asc2bov.o $(PLANK_LIBS)
@@ -22,9 +26,6 @@ summarize: summarize.o
 
 make_folds: make_folds.o
 	$(CC) $(CFLAGS) -o $@ make_folds.o $(PLANK_LIBS)
-
-.c.o: *.c
-	$(CC) -c $@ *.o
 
 clean:
 	rm -f core *.o $(EXECUTABLES)
