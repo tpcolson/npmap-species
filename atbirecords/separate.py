@@ -39,17 +39,29 @@ def separate(input_file):
     species = {}
     with open(input_file, 'r') as f:
         lines = [line.rstrip('\r\n') for line in f]
-        num_records = -1
+        num_records = 0
         for line in lines:
-            # skip first header line
-            if num_records > -1:
-               fields = line.split(',')
-               # capitalize() will uppercase first letter and lowercase the rest
-               sp = fields[0].capitalize().strip()
-               if sp in species:
-                   species[sp].append( (fields[1].strip(),fields[2].strip(),fields[3].strip()) )
-               else:
-                   species[sp] = [(fields[1].strip(),fields[2].strip(),fields[3].strip()),]
+            fields = line.split(',')
+            if len(fields) != 4:
+                print "Entry not processed: "+line
+                print "There are only "+ str(len(fields)) +" values."
+                continue
+            try: float(fields[1])
+            except ValueError:
+                print "Entry not processed: "+line
+                print str(fields[1]) +" is not a float."
+                continue
+            try: float(fields[2])
+            except ValueError:
+                print "Entry not processed: "+line
+                print str(fields[2]) +" is not a float."
+                continue
+            # capitalize() will uppercase first letter and lowercase the rest
+            sp = fields[0].capitalize().strip()
+            if sp in species:
+                species[sp].append( (fields[1].strip(),fields[2].strip(),fields[3].strip()) )
+            else:
+                species[sp] = [(fields[1].strip(),fields[2].strip(),fields[3].strip()),]
             num_records += 1
 
     # create directory for individual species files
