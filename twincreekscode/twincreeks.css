@@ -8,12 +8,14 @@
 ***/
 
 body {
-	background-color:#111;
-	color:#eee;
+	background-image: url('background.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #111;
 }
 
 input[type=checkbox] {
-	transform: scale(2);
+	transform: scale(1.5);
 
-	-webkit-transform: scale(2);
+	-webkit-transform: scale(1.5);
 }
