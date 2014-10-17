@@ -16,6 +16,5 @@ body {
 
 input[type=checkbox] {
 	transform: scale(1.5);
-
 	-webkit-transform: scale(1.5);
 }

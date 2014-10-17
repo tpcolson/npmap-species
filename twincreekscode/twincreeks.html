@@ -24,15 +24,19 @@
 </head>
 <body>
 	<h1>Twin Creeks</h1>
-	<p>Please use the below form to generate the configuration file.</p>
+	<p>
+		Form for controlling the IO of the maxent workflow.
+	</p>
 	<form name='submission_form'>
 		<fieldset>
 			<legend>Config form:</legend>
 			<div id='form'>
-				<div id='replicates_field' style='float:left; height:300px; width:50%; text-align:center'>
+				<div id='options_field' style='float:left; height:300px; width:30%; text-align:center'>
+					<p><u>Options</u></p>
 					Replicates: <input type='text' name='replicates' value=''></input>
 				</div>
-				<div id='species_checkboxes' style='float:left; height:300px; width:40%; overflow-y:scroll'>
+				<div id='species_checkboxes' style='float:left; height:300px; width:40%; overflow-y:scroll;'>
+					<p style='text-align:center'><u>Species</u></p>
 					<div id='buttons' style='text-align:center'>
 						<button id='selectall' type='button' onclick='select_all();'>Select all</button>
 						<button id='clearall' type='button' onclick='clear_all();'>Clear all</button>
@@ -3514,6 +3518,9 @@
 <input type='checkbox' name='Zonosemata electa'>Zonosemata electa</input><br>
 <input type='checkbox' name='Zonotrichia albicollis'>Zonotrichia albicollis</input><br>
 					</div>
+				</div>
+				<div id='group_checkboxes' style='float:left; height:300px; width:30%; overflow-y:scroll;'>
+					<p style='text-align:center'><u>Groups</u></p>
 				</div>
 			</div>
 			<div id='submitter' style='clear:both; text-align:center; height:100px'>
