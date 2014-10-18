@@ -24,15 +24,17 @@ function update_checkboxes(option) {
 
 	for(var i = 0; i < inputs.length; i++) {
 		if(inputs[i].type == 'checkbox') {
-			switch(option) {
-				case 'select':
-					inputs[i].checked = true;
-					break;
-				case 'clear':
-					inputs[i].checked = false;
-					break;
-				default:
-					break;
+			if(!inputs[i].disabled) {
+				switch(option) {
+					case 'select':
+						inputs[i].checked = true;
+						break;
+					case 'clear':
+						inputs[i].checked = false;
+						break;
+					default:
+						break;
+				}
 			}
 		}
 	}
