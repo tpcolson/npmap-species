@@ -23,10 +23,11 @@ do
 done
 
 # change file permissions as appropriate
-ssh ${USER}@${HOST}
+ssh ${USER}@${TAR_HOST} << ENDSSH
 chmod 644 ${TAR_DIR}/index.html
 for file in "${PUB_FILES[@]}"
 do
 	chmod 644 ${TAR_DIR}/${file}
 done
+ENDSSH
 exit
