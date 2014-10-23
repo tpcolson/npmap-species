@@ -17,6 +17,7 @@
 	<link rel='stylesheet' href='jquery-ui-1.11.0.custom/jquery-ui.theme.css'>
 	<script src='form_utils.js'></script>
 	<script src='config_gen.js'></script>
+	<script src='send_email.js'></script>
 	<script src='jquery-ui-1.11.0.custom/external/jquery/jquery.js'></script>
 	<script src='jquery-ui-1.11.0.custom/jquery-ui.js'></script>
 </head>
@@ -3570,7 +3571,8 @@
 				</div>
 			</div>
 			<div id='submitter' style='clear:both; text-align:center; height:100px'>
-				<button type='button' style='margin-top:50px' onclick='generate_config();'>Generate config file</button>
+				<button type='button' style='margin-top:50px' onclick='//generate_config();
+					send_email();'>Generate config file</button>
 			</div>
 		</fieldset>
 	</form>

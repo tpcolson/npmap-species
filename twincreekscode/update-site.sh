@@ -7,10 +7,10 @@
 # set up (you'll want to change this if you change the file info)
 INDEX="twincreeks.html"
 PUB_FILES=("twincreeks.css" "config_gen.js" "form_utils.js" "background.jpg")
-PRIV_FILES=()
+PRIV_FILES=("send_email.js")
 USER="jduggan1"
 TAR_HOST="seelab.eecs.utk.edu"
-SRC_DIR="/home/john/npmap-species/twincreekscode" # currently must be on localhost
+SRC_DIR="/home/jduggan1/npmap-species/twincreekscode" # currently must be on localhost
 TAR_DIR="/export/home/seelab/huangj/seelabwww/twincreeks"
 
 # let's copy over the files to the site
