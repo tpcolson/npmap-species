@@ -6,8 +6,8 @@
 
 # set up (you'll want to change this if you change the file info)
 INDEX="twincreeks.html"
-PUB_FILES=("twincreeks.css" "config_gen.js" "form_utils.js" "background.jpg")
-PRIV_FILES=("send_email.js")
+PUB_FILES=("twincreeks.css" "config_gen.js" "form_utils.js" "send_email.js" "background.jpg")
+PRIV_FILES=()
 USER="jduggan1"
 TAR_HOST="seelab.eecs.utk.edu"
 TAR_DIR="/export/home/seelab/huangj/seelabwww/twincreeks"
