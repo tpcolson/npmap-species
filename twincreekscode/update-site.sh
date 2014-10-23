@@ -14,20 +14,16 @@ SRC_DIR="/home/john/npmap-species/twincreekscode" # currently must be on localho
 TAR_DIR="/export/home/seelab/huangj/seelabwww/twincreeks"
 
 # let's copy over the files to the site
-# start with the index (it's the special case)
-scp ${SRC_DIR}/${INDEX} ${USER}@${TAR_HOST}:${TAR_DIR}/index.html
-# now get the rest
-for file in "${PUB_FILES[@]}" "${PRIV_FILES[@]}"
-do
-	scp ${SRC_DIR}/${file} ${USER}@${TAR_HOST}:${TAR_DIR}/${file}
-done
+scp ${SRC_DIR}/${INDEX} "${PUB_FILES[@]}" "${PRIV_FILES[@]}" ${USER}@${TAR_HOST}:${TAR_DIR}
 
-# change file permissions as appropriate
+# change file permissions as appropriate (also rename index)
 ssh ${USER}@${TAR_HOST} << ENDSSH
-chmod 644 ${TAR_DIR}/index.html
-for file in "${PUB_FILES[@]}"
-do
-	chmod 644 ${TAR_DIR}/${file}
-done
+	chmod 644 ${TAR_DIR}/${INDEX}
+	mv ${TAR_DIR}/${INDEX} ${TAR_DIR}/index.html
+	for file in "${PUB_FILES[@]}"
+	do
+		chmod 644 ${TAR_DIR}/$file
+	done
+	chmod 755 ${TAR_DIR}
 ENDSSH
 exit
