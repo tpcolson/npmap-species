@@ -35,7 +35,7 @@
 						<p style='text-align:center'><u>Options</u></p>
 					</div>
 					<div id='options' style='height:250px; overflow-y:scroll'>
-						Replicates: <select name='replicates'>
+						Number of replicates: <select name='replicates'>
 							<option value=2>2</option>
 							<option value=3>3</option>
 							<option value=4>4</option>
@@ -44,7 +44,7 @@
 							<option value=7>7</option>
 							<option value=8>8</option>
 							<option value=9>9</option>
-							<option value=10>10</option>
+							<option selected='selected' value=10>10</option>
 							<option value=11>11</option>
 							<option value=12>12</option>
 							<option value=13>13</option>
@@ -56,19 +56,19 @@
 							<option value=19>19</option>
 							<option value=20>20</option>
 						</select><br>
-						Create response curves: <input type='checkbox' checked disabled></input><br>
-						Make pictures of predictions: <input type='checkbox' checked disabled></input><br>
-						Do jackknife: <input type='checkbox' checked disabled></input><br>
-						Output format: <select disabled><option>Logistic</option></select><br>
-						Output file type: <select disabled><option>asc</option></select><br>
-						Random seed: <input type='checkbox' checked disabled></input><br>
-						Remove duplicate presence records: <input type='checkbox' checked disabled></input><br>
+						Replicated run type: <select disabled><option>Cross-validation</option></select><br>
+						Create response curves: <input type='checkbox' disabled></input><br>
+						Do jackknife: <input type='checkbox' disabled></input><br>
+						Random seed: <input type='checkbox' disabled></input><br>
+						Remove duplicate presence records: <input type='checkbox' disabled></input><br>
 						Random test percentage: <input type='type' value=0 disabled style='width:50px'></input><br>
 						Regulization multiplier: <input type='type' value=1 disabled style='width:50px'></input><br>
-						Replicated run type: <select disabled><option>Subsample</option></select><br>
-						Test sample file: <input type='type' value='ATBI_extract.csv' disabled></input><br>
+						Test sample file: <input type='type' value='ATBI_records.csv' disabled></input><br>
 						Add samples to background: <input type='checkbox' checked disabled></input><br>
-						Write plot data: <input type='checkbox' checked disabled></input><br>
+						Output format: <select disabled><option>Logistic</option></select><br>
+						Output file type: <select disabled><option>asc</option></select><br>
+						Make pictures of predictions: <input type='checkbox' disabled></input><br>
+						Write plot data: <input type='checkbox' disabled></input><br>
 						Extrapolate: <input type='checkbox' checked disabled></input><br>
 						Do clamping: <input type='checkbox' checked disabled></input><br>
 						Write output grids: <input type='checkbox' checked disabled></input><br>
