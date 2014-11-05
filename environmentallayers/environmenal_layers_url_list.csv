@@ -1,0 +1,21 @@
+NAME,TYPE,ASCII URL,META URL
+"Available Water Supply, 0 to 100 cm Depth",Categorical,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511421&file=cat_availablewatersupply0-100cm.asc,https://irma.nps.gov/App/Reference/Profile/2198015
+"Available Water Supply, 0 to 150 cm Depth",Categorical,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511424&file=cat_availablewatersupply0-150cm.asc,https://irma.nps.gov/App/Reference/Profile/2198016
+"Available Water Supply, 0 to 25 cm Depth",Categorical,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511428&file=cat_availablewatersupply0-25cm.asc,https://irma.nps.gov/App/Reference/Profile/2198013
+"Available Water Supply, 0 to 50 cm Depth",Categorical,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511429&file=cat_availablewatersupply0-50cm.asc,https://irma.nps.gov/App/Reference/Profile/2198012
+30-m Plan Curvature,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511305&file=con_plancurvature.asc,https://irma.nps.gov/App/Reference/Profile/2209670
+Topographic Wetness Index,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511430&file=con_topographicwetness.asc,https://irma.nps.gov/App/Reference/Profile/2208650
+Potential Solar Radiation ,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511432&file=con_solarradiation.asc,https://irma.nps.gov/App/Reference/Profile/2208716
+Diurnal Anisotropic Heating Index,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511466&file=con_diurnalanisotropicheatingindex.asc,https://irma.nps.gov/App/Reference/Profile/2209666/
+Stream Power Index,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511467&file=con_streampowerindex.asc,https://irma.nps.gov/App/Reference/Profile?code=2217086
+Average Curvature,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511468&file=con_curvature.asc,https://irma.nps.gov/App/Reference/Profile/2209669
+Digital Elevation Model (Meters),Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511470&file=con_elevation.asc,https://irma.nps.gov/App/Reference/Profile/2180607
+Morphometric Protection Index,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511473&file=con_morphometricprotectionindex.asc,https://irma.nps.gov/App/Reference/Profile/2209667
+Lidar Slope Model (Percent),Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511474&file=con_percentslope.asc,https://irma.nps.gov/App/Reference/Profile/2180634
+Slope Height,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511476&file=con_slopeheight.asc,https://irma.nps.gov/App/Reference/Profile?code=2217089
+Organic Matter Content of Soil,Categorical,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511481&file=cat_soilpercentorganicmatter.asc,https://irma.nps.gov/App/Reference/Profile/2198011
+Slope Length,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511479&file=con_slopelength.asc,https://irma.nps.gov/App/Reference/Profile?code=2217090
+Lidar Beers Aspect Model,Continuous,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511483&file=con_beersaspect.asc,https://irma.nps.gov/App/Reference/Profile/2217092
+Digital Geologic Units ,Categorical,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511484&file=cat_geology.asc,https://irma.nps.gov/App/Reference/Profile/2197991
+Leaf-On Classes,Categorical,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511485&file=cat_leafonclasses.asc,https://irma.nps.gov/App/Reference/Profile/1047498
+Soil Drainage Class,Categorical,https://irma.nps.gov/App/Reference/DownloadDigitalFile?code=511486&file=cat_soildrainageclass.asc,https://irma.nps.gov/App/Reference/Profile/2198005
