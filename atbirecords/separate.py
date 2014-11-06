@@ -18,18 +18,6 @@
 """
 
 def separate(input_file):
-
-    # check format of filename
-    # result = re.match('ATBI_records_(20[0-9][0-9]-[0-1][0-9]-[0-3][0-9])\.csv',
-            # input_file)
-    # if result == None:
-        # print 'Please use the following format for input filenames:'
-        # print '  ATBI_records_yyyy-mm-dd.csv'
-        # return
-    # date_string = result.group(1)
-
-    # counts_file = ''.join(['ATBI_counts_',date_string,'.txt'])   
-    # files_dir = ''.join(['ATBI_files_',date_string])   
     
     counts_file = 'ATBI_counts.txt'
     files_dir = 'ATBI_files'
@@ -37,6 +25,8 @@ def separate(input_file):
 
     # make dictionary keyed by species name
     # the value for each species key will be a list of coordinate tuples (x,y)
+    # NOTE: We assume the data is formatted as "Species, Latitude, Longitude, Group"
+    
     species = {}
     with open(input_file, 'r') as f:
         lines = [line.rstrip('\r\n') for line in f]
@@ -87,8 +77,8 @@ def separate(input_file):
             csv.write('Species,x,y\n')
             s = set()
             for coord in species[sp]:
-                csv.write(','.join([sp,coord[0],coord[1]]) + '\n')
-                s.add( (float(coord[0]), float(coord[1])) )
+                csv.write(','.join([sp,coord[1],coord[0]]) + '\n')
+                s.add( (float(coord[1]), float(coord[0])) )
             MP = MultiPoint(list(s))
             json.write(str(MP) + '\n')
 
