@@ -33,6 +33,7 @@ def separate(input_file):
     
     counts_file = 'ATBI_counts.txt'
     files_dir = 'ATBI_files'
+    geojson_dir='GeoJSONs'
 
     # make dictionary keyed by species name
     # the value for each species key will be a list of coordinate tuples (x,y)
@@ -66,6 +67,7 @@ def separate(input_file):
 
     # create directory for individual species files
     os.mkdir(files_dir)
+    os.mkdir(geojson_dir)
 
     # write individual species files
     sorted = species.keys()
@@ -78,11 +80,17 @@ def separate(input_file):
             continue 
         counts_list.append(''.join([sp,',',str(num),',',species[sp][0][2],'\n']))
 
-        filename = ''.join([sp,'.csv'])
-        with open(os.path.join(files_dir,filename),'w') as f:
-            f.write('Species,x,y\n')
+        csv_filename = ''.join([sp,'.csv'])
+        json_filename = ''.join([sp,'.json'])
+        with open(os.path.join(files_dir, csv_filename), 'w') as csv, \
+            open(os.path.join(geojson_dir, json_filename), 'w') as json:
+            csv.write('Species,x,y\n')
+            s = set()
             for coord in species[sp]:
-                f.write(','.join([sp,coord[0],coord[1]]) + '\n')
+                csv.write(','.join([sp,coord[0],coord[1]]) + '\n')
+                s.add( (float(coord[0]), float(coord[1])) )
+            MP = MultiPoint(list(s))
+            json.write(str(MP) + '\n')
 
     # write counts file
     with open(counts_file,'w') as f:
@@ -98,6 +106,7 @@ if __name__ == "__main__":
     import sys
     import os
     import re
+    from geojson import MultiPoint
     if len(sys.argv) != 2:
         print 'usage: python separate.py input_file'
     else:
