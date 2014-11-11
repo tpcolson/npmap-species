@@ -9,6 +9,7 @@ mkdir eden_maxent
 mkdir maxent_results
 
 samples_dir=$RUN_DIR/training
+test_samples_dir=$RUN_DIR/test
 output_dir=$RUN_DIR/maxent_results
 
 # Create commands list for running MaxEnt via eden
@@ -16,27 +17,32 @@ i=-1
 while read line; do
    i=$(($i + 1))
    # Skip first line
-   if test $i -eq 0; then continue; fi
+   if test $i -eq -1; then 
+	i=0
+	continue; fi
    species=$line
    fold=0
    while test $fold -lt $CV_NUM_FOLDS; do
 
-      flags="togglelayertype=cat \
+      flags="\
+autorun=true
+togglelayertype=cat \
 perspeciesresults=true \
 askoverwrite=false \
 visible=false \
-skipifexists \
+skipifexists=false \
 plots=false \
 pictures=false \
 writebackgroundpredictions=false \
 removeduplicates=false \
-testsamplesfile=$RUN_DIR/test/${species}_${fold}.csv \
+environmentallayers=$ENV_DIR \
+samplesfile=$sample_dir/${species}_${fold}.csv \
+testsamplesfile=$test_samples_dir/${species}_${fold}.csv \
+outputdirectory=$output_dir/$species/fold$fold \
 autorun"
 
-      maxent_cmd="java -Xms512m -Xmx512m -XX:-UsePerfData -jar $MAXENT_JAR environmentallayers=$ENV_DIR samplesfile=$samples_dir/${species}_$fold.csv outputdirectory=$output_dir/$species/fold$fold $flags"
-      #echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd && cd $output_dir/$species/fold$fold && $TOOL_DIR/asc2bov $species.asc $species && rm $species.asc" >> eden_maxent/commands
+      maxent_cmd="java -Xms512m -Xmx512m -XX:-UsePerfData -jar $MAXENT_JAR $flags"
       echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd && cd $output_dir/$species/fold$fold && $TOOL_DIR/asc2bov $species.asc $species" >> eden_maxent/commands
-      #echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd" >> eden_maxent/commands
 
       fold=$(($fold + 1))
       i=$(( $i + 1 ))
@@ -47,7 +53,7 @@ done < $CONFIG_FILE
 if test $i -gt 256; then
    ncpus=256
 elif test $i -gt 32; then
-   ncpus=$(( $i+ (8-$i)%8+8 ))
+   ncpus=$(( $i + ((8-$i)%8+8)%8 ))
 else
    ncpus=32
 fi

@@ -16,13 +16,15 @@ JOBID_FILE=current_eden_job.txt
 # Configuration settings--SET APPROPRIATE PATHS HERE FOR YOUR ENVIRONMENT
 TOOL_DIR=/lustre/medusa/lyu6/npmap-species/nautiluscode/maxent
 MAXENT_JAR=$TOOL_DIR/maxent.jar
-CONFIG_FILE=/lustre/medusa/lyu6/npmap-species/twincreekscode/maxent_config/config.txt
+CONFIG_FILE=/lustre/medusa/lyu6/npmap-species/twincreekscode/maxent_config/config_small.txt
 CV_NUM_FOLDS=$(head $CONFIG_FILE -n 1)
 CV=true
 COUNTS_FILE=/lustre/medusa/lyu6/npmap-species/atbirecords/ATBI_counts.txt
 RECORDS_DIR=/lustre/medusa/lyu6/npmap-species/atbirecords/ATBI_files
 ENV_DIR=/lustre/medusa/lyu6/npmap-species/environmentallayers/mxe
 ENV_PICK=all
+GDAL_BIN=/lustre/medusa/lyu6/gdal/bin/
+GEOTIFF_DIR=$RUN_DIR/geotiffs
 ACCOUNT=UT-NTNL0229
 #------------------------------------------------------------------------
 
@@ -32,7 +34,7 @@ if test $CV_NUM_FOLDS -gt 20 || test $CV_NUM_FOLDS -lt 2; then
 fi
 
 # clean up previous run's output
-rm -rf eden* training test png
+rm -rf eden*
 
 # make pre-process script
 echo "#!/bin/sh
@@ -85,8 +87,8 @@ else
    echo "cat eden_maxent/footer.pbs >> eden_maxent/header.pbs" >> maxent.sh
    
 fi
-#echo "echo 'Running eden job in eden_maxent/'" >> maxent.sh
-#echo "eden eden_maxent > $JOBID_FILE" >> maxent.sh
+echo "echo 'Running eden job in eden_maxent/'" >> maxent.sh
+echo "eden eden_maxent > $JOBID_FILE" >> maxent.sh
 chmod u+x maxent.sh
 
 
@@ -99,6 +101,8 @@ export TOOL_DIR=$TOOL_DIR
 export CONFIG_FILE=$CONFIG_FILE
 export MAXENT_JAR=$MAXENT_JAR
 export ENV_DIR=$ENV_DIR
+export GDAL_BIN=$GDAL_BIN
+export GEOTIFF_DIR=$GEOTIFF_DIR
 export ACCOUNT=$ACCOUNT
 export CV_NUM_FOLDS=$CV_NUM_FOLDS
 
