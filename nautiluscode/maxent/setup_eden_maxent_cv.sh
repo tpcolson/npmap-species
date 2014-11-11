@@ -15,17 +15,16 @@ output_dir=$RUN_DIR/maxent_results
 # Create commands list for running MaxEnt via eden
 i=-1
 while read line; do
-   i=$(($i + 1))
    # Skip first line
    if test $i -eq -1; then 
-	i=0
-	continue; fi
+       i=0
+       continue; fi
    species=$line
    fold=0
    while test $fold -lt $CV_NUM_FOLDS; do
 
       flags="\
-autorun=true
+autorun=true \
 togglelayertype=cat \
 perspeciesresults=true \
 askoverwrite=false \
@@ -36,13 +35,14 @@ pictures=false \
 writebackgroundpredictions=false \
 removeduplicates=false \
 environmentallayers=$ENV_DIR \
-samplesfile=$sample_dir/${species}_${fold}.csv \
+samplesfile=$samples_dir/${species}_${fold}.csv \
 testsamplesfile=$test_samples_dir/${species}_${fold}.csv \
 outputdirectory=$output_dir/$species/fold$fold \
-autorun"
+"
 
       maxent_cmd="java -Xms512m -Xmx512m -XX:-UsePerfData -jar $MAXENT_JAR $flags"
-      echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd && cd $output_dir/$species/fold$fold && $TOOL_DIR/asc2bov $species.asc $species" >> eden_maxent/commands
+	  asc2bov_cmd="cd $output_dir/$species/fold$fold && $TOOL_DIR/asc2bov $species.asc $species"
+      echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd" >> eden_maxent/commands
 
       fold=$(($fold + 1))
       i=$(( $i + 1 ))
