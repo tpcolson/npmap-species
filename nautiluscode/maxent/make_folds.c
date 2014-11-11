@@ -23,8 +23,8 @@ typedef struct {
 } Fold;
 
 typedef struct {
-   int x;
-   int y;
+   float x;
+   float y;
 } Coord;
 
 int main(int argc, char **argv) {
@@ -68,8 +68,8 @@ int main(int argc, char **argv) {
    get_line(is);                    // skip first line
    for(i = 0; get_line(is) >= 0; i++) {
       strtok(is->fields[0], ",");
-      sscanf(strtok(NULL, ","), "%d", &coords[i].x);
-      sscanf(strtok(NULL, ","), "%d", &coords[i].y);
+      sscanf(strtok(NULL, ","), "%f", &coords[i].x);
+      sscanf(strtok(NULL, ","), "%f", &coords[i].y);
    }
    jettison_inputstruct(is);
 
@@ -118,18 +118,18 @@ int main(int argc, char **argv) {
       for(j = 0; j < folds[i].next; j++) {
          for(k = start; k < folds[i].members[j]; k++) {
             // printf("writing %d to training file\n", k);
-            fprintf(training_fp, "%s,%d,%d\n", species_name, coords[k].x,
+            fprintf(training_fp, "%s,%f,%f\n", species_name, coords[k].x,
                   coords[k].y);
 
          }
          // printf("  writing %d to test file\n", k);
-         fprintf(test_fp, "%s,%d,%d\n", species_name, coords[k].x, coords[k].y);
+         fprintf(test_fp, "%s,%f,%f\n", species_name, coords[k].x, coords[k].y);
          start = k + 1;
       }
       // get remainder
       for(k = start; k < num_records; k++) {
          // printf("writing %d to training file\n", k);
-         fprintf(training_fp, "%s,%d,%d\n", species_name, coords[k].x,
+         fprintf(training_fp, "%s,%f,%f\n", species_name, coords[k].x,
                coords[k].y);
       }
       // printf("\n");
