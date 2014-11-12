@@ -24,8 +24,8 @@ typedef struct {
 grid *read_file(char *filename) {
 
     int i, j, n;
-    int ncols, nrows, total;
-	float xOrigin, yOrigin, cellsize;
+    int ncols, nrows;
+	float xOrigin, yOrigin, cellsize, nodata_value;
     grid *g;
     IS is;
 
@@ -60,6 +60,11 @@ grid *read_file(char *filename) {
        exit(1);
     }
 	sscanf(is->fields[1], "%f", &cellsize);
+	if(get_line(is) < 0) {
+       fprintf(stderr, "problem reading %s\n", filename);
+       exit(1);
+    }
+	sscanf(is->fields[1], "%f", &nodata_value);
 	
     g = (grid *)malloc(sizeof(grid));
     g->a = (float *)malloc(sizeof(float) * ncols * nrows);
@@ -69,18 +74,21 @@ grid *read_file(char *filename) {
 	g->yOrigin = yOrigin;
 	g->cellsize = cellsize;
 	
-    total = 0;
     for(i = 0; i < nrows; i++) {
 		if(get_line(is) < 0) {
 			fprintf(stderr, "problem reading %s\n", filename);
 			exit(1);
 		}
 		if(is->NF != ncols) {
+			fprintf(stderr, "is->NF = %d\n", is->NF);
+			fprintf(stderr, "ncols = %d\n", ncols);
 			fprintf(stderr, "col number mismatch in %s\n", filename);
 			exit(1);
 		}
         for(j = 0; j < ncols; j++) {
            sscanf(is->fields[j], "%f", g->a +(i*ncols)+j);
+		   // printf("i = %d, j = %d\n", i, j);
+		   // printf("is->fields[j] = %f\n", is->fields[j]);
         }
     }
     jettison_inputstruct(is);
@@ -126,5 +134,8 @@ int main(int argc, char **argv) {
 
     make_bov(g, species);
 	
+	free(file);
+	free(species);
+	free(g);
     return 0;
 }
