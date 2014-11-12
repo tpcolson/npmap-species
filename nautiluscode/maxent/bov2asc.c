@@ -112,5 +112,7 @@ main(int argc, char **argv)
 	g = read_file(fname);
 	make_asc(g);
 
+	free(fname);
+	free(g);
 	return 0;
 }

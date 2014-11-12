@@ -1,13 +1,58 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "fields.h"
 
 #define ROWS 1302
 #define COLS 2899
+#define NODATA_VALUE -9999
 
-void readfile(char *fname, float *map) {
+typedef struct Bov_Header{
+	int dataSize[3];
+	char dataFormat[256];
+	char variable[256];
+	char dataEndian[256];
+	char centering[256];
+	float brickOrigin[3];
+	float brickSize[3];
+} * BH;
+
+BH read_bov(char *fname)
+{
+	BH bh;
+	IS is;
+	int i;
+	
+	is = new_inputstruct(fname);
+	if(is == NULL){
+		fprintf(stderr, "Unable to open %s\n", fname);
+		exit(1);
+	}
+	bh = (BH) malloc(sizeof(struct Bov_Header));
+	get_line(is); // DATA_FILE:
+	get_line(is); // DATA_SIZE:
+	for(i = 0; i < 3; i++)
+		sscanf(is->fields[i+1], "%d", &bh->dataSize[i]);
+	get_line(is); // DATA_FORMAT:
+	sscanf(is->fields[1], "%s", &bh->dataFormat);
+	get_line(is); // VARIABLE:
+	sscanf(is->fields[1], "%s", &bh->variable);
+	get_line(is); // DATA_ENDIAN:
+	sscanf(is->fields[1], "%s", &bh->dataEndian);
+	get_line(is); // CENTERING:
+	sscanf(is->fields[1], "%s", &bh->centering);
+	get_line(is); // BRICK_ORIGIN:
+	for(i = 0; i < 3; i++)
+		sscanf(is->fields[i+1], "%f", &bh->brickOrigin[i]);
+	get_line(is); // BRICK_SIZE:
+	for(i = 0; i < 3; i++)
+		sscanf(is->fields[i+1], "%f", &bh->brickSize[i]);
+	
+	return bh;
+}
+
+void read_dat(char *fname, float *map, BH bh) {
    FILE *fp;
-   int i, j;
 
    fp = fopen(fname, "rb");
    if(fp == NULL) {
@@ -15,35 +60,44 @@ void readfile(char *fname, float *map) {
       exit(1);
    }
 
-   fread(map, sizeof(float), ROWS*COLS, fp);
+   fread(map, sizeof(float), bh->dataSize[0]*bh->dataSize[1], fp);
    fclose(fp);
 }
 
-void make_bov(float *map, char *species) {
+void make_bov(float *map, char *fname, BH bh) {
    FILE *fp;
    char dat[256];
    char bov[256];
-   sprintf(dat, "%s.dat", species);
-   sprintf(bov, "%s.bov", species);
+   int i;
+   
+   sprintf(dat, "%s.dat", fname);
+   sprintf(bov, "%s.bov", fname);
    // write data to binary file
    fp = fopen(dat, "wb");
-   fwrite(map, sizeof(float), ROWS*COLS, fp);
+   fwrite(map, sizeof(float), bh->dataSize[0]*bh->dataSize[1], fp);
    fclose(fp);
    // write header file
    fp = fopen(bov, "w");
    fprintf(fp, "DATA_FILE: %s\n", dat);
-   fprintf(fp, "DATA_SIZE: %d %d 1\n", COLS, ROWS);
-   fprintf(fp, "DATA_FORMAT: FLOAT\n");
-   fprintf(fp, "VARIABLE: presence\n");
-   fprintf(fp, "DATA_ENDIAN: LITTLE\n");
-   fprintf(fp, "CENTERING: zonal\n");
-   fprintf(fp, "BRICK_ORIGIN: 228093.609769 3923599.272669 0\n");
-   fprintf(fp, "BRICK_SIZE: %d %d 1\n", COLS*30, ROWS*30);
+   fprintf(fp, "DATA_SIZE: ");
+   for(i = 0; i < 3; i++) fprintf(fp, "%d ", bh->dataSize[i]);
+   fprintf(fp, "\n");
+   fprintf(fp, "DATA_FORMAT: %s\n", bh->dataFormat);
+   fprintf(fp, "VARIABLE: %s\n", bh->variable);
+   fprintf(fp, "DATA_ENDIAN: %s\n", bh->dataEndian);
+   fprintf(fp, "CENTERING: %s\n", bh->centering);
+   fprintf(fp, "BRICK_ORIGIN: ");
+   for(i = 0; i < 3; i++) fprintf(fp, "%f ", bh->brickOrigin[i]);
+   fprintf(fp, "\n");
+   fprintf(fp, "BRICK_SIZE: ");
+   for(i = 0; i < 3; i++) fprintf(fp, "%f ", bh->brickSize[i]);
+   fprintf(fp, "\n");
    fclose(fp);
 }
 
 int main(int argc, char **argv) {
 
+   BH bh;
    char *rundir, *gs;
    char fname[512];
    int i,j,total;
@@ -69,12 +123,16 @@ int main(int argc, char **argv) {
    avg = (float *)malloc(sizeof(float)*ROWS*COLS);
    stddev = (float *)malloc(sizeof(float)*ROWS*COLS);
    current = (float *)malloc(sizeof(float)*nf);
+   
+   // Read in one BOV header file
+   sprintf(fname, "fold0/%s.bov", gs);
+   bh = read_bov(fname);
 
    // read in .dat files
    for(i = 0; i < nf; i++) {
       //sprintf(fname, "%s/fold%d/%s.asc", rundir, i, gs);
       sprintf(fname, "fold%d/%s.dat", i, gs);
-      readfile(fname, maps[i]);
+      read_dat(fname, maps[i], bh);
    }
 
    // compute average map and stddev map
@@ -83,7 +141,7 @@ int main(int argc, char **argv) {
    total = 0;
    for(i = 0; i < ROWS*COLS; i++) {
       // skip this cell if NOVALUE (-9999)
-      if(maps[0][i] < 0) {
+      if(maps[0][i] == NODATA_VALUE) {
          avg[i] = maps[0][i];
          stddev[i] = maps[0][i];
          continue;
@@ -123,8 +181,10 @@ int main(int argc, char **argv) {
 
    printf("%s %f %f\n", gs, sd_mean, sd_max);
 
-   make_bov(avg, "avg");
-   make_bov(stddev, "stddev");
+   sprintf(fname, "%s_avg", gs);
+   make_bov(avg, fname, bh);
+   sprintf(fname, "%s_std", gs);
+   make_bov(stddev, fname, bh);
 
       
    /*
@@ -136,6 +196,7 @@ int main(int argc, char **argv) {
    */
    free(avg);
    free(stddev);
+   free(current);
    free(maps[0]);
    free(maps);
 }
