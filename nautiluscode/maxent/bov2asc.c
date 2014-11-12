@@ -10,7 +10,6 @@
 #include <string.h>
 #include "fields.h"
 
-#define CELL_SIZE 30.0
 #define NODATA_VALUE -9999.0
 
 typedef struct grid
@@ -18,15 +17,16 @@ typedef struct grid
 	float *data;
 	int ncols;
 	int nrows;
-	double xllcorner;
-	double yllcorner;
+	float xllcorner;
+	float yllcorner;
+	float cellsize;
 } * GRID;
 
 GRID
 read_file(char *filename)
 {
 	int ncols, nrows;
-	double xllcorner, yllcorner;
+	float xllcorner, yllcorner, bricksizeY;
 	GRID g;
 	char bovfile[256], datfile[256];
 	IS is;
@@ -46,8 +46,10 @@ read_file(char *filename)
 	get_line(is);
 	get_line(is);
 	get_line(is); // 7th line
-	sscanf(is->fields[1], "%lf", &xllcorner);
-	sscanf(is->fields[2], "%lf", &yllcorner);
+	sscanf(is->fields[1], "%f", &xllcorner);
+	sscanf(is->fields[2], "%f", &yllcorner);
+	get_line(is);
+	sscanf((is->fields[1]), "%f", &bricksizeY);
 	jettison_inputstruct(is);
 
 	// fill out the grid header
@@ -57,6 +59,7 @@ read_file(char *filename)
 	g->nrows = nrows;
 	g->xllcorner = xllcorner;
 	g->yllcorner = yllcorner;
+	g->cellsize = bricksizeY/ncols;
 
 	// read data
 	fp = fopen(datfile, "rb");
@@ -76,9 +79,9 @@ make_asc(GRID g)
 	// write header
 	printf("%-14s%d\n", "ncols", g->ncols);
 	printf("%-14s%d\n", "nrows", g->nrows);
-	printf("%-14s%lf\n", "xllcorner", g->xllcorner);
-	printf("%-14s%lf\n", "yllcorner", g->yllcorner);
-	printf("%-14s%f\n", "cellsize", CELL_SIZE);
+	printf("%-14s%f\n", "xllcorner", g->xllcorner);
+	printf("%-14s%f\n", "yllcorner", g->yllcorner);
+	printf("%-14s%f\n", "cellsize", g->cellsize);
 	printf("%-14s%f\n", "NODATA_value", NODATA_VALUE);
 
 	// write data
@@ -86,7 +89,7 @@ make_asc(GRID g)
 	for(i = 0; i < g->ncols; i++) {
 		for(j = 0; j < g->nrows; j++) {
 			index = i * g->nrows + j;
-			printf("%lf ", g->data[index]);
+			printf("%f ", g->data[index]);
 		}
 		printf("\n");
 	}
