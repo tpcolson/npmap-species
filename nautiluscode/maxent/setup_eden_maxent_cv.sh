@@ -42,7 +42,7 @@ outputdirectory=$output_dir/$species/fold$fold \
 
       maxent_cmd="java -Xms512m -Xmx512m -XX:-UsePerfData -jar $MAXENT_JAR $flags"
 	  asc2bov_cmd="cd $output_dir/$species/fold$fold && $TOOL_DIR/asc2bov $species.asc $species"
-      echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd && asc2bov_cmd" >> eden_maxent/commands
+      echo "mkdir -p $output_dir/$species/fold$fold && $maxent_cmd && $asc2bov_cmd" >> eden_maxent/commands
 
       fold=$(($fold + 1))
       i=$(( $i + 1 ))
