@@ -40,9 +40,8 @@ Fax: 865-974-4404
 /* The fields library -- making input processing easier */
 
 #include <stdio.h>
-#include <limits.h>
 #define MAXLEN 50000
-#define MAXFIELDS INT_MAX
+#define MAXFIELDS 5000
 
 typedef struct inputstruct {
   char *name;               /* File name */
