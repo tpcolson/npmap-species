@@ -16,9 +16,11 @@ while read line; do
    # Skip first line
    if test $i -eq 0; then continue; fi
    species=$line
-   gdal_translate="$GDAL_BIN/gdal_translate -a_srs EPSG:4326 $input_dir/$species/avg.asc $GEOTIFF_DIR/$species.tif"
-   gdaldem="$GDAL_BIN/gdaldem color-relief $GEOTIFF_DIR/$species.tif $TOOL_DIR/color_ramp.txt $GEOTIFF_DIR/${species}_colored.tif"
-   echo "cd $RUN_DIR; export TOOL_DIR=$TOOL_DIR; export CV_NUM_FOLDS=$CV_NUM_FOLDS; $TOOL_DIR/aggregate.sh $species&& $gdal_translate $$ $gdaldem" >> eden_aggregate/commands
+   aggregate_cmd="cd $RUN_DIR; export TOOL_DIR=$TOOL_DIR; export CV_NUM_FOLDS=$CV_NUM_FOLDS; $TOOL_DIR/aggregate.sh $species"
+   bov2asc_cmd="$TOOL_DIR/bov2asc $input_dir/$species/${species}_avg > $input_dir/$species/${species}_avg.asc"
+   gdal_translate_cmd="$GDAL_BIN/gdal_translate -a_srs EPSG:4326 $input_dir/$species/${species}_avg.asc $GEOTIFF_DIR/$species.tif"
+   gdaldem_cmd="$GDAL_BIN/gdaldem color-relief -alpha $GEOTIFF_DIR/$species.tif $TOOL_DIR/color_ramp.txt $GEOTIFF_DIR/${species}_colored.tif"
+   echo "$aggregate_cmd && $bov2asc_cmd && $gdal_translate_cmd && $gdaldem_cmd" >> eden_aggregate/commands
 done < $CONFIG_FILE
 
 # Make PBS header file for eden run

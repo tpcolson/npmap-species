@@ -3,8 +3,6 @@
 #include <math.h>
 #include "fields.h"
 
-#define ROWS 1302
-#define COLS 2899
 #define NODATA_VALUE -9999
 
 typedef struct Bov_Header{
@@ -98,13 +96,11 @@ void make_bov(float *map, char *fname, BH bh) {
 int main(int argc, char **argv) {
 
    BH bh;
-   char *rundir, *gs;
-   char fname[512];
-   int i,j,total;
-   int nf;          // number of folds
+   char *rundir, *gs, fname[512];
+   int i, j, total, nrows, ncols, numFolds;
    float **maps;
    float *avg, *stddev, *current;
-   float mean, sos;     // sos = sum of squares
+   float mean, sumSqrs;     // sumSqrs = sum of squares
    float sd_mean, sd_max;
 
    if(argc != 3) {
@@ -113,23 +109,26 @@ int main(int argc, char **argv) {
     }
    // argv[1] is Genus_species 
    gs = strdup(argv[1]);
-   sscanf(argv[2], "%d", &nf);
-
-   maps = (float **)malloc(sizeof(float *)*nf);
-   maps[0] = (float *)malloc(sizeof(float)*ROWS*COLS*nf);
-   for(i = 1; i < nf; i++) {
-      maps[i] = maps[i-1] + (ROWS*COLS);
-   }
-   avg = (float *)malloc(sizeof(float)*ROWS*COLS);
-   stddev = (float *)malloc(sizeof(float)*ROWS*COLS);
-   current = (float *)malloc(sizeof(float)*nf);
+   sscanf(argv[2], "%d", &numFolds);
    
    // Read in one BOV header file
    sprintf(fname, "fold0/%s.bov", gs);
    bh = read_bov(fname);
+   ncols = bh->dataSize[0];
+   nrows = bh->dataSize[1];
+   
+   // Allocate memory
+   maps = (float **)malloc(sizeof(float *)*numFolds);
+   maps[0] = (float *)malloc(sizeof(float)*nrows*ncols*numFolds);
+   for(i = 1; i < numFolds; i++) {
+      maps[i] = maps[i-1] + (nrows*ncols);
+   }
+   avg = (float *)malloc(sizeof(float)*nrows*ncols);
+   stddev = (float *)malloc(sizeof(float)*nrows*ncols);
+   current = (float *)malloc(sizeof(float)*numFolds);
 
    // read in .dat files
-   for(i = 0; i < nf; i++) {
+   for(i = 0; i < numFolds; i++) {
       //sprintf(fname, "%s/fold%d/%s.asc", rundir, i, gs);
       sprintf(fname, "fold%d/%s.dat", i, gs);
       read_dat(fname, maps[i], bh);
@@ -139,7 +138,7 @@ int main(int argc, char **argv) {
    sd_mean = 0.0;
    sd_max = 0.0;
    total = 0;
-   for(i = 0; i < ROWS*COLS; i++) {
+   for(i = 0; i < nrows*ncols; i++) {
       // skip this cell if NOVALUE (-9999)
       if(maps[0][i] == NODATA_VALUE) {
          avg[i] = maps[0][i];
@@ -147,22 +146,22 @@ int main(int argc, char **argv) {
          continue;
       }
       // get cell value from 10 maps
-      for(j = 0; j < nf; j++) {
+      for(j = 0; j < numFolds; j++) {
          current[j] = maps[j][i];
       }
       // first get average
       mean = 0.0;
-      for(j = 0; j < nf; j++) {
+      for(j = 0; j < numFolds; j++) {
          mean += current[j];
       }
-      mean = mean / (float)nf;
+      mean = mean / (float)numFolds;
       avg[i] = mean;
       // get sum of squared deviations
-      sos = 0.0;
-      for(j = 0; j < nf; j++) {
-         sos += ((mean - current[j]) * (mean - current[j]));
+      sumSqrs = 0.0;
+      for(j = 0; j < numFolds; j++) {
+         sumSqrs += ((mean - current[j]) * (mean - current[j]));
       }
-      stddev[i] = sqrtf(sos / (float)nf);
+      stddev[i] = sqrtf(sumSqrs / (float)numFolds);
 
       // keep track of max and calculate average
       total++;
@@ -172,7 +171,7 @@ int main(int argc, char **argv) {
       for(j = 0; j < 10; j++) {
          printf("current[%d] = %f\n", j, current[j]);
       }
-      printf("mean: %f  sos: %f  stddev: %f\n", mean, sos, stddev);
+      printf("mean: %f  sumSqrs: %f  stddev: %f\n", mean, sumSqrs, stddev);
       */
       //exit(1);
 
