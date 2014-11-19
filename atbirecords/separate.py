@@ -28,6 +28,7 @@ def separate(input_file):
     # NOTE: We assume the data is formatted as "Species, Latitude, Longitude, Group"
     
     species = {}
+    groups = set()
     with open(input_file, 'r') as f:
         lines = [line.rstrip('\r\n') for line in f]
         num_records = 0
@@ -53,12 +54,18 @@ def separate(input_file):
                 species[sp].append( (fields[1].strip(),fields[2].strip(),fields[3].strip()) )
             else:
                 species[sp] = [(fields[1].strip(),fields[2].strip(),fields[3].strip()),]
+            groups.add(fields[3].strip())
             num_records += 1
 
     # create directory for individual species files
     os.mkdir(files_dir)
     os.mkdir(geojson_dir)
-
+    for group_name in groups:
+        if group_name == '':
+            group_name = 'No_group'
+        group_dir = '/'.join([geojson_dir, group_name])
+        os.mkdir(group_dir)
+    
     # write individual species files
     sorted = species.keys()
     sorted.sort()
@@ -68,12 +75,16 @@ def separate(input_file):
         num = len(species[sp])
         if num < 30:
             continue 
-        counts_list.append(''.join([sp,',',str(num),',',species[sp][0][2],'\n']))
+        group_name = species[sp][0][2]
+        if group_name == '':
+            group_name = 'No_group'
+        counts_list.append(''.join([sp, ',', str(num), ',', group_name, '\n']))
 
         csv_filename = ''.join([sp,'.csv'])
         geojson_filename = ''.join([sp,'.geojson'])
+        group_dir = '/'.join([geojson_dir, group_name])
         with open(os.path.join(files_dir, csv_filename), 'w') as csv, \
-            open(os.path.join(geojson_dir, geojson_filename), 'w') as geojson:
+            open(os.path.join(group_dir, geojson_filename), 'w') as geojson:
             csv.write('Species,x,y\n')
             s = set()
             for coord in species[sp]:
@@ -90,7 +101,7 @@ def separate(input_file):
     print 'Total unique species:           ' + str(num_species)
     print 'Total species with 30+ records: ' + str(len(counts_list))
     print 'Counts file written: ' + counts_file
-    print str(len(counts_list)) + ' files created in ' + files_dir
+    print str(len(counts_list)) + ' files created in ' + files_dir + '/'
    
 if __name__ == "__main__":
     import sys
