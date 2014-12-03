@@ -4,13 +4,8 @@ import sys
 
 class Application(tornado.web.Application):
 	def __init__(self):
-		handlers = [
-			(r'/', socket_handler.IndexHandler),
-			(r'/websocket', socket_handler.WebSocketHandler)
-		]
-		settings = {
-			'static_path' : '/export/common/work/npmap-species/twincreekscode'
-		}
+		handlers = [(r'/websocket', socket_handler.WebSocketHandler)]
+		settings = {}
 		tornado.web.Application.__init__(self, handlers, **settings)
 
 if __name__ == '__main__':
@@ -20,4 +15,4 @@ if __name__ == '__main__':
 
 	server = Application()
 	server.listen(5678)
-	tornado.ioloop.IOLoop.instance().start(5)
+	tornado.ioloop.IOLoop.instance().start()
