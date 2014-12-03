@@ -20,4 +20,4 @@ if __name__ == '__main__':
 
 	server = Application()
 	server.listen(5678)
-	tornado.ioloop.IOLoop.instance().start()
+	tornado.ioloop.IOLoop.instance().start(5)
