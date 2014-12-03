@@ -37,17 +37,17 @@
 					<div id='options' style='height:150px; overflow-y:scroll'>
 						<span title='Create graphs showing how predicted relative probability of occurence depends on the value of each environmental variable.'>
 							Create response curves:
-							<input type='checkbox' name='createrescurves' disabled checked></input>
+							<input type='checkbox' name='createrescurves' disabled></input>
 						</span>
 						<br>
 						<span title='Create a .png image for each output grid.'>
 							Make pictures of predictions:
-							<input type='checkbox' name='picpredictions' disabled checked></input>
+							<input type='checkbox' name='picpredictions' disabled></input>
 						</span>
 						<br>
 						<span title='Measure importance of each environmental variable by training with each environmental variable first omitted, then used in isolation.'>
 							Do jackknife:
-							<input type='checkbox' name='jackknife' disabled checked></input>
+							<input type='checkbox' name='jackknife'></input>
 						</span>
 						<br>
 						<span title='If selected, a different random seed will be used for each run, so a different random test/train partition will be made and a different subset of the background will be used, if applicable.'>
@@ -66,22 +66,22 @@
 						</span>
 						<br>
 							Random seed:
-							<input type='checkbox' name='randomseed' checked></input>
+							<input type='checkbox' name='randomseed' checked disabled></input>
 						</span>
 						<br>
 						<span title='Remove duplicate presence records.  If environmental data are in grids, duplicates are records in the same grid cell.  Otherwise, duplicates are records with identical coordinates.'>
 							Remove duplicate presence records:
-							<input type='checkbox' name='removedups' checked></input>
+							<input type='checkbox' name='removedups'></input>
 						</span>
 						<br>
 						<span title='Percentage of presence localities to be randomly put aside as test points, used to compute AUC, omission, etc.'>
 							Random test percentage:
-							<input type='text' name='testpct' value=0 style='width:50px'></input>
+							<input type='text' name='testpct' value='10' style='width:50px'></input>
 						</span>
 						<br>
 						<span title='Multiply all automatic regularization parameters by this number.  A higher number gives a more spread-out distribution.'>
 							Regulization multiplier:
-							<input type='text' name='regmult' value=1 style='width:50px'></input>
+							<input type='text' name='regmult' value='1' style='width:50px'></input>
 						</span>
 						<br>
 						<span title='Number of replicate runs to do when cross-validating, bootstrapping or doing sampling with replacement runs.'>
@@ -128,7 +128,7 @@
 						<br>
 						<span title='Write output files containing the data used to make response curves, for import into external plotting software.'>
 							Write plot data:
-							<input type='checkbox' name='writeplotdata'></input>
+							<input type='checkbox' name='writeplotdata' disabled></input>
 						</span>
 						<br>
 						<span title='Predict to regions of environmental space outside the limits encountered during training.'>
@@ -143,11 +143,11 @@
 						<br>
 						<span title='Write output grids.  Turning this off when doing replicate runs causes only the summary grids (average, std deviation, etc.) to be written, not those for individual runs.'>
 							Write output grids:
-							<input type='checkbox' name='writegrids' checked></input>
+							<input type='checkbox' name='writegrids' checked disabled></input>
 						</span>
 						<br>
 						<span title='Write various plots for inclusion in .html output'>
-							Write plots: <input type='checkbox' name='writeplots' checked></input>
+							Write plots: <input type='checkbox' name='writeplots' disabled></input>
 						</span>
 						<br>
 						<span title='Stop training after this many iterations of the optimization algorithm.'>
