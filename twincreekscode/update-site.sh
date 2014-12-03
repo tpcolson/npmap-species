@@ -23,10 +23,6 @@ ssh ${USER}@${TAR_HOST} << ENDSSH
 	do
 		chmod 644 ${TAR_DIR}/$file
 	done
-	for file in "${PRIV_FILES[@]}"
-	do
-		chmod 600 ${TAR_DIR}/$file
-	done
 	chmod 755 ${TAR_DIR}
 ENDSSH
 exit
