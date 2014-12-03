@@ -18,7 +18,6 @@ scp ${INDEX} "${PUB_FILES[@]}" "${PRIV_FILES[@]}" ${USER}@${TAR_HOST}:${TAR_DIR}
 # change file permissions as appropriate (also rename index)
 ssh ${USER}@${TAR_HOST} << ENDSSH
 	chmod 644 ${TAR_DIR}/${INDEX}
-	mv ${TAR_DIR}/${INDEX} ${TAR_DIR}/index.html
 	for file in "${PUB_FILES[@]}"
 	do
 		chmod 644 ${TAR_DIR}/$file
