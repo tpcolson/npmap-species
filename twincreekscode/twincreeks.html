@@ -34,7 +34,7 @@
 					<div id='options_header' style='height:50; text-align:center'>
 						<p style='text-align:center'><u>Options</u></p>
 					</div>
-					<div id='options' style='height:150px; overflow-y:scroll'>
+					<div id='options' style='height:200px; overflow-y:scroll'>
 						<span title='Create graphs showing how predicted relative probability of occurence depends on the value of each environmental variable.'>
 							Create response curves:
 							<input type='checkbox' name='createrescurves' disabled></input>
@@ -76,7 +76,7 @@
 						<br>
 						<span title='Percentage of presence localities to be randomly put aside as test points, used to compute AUC, omission, etc.'>
 							Random test percentage:
-							<input type='text' name='testpct' value='10' style='width:50px'></input>
+							<input type='number' name='testpct' min='1' max='99' value='10' style='width:50px'></input>
 						</span>
 						<br>
 						<span title='Multiply all automatic regularization parameters by this number.  A higher number gives a more spread-out distribution.'>
@@ -152,11 +152,11 @@
 						<br>
 						<span title='Stop training after this many iterations of the optimization algorithm.'>
 							Maximum iterations:
-							<input type='text' name='iterations' value=500 style='width:50px'></input>
+							<input type='number' name='iterations' min='1' value='500' style='width:50px'></input>
 						</span>
 					</div>
 					<div style='height:25px'></div>
-					<div id='destination' style='height:75px'>
+					<div id='destination' style='height:25px'>
 						<span title='Destination for the results of the maxent runs.'>
 							Destination:
 							<select name='rundest'>
@@ -170,11 +170,14 @@
 				<div style='float:left; height:300px; width:5%'></div>
 				<div id='species_checkboxes' style='float:left; width:40%'>
 					<p style='text-align:center'><u>Species</u></p>
-					<div id='buttons' style='text-align:center; height:50px'>
-						<button id='selectall' type='button' onclick='select_all();'>Select all</button>
-						<button id='clearall' type='button' onclick='clear_all();'>Clear all</button>
+					<div id='update_species' style='text-align:center; height:50px'>
+						<button id='update_sp' type='button' onclick='update_species();'>Update species list</button>
 					</div>
 					<div id='species_list' style='height:200px; overflow-y:scroll'>
+					</div>
+					<div id='selectors' style='text-align:center; height:50px'>
+						<button id='selectall' type='button' onclick='select_all();'>Select all</button>
+						<button id='clearall' type='button' onclick='clear_all();'>Clear all</button>
 					</div>
 				</div>
 				<div style='float:left; height:300px; width:5%'></div>
