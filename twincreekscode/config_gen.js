@@ -116,9 +116,32 @@ function produce_config_file(fname, data) {
  * kick the config file to github
 ***/
 function post_config(contents) {
-	var socket = new WebSocket('ws://localhost:5678/websocket');
+	var fsha;
+	var b64contents = window.btoa(contents);
 
-	setTimeout(function() {
-		socket.send('push:' + contents);
-	}, 10000);
+	$.ajax({
+		type: 'GET',
+		url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/twincreekscode/maxent_config/config.json',
+		dataType: 'jsonp',
+		success: function(data) {
+			fsha = data['data']['sha'];
+
+			$.ajax({
+				type: 'PUT',
+				url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/twincreekscode/maxent_config/config.json',
+				message: 'updated config file',
+				dataType: 'jsonp',
+				committer: {
+					name: 'Twin Creeks',
+					email: 'noreply.twincreeks@gmail.com'
+				},
+				content: b64contents,
+				sha: fsha,
+				success: function(data) {
+					console.log(data);
+					alert('config file submitted to GitHub');
+				}
+			});
+		}
+	});
 }
