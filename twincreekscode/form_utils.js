@@ -7,35 +7,48 @@ function clear_all() {
 }
 
 function update_checkboxes(option) {
-	var form;
-	var inputs;
+	var	species,
+		groups,
+		inputs;
 
-	form = document.forms['submission_form'];
-	if(form == null) {
-		alert('Couldn\'t grab the form document');
+	species = document.getElementById('species_list').getElementsByTagName('input');
+	if(species == null) {
+		alert('Couldn\'t find any species');
 		return;
 	}
 
-	inputs = form.getElementsByTagName('input');
-	if(inputs == null) {
-		alert('Couldn\'t find any form fields');
+	groups = document.getElementById('groups').getElementsByTagName('input');
+	if(groups == null) {
+		alert('Couldn\'t find any groups');
 		return;
 	}
 
-	for(var i = 0; i < inputs.length; i++) {
-		if(inputs[i].type == 'checkbox') {
-			if(!inputs[i].disabled) {
-				switch(option) {
-					case 'select':
-						inputs[i].checked = true;
-						break;
-					case 'clear':
-						inputs[i].checked = false;
-						break;
-					default:
-						break;
-				}
-			}
+	for(var i = 0; i < species.length; i++) {
+		switch(option) {
+			case 'select':
+				species[i].checked = true;
+				break;
+			case 'clear':
+				species[i].checked = false;
+				break;
+			default:
+				break;
 		}
 	}
+
+	for(var i = 0; i < groups.length; i++) {
+		switch(option) {
+			case 'select':
+				groups[i].checked = true;
+				break;
+			case 'clear':
+				groups[i].checked = false;
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+function update_species() {
 }
