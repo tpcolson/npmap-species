@@ -39,43 +39,45 @@ function grab_form_data() {
 	// object to store the form data
 	var data = {};
 
-	// form object
-	var form;
+	// list of species
+	var sp_list = [];
 
-	// array of input elements from the form
+	// options div
+	var options;
+
+	// input options
 	var inputs;
 
-	// build form object
-	form = document.forms['submission_form'];
-	if(form == null) {
-		alert('Couldn\'t grab the form document');
+	// select options
+	var selects;
+
+	// build options list
+	options = document.getElementById('options');
+	if(options == null) {
+		alert('Couldn\'t find any options');
 		return null;
 	}
-
-	// build array of the input elements
-	inputs = form.getElementsByTagName('input');
-	if(inputs == null) {
-		alert('Couldn\'t find any form fields');
-		return null;
-	}
-
-	// build up data array
+	inputs = options.getElementsByTagName('input');
 	for(var i = 0; i < inputs.length; i++) {
-		if(inputs[i].type == 'text') data[inputs[i].name] = inputs[i].value;
-		else if(inputs[i].type == 'checkbox') {
-			//make sure array is initialized
-			if(!('species' in data)) data['species'] = [];
-
-			//if checked, add species to the config file
-			if(inputs[i].checked == true) {
-				data['species'].push(inputs[i].name);
-			}
-		}
-		else {
-			alert('Invalid input element with name ' + inputs[i].name + ' of type ' + inputs[i].type);
-			return null;
+		if(inputs[i].type == 'checkbox') {
+			data[inputs[i].name] = inputs[i].checked;
+		} else {
+			data[inputs[i].name] = inputs[i].value;
 		}
 	}
+	selects = options.getElementsByTagName('select');
+	for(var i = 0; i < selects.length; i++) {
+		data[selects[i].name] = selects[i].options[selects[i].selectedIndex].value;
+	}
+
+	// build species list
+	species = document.getElementById('species_list').getElementsByTagName('input');
+	for(var i = 0; i < species.length; i++) {
+		if(species[i].checked) {
+			sp_list.push(species[i].name);
+		}
+	}
+	data['species'] = sp_list;
 
 	return data;
 }
@@ -100,13 +102,14 @@ function produce_config_file(fname, data) {
 	}
 	
 	// write the config file
-	config_contents += data['replicates'] + '\n';
-	for(var sp in data['species']) {
-		config_contents += data['species'][sp] + '\n';
+	for (var key in data) {
+		config_contents += '\'' + key + '\':\'' + data[key] + '\'';
 	}
 
-	// kick to GitHub
+	// post to server for kicking to GitHub
 	post_config(config_contents);
+
+	console.log(config_contents);
 
 	return true;
 }
@@ -118,6 +121,6 @@ function post_config(contents) {
 	var socket = new WebSocket('ws://localhost:5678/websocket');
 
 	setTimeout(function() {
-		socket.send(contents);
+		socket.send('push:' + contents);
 	}, 10000);
 }
