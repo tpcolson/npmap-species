@@ -106,14 +106,20 @@ function update_species() {
 					contents = window.atob(data['data']['content']);
 					lines = contents.split('\n');
 
-					/* start at 1 to skip header line */
+					/* read each line, start at 1 to skip header line */
 					for(var i = 1; i < lines.length; i++) {
 						token = lines[i].split(',');
 						if(token[0] != '') { token[0] = token[0][0].toUpperCase() + token[0].slice(1); }
 						if(token[3] != '' && token[3] != undefined) { token[3] = token[3][0].toUpperCase() + token[3].slice(1); }
 
-						if(encountered_species.indexOf(token[0]) == -1 && token[0] != '') {
-							encountered_species.push(token[0]);
+						if(token[3] != '' && token[3] != undefined) {
+							if(encountered_species.indexOf(token[0] + ':' + token[3]) == -1 && token[0] != '') {
+								encountered_species.push(token[0] + ':' + token[3]);
+							}
+						} else {
+							if(encountered_species.indexOf(token[0]) == -1 && token[0] != '') {
+								encountered_species.push(token[0]);
+							}
 						}
 
 						if(encountered_groups.indexOf(token[3]) == -1 && token[3] != '' && token[3] != undefined) {
@@ -127,10 +133,15 @@ function update_species() {
 
 					/* create the new innerHTML for species and groups divs */
 					for(var i = 0; i < encountered_species.length; i++) {
-						new_species = new_species + '<input type=\'checkbox\' name=\'' + encountered_species[i] + '\'></input>' + encountered_species[i] + '<br>';
+						var sp = encountered_species[i].split(':');
+						if(sp[1] == undefined || sp[1] == '') {
+							new_species = new_species + '<input type=\'checkbox\' name=\'' + sp[0] + '\' value=\'\'></input>' + sp[0] + '<br>';
+						} else {
+							new_species = new_species + '<input type=\'checkbox\' name=\'' + sp[0] + '\' value=\'' + sp[1] + '\'></input>' + sp[0] + '<br>';
+						}
 					}
 					for(var i = 0; i < encountered_groups.length; i++) {
-						new_groups = new_groups + '<input type=\'checkbox\' name=\'' + encountered_groups[i] + '\'></input>' + encountered_groups[i] + '<br>';
+						new_groups = new_groups + '<input type=\'checkbox\' name=\'' + encountered_groups[i] + '\' onclick=\'changeGroup(this)\'></input>' + encountered_groups[i] + '<br>';
 					}
 
 					/* update the page */
@@ -140,4 +151,22 @@ function update_species() {
 			});
 		}
 	});
+}
+
+function changeGroup(checkbox) {
+	var species = document.getElementById('species_list').getElementsByTagName('input');
+
+	if(checkbox.checked) {
+		for(var i = 0; i < species.length; i++) {
+			if(checkbox.name == species[i].value) {
+				species[i].checked = true;
+			}
+		}
+	} else {
+		for(var i = 0; i < species.length; i++) {
+			if(checkbox.name == species[i].value) {
+				species[i].checked = false;
+			}
+		}
+	}
 }
