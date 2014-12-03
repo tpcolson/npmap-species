@@ -109,8 +109,6 @@ function produce_config_file(fname, data) {
 	// post to server for kicking to GitHub
 	post_config(config_contents);
 
-	console.log(config_contents);
-
 	return true;
 }
 
