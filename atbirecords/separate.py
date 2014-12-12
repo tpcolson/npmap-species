@@ -86,12 +86,15 @@ def separate(input_file):
         with open(os.path.join(files_dir, csv_filename), 'w') as csv, \
             open(os.path.join(group_dir, geojson_filename), 'w') as geojson:
             csv.write('Species,x,y\n')
-            s = set()
+
+            # NOTE: modified by John D. to work with NPMap.js.  Changed MultiPoint to FeatureCollection.  This slows things down, but this isn't a bottleneck in the process so don't worry about it.  :-)
+            s = []
             for coord in species[sp]:
                 csv.write(','.join([sp,coord[1],coord[0]]) + '\n')
-                s.add( (float(coord[1]), float(coord[0])) )
-            MP = MultiPoint(list(s))
-            geojson.write(str(MP) + '\n')
+                if not Feature(Point((float(coord[1]), float(coord[0])))) in s:
+                    s.append(Feature(geometry=Point((float(coord[1]), float(coord[0])))))
+            FC = FeatureCollection(list(s))
+            geojson.write(str(FC))
 
     # write counts file
     with open(counts_file,'w') as f:
@@ -107,7 +110,7 @@ if __name__ == "__main__":
     import sys
     import os
     import re
-    from geojson import MultiPoint
+    from geojson import Feature, Point, FeatureCollection
     if len(sys.argv) != 2:
         print 'usage: python separate.py input_file'
     else:
