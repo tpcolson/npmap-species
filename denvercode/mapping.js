@@ -33,13 +33,18 @@ var NPMap = {
 	name: 'observations',
 	url: 'Abies_fraseri.geojson',
 	type: 'geojson',
-	clickable: false,
 	styles: {
 	  point: {
-		'marker-color': '#896c9c',
-		'marker-size': 'small' /* TODO: perhaps could ask Nate to be able to provide own object for this instead of the three presets */
+		'marker-color': '#7a904f',
+		'marker-size': 'small'
 	  }
-	}
+	},
+	cluster: {
+		clusterIcon: '#7a904f'
+	},
+	clickable: false,
+	showCoverageOnHover: true,
+	disableClusteringAtZoom: 15
   }],
   zoom: 10,
   center: { lat: 35.6, lng: -83.52 },
@@ -56,22 +61,4 @@ var NPMap = {
   measureControl: true,
   shareControl: true,
   editControl: true
-};
-
-/* TODO: fix this, the functions are not called */
-var NPMapUtils = {
-  fullscreenControl: {
-	listeners: {
-	  enterfullscreen: function() {
-		alert('hello');
-		//divHeader.style.zIndex = -1;
-		//divSubNav.style.zIndex = -1;
-	  },
-	  exitfullscreen: function() {
-		alert('world');
-		//divHeader.style.zIndex = 100;
-		//divSubNav.style.zIndex = 100;
-	  }
-	}
-  }
 };
