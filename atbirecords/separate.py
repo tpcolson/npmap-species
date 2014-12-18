@@ -88,20 +88,12 @@ def separate(input_file):
             csv.write('Species,x,y\n')
 
             # NOTE: modified by John D. to work with NPMap.js.  Changed MultiPoint to FeatureCollection.  This slows things down, but this isn't a bottleneck in the process so don't worry about it.  :-)
-            found = []
             s = []
             for coord in species[sp]:
                 csv.write(','.join([sp,coord[1],coord[0]]) + '\n')
-                feature = Feature(geometry=Point((float(coord[1]), float(coord[0]))))
-                if not feature in found:
-                    found.append(feature)
-                    feature['properties']['count'] = 1
+                feature = Feature(properties={'coordinates':'['+str(float(coord[1]))+','+str(float(coord[0]))+']'}, geometry=Point((float(coord[1]), float(coord[0]))))
+                if not feature in s:
                     s.append(feature)
-                else:
-                    for f in s:
-                        if f['geometry'] == feature['geometry']:
-                            f['properties']['count'] += 1
-                            break
             FC = FeatureCollection(list(s))
             geojson.write(str(FC))
 
