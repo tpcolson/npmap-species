@@ -1,16 +1,16 @@
-var sub_nav_z, header_z, div_header, div_sub_nav,
+var subNavZ, headerZ, divHeader, divSubNav,
 	fullscreen = false;
 
 function enterfullscreen() {
-	header_z = div_header.style.zIndex;
-	sub_nav_z = div_sub_nav.style.zIndex;
-	div_header.style.zIndex = 0;
-	div_sub_nav.style.zIndex = 0;
+	headerZ = divHeader.style.zIndex;
+	subNavZ = divSubNav.style.zIndex;
+	divHeader.style.zIndex = 0;
+	divSubNav.style.zIndex = 0;
 }
 
 function exitfullscreen() {
-	div_header.style.zIndex = header_z;
-	div_sub_nav.style.zIndex = sub_nav_z;
+	divHeader.style.zIndex = headerZ;
+	divSubNav.style.zIndex = subNavZ;
 }
 
 function toggle() {
@@ -24,10 +24,10 @@ function toggle() {
 }
 
 window.onload = function() {
-	div_header = document.getElementById('header');
-	div_sub_nav = document.getElementById('sub-nav');
+	divHeader = document.getElementById('header');
+	divSubNav = document.getElementById('sub-nav');
 
-	var fs_button = document.getElementsByClassName('fullscreen enter')[0];
+	var fsButton = document.getElementsByClassName('fullscreen enter')[0];
 
-	fs_button.addEventListener('click', toggle, false);
+	fsButton.addEventListener('click', toggle, false);
 }
