@@ -91,7 +91,7 @@ def separate(input_file):
             s = []
             for coord in species[sp]:
                 csv.write(','.join([sp,coord[1],coord[0]]) + '\n')
-                if not Feature(Point((float(coord[1]), float(coord[0])))) in s:
+                if not Feature(geometry=Point((float(coord[1]), float(coord[0])))) in s:
                     s.append(Feature(geometry=Point((float(coord[1]), float(coord[0])))))
             FC = FeatureCollection(list(s))
             geojson.write(str(FC))
