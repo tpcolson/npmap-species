@@ -43,27 +43,31 @@ function setLegend() {
 	return html;
 }
 
-var obsVisible = true;
+var baseVisible = true,
+	overlayVisible = [];
 function toggleVisibility(layer) {
 	if(layer === NPMap.config.baseLayers) {
-		if(layer[0].L.options.opacity === 1) layer[0].L.setOpacity(0);
-		else layer[0].L.setOpacity(1);
+		if(baseVisible) {
+			baseVisible = false;
+			for(var i = 0; i < layer.length; i++) {
+				if(layer[i].L) NPMap.config.L.removeLayer(layer[i].L);
+			}
+		} else {
+			baseVisible = true;
+			for(var i = 0; i < layer.length; i++) {
+				if(layer[i].L) NPMap.config.L.addLayer(layer[i].L);
+			}
+		}
 	} else {
 		var i = parseInt(layer.split('-')[1]);
 		var _layer = NPMap.config.overlays[i];
 
-		if(_layer.type === 'geojson') {
-			/* couldn't get geojsons setopacity to work, so I just remove and add back the layer (a bit slower, but not too bad so who cares) */
-			if(obsVisible) {
-				obsVisible = false;
-				NPMap.config.L.removeLayer(_layer.L);
-			} else {
-				obsVisible = true;
-				NPMap.config.L.addLayer(_layer.L);
-			}
+		if(overlayVisible[i] || overlayVisible[i] === undefined) {
+			overlayVisible[i] = false;
+			NPMap.config.L.removeLayer(_layer.L);
 		} else {
-			if(_layer.L.options.opacity === 1) _layer.L.setOpacity(0);
-			else _layer.L.setOpacity(1);
+			overlayVisible[i] = true;
+			NPMap.config.L.addLayer(_layer.L);
 		}
 	}
 }
