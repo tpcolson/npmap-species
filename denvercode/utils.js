@@ -23,6 +23,7 @@ function toggle() {
 	}
 }
 
+var switcher, selected;
 window.onload = function() {
 	divHeader = document.getElementById('header');
 	divSubNav = document.getElementById('sub-nav');
@@ -30,11 +31,24 @@ window.onload = function() {
 	var fsButton = document.getElementsByClassName('fullscreen enter')[0];
 
 	fsButton.addEventListener('click', toggle, false);
+
+	switcher = document.getElementById('basemap_listbox');
+	selected = switcher.getElementsByClassName('selected')[0];
+	switcher.addEventListener('click', checkBase);
+}
+
+function checkBase() {
+	var newSelected = switcher.getElementsByClassName('selected')[0];
+	if(newSelected !== selected) {
+		baseVisible = true;
+		selected = newSelected;
+		document.getElementById('baseToggle').checked = true;
+	}
 }
 
 function setLegend() {
 	var html = '<center><h1>Show Layer?</h1></center>';
-	html += '<input type=\'checkbox\' checked=true onchange=\'toggleVisibility(NPMap.config.baseLayers);\' /> ' + 'Base Layer' + '<br>';
+	html += '<input id=\'baseToggle\' type=\'checkbox\' checked=true onchange=\'toggleVisibility(NPMap.config.baseLayers);\' /> ' + 'Base Layer' + '<br>';
 
 	var overlays = NPMap.config.overlays;
 	for (var i = 0; i < overlays.length; i++) {
