@@ -68,7 +68,7 @@ var NPMap = {
 	legendControl: {
 		html: setLegend
 	},
-	locateControl: true, //TODO: Check if Tom wants this
+	//locateControl: true, //TODO: Check if Tom wants this
 	measureControl: true,
 	editControl: true,
 	scaleControl: true
