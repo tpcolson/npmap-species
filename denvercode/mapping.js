@@ -27,13 +27,17 @@ var NPMap = {
 	],
 	//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 	overlays: [{
-		name: 'habitat',
+		name: 'Habitat',
 		id: 'lonnieljyu.test',
 		type: 'mapbox'
 	}, {
-		name: 'observations',
+		name: 'Observations',
 		url: 'Abies_fraseri.geojson',
 		type: 'geojson',
+		popup: {
+			title: 'Observation',
+			description: 'Coordinates: {{coordinates}}'
+		},
 		styles: {
 			point: {
 				'marker-color': '#7a904f',
@@ -43,9 +47,12 @@ var NPMap = {
 		cluster: {
 			clusterIcon: '#7a904f'
 		},
-		clickable: false,
 		showCoverageOnHover: true,
-		disableClusteringAtZoom: 15
+		disableClusteringAtZoom: 15,
+		polygonOptions: {
+			color: '#7a904f',
+			fillColor: '#7a904f'
+		}
 	}],
 	zoom: 10,
 	center: { lat: 35.6, lng: -83.52 },
@@ -56,10 +63,13 @@ var NPMap = {
 		{ lat: 35.9, lng: -82.75 }
 	],
 	fullscreenControl: true,
-	scaleControl: true,
+	shareControl: true,
 	printControl: true,
+	legendControl: {
+		html: setLegend
+	},
 	locateControl: true, //TODO: Check if Tom wants this
 	measureControl: true,
-	shareControl: true,
-	editControl: true
+	editControl: true,
+	scaleControl: true
 };
