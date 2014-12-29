@@ -1,5 +1,9 @@
+# I run this as follows, but do what you want
+# cat ATBI_records.csv | make_index.py > index.json
+
 import sys, json
 
+output = ''
 encountered = []
 lines = map(str.strip, sys.stdin.readlines()[1:])
 for line in lines:
@@ -24,7 +28,7 @@ for line in lines:
                 'group': group
             }
 
-            print json.dumps(index) + ','
+            output += json.dumps(index) + ','
 
             encountered.append(species)
 
@@ -38,6 +42,8 @@ for line in lines:
                 'group': group
             }
 
-            print json.dumps(index) + ','
+            output += json.dumps(index) + ','
 
             encountered.append(group)
+
+print output
