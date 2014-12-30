@@ -118,8 +118,10 @@ var control,
 			L.DomEvent.preventDefault(e);
 			control._highlightFirst();
 		} else if(code == 13) {
+			L.DomEvent.preventDefault(e);
 			control._selectFirst();
 		} else if(code == 27) {
+			L.DomEvent.preventDefault(e);
 			control._clearResults();
 			control._input.value = '';
 		}
