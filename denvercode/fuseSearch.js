@@ -133,7 +133,7 @@ var control,
 			L.DomEvent.preventDefault(e);
 			control._selectFirst();
 		} else if(code == 27) {
-			L.DomEvent.preventDefault(e);
+			L.DomEvent.preventDefault(e); //TODO: this doesn't work
 			control._clearResults();
 			control._input.value = '';
 		}
@@ -157,9 +157,17 @@ var control,
 
 			li.style.height = '100px';
 			li.id = res.id;
-			li.innerHTML = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="Abies--fraseri.jpg"></img></div>' +
-						   '<div style="float:left; width:5%; height:100%"></div>' +
-						   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>Fraser Fir<br>' + res.group + '</div></div>'; //TODO: add the thumbnail, sp name and common name here
+
+			if(res.name != res.group) {
+				li.innerHTML = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="Abies--fraseri.jpg"></img></div>' +
+							   '<div style="float:left; width:5%; height:100%"></div>' +
+							   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>Fraser Fir<br>' + res.group + '</div></div>'; //TODO: add the actual thumbnails and common names
+			} else {
+				li.innerHTML = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="Abies--fraseri.jpg"></img></div>' +
+							   '<div style="float:left; width:5%; height:100%"></div>' +
+							   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>Group</div></div>'; //TODO: add the actual thumbnails and common names
+			}
+
 			L.DomEvent.on(li, 'click', function() {
 				control._handleSelect(this);
 			});
