@@ -130,10 +130,8 @@ var control,
 			L.DomEvent.preventDefault(e);
 			control._highlightFirst();
 		} else if(code == 13) {
-			L.DomEvent.preventDefault(e);
 			control._selectFirst();
 		} else if(code == 27) {
-			L.DomEvent.preventDefault(e); //TODO: this doesn't work
 			control._clearResults();
 			control._input.value = '';
 		}
@@ -143,6 +141,8 @@ var control,
 
 		if(code != 9 && code != 13 && code != 38 && code != 40 && code != 27) {
 			control._fuseSearch(control._input.value);
+		} else {
+			L.DomEvent.stopPropagation(e);
 		}
 	},
 	_fuseSearch: function(value) {
