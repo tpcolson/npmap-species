@@ -1,6 +1,3 @@
-var subNavZ, headerZ, divHeader, divSubNav,
-	fullscreen = false;
-
 function enterfullscreen() {
 	headerZ = divHeader.style.zIndex;
 	subNavZ = divSubNav.style.zIndex;
@@ -9,32 +6,20 @@ function enterfullscreen() {
 }
 
 function exitfullscreen() {
-	divHeader.style.zIndex = headerZ;
-	divSubNav.style.zIndex = subNavZ;
-}
-
-function toggle() {
-	if(fullscreen) {
-		fullscreen = false;
-		exitfullscreen();
-	} else {
-		fullscreen = true;
-		enterfullscreen();
+	if(headerZ !== undefined && subNavZ !== undefined) {
+		divHeader.style.zIndex = headerZ;
+		divSubNav.style.zIndex = subNavZ;
 	}
 }
 
-var switcher, selected;
-window.onload = function() {
-	divHeader = document.getElementById('header');
-	divSubNav = document.getElementById('sub-nav');
+function setDivs() {
+	if(divHeader === undefined) {
+		divHeader = document.getElementById('header');
+	}
 
-	var fsButton = document.getElementsByClassName('fullscreen enter')[0];
-
-	fsButton.addEventListener('click', toggle, false);
-
-	switcher = document.getElementById('basemap_listbox');
-	selected = switcher.getElementsByClassName('selected')[0];
-	switcher.addEventListener('click', checkBase);
+	if(divSubNav === undefined) {
+		divSubNav = document.getElementById('sub-nav');
+	}
 }
 
 function checkBase() {
@@ -84,4 +69,19 @@ function toggleVisibility(layer) {
 			NPMap.config.L.addLayer(_layer.L);
 		}
 	}
+}
+
+var switcher, selected;
+window.onload = function() {
+	/*
+	 * a bit annoying, but when the switcher changes the base layer,
+	 * we need to check the show layer box for the base layer
+	 */
+	switcher = document.getElementById('basemap_listbox');
+	selected = switcher.getElementsByClassName('selected')[0];
+	switcher.addEventListener('click', checkBase);
+
+	/* create and add the search box to the map */
+	var fc = new FuseSearchControl();
+	NPMap.config.L.addControl(fc);
 }
