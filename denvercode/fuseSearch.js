@@ -63,8 +63,20 @@ var control,
 				var contents = window.atob(data.content),
 					index = jQuery.parseJSON(contents)['items'],
 					options = {
-						keys: ['search_tag', 'alt_tag'],
-						threshold: 0.5
+						keys: ['search_tag', 'alt_tag', 'group'],
+						threshold: 0.5,
+						sortFn: function(a, b) {
+							//throw matched groups to the front and sort the rest based on score
+							if(a.item.group == a.item.name && b.item.group == b.item.name) {
+								return a.score - b.score;
+							} else if(a.item.group == a.item.name) {
+								return -1;
+							} else if(b.item.group == b.item.name) {
+								return 1;
+							} else {
+								return a.score - b.score;
+							}
+						}
 					}
 
 				control._fuser = new Fuse(index, options);
@@ -138,12 +150,16 @@ var control,
 
 		control._clearResults();
 
-		for(var i = 0; i < results.length; i++) {
+		// put 10 top results in ul
+		for(var i = 0; i < results.length && i < 10; i++) {
 			var res = results[i],
 				li = L.DomUtil.create('li', null, control._ul);
 
+			li.style.height = '100px';
 			li.id = res.id;
-			li.innerHTML = '<h1>' + res.name + '</h1>'; //TODO: add the thumbnail, sp name and common name here
+			li.innerHTML = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="Abies--fraseri.jpg"></img></div>' +
+						   '<div style="float:left; width:5%; height:100%"></div>' +
+						   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>Fraser Fir<br>' + res.group + '</div></div>'; //TODO: add the thumbnail, sp name and common name here
 			L.DomEvent.on(li, 'click', function() {
 				control._handleSelect(this);
 			});
