@@ -31,6 +31,10 @@ var control,
 			.on(this._input, 'mousewheel', stopPropagation)
 			.on(this._input, 'keydown', this._handleKeyDown)
 			.on(this._input, 'keyup', this._handleKeyUp)
+			.on(this._input, 'blur', function() {
+				control._input.value = '';
+				control._clearResults();
+			})
 			.on(this._ul, 'mousewheel', stopPropagation);
 
 		this._container = container;
@@ -198,7 +202,9 @@ var control,
 			if(res.name != res.group) {
 				li.innerHTML = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="Abies--fraseri.jpg"></img></div>' +
 							   '<div style="float:left; width:5%; height:100%"></div>' +
-							   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>Fraser Fir<br>' + res.group + '</div></div>'; //TODO: add the actual thumbnails and common names
+							   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>' +
+							   (res.alt_name === '' ? 'Unknown' : res.alt_name) + '<br>' +
+							   res.group + '</div></div>'; //TODO: add the actual thumbnails and common names
 			} else {
 				li.innerHTML = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="Abies--fraseri.jpg"></img></div>' +
 							   '<div style="float:left; width:5%; height:100%"></div>' +
