@@ -88,12 +88,12 @@ var control,
 	},
 	_checkScroll: function() {
 		if (this._selected) {
-			var top = util.getPosition(this._selected).top,
-				bottom = top + util.getOuterDimensions(this._selected).height,
+			var top = utilGetPosition(this._selected).top,
+				bottom = top + utilGetOuterDimensions(this._selected).height,
 				scrollTop = this._ul.scrollTop,
 				visible = [
 					scrollTop,
-					scrollTop + util.getOuterDimensions(this._ul).height
+					scrollTop + utilGetOuterDimensions(this._ul).height
 				];
 
 				if (top < visible[0]) {
@@ -111,27 +111,64 @@ var control,
 		this._input.setAttribute('aria-expanded', false);
 		this._selected = null;
 	},
-	_highlightFirst: function() {
-		// highlight and change focus to first search option
+	_highlightNext: function() {
+		var liList = [].slice.call(control._ul.getElementsByTagName('li'));
+		if(liList.length > 0) {
+			if(control._selected)
+				L.DomUtil.removeClass(control._selected, 'selected');
+
+			var curr_idx = liList.indexOf(control._selected),
+				len = liList.length,
+				idx = curr_idx < len-1 ? curr_idx+1 : len-1;
+			control._selected = liList[idx];
+
+			L.DomUtil.addClass(control._selected, 'selected');
+			control._checkScroll();
+		}
+	},
+	_highlightPrev: function() {
+		var liList = [].slice.call(control._ul.getElementsByTagName('li'));
+		if(liList.length > 0) {
+			if(control._selected)
+				L.DomUtil.removeClass(control._selected, 'selected');
+
+			var curr_idx = liList.indexOf(control._selected),
+				len = liList.length,
+				idx = curr_idx > 0 ? curr_idx-1 : 0;
+			control._selected = liList[idx];
+
+			L.DomUtil.addClass(control._selected, 'selected');
+			control._checkScroll();
+		}
 	},
 	_handleSelect: function(item) {
-		// change map to selected one and clear the search and results
+		//select new species
+		control._clearResults();
+		control._input.value = '';
+		control._input.blur();
 	},
 	_selectFirst: function() {
 		var liList = control._ul.getElementsByTagName('li');
-		if(liList.length != 0) {
+		if(liList.length > 0) {
 			control._handleSelect(liList[0]);
 		}
 	},
 	_handleKeyDown: function(e) {
 		var code = e.keyCode;
 
-		if(code == 9 || code == 38 || code == 40) {
+		if(code === 9 || code === 38 || code === 40) {
 			L.DomEvent.preventDefault(e);
-			control._highlightFirst();
-		} else if(code == 13) {
-			control._selectFirst();
-		} else if(code == 27) {
+
+			if(code === 38)
+				control._highlightPrev();
+			else
+				control._highlightNext();
+		} else if(code === 13) {
+			if(control._input === document.activeElement)
+				control._selectFirst();
+			else
+				control._handleSelect(control._selected);
+		} else if(code === 27) {
 			control._clearResults();
 			control._input.value = '';
 		}
@@ -139,7 +176,7 @@ var control,
 	_handleKeyUp: function(e) {
 		var code = e.keyCode;
 
-		if(code != 9 && code != 13 && code != 38 && code != 40 && code != 27) {
+		if(code !== 9 && code !== 13 && code !== 27 && code !== 38 && code !== 40) {
 			control._fuseSearch(control._input.value);
 		} else {
 			L.DomEvent.stopPropagation(e);
@@ -155,7 +192,7 @@ var control,
 			var res = results[i],
 				li = L.DomUtil.create('li', null, control._ul);
 
-			li.style.height = '100px';
+			li.style.height = '75px';
 			li.id = res.id;
 
 			if(res.name != res.group) {
@@ -168,9 +205,14 @@ var control,
 							   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>Group</div></div>'; //TODO: add the actual thumbnails and common names
 			}
 
-			L.DomEvent.on(li, 'click', function() {
-				control._handleSelect(this);
-			});
+			L.DomEvent
+				.on(li, 'click', function() {
+					control._handleSelect(this);
+				})
+				.on(li, 'keydown', function(e) {
+					if(e.keyCode === 13)
+						control._handleSelect(this);
+				});
 		}
 
 		control._ul.style.display = 'block';
