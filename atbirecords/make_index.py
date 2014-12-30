@@ -3,7 +3,7 @@
 
 import sys, json
 
-output = ''
+value_list = []
 encountered = []
 lines = map(str.strip, sys.stdin.readlines()[1:])
 for line in lines:
@@ -28,8 +28,7 @@ for line in lines:
                 'group': group
             }
 
-            output += json.dumps(index) + ','
-
+            value_list.append(index)
             encountered.append(species)
 
         if group != '' and not group in encountered:
@@ -42,8 +41,7 @@ for line in lines:
                 'group': group
             }
 
-            output += json.dumps(index) + ','
-
+            value_list.append(index)
             encountered.append(group)
 
-print output
+print json.dumps({'items': value_list})
