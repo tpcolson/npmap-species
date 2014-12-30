@@ -25,7 +25,7 @@ for line in lines:
                 'alt_tag': '', # TODO: get the common name of a species
                 'name': species.capitalize(),
                 'alt_name': '', # TODO: get the capitalized common name of a species
-                'group': group
+                'group': group.capitalize()
             }
 
             value_list.append(index)
@@ -38,7 +38,7 @@ for line in lines:
                 'alt_tag': group,
                 'name': group.capitalize(),
                 'alt_name': group.capitalize(),
-                'group': group
+                'group': group.capitalize()
             }
 
             value_list.append(index)
