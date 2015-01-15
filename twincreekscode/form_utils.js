@@ -83,6 +83,17 @@ function update_species() {
 	/* string containing new innerHTML for groups div */
 	var new_groups = '';
 
+	/* button object for updating the species list */
+	var sp_up_button = document.getElementById('update_sp');
+
+	/* since this will take a while, make sure they are committed to this */
+	if(!confirm('Are you sure? This may take a minute or longer.')) {
+		return;
+	}
+
+	/* disable the update species button while the update occurs */
+	sp_up_button.disabled = true;
+
 	/* first, search for the correct sha for the ATBI_records.csv file (the file is over 1 MB, so we must use the GitHub blob api */
 	$.ajax({
 		type: 'GET',
@@ -103,7 +114,7 @@ function update_species() {
 				dataType: 'jsonp',
 				success: function(data) {
 					/* if everything went well, let's parse this thing, update the page, and send it to update the html */
-					contents = window.atob(data['data']['content']);
+					contents = window.atob(data['data']['content'].replace(/\s/g, ''));
 					lines = contents.split('\n');
 
 					/* read each line, start at 1 to skip header line */
@@ -147,6 +158,9 @@ function update_species() {
 					/* update the page */
 					document.getElementById('species_list').innerHTML = new_species;
 					document.getElementById('groups').innerHTML = new_groups;
+
+					/* reenable the update species button */
+					sp_up_button.disabled = false;
 				}
 			});
 		}
