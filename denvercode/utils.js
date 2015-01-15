@@ -84,4 +84,10 @@ window.onload = function() {
 	/* create and add the search box to the map */
 	var fc = new FuseSearchControl();
 	NPMap.config.L.addControl(fc);
+
+	/* move the search box to directly before the base selector */
+	var par = document.getElementsByClassName('leaflet-top leaflet-right')[0];
+	var baseChoice = document.getElementsByClassName('npmap-control-switcher leaflet-control')[0];
+	var fuseSearch = document.getElementsByClassName('leaflet-control-geocoder leaflet-control')[0];
+	par.insertBefore(fuseSearch, baseChoice);
 }

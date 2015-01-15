@@ -19,6 +19,7 @@ var control,
 		this._button = L.DomUtil.create('button', 'search', container);
 		this._input = L.DomUtil.create('input', '', container);
 		this._ul = L.DomUtil.create('ul', 'leaflet-control', container);
+		this._thumbnails = [];
 		L.DomEvent.disableClickPropagation(this._button);
 		L.DomEvent.disableClickPropagation(this._input);
 		L.DomEvent.disableClickPropagation(this._ul);
@@ -31,10 +32,6 @@ var control,
 			.on(this._input, 'mousewheel', stopPropagation)
 			.on(this._input, 'keydown', this._handleKeyDown)
 			.on(this._input, 'keyup', this._handleKeyUp)
-			.on(this._input, 'blur', function() {
-				control._input.value = '';
-				control._clearResults();
-			})
 			.on(this._ul, 'mousewheel', stopPropagation);
 
 		this._container = container;
@@ -53,6 +50,7 @@ var control,
 		this._ul.setAttribute('role', 'listbox');
 
 		this._initializeFuseIndex();
+		this._findThumbnails();
 		return container;
 	},
 	onRemove: function(map) {
@@ -87,6 +85,19 @@ var control,
 				control._button.disabled = false;
 				control._input.setAttribute('placeholder', 'Find a species or group');
 				control._input.disabled = false;
+			}
+		});
+	},
+	_findThumbnails: function() {
+		jQuery.ajax({
+			type: 'GET',
+			url: 'thumbnails/image_index.txt',
+			dataType: 'text',
+			success: function(data) {
+				var fnames = data.match(/[^\r\n]+/g);
+				for(var i in fnames) {
+					control._thumbnails.push(fnames[i]);
+				}
 			}
 		});
 	},
@@ -199,17 +210,21 @@ var control,
 			li.style.height = '75px';
 			li.id = res.id;
 
+			// search for the image
+			var target = li.id.split('-')[1] + '.jpg';
+			var deflt = 'thumbnails/no_image.png';
+			var imgFile = control._thumbnails.indexOf(target) >= 0 ? 'thumbnails/' + target : deflt;
+
+			var content = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="' + imgFile + '"></img></div>' +
+						   '<div style="float:left; width:5%; height:100%"></div>' +
+						   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>';
+
 			if(res.name != res.group) {
-				li.innerHTML = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="Abies--fraseri.jpg"></img></div>' +
-							   '<div style="float:left; width:5%; height:100%"></div>' +
-							   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>' +
-							   (res.alt_name === '' ? 'Unknown' : res.alt_name) + '<br>' +
-							   res.group + '</div></div>'; //TODO: add the actual thumbnails and common names
+				content += (res.alt_name === '' ? 'Unknown' : res.alt_name) + '<br>' + res.group + '</div></div>';
 			} else {
-				li.innerHTML = '<div style="height:100%"><div style="float:left; width:35%"><img style="width:100%; height:100%" src="Abies--fraseri.jpg"></img></div>' +
-							   '<div style="float:left; width:5%; height:100%"></div>' +
-							   '<div style="float:left; width:60%"><strong>' + res.name + '</strong><br>Group</div></div>'; //TODO: add the actual thumbnails and common names
+				content += 'Group</div></div>';
 			}
+			li.innerHTML = content;
 
 			L.DomEvent
 				.on(li, 'click', function() {

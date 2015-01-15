@@ -28,7 +28,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		],
 		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
-			name: 'Habitat',
+			name: '<i>Abies fraseri</i>',
 			id: 'lonnieljyu.test',
 			type: 'mapbox'
 		}, {
