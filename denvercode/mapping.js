@@ -2,33 +2,14 @@ var subNavZ, headerZ, divHeader, divSubNav,
 	NPMap = {
 		div: 'main-map',
 		baseLayers: [
-			'nps-parkTilesImagery', /* first item is the default baseLayer */
-			'nps-lightStreets',
-			'nps-neutralTerrain',
-			'nps-parkTiles',
-			'nps-satelliteNight',
-			'bing-aerial',
-			'bing-aerialLabels',
-			'bing-roads',
-			'esri-gray',
-			'esri-imagery',
-			'esri-nationalGeographic',
-			'esri-oceans',
-			'esri-streets',
-			'esri-topographic',
-			'mapbox-light',
-			'mapbox-outdoors',
-			'mapbox-satellite',
-			'mapbox-satelliteLabels',
-			'mapbox-streets',
 			'mapbox-terrain',
-			'openstreetmap',
-			'stamen-toner',
-			'stamen-watercolor'
+			'nps-parkTiles',
+			'esri-topographic',
+			'esri-imagery'
 		],
 		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
-			name: '<i>Abies fraseri</i>',
+			name: 'Abies fraseri',
 			id: 'lonnieljyu.test',
 			type: 'mapbox'
 		}, {
