@@ -5,7 +5,9 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			'mapbox-terrain',
 			'nps-parkTiles',
 			'esri-topographic',
-			'esri-imagery'
+			'esri-imagery',
+			'mapbox-satelliteLabels',
+			'nps-parkTilesImagery'
 		],
 		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
@@ -35,6 +37,18 @@ var subNavZ, headerZ, divHeader, divSubNav,
 				color: '#7a904f',
 				fillColor: '#7a904f'
 			}
+		}, {
+			name: 'Trails',
+			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
+			type: 'geojson'
+		}, {
+			name: 'Shelters',
+			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_BACK_COUNTY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
+			type: 'geojson'
+		}, {
+			name: 'Roads',
+			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_Road_Centerline/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
+			type: 'geojson'
 		}],
 		zoom: 10,
 		center: { lat: 35.6, lng: -83.52 },
