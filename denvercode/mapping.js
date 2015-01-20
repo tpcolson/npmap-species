@@ -40,15 +40,37 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		}, {
 			name: 'Trails',
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
-			type: 'geojson'
+			type: 'geojson',
+			events: [{
+				fn: function() {
+					NPMap.config.overlays[2].L.setStyle(function() {
+						return { color: 'blue' };
+					});
+				},
+				type: 'ready'
+			}]
 		}, {
 			name: 'Shelters',
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_BACK_COUNTY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
-			type: 'geojson'
+			type: 'geojson',
+			styles: {
+				point: {
+					'marker-color': '#ff0000',
+					'marker-size': 'small'
+				}
+			}
 		}, {
 			name: 'Roads',
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_Road_Centerline/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
-			type: 'geojson'
+			type: 'geojson',
+			events: [{
+				fn: function() {
+					NPMap.config.overlays[4].L.setStyle(function() {
+						return { color: 'black' };
+					});
+				},
+				type: 'ready'
+			}]
 		}],
 		zoom: 10,
 		center: { lat: 35.6, lng: -83.52 },
