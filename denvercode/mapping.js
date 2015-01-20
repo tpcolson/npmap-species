@@ -44,7 +44,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			events: [{
 				fn: function() {
 					NPMap.config.overlays[2].L.setStyle(function() {
-						return { color: 'blue' };
+						return { color: '#cb9733' };
 					});
 				},
 				type: 'ready'
@@ -55,8 +55,9 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			type: 'geojson',
 			styles: {
 				point: {
-					'marker-color': '#ff0000',
-					'marker-size': 'small'
+					'marker-color': '#cb9733',
+					'marker-size': 'small',
+					'marker-symbol': 'building'
 				}
 			}
 		}, {
@@ -66,7 +67,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			events: [{
 				fn: function() {
 					NPMap.config.overlays[4].L.setStyle(function() {
-						return { color: 'black' };
+						return { color: '#222222' };
 					});
 				},
 				type: 'ready'
