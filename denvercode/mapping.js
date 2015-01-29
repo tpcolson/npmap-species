@@ -41,14 +41,12 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			name: 'Trails',
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
 			type: 'geojson',
-			events: [{
-				fn: function() {
-					NPMap.config.overlays[2].L.setStyle(function() {
-						return { color: '#cb9733' };
-					});
-				},
-				type: 'ready'
-			}]
+			styles: {
+				line: {
+					'stroke': '#cb9733',
+					'stroke-opacity': 0.75
+				}
+			}
 		}, {
 			name: 'Shelters',
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_BACK_COUNTY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
@@ -64,14 +62,12 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			name: 'Roads',
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_Road_Centerline/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
 			type: 'geojson',
-			events: [{
-				fn: function() {
-					NPMap.config.overlays[4].L.setStyle(function() {
-						return { color: '#222222' };
-					});
-				},
-				type: 'ready'
-			}]
+			styles: {
+				line: {
+					'stroke': '#222222',
+					'stroke-opacity': 0.75
+				}
+			}
 		}],
 		zoom: 10,
 		center: { lat: 35.6, lng: -83.52 },
@@ -83,6 +79,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		],
 		//downloadControl: true, //TODO: this would be useful (once implemented, we could link to the relevant data store page)
 		fullscreenControl: true,
+		zoomdisplayControl: true,
 		//shareControl: true, //TODO: this would be useful once implemented
 		printControl: true, //TODO: this won't work right until the geojsons are being pulled from non-local url
 		legendControl: {
