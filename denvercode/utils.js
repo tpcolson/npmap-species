@@ -81,6 +81,10 @@ window.onload = function() {
 	selected = switcher.getElementsByClassName('selected')[0];
 	switcher.addEventListener('click', checkBase);
 
+	/* create and add the colorbar to the map */
+	var cb = new ColorbarControl();
+	NPMap.config.L.addControl(cb);
+
 	/* create and add the search box to the map */
 	var fc = new FuseSearchControl();
 	NPMap.config.L.addControl(fc);

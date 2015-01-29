@@ -1,0 +1,14 @@
+.npmap-utk-colorbar {
+	background-color: #fff;
+	padding: 5px;
+	opacity: 0.8;
+}
+
+.npmap-utk-colorbar h1 {
+	opacity: 1;
+}
+
+.npmap-utk-colorbar p {
+	font-size: 12px;
+	opacity: 1;
+}
