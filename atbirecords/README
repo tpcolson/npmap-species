@@ -7,7 +7,15 @@ will be named with the following convention:
 
 This file must have a single header line followed by lines of the form:
 
-   Genus_Species, LAT, LON, Taxa_Group
+   Genus_SpeciesMaxent [used by model, no spaces in name], 
+   Genus_SpeciesIRMA [used to populate and link NPS metadata],
+   GRSM_SpeciesID [used to sync with Park/NP Species, ITIS, etc...],
+   CommonName [used to populate "info-window" pop-up in GIS web map],
+   taxaGroup [used to split large # of files into folders for GH contraints],
+   Subject [used to populate and link NPS metadata],
+   Category [used to populate and link NPS metadata]
+   LAT,
+   LON
 
 Once we have this master csv, we run the provided python script (separate.py)
 to make individual per-species files.  The script must be run in this directory
