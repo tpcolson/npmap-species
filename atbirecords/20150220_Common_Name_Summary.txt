@@ -1,0 +1,1113 @@
+OBJECTID,CommonName,Cnt_CommonName
+-1,A Grape,118
+-1,A Grass,96
+-1,A Violet,293
+-1,Acadian Flycatcher,809
+-1,Acorn Moth,5
+-1,Aerial Yellowjacket,10
+-1,Afflicted Dager Moth,22
+-1,Agreeable Tiger Moth ,76
+-1,Alderfly,21
+-1,Algae,9
+-1,Alhedra Retreat-Maker,21
+-1,Allegheny Blackberry,68
+-1,Allegheny Hawkweed,54
+-1,Allegheny Mountain Dusky Salamander,8
+-1,Allegheny Serviceberry,632
+-1,Alternate-Leaf Dogwood,180
+-1,American-Bellflower,37
+-1,American Alumroot,39
+-1,American Beech,"1,377"
+-1,American Bullfrog,28
+-1,American Cancer-Root,71
+-1,American Crow,"1,522"
+-1,American Dagger Moth,83
+-1,American Ear Moth,37
+-1,American Elder,46
+-1,American Elm,142
+-1,American Goldfinch,204
+-1,American Hogpeanut,229
+-1,American Holly,388
+-1,American Hornbeam,345
+-1,American Lopseed,51
+-1,American Mite Eating Ant,50
+-1,American Mountain-Ash,246
+-1,American Painted Lady,30
+-1,American Plum,29
+-1,American Redstart,68
+-1,American Robin,141
+-1,American Strawberry-Bush,242
+-1,American Sycamore,454
+-1,American Toad,74
+-1,American Umbrellaleaf,57
+-1,American Witchhazel,565
+-1,Angulate Snowfly,27
+-1,Anise-Scented Goldenrod,67
+-1,Ant,219
+-1,Ant B,42
+-1,Antlike Stone Beetle,25
+-1,Antloving Rove Beetle,5
+-1,Antloving Rove Beetle B,19
+-1,Aphid,24
+-1,Aphrodite,20
+-1,Apical Retreat-Maker,31
+-1,Appalachian Brook Crayfish,93
+-1,Appalachian False Goat'S Beard,36
+-1,Appalachian Joe-Pye-Weed,41
+-1,Appalachian Needlefly,26
+-1,Aquatic Microdrile Oligochaete Worm,29
+-1,Ash,32
+-1,Ashy Fingernet Caddis,52
+-1,Aster,38
+-1,Aster Family Species,114
+-1,Atlantic Goldenrod,38
+-1,Atlantic Sweat Bee,16
+-1,Auerbach`S Antloving Rove Beetle,13
+-1,Aurora Snowfly,10
+-1,Aurora Trout,31
+-1,Bald-Faced Hornet,12
+-1,Banasa Stink Bug,9
+-1,Banded Tussock Moth,108
+-1,Banded Woollybear,52
+-1,Barklice,316
+-1,Barn Swallow,13
+-1,Barred Owl,58
+-1,Basal Long-Toed Water Beetle,16
+-1,Basswood Owlet Moth,26
+-1,Basswood Species,50
+-1,Beaked Dodder,30
+-1,Bear Huckleberry,324
+-1,Bearded Shorthusk,58
+-1,Beautiful Retreat-Maker,16
+-1,Beautiful Stone,39
+-1,Bedstraw,66
+-1,Bee,91
+-1,Bee A,22
+-1,Beech Species,31
+-1,Beechdrops,42
+-1,Beetle,88
+-1,Belted Kingfisher,25
+-1,Bent-Lined Gray,64
+-1,Betten'S Retreat-Maker,15
+-1,Beyer'S Antloving Rove Beetle,16
+-1,Bicolored Sallow,21
+-1,Big-Headed Fly,2
+-1,Big Abacion Milliped,11
+-1,Bigfruit Hawthorn,25
+-1,Bigleaf Aster,49
+-1,Black-And-White Warbler,"1,419"
+-1,Black-Bellied Salamander,160
+-1,Black-Bordered Lemon Moth,65
+-1,Black-Chinned Red Salamander,47
+-1,Black-Throated Blue Warbler,"1,503"
+-1,Black-Throated Green Warbler,"2,534"
+-1,Black Carpenter Ant,33
+-1,Black Chokecherry,816
+-1,Black Cutworm,53
+-1,Black Edge Sedge,27
+-1,Black Fly,106
+-1,Black Free Living Caddis,112
+-1,Black Huckleberry,85
+-1,Black Oak,499
+-1,Black Oak Ambrosia Beetle,15
+-1,Black Walnut,383
+-1,Black Willow,44
+-1,Blackberry,378
+-1,Blackburnian Warbler,338
+-1,Blackgum,"1,457"
+-1,Blackjack Oak,66
+-1,Blackjacket,9
+-1,Blackspot Fish Fluke,6
+-1,Blister Beetle,13
+-1,Blisterwort,88
+-1,Blue-Gray Gnatcatcher,136
+-1,Blue-Headed Vireo,"1,924"
+-1,Blue Dasher,21
+-1,Blue Jay,754
+-1,Blue Ridge Two-Lined Salamander,521
+-1,Blueberry,58
+-1,Bluegill,22
+-1,Blueridge Stone,51
+-1,Bluntleaf Waterleaf,49
+-1,Bolete Mushroom Species,17
+-1,Bosc'S Panicgrass,96
+-1,Bowed Eunotia Diatom,61
+-1,Bowling Ground Beetle,19
+-1,Brainy Slime Mold,64
+-1,Bristly Cutworm,43
+-1,Broad-Winged Hawk,104
+-1,Broad Beech Fern,221
+-1,Broad Loose-Flower Sedge,35
+-1,Broad Looseflower Sedge,32
+-1,Broad Necked Root Borer,4
+-1,Broad Shoulder Water Bug,40
+-1,Bronta Retreat-Maker,22
+-1,Brook Springfly,84
+-1,Broomsedge,54
+-1,Brown-Headed Cowbird,24
+-1,Brown Bark Carpet,35
+-1,Brown Lacewing,19
+-1,Brown Lacewing Moth,6
+-1,Brown Speckled Leafhopper,9
+-1,Brown Thrasher,34
+-1,Brown Trout,58
+-1,Brownish Small Minnow Mayfly,25
+-1,Brushy-Legged Mayfly,79
+-1,Buckeye,42
+-1,Buffalo Nut,430
+-1,Bufflehead,3
+-1,Burrowing Mayfly,20
+-1,Burying Beetle,6
+-1,Bush-Clover,54
+-1,California Boxelder,28
+-1,Camel Cricket,9
+-1,Canada Clearweed,30
+-1,Canada Goldenrod,31
+-1,Canada Goose,8
+-1,Canada Mayflower,40
+-1,Canada Warbler,401
+-1,Canada Woodnettle,259
+-1,Canadian Blacksnakeroot,116
+-1,Canadian Honewort,33
+-1,Canadian Lousewort,51
+-1,Canadian Melanolophia,73
+-1,Canadian Violet,108
+-1,Cane,37
+-1,Carinate Antloving Rove Beetle,48
+-1,Carlin'S Mining Bee,18
+-1,Carlson'S Flatheaded Mayfly,19
+-1,Carolina Armored Mayfly,23
+-1,Carolina Chickadee,585
+-1,Carolina Flat-Headed Mayfly,60
+-1,Carolina Forestfly,15
+-1,Carolina Free Living Caddis,120
+-1,Carolina Holly,27
+-1,Carolina Sallfly,21
+-1,Carolina Satyr,36
+-1,Carolina Stone,23
+-1,Carolina Vetch,47
+-1,Carolina Wren,359
+-1,Carpenter Bee,26
+-1,Carrion Beetle,1
+-1,Carved Glyph,26
+-1,Cat Greenbrier,377
+-1,Catawba Rhododendron,74
+-1,Catawba Spiny Crawler Mayfly,64
+-1,Cave Cricket,7
+-1,Cedar Waxwing,112
+-1,Celery Looper,18
+-1,Central Stoneroller,122
+-1,Chaste Flat-Headed Mayfly,84
+-1,Cherry Dagger Moth,31
+-1,Chestnut-Sided Warbler,568
+-1,Chestnut Oak,"1,857"
+-1,Chimney Swift,522
+-1,Chinaroot,58
+-1,Chinese Honeysuckle,40
+-1,Chinese Yam,23
+-1,Chipping Sparrow,48
+-1,Christmas Fern,"2,132"
+-1,Cinnabar-Red Chanterelle,37
+-1,Cinnamon Fern,206
+-1,Claybacked Cutworm,24
+-1,Clayton'S Sweetroot,97
+-1,Click Beetle,4
+-1,Clio Stripetail,16
+-1,Clouded Skipper,22
+-1,Clouded Sulphur,25
+-1,Clubtail,30
+-1,Clustered Goldenrod,44
+-1,Clymene Moth ,27
+-1,Comma,39
+-1,Common Blue Violet,73
+-1,Common Blue Wood Aster,101
+-1,Common Checkered Skipper,14
+-1,Common Dogfaced Caddis,71
+-1,Common Eastern Bumble Bee,31
+-1,Common Goldstar,44
+-1,Common Gray,27
+-1,Common Greenbrier,670
+-1,Common Honeylocust,45
+-1,Common Little Caddis,33
+-1,Common Saddle-Case Maker,138
+-1,Common Serviceberry,158
+-1,Common Stone,130
+-1,Common Waterstrider,36
+-1,Common Yellowthroat,23
+-1,Coneflower,81
+-1,Confusing Retreat-Maker,182
+-1,Cope'S Gray Treefrog,35
+-1,Coral Mushroom,25
+-1,Cornfield Ant,31
+-1,Crane Fly,535
+-1,Crane Fly 10,10
+-1,Crane Fly 21,11
+-1,Crane Fly 22,10
+-1,Crane Fly 26,11
+-1,Crane Fly 32,9
+-1,Crane Fly 39,11
+-1,Crane Fly 41,11
+-1,Crane Fly 42,8
+-1,Crayfish,29
+-1,Creek Chub,29
+-1,Creeping Ancylid,22
+-1,Creeping Aster,37
+-1,Creeping Cedar,52
+-1,Cresson`S Sweat Bee,12
+-1,Crinkleroot,91
+-1,Crossed Tail Armored Caddis,43
+-1,Crossline Skipper,13
+-1,Crossvine,53
+-1,Cryptic Painted Minnow Mayfly,35
+-1,Cucumber-Tree,419
+-1,Cut-Leaf Grape-Fern,50
+-1,Cypress Panicgrass,33
+-1,Dark-Eyed Junco,"1,793"
+-1,Dark Marbled Carpet,7
+-1,Darkling Beetle,22
+-1,Deciduous Leucothoe,45
+-1,Deer Mouse,83
+-1,Deerberry,236
+-1,Denuded Dicranodontium Moss,40
+-1,Devil'S Darning Needles,49
+-1,Devils Snuff-Box,29
+-1,Diatom,44
+-1,Dicranum Moss,60
+-1,Dieck`S Stenamma Ant,23
+-1,Digressing Non-Biting Midge,32
+-1,Distinct Quaker,16
+-1,Diverse Little Caddis,121
+-1,Dixid Midge,85
+-1,Dobsonfly,16
+-1,Dogwood,37
+-1,Dogwood Probole,34
+-1,Downy Woodpecker,181
+-1,Drab Prominent,16
+-1,Dracula Ant,33
+-1,Dragonhunter,26
+-1,Dreamy Duskywing,30
+-1,Drooping Sedge,23
+-1,Dusky Cutworm,18
+-1,Dusky Salamander,22
+-1,Dusky Wing,17
+-1,Dwarf Cinquefoil,129
+-1,Dwarf Crested Iris,67
+-1,Dwarf Rattlesnakeroot,39
+-1,Dwarf St. Johnswort,26
+-1,Dybas` Antloving Rove Beetle,27
+-1,Early Meadow-Rue,55
+-1,Eastern Black Carpenter Ant,12
+-1,Eastern Blacknose Dace,63
+-1,Eastern Bluebird,22
+-1,Eastern Hayscented Fern,942
+-1,Eastern Hemlock,"3,400"
+-1,Eastern Hophornbeam,74
+-1,Eastern Least Clubtail,31
+-1,Eastern Meadowlark,21
+-1,Eastern Needlefly,32
+-1,Eastern Persimmon,93
+-1,Eastern Phoebe,73
+-1,Eastern Pinelooper,38
+-1,Eastern Red-Cedar,30
+-1,Eastern Rough Sedge,25
+-1,Eastern Snowfly,6
+-1,Eastern Tailed Blue,45
+-1,Eastern Tent Caterpillar,33
+-1,Eastern Tiger Swallowtail,76
+-1,Eastern Towhee,819
+-1,Eastern Winter Wren,"1,029"
+-1,Eastern Wintergreen,93
+-1,Eastern Wood Pewee,324
+-1,Eastern Worm Snake,56
+-1,Eastern Yellowjacket,9
+-1,Ebony Jewelwing,66
+-1,Ebony Spleenwort,285
+-1,Elegant Riffle Beetle,29
+-1,English Grain Aphid,14
+-1,Ephemerellid Mayfly,244
+-1,Eyed Baileya,46
+-1,Fairy Helmet Fungus Species,41
+-1,Fall Spruce Needle Moth,6
+-1,Fall Webworm Moth,23
+-1,False Chanterelle,20
+-1,False Non-Biting Midge,42
+-1,False Underwing Moth,69
+-1,False Water Penny Beetle,55
+-1,Falsebugbane,29
+-1,Farkleberry,41
+-1,Fawn Darner,31
+-1,Feather-Winged Beetle,6
+-1,Feathery False Solomon'S-Seal,281
+-1,Few Flowered Sedge,31
+-1,Fiberhead Mushroom,38
+-1,Field Sparrow,23
+-1,Filmy Angelica,87
+-1,Fine-Net Caddisfly,89
+-1,Finger-Net Caddisfly,43
+-1,Fir Harlequin,78
+-1,Fire-Colored Beetle,3
+-1,Fire Pink,37
+-1,"Firefly, Lightningbug",18
+-1,Five-Lined Skink,35
+-1,Flat-Headed Mayfly,297
+-1,Flat-Headed Mayfly A1,19
+-1,Flat-Headed Mayfly A2,27
+-1,Flat-Headed Mayfly A3,16
+-1,Flat-Headed Mayfly A4,24
+-1,Flat-Headed Mayfly A5,14
+-1,Flat-Headed Mayfly A6,19
+-1,Flat-Headed Mayfly A7,26
+-1,Flat-Headed Mayfly A8,27
+-1,Flat Bug,10
+-1,Flat Worm,34
+-1,Flatheaded Mayfly,18
+-1,Flattened Oatgrass,68
+-1,Flatworm,156
+-1,Flowering Dogwood,"1,413"
+-1,Flowering Spurge,61
+-1,Fly,23
+-1,Forest Tent Caterpillar,23
+-1,Forestfly,67
+-1,Four-Barred Gray Moth,33
+-1,Fox Grape,61
+-1,Foxglove Aphid,29
+-1,Fragile Dagger,59
+-1,Fragile Forktail,20
+-1,Fragrant Bedstraw,129
+-1,Fraser'S Magnolia,951
+-1,Free Living Caddisfly,85
+-1,Fringed Looper,73
+-1,Fruit Fly,24
+-1,Fruit Fly 1,11
+-1,Fruit Fly 2,12
+-1,Fungus,"2,649"
+-1,Gem,28
+-1,Georgian June Beetle,13
+-1,Gilt Darter,30
+-1,Glassy Grapeskin,27
+-1,Goerid Caddisfly,60
+-1,Gold Moth,19
+-1,Goldcap Moss-Eater Moth,17
+-1,Golden-Crowned Kinglet,782
+-1,Golden Ragwort,30
+-1,Golden Waxy Cap,32
+-1,Goldenrod Species,248
+-1,Gory`S Ground Beetle,26
+-1,Grand Globe,32
+-1,Gray-Foot Lancetooth,37
+-1,Gray Catbird,112
+-1,Gray Hairstreak,23
+-1,Gray Spruce Looper,47
+-1,Graybanded Leafroller,21
+-1,Grease Moth,25
+-1,Great Crested Flycatcher,181
+-1,Great Spangled Fritillary,36
+-1,Greater Bladder Sedge,41
+-1,Greater Oak Dager Moth,21
+-1,Greater Red Dart,38
+-1,Greater Straw Sedge,14
+-1,Greater Tickseed,117
+-1,Green Arches,43
+-1,Green Ash,67
+-1,Green Frog,38
+-1,Green Lacewing,7
+-1,Green Non-Biting Midge,32
+-1,Greenbrier,48
+-1,Greenbrier Springfly,52
+-1,Greenfin Darter,56
+-1,Greenstriped Grasshopper,21
+-1,Ground Beetle,92
+-1,Ground Beetle 10,14
+-1,Ground Beetle 11,13
+-1,Ground Beetle 13,14
+-1,Ground Beetle 14,25
+-1,Ground Beetle 16,18
+-1,Ground Beetle 2,13
+-1,Ground Beetle 3,24
+-1,Ground Beetle 5,17
+-1,Ground Beetle 6,25
+-1,Ground Pine,68
+-1,Grouse Locust,14
+-1,Grove Bluegrass,36
+-1,Gulf Fritillary,20
+-1,Hairy Bedstraw,28
+-1,Hairy Blueberry,174
+-1,Hairy Lespedeza,32
+-1,Hairy Wood-Rush,38
+-1,Hairy Woodpecker,431
+-1,Hairyjoint Meadowparsnip,29
+-1,Halberdleaf Yellow Violet,220
+-1,Half-Black Bumble Bee,21
+-1,Handsome Fungus Beetle,10
+-1,Hanging Scorpionfly,8
+-1,Hannah`S Bristletail,18
+-1,Harmsworth`S Water Bear,73
+-1,Harnessed Tiger Moth,25
+-1,Harvestman,51
+-1,Hawthorn,54
+-1,Hazel Alder,87
+-1,He-Huckleberry,63
+-1,Hedgehog Woodrush,27
+-1,Hemlock Looper Moth,36
+-1,Hemlock Root Bacteria,21
+-1,Hemlock Species,47
+-1,Hesitant Dagger Moth,53
+-1,Hexapod,20
+-1,Hickory,157
+-1,Hickory Leafroiler,6
+-1,Hickory Tussock Moth,17
+-1,Higgin'S Waterbear,33
+-1,Highland Doghobble,248
+-1,Hill Cane,25
+-1,Hillside Blueberry,308
+-1,Hobblebush,381
+-1,Honest Ground Beetle,32
+-1,Honey Bee,27
+-1,Honey Mushroom,29
+-1,Hooded Warbler,"1,412"
+-1,Horse Fly,14
+-1,Hufeland`S Waterbear,31
+-1,Hypnum Moss,30
+-1,Ilia Underwing,34
+-1,Illinoian Non-Biting Midge,36
+-1,Immaculate Ladybird Beetle,11
+-1,Imperial Moth ,40
+-1,Incised Eunotia Diatom,69
+-1,Inconspicuous Caddisfly,17
+-1,Indian Cucumber,273
+-1,Indianpipe,97
+-1,Indigo Bunting,889
+-1,Intermediate Water Bear,74
+-1,Intermediate Woodfern,"1,072"
+-1,Io Moth ,47
+-1,Irrorate Retreat-Maker,84
+-1,Island Waterbear,24
+-1,Isopod,27
+-1,Jack-In-The-Pulpit,252
+-1,Jacob'S Lader,89
+-1,Japanese Beetle,7
+-1,Japanese Stiltgrass,111
+-1,Jelly Babies,33
+-1,Jersey Pine,636
+-1,Jet Black Caddisfly,22
+-1,Jewelweed,43
+-1,Jewelwing,19
+-1,Joe-Pye-Weed,30
+-1,Juvenal`S Duskywing,32
+-1,Keith`S Anilline Ground Beetle,18
+-1,Kent`S Geometer,23
+-1,Labrador Carpet Moth,19
+-1,Ladybird Beetle,9
+-1,Lanceleaf Wild Licorice,43
+-1,Lappet Moth,21
+-1,Large Bland Rove Beetle,27
+-1,Large Eastern Free Living Caddis,184
+-1,Large Sturdy Case Caddisfly,38
+-1,Large Wood Nymph,22
+-1,Largeflower Bellwort,29
+-1,Largescale Stoneroller,38
+-1,Lash Springfly,43
+-1,Lead-Colored Lichen Moth ,40
+-1,Leaf Beetle,34
+-1,Leaf Fungus,17
+-1,Leaf Hopper,19
+-1,Leafhopper,69
+-1,Leafhopper B,11
+-1,Leafhopper H,11
+-1,Leafhopper I,15
+-1,Least-Marked Euchlaena Moth,32
+-1,Least Flycatcher,16
+-1,Least Sallfly,31
+-1,Least Skipperling,21
+-1,Leconte`S Haploa,70
+-1,Leconte`S Rove Beetle,45
+-1,Leconte1S Clown Beetle,14
+-1,Lemon Plagodis Moth,37
+-1,Leptophlebiid Mayfly,125
+-1,Lesser Grapevine Looper Moth,46
+-1,Lesser Maple Spanworm Moth,19
+-1,Lesser Small Minnow Mayfly,41
+-1,Lesser Smooth Free Living Caddis,62
+-1,Lichen,273
+-1,Licorice Bedstraw,74
+-1,Light-Blothced False Darkling Beetle,33
+-1,Light Carpet Moth,12
+-1,Lily-Of-The-Valley Tree,"1,966"
+-1,Linear Painted Minnow Mayfly,20
+-1,Little-Neck Ground Beetle,36
+-1,Little Black Ground Beetle,15
+-1,Little Bluestem,74
+-1,Little Pronggill Mayfly,43
+-1,Little Saint Caddisfly,12
+-1,Little White Lichen Moth ,81
+-1,Little Wood Satyr,21
+-1,Locust Leaf Miner,41
+-1,Long-Horned Beetle,44
+-1,Long-Horned Caddisfly,10
+-1,Long-Tailed Salamander,30
+-1,Longhorned Spiny Crawler Mayfly,30
+-1,Longnose Dace,112
+-1,Lorchel Fungus,11
+-1,Louisiana Waterthrush,137
+-1,Low Ragweed,49
+-1,Lowland Bladderfern,231
+-1,Luna Moth ,43
+-1,Lundbeck`S Non-Biting Midge,79
+-1,Lyreleaf Sage,24
+-1,Macleod`S Retreat-Maker,75
+-1,Maculate Fingernet Caddis,36
+-1,Maidenhair,294
+-1,Malloch`S Non-Biting Midge,36
+-1,Maple,83
+-1,Maple Prominent,101
+-1,Mapleleaf Viburnum,221
+-1,Marbled Dogæs-Tooth Tortrix,7
+-1,Marsh Blue Violet,36
+-1,Maryland Goldenaster,32
+-1,Masked Birch Caterpillar,82
+-1,Mason Bee,3
+-1,Mayflower,154
+-1,Mayfly,104
+-1,Meadow-Parsnip,50
+-1,Meadow-Rue,30
+-1,Meadow Fritillary,15
+-1,Meager Enotia Diatom,52
+-1,Medium Dagger Moth,34
+-1,Michaux`S Saxifrage,53
+-1,Micro-Caddisfly,45
+-1,Milkweed Tussock Moth,20
+-1,Milliped 11,12
+-1,Milliped 15,12
+-1,Millipede,214
+-1,Minor Eunotia Diatom,44
+-1,Mitchell`S Dogfaced Caddis,129
+-1,Mockernut Hickory,387
+-1,Modest Flat-Headed Mayfly,51
+-1,Monarch,24
+-1,Moosewood,"2,025"
+-1,Morning-Glory Prominent,81
+-1,Morose Caddisfly,27
+-1,Morrison'S Pero,54
+-1,Moth Fly,27
+-1,Mottled Gray Carpet,25
+-1,Mottled Sculpin,99
+-1,Mountain-Mint,42
+-1,Mountain Aster,42
+-1,Mountain Bellwort,113
+-1,Mountain Button,36
+-1,Mountain Decumbent Goldenrod,230
+-1,Mountain Delicate Burrower,73
+-1,Mountain Laurel,"1,531"
+-1,Mountain Maple,401
+-1,Mountain Meadow-Rue,36
+-1,Mountain Millstone,53
+-1,Mountain Retreat-Maker,94
+-1,Mountain Spleenwort,39
+-1,Mountain Sweet Pepperbush,115
+-1,Mountain Winterberry,384
+-1,Mountain Woodfern,104
+-1,Mountain Woodsorrel,112
+-1,Mournful Finger-Net Caddis,92
+-1,Mourning Dove,110
+-1,Muscadine,86
+-1,Nakedflower Ticktrefoil,149
+-1,Nancy`S Anilline Ground Beetle,18
+-1,Narrow Riffle Beetle,59
+-1,Narrowleaf Cowwheat,54
+-1,Needlefly,156
+-1,Neophylax Caddisfly,40
+-1,Net-Winged Midge,63
+-1,New Jersey Tea,27
+-1,New York Fern,"1,507"
+-1,Nicolay`S Antloving Rove Beetle,31
+-1,No-See-Um,78
+-1,Nodding Fescue,34
+-1,Non-Biting Midge,"1,176"
+-1,Non-Biting Midge 16,22
+-1,Non-Biting Midge 17,26
+-1,Non-Biting Midge 21,26
+-1,Non-Biting Midge 22,20
+-1,Nondescript Dagger Moth,43
+-1,Northern Black Racer,114
+-1,Northern Caddisfly,147
+-1,Northern Cardinal,176
+-1,Northern Copperhead,142
+-1,Northern Dusky Salamander,16
+-1,Northern Flicker,150
+-1,Northern Hog Sucker,132
+-1,Northern Parula,841
+-1,Northern Red Oak,"2,465"
+-1,Northern Redbelly Snake,22
+-1,Northern Ringneck Snake,91
+-1,Northern Rough-Winged Swallow,20
+-1,Northern Water Snake,59
+-1,Northern White Pine,"1,058"
+-1,Northern White Violet,37
+-1,Northern/Midland Brown Snake,42
+-1,Oak Besma,35
+-1,Oak Species,95
+-1,Oak Stag Beetle,12
+-1,Ocellated Darner,15
+-1,Ochre Dagger Moth,39
+-1,Odorous House Ant,17
+-1,Olive Arches Moth,26
+-1,Orange Sulphur,52
+-1,Ornate Dogfaced Caddis,32
+-1,Osmia Bee,11
+-1,Oval-Based Prominent ,58
+-1,Oval Riffle Beetle,47
+-1,Ovate Dagger Moth,69
+-1,Packard`S Lichen Moth,19
+-1,Pagan Stickbait Caddis,50
+-1,Painted Lichen Moth ,85
+-1,Pale-Banded Dart Moth,30
+-1,Pale Flat-Headed Mayfly,38
+-1,Pale Indian Plantain,46
+-1,Pale Lichen Moth ,39
+-1,Pale Snapweed,102
+-1,Pale Stripetail,86
+-1,Pallar`S Water Bear,80
+-1,Pandorus Sphinx ,19
+-1,Panic Grass,152
+-1,Panicled Tick-Trefoil,44
+-1,Parasol Mushroom Species,14
+-1,Pearl Crescent,77
+-1,Pennsylvania Sedge,110
+-1,Pepper And Salt Geometer,62
+-1,Perfoliate Bellwort,94
+-1,Perplexing Bumble Bee,15
+-1,Pignut,121
+-1,Pignut Hickory,306
+-1,Pileated Woodpecker,"1,206"
+-1,Pin Cherry,385
+-1,Pine Siskin,73
+-1,Pine Species,146
+-1,Pine Warbler,129
+-1,Pink-Masked Pyralid Moth,25
+-1,Pink Turtlehead,33
+-1,Pinkgill Mushroom Species,32
+-1,Pipevine,152
+-1,Pipevine Swallowtail,71
+-1,Pitch Pine,554
+-1,Pitiless Free Living Caddis,55
+-1,Pitted Ambrosia Beetle,5
+-1,Plant Hopper,12
+-1,Plant Hopper 29,17
+-1,Plant Hopper 30,20
+-1,Plant Hopper 31,29
+-1,Plant Pathogenic Polypore Fungus,9
+-1,Plantainleaf Pussytoes,46
+-1,Plantainleaf Sedge,42
+-1,Plate-Thigh Beetle,11
+-1,Pleasant Dager Moth,27
+-1,Pluto`S Small Minnow Mayfly,37
+-1,Poison Ivy,244
+-1,Poke,25
+-1,Polycentropus Caddisfly,140
+-1,Polyphemus Moth,40
+-1,Polytrichum Moss,41
+-1,Poplar Species,29
+-1,Post Oak,37
+-1,Poverty Oatgrass,47
+-1,Poverty Rush,33
+-1,Prickley Pine,186
+-1,Promethea Moth,13
+-1,Purple-Node Joe-Pye-Weed,42
+-1,Purple-Stemmed Aster,28
+-1,Purple Bedstraw,49
+-1,Quebec Sweat Bee,9
+-1,Question Mark,32
+-1,Raspberry Dager Moth,26
+-1,Rat Snake,49
+-1,Rattlesnake Fern,559
+-1,Rattlesnakeweed,57
+-1,Rearhumped Caterpillar,72
+-1,Recurved Brotherella Moss,62
+-1,Red-Banded Hairstreak,28
+-1,Red-Bellied Woodpecker,146
+-1,Red-Breasted Nuthatch,681
+-1,Red-Eyed Vireo,"2,611"
+-1,Red-Lipped Green Lacewing,12
+-1,Red-Shouldered Hawk,11
+-1,Red-Winged Blackbird,34
+-1,Red Admiral,40
+-1,Red Elderberry,49
+-1,Red Mulberry,86
+-1,Red Spruce,980
+-1,Red Squirrel,10
+-1,Redbanded Leafroller,27
+-1,Redbud,101
+-1,Reddish Speckled Dart,18
+-1,Redline Darter,52
+-1,Retarded Dagger Moth,29
+-1,Retreat-Maker,21
+-1,Retreat-Making Caddisfly,148
+-1,Rhododendron,"1,644"
+-1,Rhomboid Eunotia Diatom,107
+-1,Ribbed Sedge,24
+-1,Richweed,149
+-1,Riffle Beetle,82
+-1,River Birch,49
+-1,River Chub,116
+-1,River Cruiser,11
+-1,River Fly,68
+-1,Roachlike Stonefly,133
+-1,Roan Mountain Rattlesnakeroot,25
+-1,Robin'S Plantain,27
+-1,Rock Bass,51
+-1,Rohwer`S Sweat Bee,13
+-1,Roof Mushroom,42
+-1,Rose-Breasted Grosbeak,280
+-1,Rosebay,918
+-1,Rosette Grass,83
+-1,Rosy Maple Moth ,80
+-1,Rosy Sedge,27
+-1,Rosyside Dace,36
+-1,Round-Headed Katydid,5
+-1,Round-Necked Longhorn,15
+-1,Round-Necked Longhorn 02,14
+-1,Round-Necked Longhorn 09,15
+-1,Round-Necked Longhorn 10,14
+-1,Round-Necked Longhorn 11,12
+-1,Round-Necked Longhorn 13,27
+-1,Round-Necked Longhorn 16,20
+-1,Round Fungus Beetle,22
+-1,Roundleaf Violet,145
+-1,Roundneck Sexton Beetle,32
+-1,Rove Beetle,346
+-1,Rove Beetle 04,15
+-1,Rove Beetle 07,18
+-1,Rove Beetle 09,28
+-1,Rove Beetle 10,21
+-1,Rove Beetle 11,14
+-1,Rove Beetle 12,28
+-1,Rove Beetle 13,19
+-1,Ruby-Throated Hummingbird,110
+-1,Rue Anemone,118
+-1,Ruffed Grouse,66
+-1,Running Strawberry-Bush,49
+-1,Rustic Borer,6
+-1,Rusty Leaf Beetle,12
+-1,Sable Clubtail,10
+-1,Saddle-Case Making Caddisfly,39
+-1,Saddleback Looper,56
+-1,Saffron Shiner,39
+-1,Sallfly,105
+-1,Salmonfly,97
+-1,Sanderson Bumble Bee,21
+-1,Sap-Feeding Beetle,7
+-1,Sap-Feeding Beetle 03,16
+-1,Sap-Feeding Beetle 04,31
+-1,Sassafras,744
+-1,Satchem,40
+-1,Sawfly,126
+-1,Scale-Mouthed Caddisfly,170
+-1,Scarab Beetle,76
+-1,Scarlet-Winged Lichen Moth ,66
+-1,Scarlet Beebalm,75
+-1,Scarlet Oak,907
+-1,Scarlet Tanager,"1,744"
+-1,Scentless Plant Bug,8
+-1,Scorpionfly,24
+-1,Seal Salamander,131
+-1,Sedge,282
+-1,Seed Bug,19
+-1,Seedcorn Beetle,18
+-1,Serrate Fishfly,51
+-1,Serviceberry Species,61
+-1,Sessileleaf Bellwort,75
+-1,Sexton Beetle,12
+-1,Shagbark Hickory,36
+-1,Shallow Sedge,24
+-1,Shingle Oak,91
+-1,Short-Horned Caddisfly,86
+-1,Short-Horned Grasshopper,10
+-1,Short-Tailed Shrew,32
+-1,Shortstraw Pine,193
+-1,Shovel-Nosed Salamander,38
+-1,Showy Gentian,50
+-1,Showy Goldenrod,39
+-1,Silky Dogwood,41
+-1,Silky Willow,33
+-1,Silly Stickbait Caddis,41
+-1,Silver-Spotted Skipper,70
+-1,Silver False Spleenwort,226
+-1,Silverbell,16
+-1,Silverleaf Hydrangea,50
+-1,Similar Antloving Rove Beetle,50
+-1,Slender Springtail C,12
+-1,Slender Springtail J,11
+-1,Slender Springtail M,13
+-1,Slender Wood-Reed,35
+-1,Slippery Elm,84
+-1,Slosson`S Retreat-Maker,57
+-1,Slug,11
+-1,Small'S Blacksnakeroot,29
+-1,Small'S Ragwort,41
+-1,Small-Eyed Sphinx ,52
+-1,Small-Flowered False Hellebore,50
+-1,Small Bonny Bellflower,78
+-1,Small Brook Flat-Headed Mayfly,38
+-1,Small Chanterelle Mushroom,17
+-1,Small Enchanter'S-Nightshade,42
+-1,Small Green Ground Beetle,15
+-1,Small Minnow Mayfly,199
+-1,Small Phigalia Moth,17
+-1,Small Spot,20
+-1,Small Squaregill Mayfly,10
+-1,Small Sturdy Case Maker Caddisfly,39
+-1,Small Woodland Sunflower,49
+-1,Smallflower Blueberry,124
+-1,Smallmouth Bass,58
+-1,Smallspike False Nettle,46
+-1,Smooth Blackberry,277
+-1,Smooth Gerardia,53
+-1,Smooth Sumac,30
+-1,Snail,31
+-1,Snail-Eating Ground Beetle,21
+-1,Snakeroot,42
+-1,Snout Moth,35
+-1,Snowfly,23
+-1,Sod Web Worm,10
+-1,Soft Rush,33
+-1,Song Sparrow,56
+-1,Sourgrass,28
+-1,Southern Balsam,526
+-1,Southern Bush Honeysuckle,31
+-1,Southern Mountain Cranberry,129
+-1,Southern Pine Beetle,5
+-1,Southern Pine Sphinx Moth,32
+-1,Southern Pygmy Clubtail,115
+-1,Southern Red-Backed Vole,31
+-1,Southern Red Oak,119
+-1,Southern Sturdy Burrower,95
+-1,Sow Fries Coral Fungus,22
+-1,Spectacular Burrowing Mayfly,20
+-1,Spider,62
+-1,Spiked Forestfly,86
+-1,Spiketail,42
+-1,Spiny Crawler Mayfly 1,22
+-1,Spiny Crawler Mayfly 3,26
+-1,Spiny Crawler Mayfly 5,24
+-1,Spiny Crawler Mayfly 6,21
+-1,Spiny Crawler Mayfly2,17
+-1,Spiny Oakworm Moth,40
+-1,Spiny Slug Caterpillar,17
+-1,Splendid Dagger Moth,47
+-1,Splendid Stickbait Caddis,36
+-1,Spoonleaf Purple Everlasting,36
+-1,Spotted Apatelodes,64
+-1,Spotted Cucumber Beetle,17
+-1,Spotted Dusky Salamander,136
+-1,Spotted Nomada Bee,11
+-1,Spotted St. Johnswort,57
+-1,Spotted Stickbait Caddisfly,31
+-1,Spotted Touch-Me-Not,49
+-1,Spreading Cinquefoil,86
+-1,Spring Azure,29
+-1,Spring Beauty Bee,15
+-1,Spring Bee,15
+-1,Spring Peeper,33
+-1,Spring Salamander,113
+-1,Springtail,346
+-1,Springtail B,11
+-1,Springtail F,11
+-1,Springtail K,13
+-1,Springtail M,13
+-1,Spruce Harlequin,53
+-1,Spruce Species,26
+-1,Spur-Throated Grasshopper,11
+-1,Spurious Retreat-Maker,111
+-1,St. Johnswort,37
+-1,Star Chickweed,204
+-1,Steelhead,139
+-1,Stenolophus Ground Beetle,50
+-1,Stone,125
+-1,Strawberry Sap Beetle,13
+-1,Streaked Flower Longhorn Beetle,22
+-1,Striped Prince'S Pine,273
+-1,Stripetail,77
+-1,Stripped Leaf Beetle,26
+-1,Stumpfoot Mushroom Species,21
+-1,Subequal Flat-Headed Mayfly,39
+-1,Sugar Maple,"1,337"
+-1,Summer Grape,155
+-1,Swainson'S Thrush,39
+-1,Swamp Sparrow,9
+-1,Swan'S Sedge,35
+-1,Sweat Bee,103
+-1,Sweat Bee B,16
+-1,Sweat Bee F,11
+-1,Sweat Bee H,13
+-1,Sweat Bee I,6
+-1,Sweet Birch,"1,620"
+-1,Sweet Fern Geometer,28
+-1,"Sweet Joe-Pye-Weed, Woodland Joe-Pye-Weed",78
+-1,Sweetgum,205
+-1,Symbiotic Non-Biting Midge,34
+-1,Tall Rattlesnakeroot,65
+-1,Tallulah Falls Antloving Rove Beetle,36
+-1,Tarnished Plant Bug,16
+-1,Tawny Holomelina ,29
+-1,Tearthumb,30
+-1,Telescope Shiner,52
+-1,Tennessee Shiner,84
+-1,Tennessee Starwort,36
+-1,The Blusher,26
+-1,The Slowpoke,40
+-1,Thick-Horned Caddisfly,16
+-1,Thickleaved Wild Strawberry,30
+-1,Thinleaf Mountainmint,49
+-1,Thoroughwort,44
+-1,Three-Lobed Needlefly,11
+-1,Three-Lobed Violet,39
+-1,Three-Tailed Small Minnow Mayfly,105
+-1,Three Color Leaf Beetle,18
+-1,Thymeleaf Bluet,79
+-1,Tick-Trefoil,40
+-1,Tiger Spiketail,52
+-1,Tiny Riffle Beetle,42
+-1,Tiphiid Wasp,3
+-1,Toed-Winged Beetle,20
+-1,Tonolli`S Water Bear,31
+-1,Toothed Brown Carpet,28
+-1,Tormented Spiny Crawler  Mayfly,54
+-1,Treehopper,21
+-1,Treehopper H,12
+-1,Treehopper J,18
+-1,Treehopper L,29
+-1,Treehopper O,12
+-1,Trident Maple,"4,806"
+-1,Trillium,76
+-1,Tuberculate Spiny Crawler Mayfly,93
+-1,Tuckasegee Darter,28
+-1,Tufted Titmouse,"1,169"
+-1,Tulip-Tree Silkmoth,33
+-1,Tupelo Leaffolder Moth,16
+-1,Turkey Tail,27
+-1,Turkey Vulture,16
+-1,Twelve-Spotted Ladybug,32
+-1,Twenty-Spotted Lady Beetle,17
+-1,Twin-Spotted Spiketail,23
+-1,Two-Ridged Snail-Eating Ground Beetle,14
+-1,Two-Spotted Bumble Bee,15
+-1,Two-Striped Clown Beetle,14
+-1,Two-Tailed Flat-Headed Mayfly,62
+-1,Twoleaf Miterwort,32
+-1,Twolined Spittlebug,23
+-1,Umbrella Magnolia,112
+-1,Unclear Dagger Moth,52
+-1,Undulated Eunotia Diatom,38
+-1,Unequal Flat-Headed Mayfly,112
+-1,Unmarked Dagger Moth,80
+-1,Unspecified,"19,974"
+-1,Upland Bentgrass,45
+-1,Vagabond Crambus,19
+-1,Variable Carpet,19
+-1,Variegated Cutworm,36
+-1,Variegated Fritillary Butterfly,28
+-1,Veery,"1,113"
+-1,Velvet Ant,17
+-1,Velvetbean Caterpillar,27
+-1,Virginia Creeper Sphinx Moth,32
+-1,Virginia Knotweed,59
+-1,Virginia Tephrosia,59
+-1,Virginia Water Horehound,28
+-1,Viscid Violet Cort,26
+-1,Walking Fern,28
+-1,Walnut Shoot Moth,13
+-1,Warpaint Shiner,102
+-1,Wasp,41
+-1,Wataga Small Mark Caddis,43
+-1,Water Mite,"3,243"
+-1,Water Penny Beetle,51
+-1,Water Scavenger Beetle,4
+-1,Water Strider,28
+-1,Waterbear,366
+-1,Waved Sphinx,24
+-1,Wavy-Lined Heterocampa ,78
+-1,Wavyleaf Aster,75
+-1,Weeping Ground Beetle,19
+-1,Weevil,55
+-1,Weevil 1,14
+-1,Weevil 2,20
+-1,Weevil 7,21
+-1,Weevil 9,30
+-1,Welsh Wave,51
+-1,Western Black-Nosed Dace,43
+-1,White-Blotched Balsa,44
+-1,White-Blotched Heterocampa Moth,41
+-1,White-Breasted Nuthatch,447
+-1,White-Footed Mouse,37
+-1,White-Lined Leafroller,36
+-1,White-Throated Sparrow,15
+-1,White Ash,565
+-1,White Avens,33
+-1,White Baneberry,91
+-1,White Bergamot,57
+-1,White Clintonia,97
+-1,White Edge Sedge,78
+-1,White Oak,"1,143"
+-1,White Snakeroot,323
+-1,White Striped Black,33
+-1,White Sucker,25
+-1,White Thoroughwort,26
+-1,White Wood Aster,333
+-1,Whitetail Shiner,63
+-1,Whorled Loosestrife,211
+-1,Whorled Wood Aster,54
+-1,Widow Underwing Moth,30
+-1,Widowsfrill,57
+-1,Wild Hydrangea,262
+-1,Wild Lettuce,27
+-1,Wild Raisin,41
+-1,Wild Turkey,59
+-1,Winged Elm,30
+-1,Winged Sumac Variety,91
+-1,Wingstem,40
+-1,Winter Ant,41
+-1,Winter Caddis,13
+-1,Winter Caddisfly,217
+-1,Winter Crane Fly,21
+-1,Witchs Hat,17
+-1,Wood Anemone,45
+-1,Wood Duck,8
+-1,Wood Frog,67
+-1,Wood Thrush,767
+-1,Woodbine,266
+-1,Woodfern,282
+-1,Woodland Stonecrop,68
+-1,Worm,169
+-1,Worm-Eating Warbler,715
+-1,Xenate Non-Biting Midge,38
+-1,Yellow-Billed Cuckoo,206
+-1,Yellow-Breasted Chat,28
+-1,Yellow-Collared Scape Moth ,29
+-1,Yellow-Faced Non-Biting Midge,41
+-1,Yellow-Haired Dagger Moth,33
+-1,Yellow-Headed Cutworm Moth,10
+-1,Yellow-Spotted Tiger Moth,14
+-1,Yellow-Striped Small Minnow Mayfly,66
+-1,Yellow-Throated Vireo,67
+-1,Yellow-Throated Warbler,464
+-1,Yellow Birch,"2,113"
+-1,Yellow Birch Leaffolder,12
+-1,Yellow Buckeye,969
+-1,Yellow Crownbeard,38
+-1,Yellow Indian-Grass,100
+-1,Yellow Locust,912
+-1,Yellow Mandarin,168
+-1,Yellow Non-Biting Midge,41
+-1,Yellow Pimpernel,23
+-1,Yellow Poplar,"2,533"
+-1,Yellow Poplar Weevil,53
+-1,Yellow Stickbait Caddis,33
+-1,Yellow Stone,75
+-1,Yellow Woolly Bear,41
+-1,Yellowlined Caterpillar,119
+-1,Yellowroot,28
+-1,Yellowstriped Armyworm,45
+-1,York Sallfly,41
+-1,Zabulon Skipper,33
+-1,Zebra Swallowtail,19
+-1,Zigzag Goldenrod,46
