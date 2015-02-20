@@ -21,41 +21,55 @@ def separate(input_file):
     
     counts_file = 'ATBI_counts.txt'
     files_dir = 'ATBI_files'
-    geojson_dir='Geojsons'
+    geojson_dir = 'Geojsons'
 
     # make dictionary keyed by species name
     # the value for each species key will be a list of coordinate tuples (x,y)
-    # NOTE: We assume the data is formatted as "Species, Latitude, Longitude, Group"
+    
+    # NOTE: The data is formatted as 
+    # "Genus_SpeciesMaxent, Genus_SpeciesIRMA, GRSM_SpeciesID, CommonName, taxaGroup, Subject, Category, LAT, LON"
+    num_fields = 9
     
     species = {}
     groups = set()
     with open(input_file, 'r') as f:
         lines = [line.rstrip('\r\n') for line in f]
         num_records = 0
+        num_records_processed = 0
+        num_records_not_processed = 0
         for line in lines:
+            num_records += 1
             fields = line.split(',')
-            if len(fields) != 4:
+            # fields[0] is Genus_SpeciesMaxent
+            # fields[7] is Latitude
+            # fields[8] is Longitude
+            # fields[4] is taxaGroup
+            
+            if len(fields) != num_fields:
                 print "Entry not processed: "+line
-                print "There are only "+ str(len(fields)) +" values."
+                print "There are "+ str(len(fields)) +" values."
+                num_records_not_processed += 1
                 continue
-            try: float(fields[1])
+            try: float(fields[7])
             except ValueError:
                 print "Entry not processed: "+line
-                print str(fields[1]) +" is not a float."
+                print str(fields[7]) +" is not a float."
+                num_records_not_processed += 1
                 continue
-            try: float(fields[2])
+            try: float(fields[8])
             except ValueError:
                 print "Entry not processed: "+line
-                print str(fields[2]) +" is not a float."
+                print str(fields[8]) +" is not a float."
+                num_records_not_processed += 1
                 continue
             # capitalize() will uppercase first letter and lowercase the rest
             sp = fields[0].capitalize().strip()
             if sp in species:
-                species[sp].append( (fields[1].strip(),fields[2].strip(),fields[3].strip()) )
+                species[sp].append( (fields[7].strip(),fields[8].strip(),fields[4].strip()) )
             else:
-                species[sp] = [(fields[1].strip(),fields[2].strip(),fields[3].strip()),]
-            groups.add(fields[3].strip())
-            num_records += 1
+                species[sp] = [(fields[7].strip(),fields[8].strip(),fields[4].strip()),]
+            groups.add(fields[4].strip())
+            num_records_processed += 1
 
     # create directory for individual species files
     os.mkdir(files_dir)
@@ -101,7 +115,9 @@ def separate(input_file):
     with open(counts_file,'w') as f:
         f.writelines(counts_list)
 
-    print 'Species records processed:      ' + str(num_records)
+    print 'Species records in total:       ' + str(num_records)
+    print 'Species records processed:      ' + str(num_records_processed)
+    print 'Species records not processed:  ' + str(num_records_not_processed)
     print 'Total unique species:           ' + str(num_species)
     print 'Total species with 30+ records: ' + str(len(counts_list))
     print 'Counts file written: ' + counts_file
