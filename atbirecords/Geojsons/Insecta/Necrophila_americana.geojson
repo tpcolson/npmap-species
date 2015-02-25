@@ -1,1 +1,1 @@
-{"features": [{"geometry": {"coordinates": [-83.83793527, 35.59205457], "type": "Point"}, "id": null, "properties": {"coordinates": "[35.59205457,-83.83793527]"}, "type": "Feature"}], "type": "FeatureCollection"}
+{"features": [{"geometry": {"coordinates": [35.590161423, -83.838041047], "type": "Point"}, "id": null, "properties": {"coordinates": "[-83.838041047,35.590161423]"}, "type": "Feature"}], "type": "FeatureCollection"}
