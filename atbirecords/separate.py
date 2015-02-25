@@ -85,14 +85,16 @@ def separate(input_file):
     sorted.sort()
     num_species = len(sorted)
     counts_list = []
+    num_species_less_than_30 = 0
     for sp in sorted:
         num = len(species[sp])
-        if num < 30:
-            continue 
         group_name = species[sp][0][2]
         if group_name == '':
             group_name = 'No_group'
-        counts_list.append(''.join([sp, ',', str(num), ',', group_name, '\n']))
+        if num >= 30:
+            counts_list.append(''.join([sp, ',', str(num), ',', group_name, '\n']))
+        else:
+            num_species_less_than_30 += 1
 
         csv_filename = ''.join([sp,'.csv'])
         geojson_filename = ''.join([sp,'.geojson'])
@@ -115,11 +117,13 @@ def separate(input_file):
     with open(counts_file,'w') as f:
         f.writelines(counts_list)
 
-    print 'Species records in total:       ' + str(num_records)
-    print 'Species records processed:      ' + str(num_records_processed)
-    print 'Species records not processed:  ' + str(num_records_not_processed)
-    print 'Total unique species:           ' + str(num_species)
-    print 'Total species with 30+ records: ' + str(len(counts_list))
+    print ''
+    print 'Species records in total:            ' + str(num_records)
+    print 'Species records processed:           ' + str(num_records_processed)
+    print 'Species records not processed:       ' + str(num_records_not_processed)
+    print 'Total unique species:                ' + str(num_species)
+    print 'Total species with >= 30 records:    ' + str(len(counts_list))
+    print 'Total species with < 30 records:     ' + str(num_species_less_than_30)
     print 'Counts file written: ' + counts_file
     print str(len(counts_list)) + ' files created in ' + files_dir + '/'
    
