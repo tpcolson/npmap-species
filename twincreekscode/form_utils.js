@@ -120,7 +120,18 @@ function update_species() {
 					/* read each line, start at 1 to skip header line */
 					for(var i = 1; i < lines.length; i++) {
 						token = lines[i].split(',');
-						if(token[0] != '') { token[0] = token[0][0].toUpperCase() + token[0].slice(1); }
+						if(token[0] != '') {
+							token[0] = token[0].replace(/_/g, ' ');
+							token[0] = token[0][0].toUpperCase() + token[0].slice(1).toLowerCase();
+							token[0] = '<i>' + token[0] + '</i>';
+
+							if(token[3] != '' && token[3] != 'Unspecified') {
+								token[0] += ' (' + token[3] + ')';
+							} else {
+								token[0] += ' (Common name unknown)';
+							}
+						}
+
 						if(token[3] != '' && token[3] != undefined) { token[3] = token[3][0].toUpperCase() + token[3].slice(1); }
 
 						if(token[3] != '' && token[3] != undefined) {
@@ -142,7 +153,7 @@ function update_species() {
 					encountered_species.sort();
 					encountered_groups.sort();
 
-					/* create the new innerHTML for species and groups divs */
+					/* create the new html for species and groups divs */
 					for(var i = 0; i < encountered_species.length; i++) {
 						var sp = encountered_species[i].split(':');
 						if(sp[1] == undefined || sp[1] == '') {
