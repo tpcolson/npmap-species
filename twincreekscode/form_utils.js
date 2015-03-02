@@ -83,16 +83,16 @@ function update_species() {
 	/* string containing new innerHTML for groups div */
 	var new_groups = '';
 
-	/* button object for updating the species list */
-	var sp_up_button = document.getElementById('update_sp');
+	/* object for disabling the page */
+	var blackout = document.getElementById('blackout');
 
 	/* since this will take a while, make sure they are committed to this */
-	if(!confirm('Are you sure? This may take a minute or longer.')) {
+	if(!confirm('Are you sure? This may take some time (the page will be unusable during this time).')) {
 		return;
 	}
 
-	/* disable the update species button while the update occurs */
-	sp_up_button.disabled = true;
+	/* disable the full page during this time */
+	blackout.style.display = 'block';
 
 	/* first, search for the correct sha for the ATBI_records.csv file (the file is over 1 MB, so we must use the GitHub blob api */
 	$.ajax({
@@ -159,8 +159,8 @@ function update_species() {
 					document.getElementById('species_list').innerHTML = new_species;
 					document.getElementById('groups').innerHTML = new_groups;
 
-					/* reenable the update species button */
-					sp_up_button.disabled = false;
+					/* reenable the page */
+					blackout.style.display = 'none';
 				}
 			});
 		}
