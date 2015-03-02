@@ -6,7 +6,7 @@
 
 # set up (you'll want to change this if you change the file info)
 INDEX="twincreeks.html"
-PUB_FILES=("twincreeks.css" "config_gen.js" "form_utils.js" "send_email.js" "background.jpg")
+PUB_FILES=("twincreeks.css" "config_gen.js" "form_utils.js" "send_email.js")
 PRIV_FILES=("server.py" "socket_handler.py")
 USER="jduggan1"
 TAR_HOST="seelab.eecs.utk.edu"
