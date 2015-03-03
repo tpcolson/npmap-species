@@ -6,6 +6,7 @@
 ***/
 
 body {
+	min-width: 1400px;
 	background-color: #ddd;
 	color: #222;
 }
