@@ -59,8 +59,10 @@ function update_species() {
 	/* list of species already found when parsing the csv */
 	var encountered_species = [];
 
-	/* list of groups already found when parsing the csv */
-	var encountered_groups = [];
+	/* lists of groups already found when parsing the csv */
+	var encountered_taxa = [];
+	var encountered_sbj = [];
+	var encountered_category = [];
 
 	/* sha for the ATBI_records.csv file on GitHub */
 	var target_sha;
@@ -77,11 +79,22 @@ function update_species() {
 	/* temp list for storing a split line */
 	var tokens;
 
-	/* string containing new innerHTML for species div */
+	/* lists of species groups */
+	var taxa;
+	var sbj;
+	var category;
+
+	/* subjects from atbi_records.csv */
+	var subjects;
+	var subject;
+
+	/* string containing new html for species div */
 	var new_species = '';
 
-	/* string containing new innerHTML for groups div */
-	var new_groups = '';
+	/* strings containing new html for groups div */
+	var new_taxa = '<center><u>Taxa</u></center><br>';
+	var new_sbj = '<center><u>Subjects</u></center><br>';
+	var new_category = '<center><u>Categories</u></center><br>';
 
 	/* object for disabling the page */
 	var blackout = document.getElementById('blackout');
@@ -120,6 +133,11 @@ function update_species() {
 					/* read each line, start at 1 to skip header line */
 					for(var i = 1; i < lines.length; i++) {
 						token = lines[i].split(',');
+						if(token.length != 9) {
+							continue;
+						}
+
+						/* get name */
 						if(token[0] != '') {
 							token[0] = token[0].replace(/_/g, ' ');
 							token[0] = token[0][0].toUpperCase() + token[0].slice(1).toLowerCase();
@@ -132,43 +150,83 @@ function update_species() {
 							}
 						}
 
-						if(token[3] != '' && token[3] != undefined) { token[3] = token[3][0].toUpperCase() + token[3].slice(1); }
+						/* get groups */
+						taxa = undefined;
+						if(token[4] != 'Unspecified') {
+							taxa = token[4].replace(/\s+/g, '_');
+						}
 
-						if(token[3] != '' && token[3] != undefined) {
-							if(encountered_species.indexOf(token[0] + ':' + token[3]) == -1 && token[0] != '') {
-								encountered_species.push(token[0] + ':' + token[3]);
-							}
-						} else {
-							if(encountered_species.indexOf(token[0]) == -1 && token[0] != '') {
-								encountered_species.push(token[0]);
+						sbj = [];
+						subjects = token[5].split('|');
+						for(var key in subjects) {
+							if(subjects[key] != '' && subjects[key] != undefined) {
+								subject = subjects[key].trim();
+								if(subject != undefined && subject != '') {
+									sbj.push(subject.replace(/\s+/g, '_'));
+								}
 							}
 						}
 
-						if(encountered_groups.indexOf(token[3]) == -1 && token[3] != '' && token[3] != undefined) {
-							encountered_groups.push(token[3]);
+						category = undefined;
+						if(token[6] != 'Unspecified') {
+							category = token[6].replace(/\s+/g, '_');
+						}
+
+						for(var key in sbj) {
+							if(encountered_sbj.indexOf(sbj[key]) == -1 && sbj[key] != '' && sbj[key] != undefined) {
+								encountered_sbj.push(sbj[key]);
+							}
+						}
+						if(encountered_taxa.indexOf(taxa) == -1 && taxa != '' && taxa != undefined) {
+							encountered_taxa.push(taxa);
+						}
+						if(encountered_category.indexOf(category) == -1 && category != '' && category != undefined) {
+							encountered_category.push(category);
+						}
+
+						if(taxa != undefined && taxa != '') {
+							sbj.push(taxa);
+						}
+						if(category != undefined && category != '') {
+							sbj.push(category);
+						}
+						if(encountered_species.indexOf(token[0] + ':' + sbj.join(' ')) == -1 && token[0] != '') {
+							encountered_species.push(token[0] + ':' + sbj.join(' '));
 						}
 					}
 
 					/* sort the two lists so that species and groups are in alphabetical order */
 					encountered_species.sort();
-					encountered_groups.sort();
+					encountered_taxa.sort();
+					encountered_sbj.sort();
+					encountered_category.sort();
 
 					/* create the new html for species and groups divs */
 					for(var i = 0; i < encountered_species.length; i++) {
 						var sp = encountered_species[i].split(':');
+						sp[1] = sp.slice(1).join(':');
+
 						if(sp[1] == undefined || sp[1] == '') {
-							new_species = new_species + '<input type=\'checkbox\' name=\'' + sp[0] + '\' value=\'\'></input>' + sp[0] + '<br>';
+							new_species = new_species + '<input type=\'checkbox\' name=\'' + sp[0] + '\' class=\'\'></input>' + sp[0] + '<br>';
 						} else {
-							new_species = new_species + '<input type=\'checkbox\' name=\'' + sp[0] + '\' value=\'' + sp[1] + '\'></input>' + sp[0] + '<br>';
+							new_species = new_species + '<input type=\'checkbox\' name=\'' + sp[0] + '\' class=\'' + sp[1] + '\'></input>' + sp[0] + '<br>';
 						}
 					}
-					for(var i = 0; i < encountered_groups.length; i++) {
-						new_groups = new_groups + '<input type=\'checkbox\' name=\'' + encountered_groups[i] + '\' onclick=\'changeGroup(this)\'></input>' + encountered_groups[i] + '<br>';
+					for(var i = 0; i < encountered_taxa.length; i++) {
+						new_taxa = new_taxa + '<input type=\'checkbox\' name=\'' + encountered_taxa[i] + '\' onclick=\'changeGroup(this)\'></input>' + encountered_taxa[i].replace(/_/g, ' ') + '<br>';
+					}
+					for(var i = 0; i < encountered_sbj.length; i++) {
+						new_sbj = new_sbj + '<input type=\'checkbox\' name=\'' + encountered_sbj[i] + '\' onclick=\'changeGroup(this)\'></input>' + encountered_sbj[i].replace(/_/g, ' ') + '<br>';
+					}
+					for(var i = 0; i < encountered_category.length; i++) {
+						new_category = new_category + '<input type=\'checkbox\' name=\'' + encountered_category[i] + '\' onclick=\'changeGroup(this)\'></input>' + encountered_category[i].replace(/_/g, ' ') + '<br>';
 					}
 
 					/* update the page */
 					document.getElementById('species_list').innerHTML = new_species;
-					document.getElementById('groups').innerHTML = new_groups;
+					document.getElementById('groups_taxa').innerHTML = new_taxa;
+					document.getElementById('groups_sbj').innerHTML = new_sbj;
+					document.getElementById('groups_category').innerHTML = new_category;
 
 					/* reenable the page */
 					blackout.style.display = 'none';
@@ -179,19 +237,16 @@ function update_species() {
 }
 
 function changeGroup(checkbox) {
-	var species = document.getElementById('species_list').getElementsByTagName('input');
+	var name = checkbox.name;
+	var species = document.getElementById('species_list').getElementsByClassName(name);
 
 	if(checkbox.checked) {
 		for(var i = 0; i < species.length; i++) {
-			if(checkbox.name == species[i].value) {
-				species[i].checked = true;
-			}
+			species[i].checked = true;
 		}
 	} else {
 		for(var i = 0; i < species.length; i++) {
-			if(checkbox.name == species[i].value) {
-				species[i].checked = false;
-			}
+			species[i].checked = false;
 		}
 	}
 }
