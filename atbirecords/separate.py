@@ -89,12 +89,12 @@ def separate(input_file):
         if group_name == '':
             group_name = 'No_group'
         if num >= 30:
-            counts_list.append(str([sp, ',', str(num), ',', group_name, '\n']))
+            counts_list.append(sp +','+ str(num) +','+ group_name +'\n')
         else:
             num_species_less_than_30 += 1
 
-        csv_filename = str([sp,'.csv'])
-        geojson_filename = str(sp) +'.geojson'
+        csv_filename = sp +'.csv'
+        geojson_filename = sp +'.geojson'
         group_dir = '/'.join([geojson_dir, group_name])
         with open(os.path.join(files_dir, csv_filename), 'w') as csvfile, \
             open(os.path.join(group_dir, geojson_filename), 'w') as geojson:
@@ -105,7 +105,7 @@ def separate(input_file):
             s = []
             for coord in species[sp]:
                 csvfile.write(','.join([sp,coord[1],coord[0]]) +'\n')
-                feature = Feature(properties = {'coordinates':'['+ str(float(coord[0])) +', '+ str(float(coord[1])) +']'}, geometry = Point((float(coord[0]), float(coord[1]))) )
+                feature = Feature(properties = {'coordinates':'['+ str(coord[0]) +', '+ str(coord[1]) +']'}, geometry = Point((float(coord[0]), float(coord[1]))) )
                 if not feature in s:
                     s.append(feature)
             FC = FeatureCollection(list(s))
