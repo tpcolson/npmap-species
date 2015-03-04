@@ -6,7 +6,7 @@
 ***/
 
 body {
-	min-width: 1400px;
+	min-width: 2000px;
 	background-color: #ddd;
 	color: #222;
 }
@@ -17,7 +17,7 @@ input[type=checkbox] {
 }
 
 #blackout {
-	width: 100%;
+	width: 2000px;
 	height: 100%;
 	position: absolute;
 	left: 0;
