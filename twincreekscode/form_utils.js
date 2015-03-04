@@ -62,7 +62,6 @@ function update_species() {
 	/* lists of groups already found when parsing the csv */
 	var encountered_taxa = [];
 	var encountered_sbj = [];
-	var encountered_category = [];
 
 	/* sha for the ATBI_records.csv file on GitHub */
 	var target_sha;
@@ -82,7 +81,6 @@ function update_species() {
 	/* lists of species groups */
 	var taxa;
 	var sbj;
-	var category;
 
 	/* subjects from atbi_records.csv */
 	var subjects;
@@ -92,9 +90,8 @@ function update_species() {
 	var new_species = '';
 
 	/* strings containing new html for groups div */
-	var new_taxa = '<center><u>Taxa</u></center><br>';
-	var new_sbj = '<center><u>Subjects</u></center><br>';
-	var new_category = '<center><u>Categories</u></center><br>';
+	var new_taxa = '<u>Taxa</u><br><br>';
+	var new_sbj = '<u>Categories</u><br><br>';
 
 	/* object for disabling the page */
 	var blackout = document.getElementById('blackout');
@@ -132,8 +129,16 @@ function update_species() {
 
 					/* read each line, start at 1 to skip header line */
 					for(var i = 1; i < lines.length; i++) {
-						token = lines[i].split(',');
-						if(token.length != 9) {
+						token = lines[i].split('"');
+						if(token.length == 1) {
+							token = token[0];
+						} else if(token.length == 3) {
+							token = token[0] + token[1].replace(/,/g, '') + token[2];
+						} else {
+							continue;
+						}
+						token = token.split(',');
+						if(token.length != 8) {
 							continue;
 						}
 
@@ -143,7 +148,7 @@ function update_species() {
 							token[0] = token[0][0].toUpperCase() + token[0].slice(1).toLowerCase();
 							token[0] = '<i>' + token[0] + '</i>';
 
-							if(token[3] != '' && token[3] != 'Unspecified') {
+							if(token[3] != '' && token[3] != 'Unspecified' && token[3] != 'unspecified') {
 								token[0] += ' (' + token[3] + ')';
 							} else {
 								token[0] += ' (Common name unknown)';
@@ -152,7 +157,7 @@ function update_species() {
 
 						/* get groups */
 						taxa = undefined;
-						if(token[4] != 'Unspecified') {
+						if(token[4] != 'Unspecified' && token[4] != 'unspecified') {
 							taxa = token[4].replace(/\s+/g, '_');
 						}
 
@@ -167,11 +172,6 @@ function update_species() {
 							}
 						}
 
-						category = undefined;
-						if(token[6] != 'Unspecified') {
-							category = token[6].replace(/\s+/g, '_');
-						}
-
 						for(var key in sbj) {
 							if(encountered_sbj.indexOf(sbj[key]) == -1 && sbj[key] != '' && sbj[key] != undefined) {
 								encountered_sbj.push(sbj[key]);
@@ -180,15 +180,9 @@ function update_species() {
 						if(encountered_taxa.indexOf(taxa) == -1 && taxa != '' && taxa != undefined) {
 							encountered_taxa.push(taxa);
 						}
-						if(encountered_category.indexOf(category) == -1 && category != '' && category != undefined) {
-							encountered_category.push(category);
-						}
 
 						if(taxa != undefined && taxa != '') {
 							sbj.push(taxa);
-						}
-						if(category != undefined && category != '') {
-							sbj.push(category);
 						}
 						if(encountered_species.indexOf(token[0] + ':' + sbj.join(' ')) == -1 && token[0] != '') {
 							encountered_species.push(token[0] + ':' + sbj.join(' '));
@@ -199,7 +193,6 @@ function update_species() {
 					encountered_species.sort();
 					encountered_taxa.sort();
 					encountered_sbj.sort();
-					encountered_category.sort();
 
 					/* create the new html for species and groups divs */
 					for(var i = 0; i < encountered_species.length; i++) {
@@ -218,15 +211,11 @@ function update_species() {
 					for(var i = 0; i < encountered_sbj.length; i++) {
 						new_sbj = new_sbj + '<input type=\'checkbox\' name=\'' + encountered_sbj[i] + '\' onclick=\'changeGroup(this)\'></input>' + encountered_sbj[i].replace(/_/g, ' ') + '<br>';
 					}
-					for(var i = 0; i < encountered_category.length; i++) {
-						new_category = new_category + '<input type=\'checkbox\' name=\'' + encountered_category[i] + '\' onclick=\'changeGroup(this)\'></input>' + encountered_category[i].replace(/_/g, ' ') + '<br>';
-					}
 
 					/* update the page */
 					document.getElementById('species_list').innerHTML = new_species;
 					document.getElementById('groups_taxa').innerHTML = new_taxa;
 					document.getElementById('groups_sbj').innerHTML = new_sbj;
-					document.getElementById('groups_category').innerHTML = new_category;
 
 					/* reenable the page */
 					blackout.style.display = 'none';
