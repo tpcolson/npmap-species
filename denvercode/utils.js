@@ -94,6 +94,4 @@ window.onload = function() {
 	var baseChoice = document.getElementsByClassName('npmap-control-switcher leaflet-control')[0];
 	var fuseSearch = document.getElementsByClassName('leaflet-control-geocoder leaflet-control')[0];
 	par.insertBefore(fuseSearch, baseChoice);
-
-	setTimeout(print_map, 3000);
 }
