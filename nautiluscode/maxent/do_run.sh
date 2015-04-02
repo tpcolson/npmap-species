@@ -23,7 +23,7 @@ COUNTS_FILE=/lustre/medusa/lyu6/npmap-species/atbirecords/ATBI_counts.txt
 RECORDS_DIR=/lustre/medusa/lyu6/npmap-species/atbirecords/ATBI_files
 ENV_DIR=/lustre/medusa/lyu6/npmap-species/environmentallayers/mxe
 ENV_PICK=all
-GDAL_BIN=/lustre/medusa/lyu6/gdal/bin/
+GDAL_BIN=/lustre/medusa/lyu6/gdal/bin
 GEOTIFF_DIR=$RUN_DIR/geotiffs
 ACCOUNT=UT-NTNL0229
 #------------------------------------------------------------------------

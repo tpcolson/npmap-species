@@ -6,8 +6,8 @@ echo $(date +%s) > start_secs.txt
 module load eden
 ./do_run.sh && \
 ./preprocess.sh && \
-./maxent.sh 
-#./postprocess.sh
+./maxent.sh && \ 
+./postprocess.sh
 #./visit.sh
 
 #eval "qsub visit.pbs -W depend=afterok:$(cat current_eden_job.txt | grep nics.utk.edu) > current_eden_job.txt" && \
