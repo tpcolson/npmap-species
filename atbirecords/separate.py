@@ -73,7 +73,8 @@ def separate(input_file):
     os.mkdir(geojson_dir)
     for group_name in groups:
         if group_name == '':
-            group_name = 'No_group'
+            # group_name = 'No_group'
+            continue
         group_dir = '/'.join([geojson_dir, group_name])
         os.mkdir(group_dir)
     
@@ -86,13 +87,23 @@ def separate(input_file):
     for sp in sorted:
         num = len(species[sp])
         group_name = species[sp][0][2]
-        if group_name == '':
-            group_name = 'No_group'
-        if num >= 30:
-            counts_list.append(sp +','+ str(num) +','+ group_name +'\n')
-        else:
+        # if group_name == '':
+            # group_name = 'No_group'
+        if num < 30:
             num_species_less_than_30 += 1
+            geojson_filename = sp +'.geojson'
+            group_dir = '/'.join([geojson_dir, group_name])
+            with open(os.path.join(group_dir, geojson_filename), 'w') as geojson:
+                s = []
+                for coord in species[sp]:
+                    feature = Feature(properties = {'coordinates':'['+ str(coord[0]) +', '+ str(coord[1]) +']'}, geometry = Point((float(coord[1]), float(coord[0]))) )
+                    if not feature in s:
+                        s.append(feature)
+                FC = FeatureCollection(list(s))
+                geojson.write(str(FC))
+            continue
 
+        counts_list.append(sp +','+ str(num) +','+ group_name +'\n')
         csv_filename = sp +'.csv'
         geojson_filename = sp +'.geojson'
         group_dir = '/'.join([geojson_dir, group_name])
@@ -110,6 +121,7 @@ def separate(input_file):
                     s.append(feature)
             FC = FeatureCollection(list(s))
             geojson.write(str(FC))
+		
 
     # Write counts file
     with open(counts_file,'w') as f:
