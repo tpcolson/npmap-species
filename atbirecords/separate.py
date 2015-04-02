@@ -105,7 +105,7 @@ def separate(input_file):
             s = []
             for coord in species[sp]:
                 csvfile.write(','.join([sp,coord[1],coord[0]]) +'\n')
-                feature = Feature(properties = {'coordinates':'['+ str(coord[0]) +', '+ str(coord[1]) +']'}, geometry = Point((float(coord[0]), float(coord[1]))) )
+                feature = Feature(properties = {'coordinates':'['+ str(coord[0]) +', '+ str(coord[1]) +']'}, geometry = Point((float(coord[1]), float(coord[0]))) )
                 if not feature in s:
                     s.append(feature)
             FC = FeatureCollection(list(s))
