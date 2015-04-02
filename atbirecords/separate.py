@@ -121,7 +121,6 @@ def separate(input_file):
                     s.append(feature)
             FC = FeatureCollection(list(s))
             geojson.write(str(FC))
-		
 
     # Write counts file
     with open(counts_file,'w') as f:
