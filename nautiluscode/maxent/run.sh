@@ -6,7 +6,7 @@ echo $(date +%s) > start_secs.txt
 module load eden
 ./do_run.sh && \
 ./preprocess.sh && \
-./maxent.sh && \ 
+./maxent.sh && \
 ./postprocess.sh
 #./visit.sh
 
