@@ -16,7 +16,7 @@ while read line; do
    # Skip first line
    if test $i -eq 0; then continue; fi
    species=$line
-   count=$(grep $species $COUNTS_FILE | cut -d',' -f2)
+   count=$(grep -w $species $COUNTS_FILE | cut -d',' -f2)
    echo "cd $RUN_DIR; $TOOL_DIR/make_folds $RECORDS_DIR/$species.csv $count $CV_NUM_FOLDS" >> eden_folds/commands
 done < $CONFIG_FILE
 
