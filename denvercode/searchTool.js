@@ -18,12 +18,16 @@ var control,
 		container.id = 'searchTool';
 		container.style.position = 'absolute';
 		container.style.margin = '0px';
+		container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
 		L.DomEvent.disableClickPropagation(container); /* I don't want double-clicking on this to zoom the map */
 
-		/* I like to animate these things up and down, and it's easiest when they have ids! */
+		/* I like to move these things up and down, and it's easiest when they have ids! */
 		document.getElementsByClassName('leaflet-control-home')[0].id = 'home';
 		document.getElementsByClassName('leaflet-control-zoom')[0].id = 'zoom';
 		document.getElementsByClassName('npmap-control-measure')[0].id = 'measure';
+		document.getElementById('home').style.top = '200px';
+		document.getElementById('zoom').style.top = '200px';
+		document.getElementById('measure').style.top = '200px';
 
 		/* top of container, never changes */
 		var header = L.DomUtil.create('div', 'utk-search-header');
@@ -31,7 +35,13 @@ var control,
 		var close = L.DomUtil.create('button', 'utk-search-close');
 
 		close.innerHTML = '<b>X</b>';
-		//todo: onclick event for close, reset search and close control
+		close.onclick = function() {
+			if(control._selected === 'searchButton') {
+				control._expandSearch('searchButton');
+			} else {
+				control._expandSearch('settingsButton');
+			}
+		}
 
 		/* stupid css is getting overwritten, take this! */
 		filler.style.margin = '0px';
@@ -44,6 +54,7 @@ var control,
 		header.appendChild(close);
 
 		/* the contentPane will hold the actual searching/setting functionalities */
+		contentPane.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684) / 2) + 'px';
 		container.appendChild(contentPane);
 
 		/* create the settings tab (change base layer, check scale info, etc.) */
@@ -59,6 +70,7 @@ var control,
 		this._contentPane = contentPane;
 		this._filler = filler;
 		this._close = close;
+		this._fullscreen = false;
 
 		return container;
 	},
@@ -99,12 +111,11 @@ var control,
 		var poiCheckboxes = L.DomUtil.create('ul', 'utk-search-poi-checkboxes');
 
 		poiLabel.innerHTML = '<b>SELECT POINTS OF INTEREST</b>';
-		poiCheckboxes.innerHTML = '<li><input type="checkbox" name="trails" value="trails"></input><label for="trails"><i> Trails</i></label></li>' +
-									'<li><input type="checkbox" name="roads" value="roads"></input><label for="roads"><i> Roads</i></label></li>' +
-									'<li><input type="checkbox" name="shelters" value="shelters"></input><label for="shelters"><i> Shelters</i></label></li>' +
-									'<li><input type="checkbox" name="restrooms" value="restrooms"></input><label for="restrooms"><i> Restrooms</i></label></li>' +
-									'<li><input type="checkbox" name="campsites" value="campsites"></input><label for="campsites"><i> Campsites</i></label></li>' +
-									'<li><input type="checkbox" name="visitors" value="visitors"></input><label for="visitors"><i> Visitor Centers</i></label></li>';
+		poiCheckboxes.innerHTML = '<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 30%"><input type="checkbox" name="trails" value="trails"></input><label for="trails"><i> Trails</i></label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 60%"><input type="checkbox" name="visitors" value="visitors"></input><label for="visitors"><i> Visitor Centers</i></label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 30%"><input type="checkbox" name="shelters" value="shelters"></input><label for="shelters"><i> Shelters</i></label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 60%"><input type="checkbox" name="roads" value="roads"></input><label for="roads"><i> Roads</i></label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 80%"><input type="checkbox" name="campsites" value="campsites"></input><label for="campsites"><i> Back Country Campsites</i></label></li>';
 
 		poiDiv.appendChild(poiLabel);
 		poiDiv.appendChild(poiCheckboxes);
@@ -267,9 +278,6 @@ var control,
 		if(control._expanded && whichTab === control._selected) {
 			control._container.removeChild(control._header);
 			control._contentPane.innerHTML = '';
-			jQuery('#home').animate({'top': '0px'});
-			jQuery('#zoom').animate({'top': '0px'});
-			jQuery('#measure').animate({'top': '0px'});
 			jQuery('#searchTool').animate({'height': '0px'});
 			jQuery('#searchButton').animate({'top': '0px'});
 			jQuery('#settingsButton').animate({'top': '0px'});
@@ -292,9 +300,6 @@ var control,
 				jQuery('#searchButton').html('<img height="20px" width="20px" src="images/searchButton.png"></img>');
 			}
 
-			jQuery('#home').animate({'top': '200px'});
-			jQuery('#zoom').animate({'top': '200px'});
-			jQuery('#measure').animate({'top': '200px'});
 			jQuery('#searchTool').animate({'height': '189px'});
 			jQuery('#searchButton').animate({'top': '189px'});
 			jQuery('#settingsButton').animate({'top': '189px'});

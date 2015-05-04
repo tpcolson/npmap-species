@@ -2,10 +2,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 	NPMap = {
 		div: 'main-map',
 		baseLayers: [
-			'mapbox-terrain',
-			'nps-parkTiles',
-			'esri-topographic',
-			'esri-imagery'
+			'mapbox-terrain'
 		],
 		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
@@ -96,16 +93,28 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		//locateControl: true, //TODO: Check if Tom wants this
 		measureControl: true,
 		//editControl: true,
-		scaleControl: true,
+		//scaleControl: true,
 		events: [{
 			fn: function() {
 				setDivs();
+				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
+				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				control._fullscreen = true;
+				document.getElementById('home').style.top = '400px';
+				document.getElementById('zoom').style.top = '400px';
+				document.getElementById('measure').style.top = '400px';
 				enterfullscreen();
 			},
 			type: 'enterfullscreen'
 		}, {
 			fn: function() {
 				setDivs();
+				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
+				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				control._fullscreen = false;
+				document.getElementById('home').style.top = '200px';
+				document.getElementById('zoom').style.top = '200px';
+				document.getElementById('measure').style.top = '200px';
 				exitfullscreen();
 			},
 			type: 'exitfullscreen'
