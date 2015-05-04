@@ -8,37 +8,61 @@ var control,
 		return this;
 	},
 	onAdd: function(map) {
+		/* create the container and set it up a bit */
 		control = this;
 		var container = L.DomUtil.create('div', 'utk-search-tool'),
 			contentPane = L.DomUtil.create('div', 'utk-search-pane'),
 			stopPropagation = L.DomEvent.stopPropagation;
+		this._container = container;
 
 		container.id = 'searchTool';
 		container.style.position = 'absolute';
 		container.style.margin = '0px';
+		L.DomEvent.disableClickPropagation(container); /* I don't want double-clicking on this to zoom the map */
 
+		/* I like to animate these things up and down, and it's easiest when they have ids! */
 		document.getElementsByClassName('leaflet-control-home')[0].id = 'home';
 		document.getElementsByClassName('leaflet-control-zoom')[0].id = 'zoom';
 		document.getElementsByClassName('npmap-control-measure')[0].id = 'measure';
 
+		/* top of container, never changes */
 		var header = L.DomUtil.create('div', 'utk-search-header');
 		var filler = L.DomUtil.create('p', 'utk-search-filler');
 		var close = L.DomUtil.create('button', 'utk-search-close');
 
-		L.DomEvent.disableClickPropagation(container);
-
 		close.innerHTML = '<b>X</b>';
+		//todo: onclick event for close, reset search and close control
 
+		/* stupid css is getting overwritten, take this! */
 		filler.style.margin = '0px';
 		close.style.margin = '0px';
 		close.style.border = '0px';
 		close.style.padding = '0px';
 
+		/* the header itself is added to the container in the _expandSearch function below */
 		header.appendChild(filler);
 		header.appendChild(close);
 
+		/* the contentPane will hold the actual searching/setting functionalities */
 		container.appendChild(contentPane);
 
+		/* create the settings tab (change base layer, check scale info, etc.) */
+		this._createOptionsDiv(control);
+
+		/* create search view (for now, this is just a static page) */
+		this._createSearchDiv(control);
+
+		/* create the expand tabs (choose setting or search view in control) */
+		this._createExpandButtons(control);
+
+		this._header = header;
+		this._contentPane = contentPane;
+		this._filler = filler;
+		this._close = close;
+
+		return container;
+	},
+	_createOptionsDiv: function(control) {
 		var optionsDiv = L.DomUtil.create('div', 'utk-search-options');
 
 		var layerOptions = L.DomUtil.create('div', 'utk-search-layer');
@@ -102,6 +126,22 @@ var control,
 		annotationDiv.appendChild(annotationTools);
 		optionsDiv.appendChild(annotationDiv);
 
+		control._optionsDiv = optionsDiv;
+		control._layerOptions = layerOptions;
+		control._layerSwitcherLabel = layerSwitcherLabel;
+		control._layerSwitcher = layerSwitcher;
+		control._levelLabel = levelLabel;
+		control._levelView = levelView;
+		control._poiDiv = poiDiv;
+		control._poiLabel = poiLabel;
+		control._poiCheckboxes = poiCheckboxes;
+		control._annotationDiv = annotationDiv;
+		control._annotationLabel= annotationLabel;
+		control._annotationTools = annotationTools;
+	},
+	_createSearchDiv: function(control) {
+	},
+	_createExpandButtons: function(control) {
 		var settingsButton = L.DomUtil.create('button', 'utk-tab-settings');
 		var searchButton = L.DomUtil.create('button', 'utk-tab-search');
 		settingsButton.id = 'settingsButton';
@@ -115,32 +155,13 @@ var control,
 		}
 		searchButton.innerHTML = '<img height="20px" width="20px" src="images/searchButton.png"></img>';
 
-		container.appendChild(settingsButton);
-		container.appendChild(searchButton);
+		control._container.appendChild(settingsButton);
+		control._container.appendChild(searchButton);
 
-		this._container = container;
-		this._header = header;
-		this._contentPane = contentPane;
-		this._filler = filler;
-		this._close = close;
-		this._optionsDiv = optionsDiv;
-		this._layerOptions = layerOptions;
-		this._layerSwitcherLabel = layerSwitcherLabel;
-		this._layerSwitcher = layerSwitcher;
-		this._levelLabel = levelLabel;
-		this._levelView = levelView;
-		this._poiDiv = poiDiv;
-		this._poiLabel = poiLabel;
-		this._poiCheckboxes = poiCheckboxes;
-		this._annotationDiv = annotationDiv;
-		this._annotationLabel= annotationLabel;
-		this._annotationTools = annotationTools;
-		this._settingsButton = settingsButton;
-		this._searchButton = searchButton;
-		this._expanded = false;
-		this._selected = '';
-
-		return container;
+		control._settingsButton = settingsButton;
+		control._searchButton = searchButton;
+		control._expanded = false;
+		control._selected = '';
 	},
 	_expandSearch: function(whichTab) {
 		if(control._expanded && whichTab === control._selected) {
