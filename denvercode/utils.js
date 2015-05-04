@@ -73,24 +73,6 @@ function toggleVisibility(layer) {
 
 var switcher, selected;
 window.onload = function() {
-	/*
-	 * a bit annoying, but when the switcher changes the base layer,
-	 * we need to check the show layer box for the base layer
-	 */
-	switcher = document.getElementById('basemap_listbox');
-	selected = switcher.getElementsByClassName('selected')[0];
-	switcher.addEventListener('click', checkBase);
-
-	/* create and add the search box to the map */
-	var fc = new FuseSearchControl();
-	NPMap.config.L.addControl(fc);
-
-	/* move the search box to directly before the base selector */
-	var par = document.getElementsByClassName('leaflet-top leaflet-right')[0];
-	var baseChoice = document.getElementsByClassName('npmap-control-switcher leaflet-control')[0];
-	var fuseSearch = document.getElementsByClassName('leaflet-control-geocoder leaflet-control')[0];
-	par.insertBefore(fuseSearch, baseChoice);
-
 	/* add in new print control */
 	var pc = new PrintControl();
 	NPMap.config.L.addControl(pc);
@@ -98,11 +80,6 @@ window.onload = function() {
 	/* add in search tool */
 	var st = new SearchTool();
 	NPMap.config.L.addControl(st);
-
-	/* move top left controls down */
-	document.getElementsByClassName('leaflet-control-home')[0].style.top = '200px';
-	document.getElementsByClassName('leaflet-control-zoom')[0].style.top = '200px';
-	document.getElementsByClassName('npmap-control-measure')[0].style.top = '200px';
 
 	/* add in floating div */
 	addFloatationDevice();

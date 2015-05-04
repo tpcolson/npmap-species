@@ -12,6 +12,7 @@ var control,
 		var container = L.DomUtil.create('div', 'utk-search-tool'),
 			stopPropagation = L.DomEvent.stopPropagation;
 
+		container.id = 'searchTool';
 		container.style.position = 'absolute';
 		container.style.margin = '0px';
 
@@ -96,7 +97,21 @@ var control,
 		annotationDiv.appendChild(annotationTools);
 		optionsDiv.appendChild(annotationDiv);
 
-		container.appendChild(optionsDiv);
+		var settingsButton = L.DomUtil.create('button', 'utk-tab-settings');
+		var searchButton = L.DomUtil.create('button', 'utk-tab-search');
+		settingsButton.id = 'settingsButton';
+		settingsButton.onclick = function() {
+			control._expandSearch('settingsButton');
+		}
+		settingsButton.innerHTML = '<img height="20px" width="20px" src="images/settingsButton.png"></img>';
+		searchButton.id = 'searchButton';
+		searchButton.onclick = function() {
+			control._expandSearch('searchButton');
+		}
+		searchButton.innerHTML = '<img height="20px" width="20px" src="images/searchButton.png"></img>';
+
+		container.appendChild(settingsButton);
+		container.appendChild(searchButton);
 
 		this._container = container;
 		this._header = header;
@@ -114,7 +129,52 @@ var control,
 		this._annotationDiv = annotationDiv;
 		this._annotationLabel= annotationLabel;
 		this._annotationTools = annotationTools;
+		this._settingsButton = settingsButton;
+		this._searchButton = searchButton;
+		this._expanded = false;
+		this._selected = '';
 
 		return container;
+	},
+	_expandSearch: function(whichTab) {
+		if(control._expanded && whichTab === control._selected) {
+			control._container.innerHTML = '';
+			control._container.appendChild(control._settingsButton);
+			control._container.appendChild(control._searchButton);
+			document.getElementsByClassName('leaflet-control-home')[0].style.top = '0px';
+			document.getElementsByClassName('leaflet-control-zoom')[0].style.top = '0px';
+			document.getElementsByClassName('npmap-control-measure')[0].style.top = '0px';
+			jQuery('#searchTool').animate({'height': '0px'});
+			jQuery('#searchButton').animate({'top': '0px'});
+			jQuery('#settingsButton').animate({'top': '0px'});
+			jQuery('#searchButton').html('<img height="20px" width="20px" src="images/searchButton.png"></img>');
+			jQuery('#settingsButton').html('<img height="20px" width="20px" src="images/settingsButton.png"></img>');
+			control._expanded = false;
+			control._selected = '';
+		} else {
+			if(whichTab === 'searchButton') {
+				control._container.innerHTML = '';
+				control._container.appendChild(control._settingsButton);
+				control._container.appendChild(control._searchButton);
+				jQuery('#searchButton').html('<img height="20px" width="20px" src="images/searchButtonSelected.png"></img>');
+				jQuery('#settingsButton').html('<img height="20px" width="20px" src="images/settingsButton.png"></img>');
+			} else {
+				control._container.innerHTML = '';
+				control._container.appendChild(control._optionsDiv);
+				control._container.appendChild(control._settingsButton);
+				control._container.appendChild(control._searchButton);
+				jQuery('#settingsButton').html('<img height="20px" width="20px" src="images/settingsButtonSelected.png"></img>');
+				jQuery('#searchButton').html('<img height="20px" width="20px" src="images/searchButton.png"></img>');
+			}
+
+			document.getElementsByClassName('leaflet-control-home')[0].style.top = '200px';
+			document.getElementsByClassName('leaflet-control-zoom')[0].style.top = '200px';
+			document.getElementsByClassName('npmap-control-measure')[0].style.top = '200px';
+			jQuery('#searchTool').animate({'height': '189px'});
+			jQuery('#searchButton').animate({'top': '189px'});
+			jQuery('#settingsButton').animate({'top': '189px'});
+			control._expanded = true;
+			control._selected = whichTab;
+		}
 	}
 });
