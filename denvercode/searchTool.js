@@ -140,6 +140,106 @@ var control,
 		control._annotationTools = annotationTools;
 	},
 	_createSearchDiv: function(control) {
+		var searchDiv = L.DomUtil.create('div', 'utk-search-div');
+
+		/* add breadcrumb to search div todo: make this dynamic */
+		var breadcrumb = L.DomUtil.create('div', 'utk-search-breadcrumb');
+		breadcrumb.innerHTML = 'SEARCH > ABIES FRASERI > COMPARE WITH > SIMILAR DISTRIBUTION';
+		searchDiv.appendChild(breadcrumb);
+
+		var selectedImage = L.DomUtil.create('div', 'image-normal vignette');
+		var innerImage = L.DomUtil.create('img', 'inner-image');
+		innerImage.src = 'thumbnails/abies_fraseri.jpg';
+		selectedImage.appendChild(innerImage);
+		searchDiv.appendChild(selectedImage);
+
+		var selectedSpecies = L.DomUtil.create('div', 'utk-search-species');
+		selectedSpecies.innerHTML = 'Abies fraseri';
+		searchDiv.appendChild(selectedSpecies);
+		
+		var selectedRadioButton = L.DomUtil.create('input', 'selected');
+		selectedRadioButton.name = 'comparison';
+		selectedRadioButton.type = 'radio';
+		selectedRadioButton.checked = 'checked';
+		searchDiv.appendChild(selectedRadioButton);
+
+		var subheadCompare = L.DomUtil.create('div', 'subhead2');
+		subheadCompare.innerHTML = 'COMPARE WITH ...';
+		searchDiv.appendChild(subheadCompare);
+
+		var subheadTitle = L.DomUtil.create('div', 'subhead');
+		subheadTitle.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
+		searchDiv.appendChild(subheadTitle);
+
+		var speciesText = L.DomUtil.create('div', 'description');
+		speciesText.innerHTML = 'Distribution Characteristics: Spread over high elevation regions with a large amount of soil coverage. It\'s a fir tree!';
+		searchDiv.appendChild(speciesText);
+
+		var dropdown1 = L.DomUtil.create('select', 'compare-dropdown-1');
+		dropdown1.innerHTML = '<option value=1><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri</option>' +
+								'<option value=2><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Another abies fraseri</option>' +
+								'<option value=3><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 3</option>' +
+								'<option value=4><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Something else</option>' +
+								'<option value=5><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 4</option>';
+		searchDiv.appendChild(dropdown1);
+
+		var dropdown2 = L.DomUtil.create('select', 'compare-dropdown-2');
+		dropdown2.innerHTML = '<option value=1><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri</option>' +
+								'<option value=2><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Another abies fraseri</option>' +
+								'<option value=3><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 3</option>' +
+								'<option value=4><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Something else</option>' +
+								'<option value=5><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 4</option>';
+		searchDiv.appendChild(dropdown2);
+
+		var numberResults = L.DomUtil.create('div', 'number-results');
+		numberResults.innerHTML = '<i>5 RESULTS</i>';
+		searchDiv.appendChild(numberResults);
+
+		var radioButton2 = L.DomUtil.create('input', 'radio-button-2');
+		radioButton2.name = 'comparison';
+		radioButton2.type = 'radio';
+		searchDiv.appendChild(radioButton2);
+
+		var radioButton2Text = L.DomUtil.create('div', 'radio-button-2-text');
+		radioButton2Text.innerHTML = '<center>COMPARE ENVIRONMENT</center>';
+		searchDiv.appendChild(radioButton2Text);
+
+		var radioButton3 = L.DomUtil.create('input', 'radio-button-3');
+		radioButton3.name = 'comparison';
+		radioButton3.type = 'radio';
+		searchDiv.appendChild(radioButton3);
+
+		var radioButton3Text = L.DomUtil.create('div', 'radio-button-3-text');
+		radioButton3Text.innerHTML = '<center>COMPARE SPECIES</center>';
+		searchDiv.appendChild(radioButton3Text);
+
+		var radioButton4 = L.DomUtil.create('input', 'radio-button-4');
+		radioButton4.name = 'comparison';
+		radioButton4.type = 'radio';
+		searchDiv.appendChild(radioButton4);
+
+		var radioButton4Text = L.DomUtil.create('div', 'radio-button-4-text');
+		radioButton4Text.innerHTML = '<center>COMPARE AREA</center>';
+		searchDiv.appendChild(radioButton4Text);
+
+		control._searchDiv = searchDiv;
+		control._breadcrumb = breadcrumb;
+		control._selectedImage = selectedImage;
+		control._innerImage = innerImage;
+		control._selectedSpecies = selectedSpecies;
+		control._selectedRadioButton = selectedRadioButton;
+		control._subheadCompare = subheadCompare;
+		control._subheadTitle = subheadTitle;
+		control._speciesText = speciesText;
+		control._dropdown1 = dropdown1;
+		control._dropdown2 = dropdown2;
+		control._numberResults = numberResults;
+		control._radioButton2 = radioButton2;
+		control._radioButton2Text = radioButton2Text;
+		control._radioButton3 = radioButton3;
+		control._radioButton3Text = radioButton3Text;
+		control._radioButton4 = radioButton4;
+		control._radioButton4Text = radioButton4Text;
 	},
 	_createExpandButtons: function(control) {
 		var settingsButton = L.DomUtil.create('button', 'utk-tab-settings');
@@ -181,6 +281,7 @@ var control,
 			if(whichTab === 'searchButton') {
 				control._contentPane.innerHTML = '';
 				control._container.insertBefore(control._header, control._contentPane);
+				control._contentPane.appendChild(control._searchDiv);
 				jQuery('#searchButton').html('<img height="20px" width="20px" src="images/searchButtonSelected.png"></img>');
 				jQuery('#settingsButton').html('<img height="20px" width="20px" src="images/settingsButton.png"></img>');
 			} else {
