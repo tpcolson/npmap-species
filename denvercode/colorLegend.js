@@ -6,7 +6,7 @@ function addFloatationDevice() {
 	parent = document.getElementById('main-map').getElementsByClassName('npmap')[0];
 
 	floatationDevice = document.createElement('div');
-	floatationDevice.id = 'floatDiv';
+	floatationDevice.id = 'color-legend';
 	floatationDevice.style.cursor = 'move';
 
 	floatationDevice.onmousedown = function(evt) {

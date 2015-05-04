@@ -1,9 +1,9 @@
-#floatDiv {
+#color-legend {
 	position: absolute;
-	width: 100px;
-	height: 100px;
-	left: 50px;
-	top: 450px;
+	width: 330px;
+	height: 168px;
+	left: 150px;
+	top: 200px;
 	z-index: 150;
 	background-color: black;
 	opacity: 0.9;
@@ -55,22 +55,30 @@
 }
 
 .utk-search-layer {
-	width: 205px;
+	width: 220px;
 	height: 109px;
 	border-right: 2px dotted #40403d;
 	float: left;
 }
 
 .utk-search-switcher {
+	border-radius: 4px;
 	width: 180px;
 	background-color: #f5faf2;
 	color: #000000;
 }
 
+.observation-checkbox {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: 600;
+	color: #f5faf2;
+}
+
 .utk-search-poi {
 	position: absolute;
-	left: 225px;
-	width: 261px;
+	left: 240px;
+	width: 221px;
 	height: 109px;
 	border-right: 2px dotted #40403d;
 	float: left;
@@ -89,13 +97,14 @@
 
 .utk-search-annotation {
 	position: absolute;
-	left: 510px;
+	left: 481px;
 	width: 134px;
 }
 
 .utk-search-annotation-tools {
 	position: relative;
 	top: 20px;
+	left: 16px;
 	width: 400px;
 	height: 100px;
 }
@@ -150,7 +159,7 @@
 
 .utk-search-breadcrumb {
 	position: relative;
-	top: -5px;
+	top: -10px;
 	width: 100%;
 	height: 20px;
 	font-weight: 600;
@@ -182,7 +191,7 @@
 
 .utk-search-species {
 	position: absolute;
-	top: 131px;
+	top: 126px;
 	font-weight: bold;
 	font-size: 18pt;
 	color: #40b5c6;
@@ -254,7 +263,7 @@
 .number-results {
 	position: absolute;
 	left: 618px;
-	top: 136px;
+	top: 131px;
 	font-size: 12pt;
 	letter-spacing: .001em;
 	color: #f5faf2;
@@ -313,10 +322,11 @@
 	outline: 0px;
 	background-color: #000000;
 	position: absolute;
-	left: 60px;
+	left: 20px;
 	top: 0px;
-	width: 30px;
-	height: 30px;
+	padding: 0px;
+	width: 40px;
+	height: 40px;
 }
 
 #searchButton {
@@ -324,8 +334,9 @@
 	outline: 0px;
 	background-color: #000000;
 	position: absolute;
-	left: 102px;
+	left: 60px;
 	top: 0px;
-	width: 30px;
-	height: 30px;
+	padding: 0px;
+	width: 40px;
+	height: 40px;
 }

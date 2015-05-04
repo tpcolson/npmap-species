@@ -112,9 +112,9 @@ var subNavZ, headerZ, divHeader, divSubNav,
 				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
 				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
 				control._fullscreen = false;
-				document.getElementById('home').style.top = '200px';
-				document.getElementById('zoom').style.top = '200px';
-				document.getElementById('measure').style.top = '200px';
+				document.getElementById('home').style.top = '225px';
+				document.getElementById('zoom').style.top = '225px';
+				document.getElementById('measure').style.top = '225px';
 				exitfullscreen();
 			},
 			type: 'exitfullscreen'

@@ -25,9 +25,9 @@ var control,
 		document.getElementsByClassName('leaflet-control-home')[0].id = 'home';
 		document.getElementsByClassName('leaflet-control-zoom')[0].id = 'zoom';
 		document.getElementsByClassName('npmap-control-measure')[0].id = 'measure';
-		document.getElementById('home').style.top = '200px';
-		document.getElementById('zoom').style.top = '200px';
-		document.getElementById('measure').style.top = '200px';
+		document.getElementById('home').style.top = '225px';
+		document.getElementById('zoom').style.top = '225px';
+		document.getElementById('measure').style.top = '225px';
 
 		/* top of container, never changes */
 		var header = L.DomUtil.create('div', 'utk-search-header');
@@ -80,6 +80,7 @@ var control,
 		var layerOptions = L.DomUtil.create('div', 'utk-search-layer');
 		var layerSwitcherLabel = L.DomUtil.create('div', 'utk-search-switcher-label');
 		var layerSwitcher = L.DomUtil.create('select', 'utk-search-switcher');
+		var observationSwitcher = L.DomUtil.create('div', 'observation-checkbox');
 		var levelLabel = L.DomUtil.create('div', 'utk-search-level-label');
 		var levelView = L.DomUtil.create('div', 'utk-search-level-view');
 
@@ -89,6 +90,7 @@ var control,
 			'<option>Park Tiles</option>' +
 			'<option>Esri Topo</option>' +
 			'<option>Esri Imagery</option>';
+		observationSwitcher.innerHTML = '<input type="checkbox" name="trails" value="trails"></input><label for="trails"> View Observed Sightings</label>';
 		levelLabel.innerHTML = '<i>CURRENT VIEW:</i>';
 		levelLabel.style.color = '#f5faf2';
 		levelLabel.style.fontWeight = '600';
@@ -99,7 +101,7 @@ var control,
 		layerOptions.appendChild(layerSwitcherLabel);
 		layerOptions.appendChild(layerSwitcher);
 		layerOptions.appendChild(document.createElement('br'));
-		layerOptions.appendChild(document.createElement('br'));
+		layerOptions.appendChild(observationSwitcher);
 		layerOptions.appendChild(levelLabel);
 		layerOptions.appendChild(levelView);
 		optionsDiv.appendChild(layerOptions);
@@ -111,11 +113,11 @@ var control,
 		var poiCheckboxes = L.DomUtil.create('ul', 'utk-search-poi-checkboxes');
 
 		poiLabel.innerHTML = '<b>SELECT POINTS OF INTEREST</b>';
-		poiCheckboxes.innerHTML = '<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 30%"><input type="checkbox" name="trails" value="trails"></input><label for="trails"><i> Trails</i></label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 60%"><input type="checkbox" name="visitors" value="visitors"></input><label for="visitors"><i> Visitor Centers</i></label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 30%"><input type="checkbox" name="shelters" value="shelters"></input><label for="shelters"><i> Shelters</i></label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 60%"><input type="checkbox" name="roads" value="roads"></input><label for="roads"><i> Roads</i></label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 80%"><input type="checkbox" name="campsites" value="campsites"></input><label for="campsites"><i> Back Country Campsites</i></label></li>';
+		poiCheckboxes.innerHTML = '<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="trails" value="trails"></input><label for="trails"> Trails</label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 52%"><input type="checkbox" name="visitors" value="visitors"></input><label for="visitors"> Visitor Centers</label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="shelters" value="shelters"></input><label for="shelters"> Shelters</label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 50%"><input type="checkbox" name="roads" value="roads"></input><label for="roads"> Roads</label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 80%"><input type="checkbox" name="campsites" value="campsites"></input><label for="campsites"> Back Country Campsites</label></li>';
 
 		poiDiv.appendChild(poiLabel);
 		poiDiv.appendChild(poiCheckboxes);
@@ -141,6 +143,7 @@ var control,
 		control._layerOptions = layerOptions;
 		control._layerSwitcherLabel = layerSwitcherLabel;
 		control._layerSwitcher = layerSwitcher;
+		control._observationSwitcher = observationSwitcher;
 		control._levelLabel = levelLabel;
 		control._levelView = levelView;
 		control._poiDiv = poiDiv;
@@ -259,12 +262,12 @@ var control,
 		settingsButton.onclick = function() {
 			control._expandSearch('settingsButton');
 		}
-		settingsButton.innerHTML = '<img height="20px" width="20px" src="images/settingsButton.png"></img>';
+		settingsButton.innerHTML = '<img src="images/settingsButton.png"></img>';
 		searchButton.id = 'searchButton';
 		searchButton.onclick = function() {
 			control._expandSearch('searchButton');
 		}
-		searchButton.innerHTML = '<img height="20px" width="20px" src="images/searchButton.png"></img>';
+		searchButton.innerHTML = '<img src="images/searchButton.png"></img>';
 
 		control._container.appendChild(settingsButton);
 		control._container.appendChild(searchButton);
@@ -281,8 +284,8 @@ var control,
 			jQuery('#searchTool').animate({'height': '0px'});
 			jQuery('#searchButton').animate({'top': '0px'});
 			jQuery('#settingsButton').animate({'top': '0px'});
-			jQuery('#searchButton').html('<img height="20px" width="20px" src="images/searchButton.png"></img>');
-			jQuery('#settingsButton').html('<img height="20px" width="20px" src="images/settingsButton.png"></img>');
+			jQuery('#searchButton').html('<img src="images/searchButton.png"></img>');
+			jQuery('#settingsButton').html('<img src="images/settingsButton.png"></img>');
 			control._expanded = false;
 			control._selected = '';
 		} else {
@@ -290,14 +293,14 @@ var control,
 				control._contentPane.innerHTML = '';
 				control._container.insertBefore(control._header, control._contentPane);
 				control._contentPane.appendChild(control._searchDiv);
-				jQuery('#searchButton').html('<img height="20px" width="20px" src="images/searchButtonSelected.png"></img>');
-				jQuery('#settingsButton').html('<img height="20px" width="20px" src="images/settingsButton.png"></img>');
+				jQuery('#searchButton').html('<img src="images/searchButtonSelected.png"></img>');
+				jQuery('#settingsButton').html('<img src="images/settingsButton.png"></img>');
 			} else {
 				control._contentPane.innerHTML = '';
 				control._container.insertBefore(control._header, control._contentPane);
 				control._contentPane.appendChild(control._optionsDiv);
-				jQuery('#settingsButton').html('<img height="20px" width="20px" src="images/settingsButtonSelected.png"></img>');
-				jQuery('#searchButton').html('<img height="20px" width="20px" src="images/searchButton.png"></img>');
+				jQuery('#settingsButton').html('<img src="images/settingsButtonSelected.png"></img>');
+				jQuery('#searchButton').html('<img src="images/searchButton.png"></img>');
 			}
 
 			jQuery('#searchTool').animate({'height': '189px'});
