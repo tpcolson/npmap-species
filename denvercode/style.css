@@ -19,6 +19,11 @@
 	opacity: 0.9;
 }
 
+.utk-search-pane {
+	width: 100%;
+	height: 169px;
+}
+
 .utk-search-header {
 	width: 100%;
 	height: 20px;
