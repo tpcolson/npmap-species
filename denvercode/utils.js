@@ -81,10 +81,6 @@ window.onload = function() {
 	selected = switcher.getElementsByClassName('selected')[0];
 	switcher.addEventListener('click', checkBase);
 
-	/* create and add the colorbar to the map */
-	var cb = new ColorbarControl();
-	NPMap.config.L.addControl(cb);
-
 	/* create and add the search box to the map */
 	var fc = new FuseSearchControl();
 	NPMap.config.L.addControl(fc);
@@ -94,4 +90,20 @@ window.onload = function() {
 	var baseChoice = document.getElementsByClassName('npmap-control-switcher leaflet-control')[0];
 	var fuseSearch = document.getElementsByClassName('leaflet-control-geocoder leaflet-control')[0];
 	par.insertBefore(fuseSearch, baseChoice);
+
+	/* add in new print control */
+	var pc = new PrintControl();
+	NPMap.config.L.addControl(pc);
+
+	/* add in search tool */
+	var st = new SearchTool();
+	NPMap.config.L.addControl(st);
+
+	/* move top left controls down */
+	document.getElementsByClassName('leaflet-control-home')[0].style.top = '200px';
+	document.getElementsByClassName('leaflet-control-zoom')[0].style.top = '200px';
+	document.getElementsByClassName('npmap-control-measure')[0].style.top = '200px';
+
+	/* add in floating div */
+	addFloatationDevice();
 }

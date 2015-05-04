@@ -5,15 +5,24 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			'mapbox-terrain',
 			'nps-parkTiles',
 			'esri-topographic',
-			'esri-imagery',
-			'mapbox-satelliteLabels',
-			'nps-parkTilesImagery'
+			'esri-imagery'
 		],
 		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
-			name: 'Abies fraseri',
-			id: 'lonnieljyu.test',
-			type: 'mapbox'
+			name: 'Orange',
+			id: 'jduggan1.Acer_pensylvanicum_orange',
+			type: 'mapbox',
+			opacity: 0.5
+		}, {
+			name: 'Pink',
+			id: 'jduggan1.Acer_rubrum_v_rubrum_pink',
+			type: 'mapbox',
+			opacity: 0.5
+		}, {
+			name: 'Blue',
+			id: 'jduggan1.Acer_saccharum_blue',
+			type: 'mapbox',
+			opacity: 0.5
 		}, {
 			name: 'Observations',
 			url: 'Abies_fraseri.geojson',
@@ -79,15 +88,14 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		],
 		//downloadControl: true, //TODO: this would be useful (once implemented, we could link to the relevant data store page)
 		fullscreenControl: true,
-		zoomdisplayControl: true,
+		//zoomdisplayControl: true,
 		//shareControl: true, //TODO: this would be useful once implemented
-		printControl: true, //TODO: this won't work right until the geojsons are being pulled from non-local url
-		legendControl: {
-			html: setLegend
-		},
+		//legendControl: {
+		//	html: setLegend
+		//},
 		//locateControl: true, //TODO: Check if Tom wants this
 		measureControl: true,
-		editControl: true,
+		//editControl: true,
 		scaleControl: true,
 		events: [{
 			fn: function() {
