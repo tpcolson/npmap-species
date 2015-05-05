@@ -73,6 +73,10 @@ function toggleVisibility(layer) {
 
 var switcher, selected;
 window.onload = function() {
+	/* remove default switcher */
+	var sw = document.getElementsByClassName('npmap-control-switcher')[0];
+	sw.remove();
+
 	/* add in new print control */
 	var pc = new PrintControl();
 	NPMap.config.L.addControl(pc);

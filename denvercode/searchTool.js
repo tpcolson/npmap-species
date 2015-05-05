@@ -21,7 +21,7 @@ var control,
 		container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
 		L.DomEvent.disableClickPropagation(container); /* I don't want double-clicking on this to zoom the map */
 
-		/* I like to move these things up and down, and it's easiest when they have ids! */
+		/* We need to move the top left controls down the page */
 		document.getElementsByClassName('leaflet-control-home')[0].id = 'home';
 		document.getElementsByClassName('leaflet-control-zoom')[0].id = 'zoom';
 		document.getElementsByClassName('npmap-control-measure')[0].id = 'measure';
@@ -90,6 +90,24 @@ var control,
 			'<option>Park Tiles</option>' +
 			'<option>Esri Topo</option>' +
 			'<option>Esri Imagery</option>';
+		control._lastBaseIndex = 0;
+		layerSwitcher.onchange = function() {
+			/* remove last layer (taken from NPMap.js switcher.js) */
+			NPMap.config.baseLayers[control._lastBaseIndex].visible = false;
+			NPMap.config.L.removeLayer(NPMap.config.baseLayers[control._lastBaseIndex].L);
+
+			/* add new layer (taken from NPMap.js switcher.js) */
+			var newLayer = NPMap.config.baseLayers[this.selectedIndex];
+			if (newLayer.type === 'arcgisserver') {
+				newLayer.L = L.npmap.layer[newLayer.type][newLayer.tiled === true ? 'tiled' : 'dynamic'](newLayer);
+			} else {
+				newLayer.L = L.npmap.layer[newLayer.type](newLayer);
+			}
+			newLayer.visible = true;
+			NPMap.config.L.addLayer(newLayer.L);
+
+			control._lastBaseIndex = this.selectedIndex;
+		}
 		observationSwitcher.innerHTML = '<input type="checkbox" name="trails" value="trails"></input><label for="trails"> View Observed Sightings</label>';
 		levelLabel.innerHTML = '<i>CURRENT VIEW:</i>';
 		levelLabel.style.color = '#f5faf2';

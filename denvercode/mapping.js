@@ -2,7 +2,10 @@ var subNavZ, headerZ, divHeader, divSubNav,
 	NPMap = {
 		div: 'main-map',
 		baseLayers: [
-			'mapbox-terrain'
+			'mapbox-terrain',
+			'nps-parkTiles',
+			'esri-topographic',
+			'esri-imagery'
 		],
 		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
