@@ -121,5 +121,18 @@ var subNavZ, headerZ, divHeader, divSubNav,
 				exitfullscreen();
 			},
 			type: 'exitfullscreen'
+		}, {
+			fn: function() {
+				var currentZoom = NPMap.config.L._zoom;
+				var currentCenter = NPMap.config.L.getCenter();
+				var firstPoint = NPMap.config.L.latLngToContainerPoint(currentCenter);
+				var firstLatLng = NPMap.config.L.containerPointToLatLng(firstPoint);
+				var secondPoint = [firstPoint.x + 1, firstPoint.y];
+				var secondLatLng = NPMap.config.L.containerPointToLatLng(secondPoint);
+				var dist = firstLatLng.distanceTo(secondLatLng);
+
+				control._levelView.innerHTML = '<i>' + dist.toFixed(1) + 'm level ' + currentZoom + ': ?m resolution data</i>';
+			},
+			type: 'zoomend'
 		}]
 	};

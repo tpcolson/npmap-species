@@ -112,7 +112,7 @@ var control,
 		levelLabel.innerHTML = '<i>CURRENT VIEW:</i>';
 		levelLabel.style.color = '#f5faf2';
 		levelLabel.style.fontWeight = '600';
-		levelView.innerHTML = '<i>700m level 6: 30m resolution data</i>';
+		levelView.innerHTML = '<i>124.3m level 10: ?m resolution data</i>';
 		levelView.style.color = '#f5faf2';
 		levelView.style.fontWeight = '600';
 
