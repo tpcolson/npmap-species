@@ -5,8 +5,7 @@ if test $# -ne 2; then
    exit 1
 fi
 
-results_dir=$1
-results_dir=${results_dir%/}
+results_dir=${1%/}
 
 while read line; do
    for sp in $line; do
