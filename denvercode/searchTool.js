@@ -185,9 +185,99 @@ var control,
 
 		/* add breadcrumb to search div todo: make this dynamic */
 		var breadcrumb = L.DomUtil.create('div', 'utk-search-breadcrumb');
-		breadcrumb.innerHTML = 'SEARCH > ABIES FRASERI > COMPARE WITH > SIMILAR DISTRIBUTION';
+		breadcrumb.innerHTML = '';
 		searchDiv.appendChild(breadcrumb);
 
+		/* create initial search page */
+		control._createInitialSearch(control);
+
+		/* create lexical/area search results page */
+		control._createSearchResults(control);
+
+		/* create group search results */
+		control._createGroupResults(control);
+
+		/* create default comparison page */
+		control._createComparePage(control);
+
+		/* create distribution comparison */
+		control._createDistributionDiv(control);
+
+		/* create environmental page */
+		control._createEnvironmentDiv(control);
+
+		/* create lexical compare page */
+		control._createLexicalDiv(control);
+
+		/* create area compare page */
+		control._createAreaCompareDiv(control);
+
+		control._searchDiv = searchDiv;
+		control._breadcrumb = breadcrumb;
+		control._lastSearchPage = control._initialSearchDiv;
+	},
+	_createInitialSearch: function(control) {
+		var initialSearchDiv = L.DomUtil.create('div', 'utk-search-initial');
+
+		var initialSearchLexical = L.DomUtil.create('div', 'utk-search-init-lexical');
+		var initialSearchLexLabel = L.DomUtil.create('div', 'init-lexical-label');
+		initialSearchLexLabel.innerHTML = 'SEARCH BY NAME';
+		var initialSearchLexBox = L.DomUtil.create('input', 'init-lexical-box');
+		initialSearchLexBox.placeholder = 'Type a species name';
+		var initialSearchLexOptions = L.DomUtil.create('div', 'init-lexical-options');
+		initialSearchLexOptions.innerHTML = '<input type="radio" name="lexicalType" value="species" checked /> SPECIES' +
+									'<input type="radio" name="lexicalType" value="groups" style="margin-left:20px" /> GROUPS';
+
+		initialSearchLexical.appendChild(initialSearchLexLabel);
+		initialSearchLexical.appendChild(initialSearchLexBox);
+		initialSearchLexical.appendChild(initialSearchLexOptions);
+		initialSearchDiv.appendChild(initialSearchLexical);
+
+		var initialSearchArea = L.DomUtil.create('div', 'utk-search-init-area');
+		var initialSearchAreaLabel = L.DomUtil.create('div', 'init-area-label');
+		initialSearchAreaLabel.innerHTML = 'SEARCH BY SPECIFIC AREA ON MAP';
+		var searchCircle = L.DomUtil.create('canvas', '');
+		searchCircle.id = 'init-area-circle';
+		searchCircle.width = 60;
+		searchCircle.height = 60;
+		var ctx = searchCircle.getContext('2d');
+		ctx.beginPath();
+		ctx.arc(30, 30, 30, 0, 2*Math.PI);
+		ctx.strokeStyle = '#f5faf2';
+		ctx.stroke();
+		ctx.fillStyle = '#f5faf2';
+		ctx.fill();
+		var searchRectangle = L.DomUtil.create('canvas', '');
+		searchRectangle.id = 'init-area-rect';
+		searchRectangle.width = 60;
+		searchRectangle.height = 60;
+		var ctx = searchRectangle.getContext('2d');
+		ctx.fillStyle = '#f5faf2';
+		ctx.fillRect(0, 0, 60, 60);
+		var radiusInput = L.DomUtil.create('div', 'init-area-radius');
+		radiusInput.innerHTML = 'Set shape size: <input name="init-radius" value="0" size="10"/> m';
+
+		initialSearchArea.appendChild(initialSearchAreaLabel);
+		initialSearchArea.appendChild(searchCircle);
+		initialSearchArea.appendChild(searchRectangle);
+		initialSearchArea.appendChild(radiusInput);
+		initialSearchDiv.appendChild(initialSearchArea);
+
+		control._initialSearchDiv = initialSearchDiv;
+		control._initialSearchLexical = initialSearchLexical;
+		control._initialSearchLexLabel = initialSearchLexLabel;
+		control._initialSearchLexBox = initialSearchLexBox;
+		control._initialSearchLexOptions = initialSearchLexOptions;
+		control._initialSearchArea = initialSearchArea;
+	},
+	_createSearchResults: function(control) {
+	},
+	_createGroupResults: function(control) {
+	},
+	_createComparePage: function(control) {
+	},
+	_createDistributionDiv: function(control) {
+								/*
 		var selectedImage = L.DomUtil.create('div', 'image-normal vignette');
 		var innerImage = L.DomUtil.create('img', 'inner-image');
 		innerImage.src = 'thumbnails/abies_fraseri.jpg';
@@ -230,41 +320,40 @@ var control,
 								'<option value=3><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 3</option>' +
 								'<option value=4><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Something else</option>' +
 								'<option value=5><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 4</option>';
-		searchDiv.appendChild(dropdown2);
+		distributionDiv.appendChild(dropdown2);
 
 		var numberResults = L.DomUtil.create('div', 'number-results');
 		numberResults.innerHTML = '<i>5 RESULTS</i>';
-		searchDiv.appendChild(numberResults);
+		distributionDiv.appendChild(numberResults);
 
 		var radioButton2 = L.DomUtil.create('input', 'radio-button-2');
 		radioButton2.name = 'comparison';
 		radioButton2.type = 'radio';
-		searchDiv.appendChild(radioButton2);
+		distributionDiv.appendChild(radioButton2);
 
 		var radioButton2Text = L.DomUtil.create('div', 'radio-button-2-text');
 		radioButton2Text.innerHTML = '<center>COMPARE ENVIRONMENT</center>';
-		searchDiv.appendChild(radioButton2Text);
+		distributionDiv.appendChild(radioButton2Text);
 
 		var radioButton3 = L.DomUtil.create('input', 'radio-button-3');
 		radioButton3.name = 'comparison';
 		radioButton3.type = 'radio';
-		searchDiv.appendChild(radioButton3);
+		distributionDiv.appendChild(radioButton3);
 
 		var radioButton3Text = L.DomUtil.create('div', 'radio-button-3-text');
 		radioButton3Text.innerHTML = '<center>COMPARE SPECIES</center>';
-		searchDiv.appendChild(radioButton3Text);
+		distributionDiv.appendChild(radioButton3Text);
 
 		var radioButton4 = L.DomUtil.create('input', 'radio-button-4');
 		radioButton4.name = 'comparison';
 		radioButton4.type = 'radio';
-		searchDiv.appendChild(radioButton4);
+		distributionDiv.appendChild(radioButton4);
 
 		var radioButton4Text = L.DomUtil.create('div', 'radio-button-4-text');
 		radioButton4Text.innerHTML = '<center>COMPARE AREA</center>';
-		searchDiv.appendChild(radioButton4Text);
+		distributionDiv.appendChild(radioButton4Text);
 
-		control._searchDiv = searchDiv;
-		control._breadcrumb = breadcrumb;
+		control._distributionDiv = distributionDiv;
 		control._selectedImage = selectedImage;
 		control._innerImage = innerImage;
 		control._selectedSpecies = selectedSpecies;
@@ -281,6 +370,13 @@ var control,
 		control._radioButton3Text = radioButton3Text;
 		control._radioButton4 = radioButton4;
 		control._radioButton4Text = radioButton4Text;
+		*/
+	},
+	_createEnvironmentDiv: function(control) {
+	},
+	_createLexicalDiv: function(control) {
+	},
+	_createAreaCompareDiv: function(control) {
 	},
 	_createExpandButtons: function(control) {
 		var settingsButton = L.DomUtil.create('button', 'utk-tab-settings');
@@ -320,6 +416,7 @@ var control,
 				control._contentPane.innerHTML = '';
 				control._container.insertBefore(control._header, control._contentPane);
 				control._contentPane.appendChild(control._searchDiv);
+				control._searchDiv.appendChild(control._lastSearchPage);
 				jQuery('#searchButton').html('<img src="images/searchButtonSelected.png"></img>');
 				jQuery('#settingsButton').html('<img src="images/settingsButton.png"></img>');
 			} else {

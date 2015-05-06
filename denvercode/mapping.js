@@ -101,7 +101,11 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			fn: function() {
 				setDivs();
 				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
-				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				if(control._selected === 'settingsButton') {
+					control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				} else if(parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) > 1366) {
+					control._searchDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 1366 + 40) / 2) + 'px';
+				}
 				control._fullscreen = true;
 				document.getElementById('home').style.top = '400px';
 				document.getElementById('zoom').style.top = '400px';
@@ -113,7 +117,12 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			fn: function() {
 				setDivs();
 				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
-				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+
+				if(control._selected === 'settingsButton') {
+					control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				} else if(parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) > 1366) {
+					control._searchDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 1366 + 40) / 2) + 'px';
+				}
 				control._fullscreen = false;
 				document.getElementById('home').style.top = '225px';
 				document.getElementById('zoom').style.top = '225px';
