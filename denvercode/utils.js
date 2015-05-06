@@ -73,25 +73,29 @@ function toggleVisibility(layer) {
 
 var switcher, selected;
 window.onload = function() {
-	/*
-	 * a bit annoying, but when the switcher changes the base layer,
-	 * we need to check the show layer box for the base layer
-	 */
-	switcher = document.getElementById('basemap_listbox');
-	selected = switcher.getElementsByClassName('selected')[0];
-	switcher.addEventListener('click', checkBase);
+	/* remove default switcher */
+	var sw = document.getElementsByClassName('npmap-control-switcher')[0];
+	sw.remove();
 
-	/* create and add the colorbar to the map */
-	var cb = new ColorbarControl();
-	NPMap.config.L.addControl(cb);
+	/* turn off overlays by default */
+	for(var i = 0; i < NPMap.config.overlays.length; i++) {
+		var overlay = NPMap.config.overlays[i];
 
-	/* create and add the search box to the map */
-	var fc = new FuseSearchControl();
-	NPMap.config.L.addControl(fc);
+		/* todo: remove this if statement once everything else is done */
+		if(overlay.name === 'Trails' || overlay.name === 'Roads' || overlay.name === 'Shelters') {
+			overlay.visible = false;
+			NPMap.config.L.removeLayer(overlay.L);
+		}
+	}
 
-	/* move the search box to directly before the base selector */
-	var par = document.getElementsByClassName('leaflet-top leaflet-right')[0];
-	var baseChoice = document.getElementsByClassName('npmap-control-switcher leaflet-control')[0];
-	var fuseSearch = document.getElementsByClassName('leaflet-control-geocoder leaflet-control')[0];
-	par.insertBefore(fuseSearch, baseChoice);
+	/* add in new print control */
+	var pc = new PrintControl();
+	NPMap.config.L.addControl(pc);
+
+	/* add in search tool */
+	var st = new SearchTool();
+	NPMap.config.L.addControl(st);
+
+	/* add in floating div */
+	addFloatationDevice();
 }

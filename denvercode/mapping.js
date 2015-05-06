@@ -5,15 +5,24 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			'mapbox-terrain',
 			'nps-parkTiles',
 			'esri-topographic',
-			'esri-imagery',
-			'mapbox-satelliteLabels',
-			'nps-parkTilesImagery'
+			'esri-imagery'
 		],
 		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
-			name: 'Abies fraseri',
-			id: 'lonnieljyu.test',
-			type: 'mapbox'
+			name: 'Orange',
+			id: 'jduggan1.Acer_pensylvanicum_orange',
+			type: 'mapbox',
+			opacity: 0.5
+		}, {
+			name: 'Pink',
+			id: 'jduggan1.Acer_rubrum_v_rubrum_pink',
+			type: 'mapbox',
+			opacity: 0.5
+		}, {
+			name: 'Blue',
+			id: 'jduggan1.Acer_saccharum_blue',
+			type: 'mapbox',
+			opacity: 0.5
 		}, {
 			name: 'Observations',
 			url: 'Abies_fraseri.geojson',
@@ -79,27 +88,51 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		],
 		//downloadControl: true, //TODO: this would be useful (once implemented, we could link to the relevant data store page)
 		fullscreenControl: true,
-		zoomdisplayControl: true,
+		//zoomdisplayControl: true,
 		//shareControl: true, //TODO: this would be useful once implemented
-		printControl: true, //TODO: this won't work right until the geojsons are being pulled from non-local url
-		legendControl: {
-			html: setLegend
-		},
+		//legendControl: {
+		//	html: setLegend
+		//},
 		//locateControl: true, //TODO: Check if Tom wants this
 		measureControl: true,
-		editControl: true,
-		scaleControl: true,
+		//editControl: true,
+		//scaleControl: true,
 		events: [{
 			fn: function() {
 				setDivs();
+				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
+				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				control._fullscreen = true;
+				document.getElementById('home').style.top = '400px';
+				document.getElementById('zoom').style.top = '400px';
+				document.getElementById('measure').style.top = '400px';
 				enterfullscreen();
 			},
 			type: 'enterfullscreen'
 		}, {
 			fn: function() {
 				setDivs();
+				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
+				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				control._fullscreen = false;
+				document.getElementById('home').style.top = '225px';
+				document.getElementById('zoom').style.top = '225px';
+				document.getElementById('measure').style.top = '225px';
 				exitfullscreen();
 			},
 			type: 'exitfullscreen'
+		}, {
+			fn: function() {
+				var currentZoom = NPMap.config.L._zoom;
+				var currentCenter = NPMap.config.L.getCenter();
+				var firstPoint = NPMap.config.L.latLngToContainerPoint(currentCenter);
+				var firstLatLng = NPMap.config.L.containerPointToLatLng(firstPoint);
+				var secondPoint = [firstPoint.x + 1, firstPoint.y];
+				var secondLatLng = NPMap.config.L.containerPointToLatLng(secondPoint);
+				var dist = firstLatLng.distanceTo(secondLatLng);
+
+				control._levelView.innerHTML = '<i>' + dist.toFixed(1) + 'm level ' + currentZoom + ': ?m resolution data</i>'; //todo: add data resolution
+			},
+			type: 'zoomend'
 		}]
 	};
