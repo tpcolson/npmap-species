@@ -109,10 +109,13 @@ var control,
 			control._lastBaseIndex = this.selectedIndex;
 		}
 		observationSwitcher.innerHTML = '<input type="checkbox" name="trails" value="trails"></input><label for="trails"> View Observed Sightings</label>';
+		observationSwitcher.onchange = function() {
+			control._toggleObservations();
+		}
 		levelLabel.innerHTML = '<i>CURRENT VIEW:</i>';
 		levelLabel.style.color = '#f5faf2';
 		levelLabel.style.fontWeight = '600';
-		levelView.innerHTML = '<i>124.3m level 10: ?m resolution data</i>';
+		levelView.innerHTML = '<i>124.3m level 10: ?m resolution data</i>'; //todo: add data resolution
 		levelView.style.color = '#f5faf2';
 		levelView.style.fontWeight = '600';
 
@@ -162,6 +165,7 @@ var control,
 		control._layerSwitcherLabel = layerSwitcherLabel;
 		control._layerSwitcher = layerSwitcher;
 		control._observationSwitcher = observationSwitcher;
+		control._showObservations = false;
 		control._levelLabel = levelLabel;
 		control._levelView = levelView;
 		control._poiDiv = poiDiv;
@@ -326,6 +330,15 @@ var control,
 			jQuery('#settingsButton').animate({'top': '189px'});
 			control._expanded = true;
 			control._selected = whichTab;
+		}
+	},
+	_toggleObservations: function() {
+		if(control._showObservations) {
+			//todo: actually turn on and off observations
+			control._showObservations = false;
+		} else {
+			//todo: actually turn on and off observations
+			control._showObservations = true;
 		}
 	}
 });
