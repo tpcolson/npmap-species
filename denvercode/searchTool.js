@@ -133,12 +133,17 @@ var control,
 		poiLabel.style.color = '#f5faf2';
 		var poiCheckboxes = L.DomUtil.create('ul', 'utk-search-poi-checkboxes');
 
+		var poiList = [
+			'Trails',
+			'Shelters',
+			'Roads'
+		];
 		poiLabel.innerHTML = '<b>SELECT POINTS OF INTEREST</b>';
-		poiCheckboxes.innerHTML = '<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="trails" value="trails"></input><label for="trails"> Trails</label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 52%"><input type="checkbox" name="visitors" value="visitors"></input><label for="visitors"> Visitor Centers</label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="shelters" value="shelters"></input><label for="shelters"> Shelters</label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 50%"><input type="checkbox" name="roads" value="roads"></input><label for="roads"> Roads</label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 80%"><input type="checkbox" name="campsites" value="campsites"></input><label for="campsites"> Back Country Campsites</label></li>';
+		poiCheckboxes.innerHTML = '<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="trails" value="Trails" onchange="control._togglePOI(this);"></input><label for="trails"> Trails</label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 52%"><input type="checkbox" name="visitors" value="visitors" onchange="control._togglePOI(this);"></input><label for="visitors"> Visitor Centers</label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="shelters" value="Shelters" onchange="control._togglePOI(this);"></input><label for="shelters"> Shelters</label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 50%"><input type="checkbox" name="roads" value="Roads" onchange="control._togglePOI(this);"></input><label for="roads"> Roads</label></li>' +
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 80%"><input type="checkbox" name="campsites" value="campsites" onchange="control._togglePOI(this);"></input><label for="campsites"> Back Country Campsites</label></li>';
 
 		poiDiv.appendChild(poiLabel);
 		poiDiv.appendChild(poiCheckboxes);
@@ -339,6 +344,21 @@ var control,
 		} else {
 			//todo: actually turn on and off observations
 			control._showObservations = true;
+		}
+	},
+	_togglePOI: function(obj) {
+		var layerName = obj.value;
+		for(var i = 0; i < NPMap.config.overlays.length; i++) {
+			var overlay = NPMap.config.overlays[i];
+			if(overlay.name === layerName) {
+				if(overlay.visible) {
+					overlay.visible = false;
+					NPMap.config.L.removeLayer(overlay.L);
+				} else {
+					overlay.visible = true;
+					NPMap.config.L.addLayer(overlay.L);
+				}
+			}
 		}
 	}
 });

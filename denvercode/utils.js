@@ -77,6 +77,17 @@ window.onload = function() {
 	var sw = document.getElementsByClassName('npmap-control-switcher')[0];
 	sw.remove();
 
+	/* turn off overlays by default */
+	for(var i = 0; i < NPMap.config.overlays.length; i++) {
+		var overlay = NPMap.config.overlays[i];
+
+		/* todo: remove this if statement once everything else is done */
+		if(overlay.name === 'Trails' || overlay.name === 'Roads' || overlay.name === 'Shelters') {
+			overlay.visible = false;
+			NPMap.config.L.removeLayer(overlay.L);
+		}
+	}
+
 	/* add in new print control */
 	var pc = new PrintControl();
 	NPMap.config.L.addControl(pc);
