@@ -123,6 +123,14 @@ var control,
 			newLayer.visible = true;
 			NPMap.config.L.addLayer(newLayer.L);
 
+			for(var i = 0; i < control._selectedSpecies.length; i++) {
+				L.npmap.layer.mapbox({
+					name: control._selectedSpecies[i],
+					opacity: 0.5,
+					id: 'nps.GRSM_' + control._selectedSpecies[i] + '_colored'
+				}).addTo(NPMap.config.L);
+			}
+
 			control._lastBaseIndex = this.selectedIndex;
 		}
 		observationSwitcher.innerHTML = '<input type="checkbox" name="trails" value="trails"></input><label for="trails"> View Observed Sightings</label>';
@@ -232,6 +240,7 @@ var control,
 		control._searchDiv = searchDiv;
 		control._breadcrumb = breadcrumb;
 		control._lastSearchPage = control._initialSearchDiv;
+		control._selectedSpecies = [];
 	},
 	_createInitialSearch: function(control) {
 		var initialSearchDiv = L.DomUtil.create('div', 'utk-search-initial');
@@ -300,6 +309,9 @@ var control,
 		control._radiusInput = radiusInput;
 	},
 	_createSearchResults: function(control) {
+		var comparisonPane = L.DomUtil.create('div', 'utk-search-compare');
+
+		control._comparisonPane = comparisonPane;
 	},
 	_createGroupResults: function(control) {
 	},
@@ -510,7 +522,22 @@ var control,
 			li.style.lineHeight = '31px';
 			li.style.cursor = 'pointer';
 			li.onclick = function() {
-				console.log(this._reference, 'selected');
+				control._selectedSpecies.push(this._reference);
+
+				L.npmap.layer.mapbox({
+					name: this._reference,
+					opacity: 0.5,
+					id: 'nps.GRSM_' + this._reference + '_colored'
+				}).addTo(NPMap.config.L);
+
+				control._resultsList.style.display = 'none';
+				control._resultsList.innerHTML = '';
+				control._initialSearchLexBox.value = '';
+
+				control._breadcrumb.innerHTML += ' > ' + this._reference.replace('_', ' ').toUpperCase();
+				control._searchDiv.removeChild(control._initialSearchDiv);
+				control._searchDiv.appendChild(control._comparisonPane);
+				control._lastSearchPage = control._comparisonPane;
 			}
 
 			control._resultsList.appendChild(li);

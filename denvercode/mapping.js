@@ -9,44 +9,6 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		],
 		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
-			name: 'Orange',
-			id: 'jduggan1.Acer_pensylvanicum_orange',
-			type: 'mapbox',
-			opacity: 0.5
-		}, {
-			name: 'Pink',
-			id: 'jduggan1.Acer_rubrum_v_rubrum_pink',
-			type: 'mapbox',
-			opacity: 0.5
-		}, {
-			name: 'Blue',
-			id: 'jduggan1.Acer_saccharum_blue',
-			type: 'mapbox',
-			opacity: 0.5
-		}, {
-			name: 'Observations',
-			url: 'Abies_fraseri.geojson',
-			type: 'geojson',
-			popup: {
-				title: 'Observation',
-				description: 'Coordinates: {{coordinates}}'
-			},
-			styles: {
-				point: {
-					'marker-color': '#7a904f',
-					'marker-size': 'small'
-				}
-			},
-			cluster: {
-				clusterIcon: '#7a904f'
-			},
-			showCoverageOnHover: true,
-			disableClusteringAtZoom: 15,
-			polygonOptions: {
-				color: '#7a904f',
-				fillColor: '#7a904f'
-			}
-		}, {
 			name: 'Trails',
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
 			type: 'geojson',
