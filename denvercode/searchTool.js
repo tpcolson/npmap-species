@@ -555,7 +555,7 @@ var control,
 			} else {
 				li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace('_', ' ');
 			}
-			li._id = results[i].id_num;
+			li._id = results[i].irma_id;
 			li._latin = results[i].latin_name;
 			li._common = results[i].common_name;
 			li.style.margin = '0px';
@@ -572,14 +572,14 @@ var control,
 				L.npmap.layer.mapbox({
 					name: this._latin,
 					opacity: 0.5,
-					id: 'nps.GRSM_' + this._id + '_colored'
+					id: 'nps.GRSM_' + this._id
 				}).addTo(NPMap.config.L);
 
 				control._resultsList.style.display = 'none';
 				control._resultsList.innerHTML = '';
 				control._initialSearchLexBox.value = '';
 
-				control._breadcrumb.innerHTML += ' > ' + this._reference.replace('_', ' ').toUpperCase();
+				control._breadcrumb.innerHTML += ' > ' + this._latin.replace('_', ' ').toUpperCase();
 				control._searchDiv.removeChild(control._initialSearchDiv);
 				control._searchDiv.appendChild(control._comparisonPane);
 				control._searchDiv.removeChild(control._nameSwitcherText);

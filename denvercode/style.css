@@ -216,10 +216,6 @@
 	top: 5px;
 }
 
-.search-result img:hover {
-
-}
-
 .init-lexical-options {
 	position: absolute;
 	padding-top: 10px;
@@ -250,13 +246,13 @@
 #init-area-rect {
 	position: absolute;
 	top: 40px;
-	left: 200px;
+	left: 160px;
 }
 
 .init-area-radius {
 	position: absolute;
-	top: 50px;
-	left: 320px;
+	top: 40px;
+	left: 240px;
 	color: #f5faf2;
 	font-size: 12pt;
 	letter-spacing: .001em;
