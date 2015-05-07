@@ -17,10 +17,10 @@ for line in csvreader:
         common_name = line[3]
 
         if not latin_name in encountered:
-            encountered[latin_name] = 0
+            encountered[latin_name] = 1
         else:
             encountered[latin_name] += 1
-            if encountered[latin_name] > 30:
+            if encountered[latin_name] >= 30:
                 index = {
                     'latin_name_ref': latin_name.replace('_', ' '),
                     'latin_name': latin_name,
@@ -28,5 +28,7 @@ for line in csvreader:
                 }
 
                 value_list.append(index)
+                encountered[latin_name] = -sys.maxint-1
 
 print json.dumps({'items': value_list})
+print len(value_list)
