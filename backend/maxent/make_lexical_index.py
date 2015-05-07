@@ -11,9 +11,10 @@ csvreader.next()
 for line in csvreader:
     if len(line) != 8:
         sys.stderr.write('error: invalid CSV file\n')
+        exit(1)
     else:
         latin_name = line[0]
-        common_name = line[4]
+        common_name = line[3]
 
         if not latin_name in encountered:
             index = {
