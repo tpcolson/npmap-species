@@ -183,7 +183,7 @@
 
 .init-lexical-label {
 	font-weight: 600;
-	font-size: 16pt;
+	font-size: 14pt;
 	letter-spacing: .001em;
 	color: #f5faf2;
 }
@@ -216,10 +216,6 @@
 	top: 5px;
 }
 
-.search-result img:hover {
-
-}
-
 .init-lexical-options {
 	position: absolute;
 	padding-top: 10px;
@@ -236,7 +232,7 @@
 
 .init-area-label {
 	font-weight: 600;
-	font-size: 16pt;
+	font-size: 14pt;
 	letter-spacing: .001em;
 	color: #f5faf2;
 }
@@ -250,16 +246,42 @@
 #init-area-rect {
 	position: absolute;
 	top: 40px;
-	left: 200px;
+	left: 160px;
 }
 
 .init-area-radius {
 	position: absolute;
-	top: 50px;
-	left: 320px;
+	top: 40px;
+	left: 240px;
 	color: #f5faf2;
 	font-size: 12pt;
 	letter-spacing: .001em;
+}
+
+.utk-name-switcher-text {
+	position: absolute;
+	top:126px;
+	left: 1240px;
+	letter-spacing: .001em;
+	font-size: 11pt;
+	color: #f5faf2;
+	border-radius: 4px;
+	background-color: #292928;
+	padding: 3px;
+	word-spacing: 20px;
+}
+
+.utk-name-switcher-button {
+	position: absolute;
+	top: 126px;
+	left: 1302px;
+	height: 28px;
+	width: 62px;
+	background-color: #404039;
+	border-radius: 4px;
+	border: 0px;
+	padding: 0px;
+	outline: 0px;
 }
 
 .image-normal {

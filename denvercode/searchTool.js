@@ -207,6 +207,7 @@ var control,
 	},
 	_createSearchDiv: function(control) {
 		var searchDiv = L.DomUtil.create('div', 'utk-search-div');
+		control._searchDiv = searchDiv;
 
 		/* add breadcrumb to search div todo: make this dynamic */
 		var breadcrumb = L.DomUtil.create('div', 'utk-search-breadcrumb');
@@ -237,10 +238,13 @@ var control,
 		/* create area compare page */
 		control._createAreaCompareDiv(control);
 
-		control._searchDiv = searchDiv;
+		/* create name type switcher */
+		control._createNameSwitcher(control);
+
 		control._breadcrumb = breadcrumb;
 		control._lastSearchPage = control._initialSearchDiv;
 		control._selectedSpecies = [];
+		control._whichName = 'latin';
 	},
 	_createInitialSearch: function(control) {
 		var initialSearchDiv = L.DomUtil.create('div', 'utk-search-initial');
@@ -272,22 +276,22 @@ var control,
 		initialSearchAreaLabel.innerHTML = 'SEARCH BY SPECIFIC AREA ON MAP';
 		var searchCircle = L.DomUtil.create('canvas', '');
 		searchCircle.id = 'init-area-circle';
-		searchCircle.width = 60;
-		searchCircle.height = 60;
+		searchCircle.width = 30;
+		searchCircle.height = 30;
 		var ctx = searchCircle.getContext('2d');
 		ctx.beginPath();
-		ctx.arc(30, 30, 30, 0, 2*Math.PI);
+		ctx.arc(15, 15, 15, 0, 2*Math.PI);
 		ctx.strokeStyle = '#f5faf2';
 		ctx.stroke();
 		ctx.fillStyle = '#f5faf2';
 		ctx.fill();
 		var searchRectangle = L.DomUtil.create('canvas', '');
 		searchRectangle.id = 'init-area-rect';
-		searchRectangle.width = 60;
-		searchRectangle.height = 60;
+		searchRectangle.width = 30;
+		searchRectangle.height = 30;
 		var ctx = searchRectangle.getContext('2d');
 		ctx.fillStyle = '#f5faf2';
-		ctx.fillRect(0, 0, 60, 60);
+		ctx.fillRect(0, 0, 30, 30);
 		var radiusInput = L.DomUtil.create('div', 'init-area-radius');
 		radiusInput.innerHTML = 'Set shape size: <input name="init-radius" value="0" size="10"/> m';
 
@@ -419,6 +423,37 @@ var control,
 	},
 	_createAreaCompareDiv: function(control) {
 	},
+	_createNameSwitcher: function(control) {
+		var nameSwitcherText = L.DomUtil.create('div', 'utk-name-switcher-text'),
+			nameSwitcherButton = L.DomUtil.create('button', 'utk-name-switcher-button');
+
+		nameSwitcherText.innerHTML = 'LATIN COMMON';
+		nameSwitcherButton.onclick = function() {
+			if(control._whichName === 'latin') {
+				for(var i = 0; i < control._resultsList.children.length; i++) {
+					var el = control._resultsList.children[i];
+					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace('_', ' ');
+				}
+
+				control._whichName = 'common';
+				jQuery('.utk-name-switcher-button').animate({'left': '1240px'});
+			} else {
+				for(var i = 0; i < control._resultsList.children.length; i++) {
+					var el = control._resultsList.children[i];
+					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace('_', ' ');
+				}
+
+				control._whichName = 'latin';
+				jQuery('.utk-name-switcher-button').animate({'left': '1302px'});
+			}
+		}
+
+		control._searchDiv.appendChild(nameSwitcherText);
+		control._searchDiv.appendChild(nameSwitcherButton);
+
+		control._nameSwitcherText = nameSwitcherText;
+		control._nameSwitcherButton = nameSwitcherButton;
+	},
 	_createExpandButtons: function(control) {
 		var settingsButton = L.DomUtil.create('button', 'utk-tab-settings');
 		var searchButton = L.DomUtil.create('button', 'utk-tab-search');
@@ -458,6 +493,10 @@ var control,
 				control._container.insertBefore(control._header, control._contentPane);
 				control._contentPane.appendChild(control._searchDiv);
 				control._searchDiv.appendChild(control._lastSearchPage);
+				control._searchDiv.removeChild(control._nameSwitcherText);
+				control._searchDiv.removeChild(control._nameSwitcherButton);
+				control._searchDiv.appendChild(control._nameSwitcherText);
+				control._searchDiv.appendChild(control._nameSwitcherButton);
 				jQuery('#searchButton').html('<img src="images/searchButtonSelected.png"></img>');
 				jQuery('#settingsButton').html('<img src="images/settingsButton.png"></img>');
 			} else {
@@ -511,8 +550,14 @@ var control,
 		control._resultsList.innerHTML = '';
 		for(var i = 0; i < results.length && i < 15; i++) {
 			var li = L.DomUtil.create('li', 'search-result');
-			li.innerHTML = '<img width="43" height="21" src="images/no_image.png"></img> ' + results[i].common_name;
-			li._reference = results[i].latin_name;
+			if(control._whichName === 'latin') {
+				li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].latin_name.replace('_', ' ');
+			} else {
+				li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace('_', ' ');
+			}
+			li._id = results[i].irma_id;
+			li._latin = results[i].latin_name;
+			li._common = results[i].common_name;
 			li.style.margin = '0px';
 			li.style.listStylePosition = 'inside';
 			li.style.border = '1px solid black';
@@ -522,21 +567,25 @@ var control,
 			li.style.lineHeight = '31px';
 			li.style.cursor = 'pointer';
 			li.onclick = function() {
-				control._selectedSpecies.push(this._reference);
+				control._selectedSpecies.push(this._id);
 
 				L.npmap.layer.mapbox({
-					name: this._reference,
+					name: this._latin,
 					opacity: 0.5,
-					id: 'nps.GRSM_' + this._reference + '_colored'
+					id: 'nps.GRSM_' + this._id
 				}).addTo(NPMap.config.L);
 
 				control._resultsList.style.display = 'none';
 				control._resultsList.innerHTML = '';
 				control._initialSearchLexBox.value = '';
 
-				control._breadcrumb.innerHTML += ' > ' + this._reference.replace('_', ' ').toUpperCase();
+				control._breadcrumb.innerHTML += ' > ' + this._latin.replace('_', ' ').toUpperCase();
 				control._searchDiv.removeChild(control._initialSearchDiv);
 				control._searchDiv.appendChild(control._comparisonPane);
+				control._searchDiv.removeChild(control._nameSwitcherText);
+				control._searchDiv.removeChild(control._nameSwitcherButton);
+				control._searchDiv.appendChild(control._nameSwitcherText);
+				control._searchDiv.appendChild(control._nameSwitcherButton);
 				control._lastSearchPage = control._comparisonPane;
 			}
 
