@@ -63,9 +63,8 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			fn: function() {
 				setDivs();
 				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
-				if(control._selected === 'settingsButton') {
-					control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
-				} else if(parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) > 1366) {
+				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				if(parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) > 1366) {
 					control._searchDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 1366 + 40) / 2) + 'px';
 				} else {
 					control._searchDiv.style.left = '20px';
@@ -82,9 +81,8 @@ var subNavZ, headerZ, divHeader, divSubNav,
 				setDivs();
 				control._container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
 
-				if(control._selected === 'settingsButton') {
-					control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
-				} else if(parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) > 1366) {
+				control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
+				if(parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) > 1366) {
 					control._searchDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 1366 + 40) / 2) + 'px';
 				} else {
 					control._searchDiv.style.left = '20px';
