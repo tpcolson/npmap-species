@@ -127,7 +127,7 @@ var control,
 				L.npmap.layer.mapbox({
 					name: control._selectedSpecies[i],
 					opacity: 0.5,
-					id: 'nps.GRSM_' + control._selectedSpecies[i] + '_colored'
+					id: 'nps.GRSM_' + control._selectedSpecies[i].id
 				}).addTo(NPMap.config.L);
 			}
 
