@@ -12,6 +12,10 @@ Entry not processed: Physarum_album,Physarum album ,"31,234",Unspecified,Protozo
 1.#QNAN0000000000 is not a float.
 Entry not processed: Stemonitis_axifera,Stemonitis axifera ,"37,989",Unspecified,Protozoa,Ecological Framework: Biological Integrity | Focal Species or Communities | Forest/Woodland Communities,1.#QNAN0000000000,1.#QNAN0000000000
 1.#QNAN0000000000 is not a float.
+Entry not processed: Halesia_tetraptera_variety,,0,,,,-85.48874388,5.7E-14
+Field 3 is 0.
+Entry not processed: ,Halesia tetraptera variety,"18,255",Common Silverbell,Tracheobionta,Ecological Framework: Biological Integrity | Focal Species or Communities | Vegetation Complexs,-83.49340277,35.66501423
+Field 1 is empty.
 
 Species records in total:            175436
 Species records processed:           175429
