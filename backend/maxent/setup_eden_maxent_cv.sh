@@ -49,16 +49,14 @@ outputdirectory=$output_dir/$species/fold$fold \
    done
 done < $CONFIG_FILE
 
-'''
 # calculate appropriate ncpus; cap at 256
-if test $i -gt 256; then
-   ncpus=256
-elif test $i -gt 32; then
-   ncpus=$(( $i + ((8-$i)%8+8)%8 ))
-else
-   ncpus=32
-fi
-'''
+#if test $i -gt 256; then
+#   ncpus=256
+#elif test $i -gt 32; then
+#   ncpus=$(( $i + ((8-$i)%8+8)%8 ))
+#else
+#   ncpus=32
+#fi
 
 # Create PBS header file for eden run
 echo "#!/bin/sh
