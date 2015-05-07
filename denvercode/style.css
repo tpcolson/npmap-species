@@ -289,6 +289,12 @@
 	top: 20px;
 	width: 165px;
 	height: 105px;
+	transition: all .2s ease-in-out;
+}
+
+.image-normal:hover {
+	width: 440px;
+	height: 330px;
 }
 
 .vignette {
@@ -313,6 +319,7 @@
 	font-size: 18pt;
 	color: #40b5c6;
 	letter-spacing: .001em;
+	z-index: -2;
 }
 
 .selected {
