@@ -799,6 +799,10 @@ var control,
 			jQuery('.compare-distribution').animate({
 				width: '740px'
 			});
+			control._distributionPaneLabelTop.innerHTML = 'COMPARE WITH ...';
+			control._distributionPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
+			control._distributionPaneLabelMain.style.color = '#f5faf2';
+			control._distributionPaneLabelMain.style.fontSize = '16pt';
 			jQuery('.compare-environment').animate({
 				left: '977px',
 				width: '125px',
@@ -835,6 +839,10 @@ var control,
 				left: '370px',
 				width: '740px',
 			});
+			control._environmentPaneLabelTop.innerHTML = 'COMPARE WITH ...';
+			control._environmentPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR ENVIRONMENT';
+			control._environmentPaneLabelMain.style.color = '#f5faf2';
+			control._environmentPaneLabelMain.style.fontSize = '16pt';
 			jQuery('.compare-lexical').animate({
 				left: '1121px',
 				width: '105px',
@@ -871,6 +879,10 @@ var control,
 				left: '515px',
 				width: '720px',
 			});
+			control._lexicalPaneLabelTop.innerHTML = 'COMPARE WITH ...';
+			control._lexicalPaneLabelMain.innerHTML = 'ANOTHER SPECIES IN THE PARK';
+			control._lexicalPaneLabelMain.style.color = '#f5faf2';
+			control._lexicalPaneLabelMain.style.fontSize = '16pt';
 			jQuery('.compare-area').animate({
 				left: '1256px',
 				width: '105px'
@@ -907,6 +919,10 @@ var control,
 				left: '640px',
 				width: '720px'
 			});
+			control._areaPaneLabelTop.innerHTML = 'COMPARE WITH ...';
+			control._areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA WITHIN THE PARK';
+			control._areaPaneLabelMain.style.color = '#f5faf2';
+			control._areaPaneLabelMain.style.fontSize = '16pt';
 		}
 	}
 });
