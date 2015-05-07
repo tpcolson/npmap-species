@@ -323,6 +323,99 @@ var control,
 		comparisonPaneSpecies.innerHTML = '';
 		comparisonPane.appendChild(comparisonPaneSpecies);
 
+		var comparisonDistributionPane = L.DomUtil.create('div', 'compare-distribution');
+		var distributionPaneLabelTop = L.DomUtil.create('div', 'subhead2');
+		distributionPaneLabelTop.innerHTML = 'COMPARE WITH';
+		distributionPaneLabelTop.style.position = 'absolute';
+		distributionPaneLabelTop.style.top = '13px';
+		distributionPaneLabelTop.style.left = '20px';
+		var distributionPaneLabelMain = L.DomUtil.create('div', 'subhead');
+		distributionPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
+		distributionPaneLabelMain.style.position = 'absolute';
+		distributionPaneLabelMain.style.top = '32px';
+		distributionPaneLabelMain.style.left = '20px';
+		var distributionRadioButton = L.DomUtil.create('input', '');
+		distributionRadioButton.type = 'radio';
+		distributionRadioButton.name = 'which-pane';
+		distributionRadioButton.value = 'distribution';
+		distributionRadioButton.style.position = 'absolute';
+		distributionRadioButton.style.top = '20px';
+		distributionRadioButton.style.left = '0px';
+		comparisonDistributionPane.appendChild(distributionPaneLabelTop);
+		comparisonDistributionPane.appendChild(distributionPaneLabelMain);
+		comparisonDistributionPane.appendChild(distributionRadioButton);
+
+		var comparisonEnvironmentPane = L.DomUtil.create('div', 'compare-environment');
+		var environmentPaneLabelTop = L.DomUtil.create('div', 'subhead2');
+		environmentPaneLabelTop.innerHTML = 'COMPARE WITH';
+		environmentPaneLabelTop.style.position = 'absolute';
+		environmentPaneLabelTop.style.top = '13px';
+		environmentPaneLabelTop.style.left = '20px';
+		var environmentPaneLabelMain = L.DomUtil.create('div', 'subhead');
+		environmentPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR ENVIRONMENT';
+		environmentPaneLabelMain.style.position = 'absolute';
+		environmentPaneLabelMain.style.top = '32px';
+		environmentPaneLabelMain.style.left = '20px';
+		var environmentRadioButton = L.DomUtil.create('input', '');
+		environmentRadioButton.type = 'radio';
+		environmentRadioButton.name = 'which-pane';
+		environmentRadioButton.value = 'environment';
+		environmentRadioButton.style.position = 'absolute';
+		environmentRadioButton.style.top = '20px';
+		environmentRadioButton.style.left = '0px';
+		comparisonEnvironmentPane.appendChild(environmentPaneLabelTop);
+		comparisonEnvironmentPane.appendChild(environmentPaneLabelMain);
+		comparisonEnvironmentPane.appendChild(environmentRadioButton);
+
+		var comparisonLexicalPane = L.DomUtil.create('div', 'compare-lexical');
+		var lexicalPaneLabelTop = L.DomUtil.create('div', 'subhead2');
+		lexicalPaneLabelTop.innerHTML = 'COMPARE WITH';
+		lexicalPaneLabelTop.style.position = 'absolute';
+		lexicalPaneLabelTop.style.top = '13px';
+		lexicalPaneLabelTop.style.left = '20px';
+		var lexicalPaneLabelMain = L.DomUtil.create('div', 'subhead');
+		lexicalPaneLabelMain.innerHTML = 'ANOTHER SPECIES IN THE PARK';
+		lexicalPaneLabelMain.style.position = 'absolute';
+		lexicalPaneLabelMain.style.top = '32px';
+		lexicalPaneLabelMain.style.left = '20px';
+		var lexicalRadioButton = L.DomUtil.create('input', '');
+		lexicalRadioButton.type = 'radio';
+		lexicalRadioButton.name = 'which-pane';
+		lexicalRadioButton.value = 'lexical';
+		lexicalRadioButton.style.position = 'absolute';
+		lexicalRadioButton.style.top = '20px';
+		lexicalRadioButton.style.left = '0px';
+		comparisonLexicalPane.appendChild(lexicalPaneLabelTop);
+		comparisonLexicalPane.appendChild(lexicalPaneLabelMain);
+		comparisonLexicalPane.appendChild(lexicalRadioButton);
+
+		var comparisonAreaPane = L.DomUtil.create('div', 'compare-area');
+		var areaPaneLabelTop = L.DomUtil.create('div', 'subhead2');
+		areaPaneLabelTop.innerHTML = 'COMPARE WITH';
+		areaPaneLabelTop.style.position = 'absolute';
+		areaPaneLabelTop.style.top = '13px';
+		areaPaneLabelTop.style.left = '20px';
+		var areaPaneLabelMain = L.DomUtil.create('div', 'subhead');
+		areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA IN THE PARK';
+		areaPaneLabelMain.style.position = 'absolute';
+		areaPaneLabelMain.style.top = '32px';
+		areaPaneLabelMain.style.left = '20px';
+		var areaRadioButton = L.DomUtil.create('input', '');
+		areaRadioButton.type = 'radio';
+		areaRadioButton.name = 'which-pane';
+		areaRadioButton.value = 'area';
+		areaRadioButton.style.position = 'absolute';
+		areaRadioButton.style.top = '20px';
+		areaRadioButton.style.left = '0px';
+		comparisonAreaPane.appendChild(areaPaneLabelTop);
+		comparisonAreaPane.appendChild(areaPaneLabelMain);
+		comparisonAreaPane.appendChild(areaRadioButton);
+
+		comparisonPane.appendChild(comparisonDistributionPane);
+		comparisonPane.appendChild(comparisonEnvironmentPane);
+		comparisonPane.appendChild(comparisonLexicalPane);
+		comparisonPane.appendChild(comparisonAreaPane);
+
 		control._comparisonPane = comparisonPane;
 		control._comparisonPaneImage = comparisonPaneImage;
 		control._innerImage = control._innerImage;
@@ -598,7 +691,7 @@ var control,
 
 				L.npmap.layer.mapbox({
 					name: this._latin,
-					opacity: 0.5,
+					opacity: 1,
 					id: 'nps.GRSM_' + this._id
 				}).addTo(NPMap.config.L);
 
