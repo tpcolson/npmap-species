@@ -31,4 +31,3 @@ for line in csvreader:
                 encountered[latin_name] = -sys.maxint-1
 
 print json.dumps({'items': value_list})
-print len(value_list)
