@@ -5,7 +5,7 @@ import sys, json, csv
 
 value_list = []
 encountered = {}
-csvfile = open('../../atbirecords/ATBI_records.csv', 'rb')
+csvfile = open('ATBI_records.csv', 'rb')
 csvreader = csv.reader(csvfile)
 csvreader.next()
 for line in csvreader:
