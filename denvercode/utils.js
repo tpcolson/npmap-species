@@ -97,5 +97,5 @@ window.onload = function() {
 	NPMap.config.L.addControl(st);
 
 	/* add in floating div */
-	addFloatationDevice();
+	//addFloatationDevice();
 }
