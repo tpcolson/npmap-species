@@ -4,7 +4,7 @@
 import sys, json, csv
 
 value_list = []
-encountered = []
+encountered = {}
 csvfile = open('../../atbirecords/ATBI_records.csv', 'rb')
 csvreader = csv.reader(csvfile)
 csvreader.next()
@@ -17,13 +17,16 @@ for line in csvreader:
         common_name = line[3]
 
         if not latin_name in encountered:
-            index = {
-                'latin_name_ref': latin_name.replace('_', ' '),
-                'latin_name': latin_name,
-                'common_name': common_name,
-            }
+            encountered[latin_name] = 0
+        else:
+            encountered[latin_name] += 1
+            if encountered[latin_name] > 30:
+                index = {
+                    'latin_name_ref': latin_name.replace('_', ' '),
+                    'latin_name': latin_name,
+                    'common_name': common_name
+                }
 
-            value_list.append(index)
-            encountered.append(latin_name)
+                value_list.append(index)
 
 print json.dumps({'items': value_list})
