@@ -8,7 +8,7 @@ fi
 file_ext="mbtiles"
 
 tilemill_dir=${1%/}
-export_cmd='$tilemill_dir/index.js export'
+export_cmd=$tilemill_dir'/index.js export'
 mapbox_dir=${2%/}
 export_dir=$mapbox_dir/export
 geotiff_dir=${3%/}
