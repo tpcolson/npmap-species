@@ -23,9 +23,10 @@ echo $(date +%s) > upload_start_secs.txt
 while read line; do
    for sp in $line; do
       sp=${sp%.tif}
+      color=${${sp##*_}%.tif}
       species_name=${sp%_*}
       id=$(grep -w $species_name $ids_file | cut -d' ' -f2)
-      $upload_cmd $mapbox_user\.$dataset_prefix\_$id $export_dir/$sp\.$file_ext
+      $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $export_dir/$sp\.$file_ext
    done
 done <<< $(ls $geotiff_dir)
 
