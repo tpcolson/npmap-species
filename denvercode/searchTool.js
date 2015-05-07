@@ -223,9 +223,6 @@ var control,
 		/* create group search results */
 		control._createGroupResults(control);
 
-		/* create default comparison page */
-		control._createComparePage(control);
-
 		/* create distribution comparison */
 		control._createDistributionDiv(control);
 
@@ -316,11 +313,22 @@ var control,
 	_createSearchResults: function(control) {
 		var comparisonPane = L.DomUtil.create('div', 'utk-search-compare');
 
+		var comparisonPaneImage = L.DomUtil.create('div', 'image-normal vignette');
+		var innerImage = L.DomUtil.create('img', 'inner-image');
+		innerImage.src = 'images/abies_fraseri.jpg';
+		comparisonPaneImage.appendChild(innerImage);
+		comparisonPane.appendChild(comparisonPaneImage);
+
+		var comparisonPaneSpecies = L.DomUtil.create('div', 'utk-search-species');
+		comparisonPaneSpecies.innerHTML = '';
+		comparisonPane.appendChild(comparisonPaneSpecies);
+
 		control._comparisonPane = comparisonPane;
+		control._comparisonPaneImage = comparisonPaneImage;
+		control._innerImage = control._innerImage;
+		control._comparisonPaneSpecies = comparisonPaneSpecies;
 	},
 	_createGroupResults: function(control) {
-	},
-	_createComparePage: function(control) {
 	},
 	_createDistributionDiv: function(control) {
 								/*
@@ -438,6 +446,10 @@ var control,
 
 				control._whichName = 'common';
 				jQuery('.utk-name-switcher-button').animate({'left': '1240px'});
+
+				if(control._selectedSpeciesRef !== undefined) {
+					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef.common.replace(/_/g, ' ');
+				}
 			} else {
 				for(var i = 0; i < control._resultsList.children.length; i++) {
 					var el = control._resultsList.children[i];
@@ -446,6 +458,10 @@ var control,
 
 				control._whichName = 'latin';
 				jQuery('.utk-name-switcher-button').animate({'left': '1302px'});
+
+				if(control._selectedSpeciesRef !== undefined) {
+					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef.latin.replace(/_/g, ' ');
+				}
 			}
 		}
 
@@ -576,7 +592,8 @@ var control,
 			li.onclick = function() {
 				control._selectedSpecies.push({
 					'id': this._id,
-					'latin': this._latin
+					'latin': this._latin,
+					'common': this._common
 				});
 
 				L.npmap.layer.mapbox({
@@ -621,6 +638,12 @@ var control,
 				control._initialSearchLexBox.value = '';
 
 				control._breadcrumb.innerHTML += ' > ' + this._latin.replace(/_/g, ' ').toUpperCase();
+				if(control._whichName === 'latin') {
+					control._comparisonPaneSpecies.innerHTML = this._latin.replace(/_/g, ' ');
+				} else {
+					control._comparisonPaneSpecies.innerHTML = this._common.replace(/_/g, ' ');
+				}
+				control._selectedSpeciesRef = control._selectedSpecies[0];
 				control._searchDiv.removeChild(control._initialSearchDiv);
 				control._searchDiv.appendChild(control._comparisonPane);
 				control._searchDiv.removeChild(control._nameSwitcherText);
