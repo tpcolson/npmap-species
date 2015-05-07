@@ -433,7 +433,7 @@ var control,
 			if(control._whichName === 'latin') {
 				for(var i = 0; i < control._resultsList.children.length; i++) {
 					var el = control._resultsList.children[i];
-					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace('_', ' ');
+					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
 				}
 
 				control._whichName = 'common';
@@ -441,7 +441,7 @@ var control,
 			} else {
 				for(var i = 0; i < control._resultsList.children.length; i++) {
 					var el = control._resultsList.children[i];
-					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace('_', ' ');
+					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
 				}
 
 				control._whichName = 'latin';
@@ -558,9 +558,9 @@ var control,
 		for(var i = 0; i < results.length && i < 15; i++) {
 			var li = L.DomUtil.create('li', 'search-result');
 			if(control._whichName === 'latin') {
-				li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].latin_name.replace('_', ' ');
+				li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].latin_name.replace(/_/g, ' ');
 			} else {
-				li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace('_', ' ');
+				li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
 			}
 			li._id = results[i].irma_id;
 			li._latin = results[i].latin_name;
@@ -591,7 +591,7 @@ var control,
 						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
 						type: 'geojson',
 						popup: {
-							title: this._latin.replace('_', ' ') + ' sighting',
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
 							description: 'Coordinates: {{coordinates}}'
 						},
 						styles: {
@@ -620,7 +620,7 @@ var control,
 				control._resultsList.innerHTML = '';
 				control._initialSearchLexBox.value = '';
 
-				control._breadcrumb.innerHTML += ' > ' + this._latin.replace('_', ' ').toUpperCase();
+				control._breadcrumb.innerHTML += ' > ' + this._latin.replace(/_/g, ' ').toUpperCase();
 				control._searchDiv.removeChild(control._initialSearchDiv);
 				control._searchDiv.appendChild(control._comparisonPane);
 				control._searchDiv.removeChild(control._nameSwitcherText);
