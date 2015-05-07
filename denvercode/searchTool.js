@@ -244,6 +244,7 @@ var control,
 		control._breadcrumb = breadcrumb;
 		control._lastSearchPage = control._initialSearchDiv;
 		control._selectedSpecies = [];
+		control._speciesSightings = [];
 		control._whichName = 'latin';
 	},
 	_createInitialSearch: function(control) {
@@ -516,10 +517,16 @@ var control,
 	},
 	_toggleObservations: function() {
 		if(control._showObservations) {
-			//todo: actually turn on and off observations
+			for(var i = 0; i < control._speciesSightings.length; i++) {
+				NPMap.config.L.removeLayer(control._speciesSightings[i]);
+			}
+
 			control._showObservations = false;
 		} else {
-			//todo: actually turn on and off observations
+			for(var i = 0; i < control._speciesSightings.length; i++) {
+				control._speciesSightings[i].addTo(NPMap.config.L);
+			}
+
 			control._showObservations = true;
 		}
 	},
@@ -567,13 +574,47 @@ var control,
 			li.style.lineHeight = '31px';
 			li.style.cursor = 'pointer';
 			li.onclick = function() {
-				control._selectedSpecies.push(this._id);
+				control._selectedSpecies.push({
+					'id': this._id,
+					'latin': this._latin
+				});
 
 				L.npmap.layer.mapbox({
 					name: this._latin,
 					opacity: 0.5,
 					id: 'nps.GRSM_' + this._id
 				}).addTo(NPMap.config.L);
+
+				control._speciesSightings.push(
+					L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace('_', ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#40b5c6',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#40b5c6'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#40b5c6',
+							fillColor: '#40b5c6'
+						}
+					})
+				);
+
+				if(control._showObservations) {
+					control._speciesSightings[control._speciesSightings.length-1].addTo(NPMap.config.L);
+				}
 
 				control._resultsList.style.display = 'none';
 				control._resultsList.innerHTML = '';
