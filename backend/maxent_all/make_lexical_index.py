@@ -15,6 +15,7 @@ for line in csvreader:
     else:
         latin_name = line[0]
         common_name = line[3]
+        id_num = line[2].replace(',', '').zfill(7)
 
         if not latin_name in encountered:
             encountered[latin_name] = 1
@@ -24,7 +25,8 @@ for line in csvreader:
                 index = {
                     'latin_name_ref': latin_name.replace('_', ' '),
                     'latin_name': latin_name,
-                    'common_name': common_name
+                    'common_name': common_name,
+                    'irma_id': id_num
                 }
 
                 value_list.append(index)
