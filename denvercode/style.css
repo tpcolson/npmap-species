@@ -322,16 +322,7 @@
 	z-index: -2;
 }
 
-.selected {
-	position: absolute;
-	top: 55px;
-	left: 195px;
-}
-
 .subhead {
-	position: absolute;
-	top: 47px;
-	left: 212px;
 	font-weight: 600;
 	font-size: 16pt;
 	letter-spacing: .001em;
@@ -339,9 +330,6 @@
 }
 
 .subhead2 {
-	position: absolute;
-	top: 28px;
-	left: 212px;
 	font-weight: 600;
 	font-size: 12pt;
 	letter-spacing: .001em;
@@ -358,6 +346,41 @@
 	letter-spacing: .001em;
 	color: #f5faf2;
 	line-height: 100%;
+}
+
+.compare-distribution {
+	position: absolute;
+	top: 20px;
+	left: 212px;
+	width: 283.5px;
+	height: 65%;
+	border-right: 2px dotted #40403d;
+}
+
+.compare-environment {
+	position: absolute;
+	top: 20px;
+	left: 515.5px;
+	width: 283.5px;
+	height: 65%;
+	border-right: 2px dotted #40403d;
+}
+
+.compare-lexical {
+	position: absolute;
+	top: 20px;
+	left: 819px;
+	width: 283.5px;
+	height: 65%;
+	border-right: 2px dotted #40403d;
+}
+
+.compare-area {
+	position: absolute;
+	top: 20px;
+	left: 1122.5px;
+	width: 283.5px;
+	height: 65%;
 }
 
 .compare-dropdown-1 {
@@ -391,54 +414,6 @@
 	font-size: 12pt;
 	letter-spacing: .001em;
 	color: #f5faf2;
-}
-
-.radio-button-2 {
-	position: absolute;
-	left: 1061px;
-	top: 46px;
-}
-
-.radio-button-2-text {
-	position: absolute;
-	left: 1047px;
-	top: 76px;
-	height: 40px;
-	width: 79px;
-	color: #909090;
-	font-size: 12pt;
-}
-
-.radio-button-3 {
-	position: absolute;
-	left: 1165px;
-	top: 46px;
-}
-
-.radio-button-3-text {
-	position: absolute;
-	left: 1151px;
-	top: 76px;
-	height: 40px;
-	width: 79px;
-	color: #909090;
-	font-size: 12pt;
-}
-
-.radio-button-4 {
-	position: absolute;
-	left: 1268px;
-	top: 46px;
-}
-
-.radio-button-4-text {
-	position: absolute;
-	left: 1256px;
-	top: 76px;
-	height: 40px;
-	width: 79px;
-	color: #909090;
-	font-size: 12pt;
 }
 
 #settingsButton {

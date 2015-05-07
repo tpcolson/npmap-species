@@ -323,10 +323,148 @@ var control,
 		comparisonPaneSpecies.innerHTML = '';
 		comparisonPane.appendChild(comparisonPaneSpecies);
 
+		var comparisonDistributionPane = L.DomUtil.create('div', 'compare-distribution');
+		var distributionPaneLabelTop = L.DomUtil.create('div', 'subhead2');
+		distributionPaneLabelTop.innerHTML = 'COMPARE WITH';
+		distributionPaneLabelTop.style.position = 'absolute';
+		distributionPaneLabelTop.style.top = '0px';
+		distributionPaneLabelTop.style.left = '20px';
+		var distributionPaneLabelMain = L.DomUtil.create('div', 'subhead');
+		distributionPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
+		distributionPaneLabelMain.style.position = 'absolute';
+		distributionPaneLabelMain.style.top = '25px';
+		distributionPaneLabelMain.style.left = '20px';
+		distributionPaneLabelMain.style.lineHeight = '25px';
+		var distributionRadioButton = L.DomUtil.create('input', '');
+		distributionRadioButton.type = 'radio';
+		distributionRadioButton.name = 'which-pane';
+		distributionRadioButton.value = 'distribution';
+		distributionRadioButton.style.position = 'absolute';
+		distributionRadioButton.style.top = '32px';
+		distributionRadioButton.style.left = '0px';
+		distributionRadioButton.onclick = function() {
+			if(control._currentComparison !== 'distribution') {
+				control._currentComparison = 'distribution';
+				control._changeCompare('distribution');
+			}
+		}
+		comparisonDistributionPane.appendChild(distributionPaneLabelTop);
+		comparisonDistributionPane.appendChild(distributionPaneLabelMain);
+		comparisonDistributionPane.appendChild(distributionRadioButton);
+
+		var comparisonEnvironmentPane = L.DomUtil.create('div', 'compare-environment');
+		var environmentPaneLabelTop = L.DomUtil.create('div', 'subhead2');
+		environmentPaneLabelTop.innerHTML = 'COMPARE WITH';
+		environmentPaneLabelTop.style.position = 'absolute';
+		environmentPaneLabelTop.style.top = '0px';
+		environmentPaneLabelTop.style.left = '20px';
+		var environmentPaneLabelMain = L.DomUtil.create('div', 'subhead');
+		environmentPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR ENVIRONMENT';
+		environmentPaneLabelMain.style.position = 'absolute';
+		environmentPaneLabelMain.style.top = '25px';
+		environmentPaneLabelMain.style.left = '20px';
+		environmentPaneLabelMain.style.lineHeight = '25px';
+		var environmentRadioButton = L.DomUtil.create('input', '');
+		environmentRadioButton.type = 'radio';
+		environmentRadioButton.name = 'which-pane';
+		environmentRadioButton.value = 'environment';
+		environmentRadioButton.style.position = 'absolute';
+		environmentRadioButton.style.top = '32px';
+		environmentRadioButton.style.left = '0px';
+		environmentRadioButton.onclick = function() {
+			if(control._currentComparison !== 'environment') {
+				control._currentComparison = 'environment';
+				control._changeCompare('environment');
+			}
+		}
+		comparisonEnvironmentPane.appendChild(environmentPaneLabelTop);
+		comparisonEnvironmentPane.appendChild(environmentPaneLabelMain);
+		comparisonEnvironmentPane.appendChild(environmentRadioButton);
+
+		var comparisonLexicalPane = L.DomUtil.create('div', 'compare-lexical');
+		var lexicalPaneLabelTop = L.DomUtil.create('div', 'subhead2');
+		lexicalPaneLabelTop.innerHTML = 'COMPARE WITH';
+		lexicalPaneLabelTop.style.position = 'absolute';
+		lexicalPaneLabelTop.style.top = '0px';
+		lexicalPaneLabelTop.style.left = '20px';
+		var lexicalPaneLabelMain = L.DomUtil.create('div', 'subhead');
+		lexicalPaneLabelMain.innerHTML = 'ANOTHER SPECIES IN THE PARK';
+		lexicalPaneLabelMain.style.position = 'absolute';
+		lexicalPaneLabelMain.style.top = '25px';
+		lexicalPaneLabelMain.style.left = '20px';
+		lexicalPaneLabelMain.style.lineHeight = '25px';
+		var lexicalRadioButton = L.DomUtil.create('input', '');
+		lexicalRadioButton.type = 'radio';
+		lexicalRadioButton.name = 'which-pane';
+		lexicalRadioButton.value = 'lexical';
+		lexicalRadioButton.style.position = 'absolute';
+		lexicalRadioButton.style.top = '32px';
+		lexicalRadioButton.style.left = '0px';
+		lexicalRadioButton.onclick = function() {
+			if(control._currentComparison !== 'lexical') {
+				control._currentComparison = 'lexical';
+				control._changeCompare('lexical');
+			}
+		}
+		comparisonLexicalPane.appendChild(lexicalPaneLabelTop);
+		comparisonLexicalPane.appendChild(lexicalPaneLabelMain);
+		comparisonLexicalPane.appendChild(lexicalRadioButton);
+
+		var comparisonAreaPane = L.DomUtil.create('div', 'compare-area');
+		var areaPaneLabelTop = L.DomUtil.create('div', 'subhead2');
+		areaPaneLabelTop.innerHTML = 'COMPARE WITH';
+		areaPaneLabelTop.style.position = 'absolute';
+		areaPaneLabelTop.style.top = '0px';
+		areaPaneLabelTop.style.left = '20px';
+		var areaPaneLabelMain = L.DomUtil.create('div', 'subhead');
+		areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA IN THE PARK';
+		areaPaneLabelMain.style.position = 'absolute';
+		areaPaneLabelMain.style.top = '25px';
+		areaPaneLabelMain.style.left = '20px';
+		areaPaneLabelMain.style.lineHeight = '25px';
+		var areaRadioButton = L.DomUtil.create('input', '');
+		areaRadioButton.type = 'radio';
+		areaRadioButton.name = 'which-pane';
+		areaRadioButton.value = 'area';
+		areaRadioButton.style.position = 'absolute';
+		areaRadioButton.style.top = '32px';
+		areaRadioButton.style.left = '0px';
+		areaRadioButton.onclick = function() {
+			if(control._currentComparison !== 'area') {
+				control._currentComparison = 'area';
+				control._changeCompare('area');
+			}
+		}
+		comparisonAreaPane.appendChild(areaPaneLabelTop);
+		comparisonAreaPane.appendChild(areaPaneLabelMain);
+		comparisonAreaPane.appendChild(areaRadioButton);
+
+		comparisonPane.appendChild(comparisonDistributionPane);
+		comparisonPane.appendChild(comparisonEnvironmentPane);
+		comparisonPane.appendChild(comparisonLexicalPane);
+		comparisonPane.appendChild(comparisonAreaPane);
+
 		control._comparisonPane = comparisonPane;
 		control._comparisonPaneImage = comparisonPaneImage;
 		control._innerImage = control._innerImage;
 		control._comparisonPaneSpecies = comparisonPaneSpecies;
+		control._comparisonDistributionPane = comparisonDistributionPane;
+		control._distributionPaneLabelTop = distributionPaneLabelTop;
+		control._distributionPaneLabelMain = distributionPaneLabelMain;
+		control._distributionRadioButton = distributionRadioButton;
+		control._comparisonEnvironmentPane = comparisonEnvironmentPane;
+		control._environmentPaneLabelTop = environmentPaneLabelTop;
+		control._environmentPaneLabelMain = environmentPaneLabelMain;
+		control._environmentRadioButton = environmentRadioButton;
+		control._comparisonLexicalPane = comparisonLexicalPane;
+		control._lexicalPaneLabelTop = lexicalPaneLabelTop;
+		control._lexicalPaneLabelMain = lexicalPaneLabelMain;
+		control._lexicalRadioButton = lexicalRadioButton;
+		control._comparisonAreaPane = comparisonAreaPane;
+		control._areaPaneLabelTop = areaPaneLabelTop;
+		control._areaPaneLabelMain = areaPaneLabelMain;
+		control._areaRadioButton = areaRadioButton;
+		control._currentComparison = '';
 	},
 	_createGroupResults: function(control) {
 	},
@@ -598,7 +736,7 @@ var control,
 
 				L.npmap.layer.mapbox({
 					name: this._latin,
-					opacity: 0.5,
+					opacity: 1,
 					id: 'nps.GRSM_' + this._id
 				}).addTo(NPMap.config.L);
 
@@ -654,6 +792,137 @@ var control,
 			}
 
 			control._resultsList.appendChild(li);
+		}
+	},
+	_changeCompare(whichCompare) {
+		if(whichCompare === 'distribution') {
+			jQuery('.compare-distribution').animate({
+				width: '740px'
+			});
+			control._distributionPaneLabelTop.innerHTML = 'COMPARE WITH ...';
+			control._distributionPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
+			control._distributionPaneLabelMain.style.color = '#f5faf2';
+			control._distributionPaneLabelMain.style.fontSize = '16pt';
+			jQuery('.compare-environment').animate({
+				left: '977px',
+				width: '125px',
+			});
+			control._environmentPaneLabelTop.innerHTML = '';
+			control._environmentPaneLabelMain.innerHTML = 'COMPARE ENVIRONMENT';
+			control._environmentPaneLabelMain.style.color = '#909090';
+			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-lexical').animate({
+				left: '1121px',
+				width: '105px',
+			});
+			control._lexicalPaneLabelTop.innerHTML = '';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._lexicalPaneLabelMain.style.color = '#909090';
+			control._lexicalPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-area').animate({
+				left: '1256px',
+				width: '105px'
+			});
+			control._areaPaneLabelTop.innerHTML = '';
+			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
+			control._areaPaneLabelMain.style.color = '#909090';
+			control._areaPaneLabelMain.style.fontSize = '10pt';
+		} else if(whichCompare === 'environment') {
+			jQuery('.compare-distribution').animate({
+				width: '125px'
+			});
+			control._distributionPaneLabelTop.innerHTML = '';
+			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
+			control._distributionPaneLabelMain.style.color = '#909090';
+			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-environment').animate({
+				left: '370px',
+				width: '740px',
+			});
+			control._environmentPaneLabelTop.innerHTML = 'COMPARE WITH ...';
+			control._environmentPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR ENVIRONMENT';
+			control._environmentPaneLabelMain.style.color = '#f5faf2';
+			control._environmentPaneLabelMain.style.fontSize = '16pt';
+			jQuery('.compare-lexical').animate({
+				left: '1121px',
+				width: '105px',
+			});
+			control._lexicalPaneLabelTop.innerHTML = '';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._lexicalPaneLabelMain.style.color = '#909090';
+			control._lexicalPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-area').animate({
+				left: '1256px',
+				width: '105px'
+			});
+			control._areaPaneLabelTop.innerHTML = '';
+			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
+			control._areaPaneLabelMain.style.color = '#909090';
+			control._areaPaneLabelMain.style.fontSize = '10pt';
+		} else if(whichCompare === 'lexical') {
+			jQuery('.compare-distribution').animate({
+				width: '125px'
+			});
+			control._distributionPaneLabelTop.innerHTML = '';
+			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
+			control._distributionPaneLabelMain.style.color = '#909090';
+			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-environment').animate({
+				left: '370px',
+				width: '125px',
+			});
+			control._environmentPaneLabelTop.innerHTML = '';
+			control._environmentPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._environmentPaneLabelMain.style.color = '#909090';
+			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-lexical').animate({
+				left: '515px',
+				width: '720px',
+			});
+			control._lexicalPaneLabelTop.innerHTML = 'COMPARE WITH ...';
+			control._lexicalPaneLabelMain.innerHTML = 'ANOTHER SPECIES IN THE PARK';
+			control._lexicalPaneLabelMain.style.color = '#f5faf2';
+			control._lexicalPaneLabelMain.style.fontSize = '16pt';
+			jQuery('.compare-area').animate({
+				left: '1256px',
+				width: '105px'
+			});
+			control._areaPaneLabelTop.innerHTML = '';
+			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
+			control._areaPaneLabelMain.style.color = '#909090';
+			control._areaPaneLabelMain.style.fontSize = '10pt';
+		} else {
+			jQuery('.compare-distribution').animate({
+				width: '125px'
+			});
+			control._distributionPaneLabelTop.innerHTML = '';
+			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
+			control._distributionPaneLabelMain.style.color = '#909090';
+			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-environment').animate({
+				left: '370px',
+				width: '125px',
+			});
+			control._environmentPaneLabelTop.innerHTML = '';
+			control._environmentPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._environmentPaneLabelMain.style.color = '#909090';
+			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-lexical').animate({
+				left: '515px',
+				width: '105px',
+			});
+			control._lexicalPaneLabelTop.innerHTML = '';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE AREA';
+			control._lexicalPaneLabelMain.style.color = '#909090';
+			control._lexicalPaneLabelMain.style.fontSize = '10pt';
+			jQuery('.compare-area').animate({
+				left: '640px',
+				width: '720px'
+			});
+			control._areaPaneLabelTop.innerHTML = 'COMPARE WITH ...';
+			control._areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA WITHIN THE PARK';
+			control._areaPaneLabelMain.style.color = '#f5faf2';
+			control._areaPaneLabelMain.style.fontSize = '16pt';
 		}
 	}
 });
