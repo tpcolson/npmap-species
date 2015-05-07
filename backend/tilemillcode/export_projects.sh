@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if test $# -ne 3; then
-   echo 'usage: create_projects.sh tilemill_directory mapbox_directory geotiff_directory'
+   echo 'usage: export_projects.sh tilemill_directory mapbox_directory geotiff_directory'
    exit 1
 fi
 
