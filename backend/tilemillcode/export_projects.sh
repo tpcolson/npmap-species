@@ -16,6 +16,8 @@ geotiff_dir=${3%/}
 echo $(date) > export_start_time.txt
 echo $(date +%s) > export_start_secs.txt
 
+rm -rf $export_dir/*.*
+
 while read line; do
    for sp in $line; do
       sp=${sp%.tif}
