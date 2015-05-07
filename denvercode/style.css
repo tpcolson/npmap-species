@@ -197,6 +197,29 @@
 	letter-spacing: .001em;
 }
 
+.init-lexical-results {
+	background-color: #292928;
+	overflow: visible;
+	width: 90%;
+	top: 0px;
+	left: 0px;
+}
+
+.search-result {
+	height: 31px;
+	letter-spacing: .001em;
+	background-color: #292928;
+}
+
+.search-result img {
+	position: relative;
+	top: 5px;
+}
+
+.search-result img:hover {
+
+}
+
 .init-lexical-options {
 	position: absolute;
 	padding-top: 10px;

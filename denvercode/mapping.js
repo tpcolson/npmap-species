@@ -105,6 +105,8 @@ var subNavZ, headerZ, divHeader, divSubNav,
 					control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
 				} else if(parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) > 1366) {
 					control._searchDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 1366 + 40) / 2) + 'px';
+				} else {
+					control._searchDiv.style.left = '20px';
 				}
 				control._fullscreen = true;
 				document.getElementById('home').style.top = '400px';
@@ -122,6 +124,8 @@ var subNavZ, headerZ, divHeader, divSubNav,
 					control._optionsDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 684 + 40) / 2) + 'px';
 				} else if(parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) > 1366) {
 					control._searchDiv.style.left = parseInt((parseInt(window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width')) - 1366 + 40) / 2) + 'px';
+				} else {
+					control._searchDiv.style.left = '20px';
 				}
 				control._fullscreen = false;
 				document.getElementById('home').style.top = '225px';

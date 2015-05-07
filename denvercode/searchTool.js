@@ -21,6 +21,23 @@ var control,
 		container.style.width = window.getComputedStyle(document.getElementsByClassName('npmap-map-wrapper')[0]).getPropertyValue('width');
 		L.DomEvent.disableClickPropagation(container); /* I don't want double-clicking on this to zoom the map */
 
+		/* Load various GitHub resourses needed by this control */
+		jQuery.ajax({
+			type: 'GET',
+			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/atbirecords/lexical_index.json',
+			dataType: 'json',
+			success: function(data) {
+				var contents = window.atob(data.content),
+					index = jQuery.parseJSON(contents)['items'],
+					options = {
+						keys: ['latin_name_ref', 'common_name'],
+						threshold: 0.5
+					}
+
+				control._fuser = new Fuse(index, options);
+			}
+		});
+
 		/* We need to move the top left controls down the page */
 		document.getElementsByClassName('leaflet-control-home')[0].id = 'home';
 		document.getElementsByClassName('leaflet-control-zoom')[0].id = 'zoom';
@@ -185,7 +202,7 @@ var control,
 
 		/* add breadcrumb to search div todo: make this dynamic */
 		var breadcrumb = L.DomUtil.create('div', 'utk-search-breadcrumb');
-		breadcrumb.innerHTML = '';
+		breadcrumb.innerHTML = 'SEARCH';
 		searchDiv.appendChild(breadcrumb);
 
 		/* create initial search page */
@@ -224,12 +241,20 @@ var control,
 		initialSearchLexLabel.innerHTML = 'SEARCH BY NAME';
 		var initialSearchLexBox = L.DomUtil.create('input', 'init-lexical-box');
 		initialSearchLexBox.placeholder = 'Type a species name';
+		initialSearchLexBox.oninput = function() {
+			var evt = window.event;
+			control._fuseSearch(evt.srcElement.value);
+		}
+		var resultsList = L.DomUtil.create('ul', 'init-lexical-results');
+		resultsList.style.display = 'none';
+		resultsList.style.margin = '0px';
 		var initialSearchLexOptions = L.DomUtil.create('div', 'init-lexical-options');
 		initialSearchLexOptions.innerHTML = '<input type="radio" name="lexicalType" value="species" checked /> SPECIES' +
 									'<input type="radio" name="lexicalType" value="groups" style="margin-left:20px" /> GROUPS';
 
 		initialSearchLexical.appendChild(initialSearchLexLabel);
 		initialSearchLexical.appendChild(initialSearchLexBox);
+		initialSearchLexical.appendChild(resultsList);
 		initialSearchLexical.appendChild(initialSearchLexOptions);
 		initialSearchDiv.appendChild(initialSearchLexical);
 
@@ -267,8 +292,12 @@ var control,
 		control._initialSearchLexical = initialSearchLexical;
 		control._initialSearchLexLabel = initialSearchLexLabel;
 		control._initialSearchLexBox = initialSearchLexBox;
+		control._resultsList = resultsList;
 		control._initialSearchLexOptions = initialSearchLexOptions;
 		control._initialSearchArea = initialSearchArea;
+		control._searchCircle = searchCircle;
+		control._searchRectangle = searchRectangle;
+		control._radiusInput = radiusInput;
 	},
 	_createSearchResults: function(control) {
 	},
@@ -456,6 +485,35 @@ var control,
 					NPMap.config.L.addLayer(overlay.L);
 				}
 			}
+		}
+	},
+	_fuseSearch: function(value) {
+		var results = control._fuser.search(value);
+
+		if(results.length > 0) {
+			control._resultsList.style.display = 'block';
+		} else {
+			control._resultsList.style.display = 'none';
+		}
+
+		control._resultsList.innerHTML = '';
+		for(var i = 0; i < results.length && i < 15; i++) {
+			var li = L.DomUtil.create('li', 'search-result');
+			li.innerHTML = '<img width="43" height="21" src="images/no_image.png"></img> ' + results[i].common_name;
+			li._reference = results[i].latin_name;
+			li.style.margin = '0px';
+			li.style.listStylePosition = 'inside';
+			li.style.border = '1px solid black';
+			li.style.color = '#f5faf2';
+			li.style.letterSpacing = '.001em';
+			li.style.fontSize = '12pt';
+			li.style.lineHeight = '31px';
+			li.style.cursor = 'pointer';
+			li.onclick = function() {
+				console.log(this._reference, 'selected');
+			}
+
+			control._resultsList.appendChild(li);
 		}
 	}
 });
