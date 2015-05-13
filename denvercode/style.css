@@ -9,6 +9,10 @@
 	opacity: 0.9;
 }
 
+#searchTool {
+	overflow: visible !important;
+}
+
 .utk-search-tool {
 	font-family: 'Source Sans Pro', sans-serif;
 	height: 0px;
@@ -191,6 +195,7 @@
 .init-lexical-box {
 	border-radius: 4px;
 	border: 0px;
+	padding-left: 5px;
 	width: 90%;
 	font-weight: 600px;
 	font-size: 12pt;
@@ -327,6 +332,7 @@
 	font-size: 16pt;
 	letter-spacing: .001em;
 	color: #f5faf2;
+	max-width: 263.5px;
 }
 
 .subhead2 {
@@ -438,4 +444,29 @@
 	padding: 0px;
 	width: 40px;
 	height: 40px;
+}
+
+.dropdown {
+	width: 375px;
+	height: 33px;
+	background-color: #292928;
+	color: #909090;
+	border-radius: 4px;
+	padding-left: 5px;
+}
+
+.comp-lexical-box {
+	width: 375px;
+	border-radius: 4px;
+	border: 0px;
+	margin: 0px;
+	padding-left: 5px;
+}
+
+.comp-lexical-results {
+	background-color: #292928;
+	overflow: visible;
+	width: 365px;
+	top: 0px;
+	left: 0px;
 }

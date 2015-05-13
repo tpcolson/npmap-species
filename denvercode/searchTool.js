@@ -38,6 +38,31 @@ var control,
 			}
 		});
 
+		jQuery.ajax({
+			type: 'GET',
+			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/trees/gh-pages:atbirecords',
+			dataType: 'jsonp',
+			success: function(data) {
+				var iterator, target_sha;
+				iterator = data['data']['tree'];
+				for(var i = 0; i < iterator.length; i++) {
+					if(iterator[i]['path'] == 'most_similar_distribution.json') {
+						target_sha = iterator[i]['sha'];
+					}
+				}
+
+				jQuery.ajax({
+					type: 'GET',
+					url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/blobs/' + target_sha,
+					dataType: 'json',
+					success: function(data) {
+						var contents = window.atob(data.content);
+						control._similarDistributions = jQuery.parseJSON(contents);
+					}
+				});
+			}
+		});
+
 		/* We need to move the top left controls down the page */
 		document.getElementsByClassName('leaflet-control-home')[0].id = 'home';
 		document.getElementsByClassName('leaflet-control-zoom')[0].id = 'zoom';
@@ -223,18 +248,6 @@ var control,
 		/* create group search results */
 		control._createGroupResults(control);
 
-		/* create distribution comparison */
-		control._createDistributionDiv(control);
-
-		/* create environmental page */
-		control._createEnvironmentDiv(control);
-
-		/* create lexical compare page */
-		control._createLexicalDiv(control);
-
-		/* create area compare page */
-		control._createAreaCompareDiv(control);
-
 		/* create name type switcher */
 		control._createNameSwitcher(control);
 
@@ -254,14 +267,14 @@ var control,
 		initialSearchLexBox.placeholder = 'Type a species name';
 		initialSearchLexBox.oninput = function() {
 			var evt = window.event;
-			control._fuseSearch(evt.srcElement.value);
+			control._fuseSearch(evt.srcElement.value, resultsList);
 		}
 		var resultsList = L.DomUtil.create('ul', 'init-lexical-results');
 		resultsList.style.display = 'none';
 		resultsList.style.margin = '0px';
 		var initialSearchLexOptions = L.DomUtil.create('div', 'init-lexical-options');
 		initialSearchLexOptions.innerHTML = '<input type="radio" name="lexicalType" value="species" checked /> SPECIES' +
-									'<input type="radio" name="lexicalType" value="groups" style="margin-left:20px" /> GROUPS';
+									'<input type="radio" name="lexicalType" value="groups" style="margin-left:20px" /> GROUP';
 
 		initialSearchLexical.appendChild(initialSearchLexLabel);
 		initialSearchLexical.appendChild(initialSearchLexBox);
@@ -314,6 +327,14 @@ var control,
 		var comparisonPane = L.DomUtil.create('div', 'utk-search-compare');
 
 		var comparisonPaneImage = L.DomUtil.create('div', 'image-normal vignette');
+		comparisonPaneImage.onmouseover = function() {
+			control._comparisonDistributionPane.style.zIndex = -2;
+		}
+		comparisonPaneImage.onmouseout = function() {
+			setTimeout(function() {
+				control._comparisonDistributionPane.style.zIndex = 1;
+			}, 200);
+		}
 		var innerImage = L.DomUtil.create('img', 'inner-image');
 		innerImage.src = 'images/abies_fraseri.jpg';
 		comparisonPaneImage.appendChild(innerImage);
@@ -468,108 +489,6 @@ var control,
 	},
 	_createGroupResults: function(control) {
 	},
-	_createDistributionDiv: function(control) {
-								/*
-		var selectedImage = L.DomUtil.create('div', 'image-normal vignette');
-		var innerImage = L.DomUtil.create('img', 'inner-image');
-		innerImage.src = 'thumbnails/abies_fraseri.jpg';
-		selectedImage.appendChild(innerImage);
-		searchDiv.appendChild(selectedImage);
-
-		var selectedSpecies = L.DomUtil.create('div', 'utk-search-species');
-		selectedSpecies.innerHTML = 'Abies fraseri';
-		searchDiv.appendChild(selectedSpecies);
-		
-		var selectedRadioButton = L.DomUtil.create('input', 'selected');
-		selectedRadioButton.name = 'comparison';
-		selectedRadioButton.type = 'radio';
-		selectedRadioButton.checked = 'checked';
-		searchDiv.appendChild(selectedRadioButton);
-
-		var subheadCompare = L.DomUtil.create('div', 'subhead2');
-		subheadCompare.innerHTML = 'COMPARE WITH ...';
-		searchDiv.appendChild(subheadCompare);
-
-		var subheadTitle = L.DomUtil.create('div', 'subhead');
-		subheadTitle.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
-		searchDiv.appendChild(subheadTitle);
-
-		var speciesText = L.DomUtil.create('div', 'description');
-		speciesText.innerHTML = 'Distribution Characteristics: Spread over high elevation regions with a large amount of soil coverage. It\'s a fir tree!';
-		searchDiv.appendChild(speciesText);
-
-		var dropdown1 = L.DomUtil.create('select', 'compare-dropdown-1');
-		dropdown1.innerHTML = '<option value=1><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri</option>' +
-								'<option value=2><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Another abies fraseri</option>' +
-								'<option value=3><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 3</option>' +
-								'<option value=4><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Something else</option>' +
-								'<option value=5><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 4</option>';
-		searchDiv.appendChild(dropdown1);
-
-		var dropdown2 = L.DomUtil.create('select', 'compare-dropdown-2');
-		dropdown2.innerHTML = '<option value=1><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri</option>' +
-								'<option value=2><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Another abies fraseri</option>' +
-								'<option value=3><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 3</option>' +
-								'<option value=4><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Something else</option>' +
-								'<option value=5><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 4</option>';
-		distributionDiv.appendChild(dropdown2);
-
-		var numberResults = L.DomUtil.create('div', 'number-results');
-		numberResults.innerHTML = '<i>5 RESULTS</i>';
-		distributionDiv.appendChild(numberResults);
-
-		var radioButton2 = L.DomUtil.create('input', 'radio-button-2');
-		radioButton2.name = 'comparison';
-		radioButton2.type = 'radio';
-		distributionDiv.appendChild(radioButton2);
-
-		var radioButton2Text = L.DomUtil.create('div', 'radio-button-2-text');
-		radioButton2Text.innerHTML = '<center>COMPARE ENVIRONMENT</center>';
-		distributionDiv.appendChild(radioButton2Text);
-
-		var radioButton3 = L.DomUtil.create('input', 'radio-button-3');
-		radioButton3.name = 'comparison';
-		radioButton3.type = 'radio';
-		distributionDiv.appendChild(radioButton3);
-
-		var radioButton3Text = L.DomUtil.create('div', 'radio-button-3-text');
-		radioButton3Text.innerHTML = '<center>COMPARE SPECIES</center>';
-		distributionDiv.appendChild(radioButton3Text);
-
-		var radioButton4 = L.DomUtil.create('input', 'radio-button-4');
-		radioButton4.name = 'comparison';
-		radioButton4.type = 'radio';
-		distributionDiv.appendChild(radioButton4);
-
-		var radioButton4Text = L.DomUtil.create('div', 'radio-button-4-text');
-		radioButton4Text.innerHTML = '<center>COMPARE AREA</center>';
-		distributionDiv.appendChild(radioButton4Text);
-
-		control._distributionDiv = distributionDiv;
-		control._selectedImage = selectedImage;
-		control._innerImage = innerImage;
-		control._selectedSpecies = selectedSpecies;
-		control._selectedRadioButton = selectedRadioButton;
-		control._subheadCompare = subheadCompare;
-		control._subheadTitle = subheadTitle;
-		control._speciesText = speciesText;
-		control._dropdown1 = dropdown1;
-		control._dropdown2 = dropdown2;
-		control._numberResults = numberResults;
-		control._radioButton2 = radioButton2;
-		control._radioButton2Text = radioButton2Text;
-		control._radioButton3 = radioButton3;
-		control._radioButton3Text = radioButton3Text;
-		control._radioButton4 = radioButton4;
-		control._radioButton4Text = radioButton4Text;
-		*/
-	},
-	_createEnvironmentDiv: function(control) {
-	},
-	_createLexicalDiv: function(control) {
-	},
-	_createAreaCompareDiv: function(control) {
-	},
 	_createNameSwitcher: function(control) {
 		var nameSwitcherText = L.DomUtil.create('div', 'utk-name-switcher-text'),
 			nameSwitcherButton = L.DomUtil.create('button', 'utk-name-switcher-button');
@@ -586,7 +505,7 @@ var control,
 				jQuery('.utk-name-switcher-button').animate({'left': '1240px'});
 
 				if(control._selectedSpeciesRef !== undefined) {
-					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef.common.replace(/_/g, ' ');
+					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef._common.replace(/_/g, ' ');
 				}
 			} else {
 				for(var i = 0; i < control._resultsList.children.length; i++) {
@@ -598,7 +517,7 @@ var control,
 				jQuery('.utk-name-switcher-button').animate({'left': '1302px'});
 
 				if(control._selectedSpeciesRef !== undefined) {
-					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef.latin.replace(/_/g, ' ');
+					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef._latin.replace(/_/g, ' ');
 				}
 			}
 		}
@@ -699,16 +618,16 @@ var control,
 			}
 		}
 	},
-	_fuseSearch: function(value) {
+	_fuseSearch: function(value, ul) {
 		var results = control._fuser.search(value);
 
 		if(results.length > 0) {
-			control._resultsList.style.display = 'block';
+			ul.style.display = 'block';
 		} else {
-			control._resultsList.style.display = 'none';
+			ul.style.display = 'none';
 		}
 
-		control._resultsList.innerHTML = '';
+		ul.innerHTML = '';
 		for(var i = 0; i < results.length && i < 15; i++) {
 			var li = L.DomUtil.create('li', 'search-result');
 			if(control._whichName === 'latin') {
@@ -728,52 +647,56 @@ var control,
 			li.style.lineHeight = '31px';
 			li.style.cursor = 'pointer';
 			li.onclick = function() {
-				control._selectedSpecies.push({
-					'id': this._id,
-					'latin': this._latin,
-					'common': this._common
-				});
+				if(control._selectedSpecies[0] !== undefined) {
+					NPMap.config.L.removeLayer(control._selectedSpecies[0]);
 
-				L.npmap.layer.mapbox({
-					name: this._latin,
-					opacity: 1,
-					id: 'nps.GRSM_' + this._id
-				}).addTo(NPMap.config.L);
-
-				control._speciesSightings.push(
-					L.npmap.layer.geojson({
-						name: this._latin + '_observations',
-						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
-						type: 'geojson',
-						popup: {
-							title: this._latin.replace(/_/g, ' ') + ' sighting',
-							description: 'Coordinates: {{coordinates}}'
-						},
-						styles: {
-							point: {
-								'marker-color': '#40b5c6',
-								'marker-size': 'small'
-							}
-						},
-						cluster: {
-							clusterIcon: '#40b5c6'
-						},
-						showCoverageOnHover: true,
-						disableClusteringAtZoom: 15,
-						polygonOptions: {
-							color: '#40b5c6',
-							fillColor: '#40b5c6'
-						}
-					})
-				);
-
-				if(control._showObservations) {
-					control._speciesSightings[control._speciesSightings.length-1].addTo(NPMap.config.L);
+					if(control._showObservations) {
+						NPMap.config.L.removeLayer(control._speciesSightings[0]);
+					}
 				}
 
-				control._resultsList.style.display = 'none';
-				control._resultsList.innerHTML = '';
+				control._selectedSpecies[0] = L.npmap.layer.mapbox({
+					name: this._latin,
+					opacity: 1,
+					id: 'nps.GRSM_' + this._id + '_blue'
+				}).addTo(NPMap.config.L);
+				control._selectedSpecies[0]._idNumber = this._id;
+				control._selectedSpecies[0]._latin = this._latin;
+				control._selectedSpecies[0]._common = this._common;
+
+				control._speciesSightings[0] = L.npmap.layer.geojson({
+					name: this._latin + '_observations',
+					url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+					type: 'geojson',
+					popup: {
+						title: this._latin.replace(/_/g, ' ') + ' sighting',
+						description: 'Coordinates: {{coordinates}}'
+					},
+					styles: {
+						point: {
+							'marker-color': '#40b5c6',
+							'marker-size': 'small'
+						}
+					},
+					cluster: {
+						clusterIcon: '#40b5c6'
+					},
+					showCoverageOnHover: true,
+					disableClusteringAtZoom: 15,
+					polygonOptions: {
+						color: '#40b5c6',
+						fillColor: '#40b5c6'
+					}
+				});
+
+				if(control._showObservations) {
+					control._speciesSightings[0].addTo(NPMap.config.L);
+				}
+
+				ul.style.display = 'none';
+				ul.innerHTML = '';
 				control._initialSearchLexBox.value = '';
+				if(control._lexSearchBox !== undefined) control._lexSearchBox.value = '';
 
 				control._breadcrumb.innerHTML += ' > ' + this._latin.replace(/_/g, ' ').toUpperCase();
 				if(control._whichName === 'latin') {
@@ -791,7 +714,7 @@ var control,
 				control._lastSearchPage = control._comparisonPane;
 			}
 
-			control._resultsList.appendChild(li);
+			ul.appendChild(li);
 		}
 	},
 	_changeCompare(whichCompare) {
@@ -803,6 +726,132 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#f5faf2';
 			control._distributionPaneLabelMain.style.fontSize = '16pt';
+
+			/* distribution pane content */
+			var distributionDropdownOne = L.DomUtil.create('div', 'dropdown');
+			distributionDropdownOne.innerHTML = 'SELECT SPECIES 1';
+			distributionDropdownOne.style.position = 'absolute';
+			distributionDropdownOne.style.lineHeight = '33px';
+			distributionDropdownOne.style.fontSize = '10pt';
+			distributionDropdownOne.style.letterSpacing = '.001em';
+			distributionDropdownOne.style.top = '0px';
+			distributionDropdownOne.style.left = '300px';
+			var distributionResultsListOne = L.DomUtil.create('ul', 'dist-results');
+			distributionResultsListOne.style.position = 'absolute';
+			distributionResultsListOne.style.top = '33px';
+			distributionResultsListOne.style.left = '300px';
+			distributionResultsListOne.style.display = 'none';
+			distributionResultsListOne.style.margin = '0px';
+			distributionResultsListOne.style.zIndex = 100;
+			var found = [ control._selectedSpecies[0]._latin ];
+			for(var i = 0; i < 15; i++) {
+				var max = -1;
+				var maxItem = '';
+				var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+
+				for(var key in spList) {
+					if(spList[key] > max && found.indexOf(key) === -1) {
+						maxItem = key;
+						max = spList[key];
+					}
+				}
+
+				found.push(maxItem);
+				var li = L.DomUtil.create('li', 'search-result');
+				if(control._whichName === 'latin') {
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+				} else {
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+				}
+				li.style.margin = '0px';
+				li.style.listStylePosition = 'inside';
+				li.style.backgroundColor = '#292928';
+				li.style.border = '1px solid black';
+				li.style.color = '#f5faf2';
+				li.style.letterSpacing = '.025em';
+				li.style.fontSize = '14pt';
+				li.style.lineHeight = '31px';
+				li.style.width = '370px';
+				li.style.cursor = 'pointer';
+				distributionResultsListOne.appendChild(li);
+			}
+			control._distroOneSelected = false;
+			distributionDropdownOne.onclick = function() {
+				if(control._distroOneSelected) {
+					control._distroOneSelected = false;
+					distributionResultsListOne.style.display = 'none';
+				} else {
+					control._distroOneSelected = true;
+					distributionResultsListOne.style.display = 'block';
+				}
+			}
+			var distributionDropdownTwo = L.DomUtil.create('div', 'dropdown');
+			distributionDropdownTwo.innerHTML = 'SELECT SPECIES 2';
+			distributionDropdownTwo.style.position = 'absolute';
+			distributionDropdownTwo.style.lineHeight = '33px';
+			distributionDropdownTwo.style.fontSize = '10pt';
+			distributionDropdownTwo.style.letterSpacing = '.001em';
+			distributionDropdownTwo.style.top = '51px';
+			distributionDropdownTwo.style.left = '300px';
+			var distributionResultsListTwo = L.DomUtil.create('ul', 'dist-results');
+			distributionResultsListTwo.style.position = 'absolute';
+			distributionResultsListTwo.style.top = '84px';
+			distributionResultsListTwo.style.left = '300px';
+			distributionResultsListTwo.style.display = 'none';
+			distributionResultsListTwo.style.margin = '0px';
+			distributionResultsListTwo.style.zIndex = 99;
+			var found = [ control._selectedSpecies[0]._latin ];
+			for(var i = 0; i < 15; i++) {
+				var max = -1;
+				var maxItem = '';
+				var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+
+				for(var key in spList) {
+					if(spList[key] > max && found.indexOf(key) === -1) {
+						maxItem = key;
+						max = spList[key];
+					}
+				}
+
+				found.push(maxItem);
+				var li = L.DomUtil.create('li', 'search-result');
+				if(control._whichName === 'latin') {
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+				} else {
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+				}
+				li.style.margin = '0px';
+				li.style.listStylePosition = 'inside';
+				li.style.backgroundColor = '#292928';
+				li.style.border = '1px solid black';
+				li.style.color = '#f5faf2';
+				li.style.letterSpacing = '.025em';
+				li.style.fontSize = '14pt';
+				li.style.lineHeight = '31px';
+				li.style.width = '370px';
+				li.style.cursor = 'pointer';
+				distributionResultsListTwo.appendChild(li);
+			}
+			control._distroTwoSelected = false;
+			distributionDropdownTwo.onclick = function() {
+				if(control._distroTwoSelected) {
+					control._distroTwoSelected = false;
+					distributionResultsListTwo.style.display = 'none';
+				} else {
+					control._distroTwoSelected = true;
+					distributionResultsListTwo.style.display = 'block';
+				}
+			}
+			control._comparisonDistributionPane.appendChild(distributionDropdownOne);
+			control._comparisonDistributionPane.appendChild(distributionResultsListOne);
+			control._comparisonDistributionPane.appendChild(distributionDropdownTwo);
+			control._comparisonDistributionPane.appendChild(distributionResultsListTwo);
+			control._distributionDropdownOne = distributionDropdownOne;
+			control._distributionResultsListOne = distributionResultsListOne;
+			control._distributionDropdownTwo = distributionDropdownTwo;
+			control._distributionResultsListTwo = distributionResultsListTwo;
+
+			/* close other panes */
 			jQuery('.compare-environment').animate({
 				left: '977px',
 				width: '125px',
@@ -811,10 +860,26 @@ var control,
 			control._environmentPaneLabelMain.innerHTML = 'COMPARE ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			if(control._environmentDropdownOne !== undefined) {
+				control._environmentDropdownOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentDropdownTwo.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListTwo.remove();
+				control._environmentDropdownOne = undefined;
+			}
 			jQuery('.compare-lexical').animate({
 				left: '1121px',
 				width: '105px',
 			});
+			if(control._compareLexBox !== undefined) {
+				control._compareLexBox.remove();
+				control._compareLexBox = undefined;
+				control._lexResultsList.remove();
+				control._lexResultsList = undefined;
+			}
 			control._lexicalPaneLabelTop.innerHTML = '';
 			control._lexicalPaneLabelMain.innerHTML = 'COMPARE SPECIES';
 			control._lexicalPaneLabelMain.style.color = '#909090';
@@ -835,6 +900,17 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			if(control._distributionDropdownOne !== undefined) {
+				control._distributionDropdownOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionDropdownTwo.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListTwo.remove();
+				control._distributionDropdownOne = undefined;
+			}
+
 			jQuery('.compare-environment').animate({
 				left: '370px',
 				width: '740px',
@@ -843,10 +919,141 @@ var control,
 			control._environmentPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#f5faf2';
 			control._environmentPaneLabelMain.style.fontSize = '16pt';
+
+			/* environment pane content */
+			var environmentDropdownOne = L.DomUtil.create('div', 'dropdown');
+			environmentDropdownOne.innerHTML = 'SELECT SPECIES 1';
+			environmentDropdownOne.style.position = 'absolute';
+			environmentDropdownOne.style.lineHeight = '33px';
+			environmentDropdownOne.style.fontSize = '10pt';
+			environmentDropdownOne.style.letterSpacing = '.001em';
+			environmentDropdownOne.style.top = '0px';
+			environmentDropdownOne.style.left = '300px';
+			var environmentResultsListOne = L.DomUtil.create('ul', 'dist-results');
+			environmentResultsListOne.style.position = 'absolute';
+			environmentResultsListOne.style.top = '33px';
+			environmentResultsListOne.style.left = '300px';
+			environmentResultsListOne.style.display = 'none';
+			environmentResultsListOne.style.margin = '0px';
+			environmentResultsListOne.style.zIndex = 100;
+			var found = [ control._selectedSpecies[0]._latin ];
+			for(var i = 0; i < 15; i++) {
+				var max = -1;
+				var maxItem = '';
+				var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+
+				for(var key in spList) {
+					if(spList[key] > max && found.indexOf(key) === -1) {
+						maxItem = key;
+						max = spList[key];
+					}
+				}
+
+				found.push(maxItem);
+				var li = L.DomUtil.create('li', 'search-result');
+				if(control._whichName === 'latin') {
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+				} else {
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+				}
+				li.style.margin = '0px';
+				li.style.listStylePosition = 'inside';
+				li.style.backgroundColor = '#292928';
+				li.style.border = '1px solid black';
+				li.style.color = '#f5faf2';
+				li.style.letterSpacing = '.025em';
+				li.style.fontSize = '14pt';
+				li.style.lineHeight = '31px';
+				li.style.width = '370px';
+				li.style.cursor = 'pointer';
+				environmentResultsListOne.appendChild(li);
+			}
+			control._enviroOneSelected = false;
+			environmentDropdownOne.onclick = function() {
+				if(control._enviroOneSelected) {
+					control._enviroOneSelected = false;
+					environmentResultsListOne.style.display = 'none';
+				} else {
+					control._enviroOneSelected = true;
+					environmentResultsListOne.style.display = 'block';
+				}
+			}
+			var environmentDropdownTwo = L.DomUtil.create('div', 'dropdown');
+			environmentDropdownTwo.innerHTML = 'SELECT SPECIES 2';
+			environmentDropdownTwo.style.position = 'absolute';
+			environmentDropdownTwo.style.lineHeight = '33px';
+			environmentDropdownTwo.style.fontSize = '10pt';
+			environmentDropdownTwo.style.letterSpacing = '.001em';
+			environmentDropdownTwo.style.top = '51px';
+			environmentDropdownTwo.style.left = '300px';
+			var environmentResultsListTwo = L.DomUtil.create('ul', 'dist-results');
+			environmentResultsListTwo.style.position = 'absolute';
+			environmentResultsListTwo.style.top = '84px';
+			environmentResultsListTwo.style.left = '300px';
+			environmentResultsListTwo.style.display = 'none';
+			environmentResultsListTwo.style.margin = '0px';
+			environmentResultsListTwo.style.zIndex = 99;
+			var found = [ control._selectedSpecies[0]._latin ];
+			for(var i = 0; i < 15; i++) {
+				var max = -1;
+				var maxItem = '';
+				var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+
+				for(var key in spList) {
+					if(spList[key] > max && found.indexOf(key) === -1) {
+						maxItem = key;
+						max = spList[key];
+					}
+				}
+
+				found.push(maxItem);
+				var li = L.DomUtil.create('li', 'search-result');
+				if(control._whichName === 'latin') {
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+				} else {
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+				}
+				li.style.margin = '0px';
+				li.style.listStylePosition = 'inside';
+				li.style.backgroundColor = '#292928';
+				li.style.border = '1px solid black';
+				li.style.color = '#f5faf2';
+				li.style.letterSpacing = '.025em';
+				li.style.fontSize = '14pt';
+				li.style.lineHeight = '31px';
+				li.style.width = '370px';
+				li.style.cursor = 'pointer';
+				environmentResultsListTwo.appendChild(li);
+			}
+			control._enviroTwoSelected = false;
+			environmentDropdownTwo.onclick = function() {
+				if(control._enviroTwoSelected) {
+					control._enviroTwoSelected = false;
+					environmentResultsListTwo.style.display = 'none';
+				} else {
+					control._enviroTwoSelected = true;
+					environmentResultsListTwo.style.display = 'block';
+				}
+			}
+			control._comparisonEnvironmentPane.appendChild(environmentDropdownOne);
+			control._comparisonEnvironmentPane.appendChild(environmentResultsListOne);
+			control._comparisonEnvironmentPane.appendChild(environmentDropdownTwo);
+			control._comparisonEnvironmentPane.appendChild(environmentResultsListTwo);
+			control._environmentDropdownOne = environmentDropdownOne;
+			control._environmentResultsListOne = environmentResultsListOne;
+			control._environmentDropdownTwo = environmentDropdownTwo;
+			control._environmentResultsListTwo = environmentResultsListTwo;
+
 			jQuery('.compare-lexical').animate({
 				left: '1121px',
 				width: '105px',
 			});
+			if(control._compareLexBox !== undefined) {
+				control._compareLexBox.remove();
+				control._compareLexBox = undefined;
+				control._lexResultsList.remove();
+				control._lexResultsList = undefined;
+			}
 			control._lexicalPaneLabelTop.innerHTML = '';
 			control._lexicalPaneLabelMain.innerHTML = 'COMPARE SPECIES';
 			control._lexicalPaneLabelMain.style.color = '#909090';
@@ -867,6 +1074,16 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			if(control._distributionDropdownOne !== undefined) {
+				control._distributionDropdownOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionDropdownTwo.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListTwo.remove();
+				control._distributionDropdownOne = undefined;
+			}
 			jQuery('.compare-environment').animate({
 				left: '370px',
 				width: '125px',
@@ -875,6 +1092,17 @@ var control,
 			control._environmentPaneLabelMain.innerHTML = 'COMPARE SPECIES';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			if(control._environmentDropdownOne !== undefined) {
+				control._environmentDropdownOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentDropdownTwo.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListTwo.remove();
+				control._environmentDropdownOne = undefined;
+			}
+
 			jQuery('.compare-lexical').animate({
 				left: '515px',
 				width: '720px',
@@ -883,6 +1111,28 @@ var control,
 			control._lexicalPaneLabelMain.innerHTML = 'ANOTHER SPECIES IN THE PARK';
 			control._lexicalPaneLabelMain.style.color = '#f5faf2';
 			control._lexicalPaneLabelMain.style.fontSize = '16pt';
+
+			var compareLexBox = L.DomUtil.create('input', 'comp-lexical-box');
+			compareLexBox.style.position = 'absolute';
+			compareLexBox.style.top = '33px';
+			compareLexBox.style.left = '300px';
+			compareLexBox.placeholder = 'Type a species name';
+			compareLexBox.oninput = function() {
+				var evt = window.event;
+				control._fuseSearch(evt.srcElement.value, lexResultsList);
+			}
+			var lexResultsList = L.DomUtil.create('ul', 'init-lexical-results');
+			lexResultsList.style.position = 'absolute';
+			lexResultsList.style.top = '53px';
+			lexResultsList.style.left = '300px';
+			lexResultsList.style.width = '375px';
+			lexResultsList.style.display = 'none';
+			lexResultsList.style.margin = '0px';
+			control._comparisonLexicalPane.appendChild(compareLexBox);
+			control._comparisonLexicalPane.appendChild(lexResultsList);
+			control._compareLexBox = compareLexBox;
+			control._lexResultsList = lexResultsList;
+
 			jQuery('.compare-area').animate({
 				left: '1256px',
 				width: '105px'
@@ -899,6 +1149,16 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			if(control._distributionDropdownOne !== undefined) {
+				control._distributionDropdownOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionDropdownTwo.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListTwo.remove();
+				control._distributionDropdownOne = undefined;
+			}
 			jQuery('.compare-environment').animate({
 				left: '370px',
 				width: '125px',
@@ -907,10 +1167,26 @@ var control,
 			control._environmentPaneLabelMain.innerHTML = 'COMPARE SPECIES';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			if(control._environmentDropdownOne !== undefined) {
+				control._environmentDropdownOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentDropdownTwo.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListTwo.remove();
+				control._environmentDropdownOne = undefined;
+			}
 			jQuery('.compare-lexical').animate({
 				left: '515px',
 				width: '105px',
 			});
+			if(control._compareLexBox !== undefined) {
+				control._compareLexBox.remove();
+				control._compareLexBox = undefined;
+				control._lexResultsList.remove();
+				control._lexResultsList = undefined;
+			}
 			control._lexicalPaneLabelTop.innerHTML = '';
 			control._lexicalPaneLabelMain.innerHTML = 'COMPARE AREA';
 			control._lexicalPaneLabelMain.style.color = '#909090';
