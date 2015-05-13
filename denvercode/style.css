@@ -430,8 +430,9 @@
 	left: 20px;
 	top: 0px;
 	padding: 0px;
-	width: 40px;
+	width: 45px;
 	height: 40px;
+	padding-left: 15px;
 }
 
 #searchButton {
@@ -439,10 +440,10 @@
 	outline: 0px;
 	background-color: #000000;
 	position: absolute;
-	left: 60px;
+	left: 80px;
 	top: 0px;
 	padding: 0px;
-	width: 40px;
+	width: 60px;
 	height: 40px;
 }
 

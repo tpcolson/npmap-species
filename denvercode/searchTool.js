@@ -329,10 +329,12 @@ var control,
 		var comparisonPaneImage = L.DomUtil.create('div', 'image-normal vignette');
 		comparisonPaneImage.onmouseover = function() {
 			control._comparisonDistributionPane.style.zIndex = -2;
+			control._comparisonEnvironmentPane.style.zIndex = -2;
 		}
 		comparisonPaneImage.onmouseout = function() {
 			setTimeout(function() {
 				control._comparisonDistributionPane.style.zIndex = 1;
+				control._comparisonEnvironmentPane.style.zIndex = 1;
 			}, 200);
 		}
 		var innerImage = L.DomUtil.create('img', 'inner-image');
@@ -414,6 +416,7 @@ var control,
 		lexicalPaneLabelMain.style.top = '25px';
 		lexicalPaneLabelMain.style.left = '20px';
 		lexicalPaneLabelMain.style.lineHeight = '25px';
+		lexicalPaneLabelMain.style.width = '200px';
 		var lexicalRadioButton = L.DomUtil.create('input', '');
 		lexicalRadioButton.type = 'radio';
 		lexicalRadioButton.name = 'which-pane';
@@ -704,14 +707,17 @@ var control,
 				} else {
 					control._comparisonPaneSpecies.innerHTML = this._common.replace(/_/g, ' ');
 				}
-				control._selectedSpeciesRef = control._selectedSpecies[0];
-				control._searchDiv.removeChild(control._initialSearchDiv);
-				control._searchDiv.appendChild(control._comparisonPane);
-				control._searchDiv.removeChild(control._nameSwitcherText);
-				control._searchDiv.removeChild(control._nameSwitcherButton);
-				control._searchDiv.appendChild(control._nameSwitcherText);
-				control._searchDiv.appendChild(control._nameSwitcherButton);
-				control._lastSearchPage = control._comparisonPane;
+				if(control._started === undefined) {
+					control._selectedSpeciesRef = control._selectedSpecies[0];
+					control._searchDiv.removeChild(control._initialSearchDiv);
+					control._searchDiv.appendChild(control._comparisonPane);
+					control._searchDiv.removeChild(control._nameSwitcherText);
+					control._searchDiv.removeChild(control._nameSwitcherButton);
+					control._searchDiv.appendChild(control._nameSwitcherText);
+					control._searchDiv.appendChild(control._nameSwitcherButton);
+					control._lastSearchPage = control._comparisonPane;
+					control._started = true;
+				}
 			}
 
 			ul.appendChild(li);
@@ -726,6 +732,7 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#f5faf2';
 			control._distributionPaneLabelMain.style.fontSize = '16pt';
+			control._distributionPaneLabelMain.style.lineHeight = '25px';
 
 			/* distribution pane content */
 			var distributionDropdownOne = L.DomUtil.create('div', 'dropdown');
@@ -761,7 +768,7 @@ var control,
 				if(control._whichName === 'latin') {
 					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
 				} else {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+					//li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
 				}
 				li.style.margin = '0px';
 				li.style.listStylePosition = 'inside';
@@ -860,6 +867,7 @@ var control,
 			control._environmentPaneLabelMain.innerHTML = 'COMPARE ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			control._environmentPaneLabelMain.style.lineHeight = '18px';
 			if(control._environmentDropdownOne !== undefined) {
 				control._environmentDropdownOne.remove();
 				control._environmentDropdownOne = undefined;
@@ -881,9 +889,10 @@ var control,
 				control._lexResultsList = undefined;
 			}
 			control._lexicalPaneLabelTop.innerHTML = '';
-			control._lexicalPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE<br>SPECIES';
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
+			control._lexicalPaneLabelMain.style.lineHeight = '18px';
 			jQuery('.compare-area').animate({
 				left: '1256px',
 				width: '105px'
@@ -892,6 +901,7 @@ var control,
 			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
 			control._areaPaneLabelMain.style.color = '#909090';
 			control._areaPaneLabelMain.style.fontSize = '10pt';
+			control._areaPaneLabelMain.style.lineHeight = '18px';
 		} else if(whichCompare === 'environment') {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -900,6 +910,7 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			control._distributionPaneLabelMain.style.lineHeight = '18px';
 			if(control._distributionDropdownOne !== undefined) {
 				control._distributionDropdownOne.remove();
 				control._distributionDropdownOne = undefined;
@@ -919,6 +930,7 @@ var control,
 			control._environmentPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#f5faf2';
 			control._environmentPaneLabelMain.style.fontSize = '16pt';
+			control._environmentPaneLabelMain.style.lineHeight = '25px';
 
 			/* environment pane content */
 			var environmentDropdownOne = L.DomUtil.create('div', 'dropdown');
@@ -1055,9 +1067,10 @@ var control,
 				control._lexResultsList = undefined;
 			}
 			control._lexicalPaneLabelTop.innerHTML = '';
-			control._lexicalPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE<br>SPECIES';
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
+			control._lexicalPaneLabelMain.style.lineHeight = '18px';
 			jQuery('.compare-area').animate({
 				left: '1256px',
 				width: '105px'
@@ -1066,6 +1079,7 @@ var control,
 			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
 			control._areaPaneLabelMain.style.color = '#909090';
 			control._areaPaneLabelMain.style.fontSize = '10pt';
+			control._areaPaneLabelMain.style.lineHeight = '18px';
 		} else if(whichCompare === 'lexical') {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -1074,6 +1088,7 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			control._distributionPaneLabelMain.style.lineHeight = '18px';
 			if(control._distributionDropdownOne !== undefined) {
 				control._distributionDropdownOne.remove();
 				control._distributionDropdownOne = undefined;
@@ -1089,9 +1104,10 @@ var control,
 				width: '125px',
 			});
 			control._environmentPaneLabelTop.innerHTML = '';
-			control._environmentPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._environmentPaneLabelMain.innerHTML = 'COMPARE ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			control._environmentPaneLabelMain.style.lineHeight = '18px';
 			if(control._environmentDropdownOne !== undefined) {
 				control._environmentDropdownOne.remove();
 				control._environmentDropdownOne = undefined;
@@ -1111,11 +1127,12 @@ var control,
 			control._lexicalPaneLabelMain.innerHTML = 'ANOTHER SPECIES IN THE PARK';
 			control._lexicalPaneLabelMain.style.color = '#f5faf2';
 			control._lexicalPaneLabelMain.style.fontSize = '16pt';
+			control._lexicalPaneLabelMain.style.lineHeight = '25px';
 
 			var compareLexBox = L.DomUtil.create('input', 'comp-lexical-box');
 			compareLexBox.style.position = 'absolute';
 			compareLexBox.style.top = '33px';
-			compareLexBox.style.left = '300px';
+			compareLexBox.style.left = '275px';
 			compareLexBox.placeholder = 'Type a species name';
 			compareLexBox.oninput = function() {
 				var evt = window.event;
@@ -1124,7 +1141,7 @@ var control,
 			var lexResultsList = L.DomUtil.create('ul', 'init-lexical-results');
 			lexResultsList.style.position = 'absolute';
 			lexResultsList.style.top = '53px';
-			lexResultsList.style.left = '300px';
+			lexResultsList.style.left = '275px';
 			lexResultsList.style.width = '375px';
 			lexResultsList.style.display = 'none';
 			lexResultsList.style.margin = '0px';
@@ -1141,6 +1158,7 @@ var control,
 			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
 			control._areaPaneLabelMain.style.color = '#909090';
 			control._areaPaneLabelMain.style.fontSize = '10pt';
+			control._areaPaneLabelMain.style.lineHeight = '18px';
 		} else {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -1149,6 +1167,7 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			control._distributionPaneLabelMain.style.lineHeight = '18px';
 			if(control._distributionDropdownOne !== undefined) {
 				control._distributionDropdownOne.remove();
 				control._distributionDropdownOne = undefined;
@@ -1164,9 +1183,10 @@ var control,
 				width: '125px',
 			});
 			control._environmentPaneLabelTop.innerHTML = '';
-			control._environmentPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._environmentPaneLabelMain.innerHTML = 'COMPARE ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			control._environmentPaneLabelMain.style.lineHeight = '18px';
 			if(control._environmentDropdownOne !== undefined) {
 				control._environmentDropdownOne.remove();
 				control._environmentDropdownOne = undefined;
@@ -1188,9 +1208,10 @@ var control,
 				control._lexResultsList = undefined;
 			}
 			control._lexicalPaneLabelTop.innerHTML = '';
-			control._lexicalPaneLabelMain.innerHTML = 'COMPARE AREA';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE<br>SPECIES';
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
+			control._lexicalPaneLabelMain.style.lineHeight = '18px';
 			jQuery('.compare-area').animate({
 				left: '640px',
 				width: '720px'
@@ -1199,6 +1220,7 @@ var control,
 			control._areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA WITHIN THE PARK';
 			control._areaPaneLabelMain.style.color = '#f5faf2';
 			control._areaPaneLabelMain.style.fontSize = '16pt';
+			control._areaPaneLabelMain.style.lineHeight = '25px';
 		}
 	}
 });
