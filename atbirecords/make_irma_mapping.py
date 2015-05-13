@@ -13,7 +13,11 @@ for line in csvreader:
         exit(1)
     else:
         latin_name = line[0]
+        common_name = line[3]
         id_num = int(line[2].replace(',', ''))
-        encountered[latin_name] = str(id_num).zfill(7)
+        encountered[latin_name] = {
+            'common': common_name,
+            'id': str(id_num).zfill(7)
+        }
 
 print json.dumps(encountered)
