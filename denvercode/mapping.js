@@ -104,7 +104,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 				var secondLatLng = NPMap.config.L.containerPointToLatLng(secondPoint);
 				var dist = firstLatLng.distanceTo(secondLatLng);
 
-				control._levelView.innerHTML = '<i>' + dist.toFixed(1) + 'm level ' + currentZoom + ': ?m resolution data</i>'; //todo: add data resolution
+				control._levelView.innerHTML = '<i>level ' + currentZoom + ': ' + dist.toFixed(1) + 'm per pixel</i>'; //todo: add data resolution
 			},
 			type: 'zoomend'
 		}]
