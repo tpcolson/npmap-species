@@ -27,7 +27,7 @@ var control,
 			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/atbirecords/lexical_index.json',
 			dataType: 'json',
 			success: function(data) {
-				var contents = window.atob(data.content),
+				var contents = window.atob(data.content.replace(/\s/g, '')),
 					index = jQuery.parseJSON(contents)['items'],
 					options = {
 						keys: ['latin_name_ref', 'common_name'],
@@ -35,6 +35,16 @@ var control,
 					}
 
 				control._fuser = new Fuse(index, options);
+			}
+		});
+
+		jQuery.ajax({
+			type: 'GET',
+			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/atbirecords/irma_mapping.json',
+			dataType: 'json',
+			success: function(data) {
+				var contents = window.atob(data.content.replace(/\s/g, ''));
+				control._nameMappings = jQuery.parseJSON(contents);
 			}
 		});
 
@@ -56,8 +66,33 @@ var control,
 					url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/blobs/' + target_sha,
 					dataType: 'json',
 					success: function(data) {
-						var contents = window.atob(data.content);
+						var contents = window.atob(data.content.replace(/\s/g, ''));
 						control._similarDistributions = jQuery.parseJSON(contents);
+					}
+				});
+			}
+		});
+
+		jQuery.ajax({
+			type: 'GET',
+			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/trees/gh-pages:atbirecords',
+			dataType: 'jsonp',
+			success: function(data) {
+				var iterator, target_sha;
+				iterator = data['data']['tree'];
+				for(var i = 0; i < iterator.length; i++) {
+					if(iterator[i]['path'] == 'most_similar_environment.json') {
+						target_sha = iterator[i]['sha'];
+					}
+				}
+
+				jQuery.ajax({
+					type: 'GET',
+					url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/blobs/' + target_sha,
+					dataType: 'json',
+					success: function(data) {
+						var contents = window.atob(data.content.replace(/\s/g, ''));
+						control._similarEnvironments = jQuery.parseJSON(contents);
 					}
 				});
 			}
@@ -660,7 +695,7 @@ var control,
 
 				control._selectedSpecies[0] = L.npmap.layer.mapbox({
 					name: this._latin,
-					opacity: 1,
+					opacity: .5,
 					id: 'nps.GRSM_' + this._id + '_blue'
 				}).addTo(NPMap.config.L);
 				control._selectedSpecies[0]._idNumber = this._id;
@@ -677,18 +712,18 @@ var control,
 					},
 					styles: {
 						point: {
-							'marker-color': '#40b5c6',
+							'marker-color': '#2b80b6',
 							'marker-size': 'small'
 						}
 					},
 					cluster: {
-						clusterIcon: '#40b5c6'
+						clusterIcon: '#2b80b6'
 					},
 					showCoverageOnHover: true,
 					disableClusteringAtZoom: 15,
 					polygonOptions: {
-						color: '#40b5c6',
-						fillColor: '#40b5c6'
+						color: '#2b80b6',
+						fillColor: '#2b80b6'
 					}
 				});
 
@@ -723,7 +758,7 @@ var control,
 			ul.appendChild(li);
 		}
 	},
-	_changeCompare(whichCompare) {
+	_changeCompare: function(whichCompare) {
 		if(whichCompare === 'distribution') {
 			jQuery('.compare-distribution').animate({
 				width: '740px'
@@ -768,8 +803,11 @@ var control,
 				if(control._whichName === 'latin') {
 					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
 				} else {
-					//li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
 				}
+				li._latin = maxItem;
+				li._common = control._nameMappings[maxItem].common;
+				li._id = control._nameMappings[maxItem].id;
 				li.style.margin = '0px';
 				li.style.listStylePosition = 'inside';
 				li.style.backgroundColor = '#292928';
@@ -780,6 +818,56 @@ var control,
 				li.style.lineHeight = '31px';
 				li.style.width = '370px';
 				li.style.cursor = 'pointer';
+				li.onclick = function() {
+					if(control._selectedSpecies[1] !== undefined) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+
+						if(control._showObservations) {
+							NPMap.config.L.removeLayer(control._speciesSightings[1]);
+						}
+					}
+
+					control._selectedSpecies[1] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_pink'
+					}).addTo(NPMap.config.L);
+					control._selectedSpecies[1]._idNumber = this._id;
+					control._selectedSpecies[1]._latin = this._latin;
+					control._selectedSpecies[1]._common = this._common;
+
+					control._speciesSightings[1] = L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#ca1892',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#ca1892'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#ca1892',
+							fillColor: '#ca1892'
+						}
+					});
+
+					if(control._showObservations) {
+						control._speciesSightings[1].addTo(NPMap.config.L);
+					}
+					
+					control._distributionResultsListOne.style.display = 'none';
+				}
+
 				distributionResultsListOne.appendChild(li);
 			}
 			control._distroOneSelected = false;
@@ -825,8 +913,11 @@ var control,
 				if(control._whichName === 'latin') {
 					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
 				} else {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
 				}
+				li._latin = maxItem;
+				li._common = control._nameMappings[maxItem].common;
+				li._id = control._nameMappings[maxItem].id;
 				li.style.margin = '0px';
 				li.style.listStylePosition = 'inside';
 				li.style.backgroundColor = '#292928';
@@ -837,6 +928,55 @@ var control,
 				li.style.lineHeight = '31px';
 				li.style.width = '370px';
 				li.style.cursor = 'pointer';
+				li.onclick = function() {
+					if(control._selectedSpecies[2] !== undefined) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[2]);
+
+						if(control._showObservations) {
+							NPMap.config.L.removeLayer(control._speciesSightings[2]);
+						}
+					}
+
+					control._selectedSpecies[2] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_orange'
+					}).addTo(NPMap.config.L);
+					control._selectedSpecies[2]._idNumber = this._id;
+					control._selectedSpecies[2]._latin = this._latin;
+					control._selectedSpecies[2]._common = this._common;
+
+					control._speciesSightings[2] = L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#f28e43',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#f28e43'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#f28e43',
+							fillColor: '#f28e43'
+						}
+					});
+
+					if(control._showObservations) {
+						control._speciesSightings[2].addTo(NPMap.config.L);
+					}
+					
+					control._distributionResultsListTwo.style.display = 'none';
+				}
 				distributionResultsListTwo.appendChild(li);
 			}
 			control._distroTwoSelected = false;
@@ -950,24 +1090,27 @@ var control,
 			environmentResultsListOne.style.zIndex = 100;
 			var found = [ control._selectedSpecies[0]._latin ];
 			for(var i = 0; i < 15; i++) {
-				var max = -1;
-				var maxItem = '';
-				var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+				var min = 10000000000;
+				var minItem = '';
+				var spList = control._similarEnvironments[control._selectedSpecies[0]._latin];
 
 				for(var key in spList) {
-					if(spList[key] > max && found.indexOf(key) === -1) {
-						maxItem = key;
-						max = spList[key];
+					if(spList[key] < min && found.indexOf(key) === -1) {
+						minItem = key;
+						min = spList[key];
 					}
 				}
 
-				found.push(maxItem);
+				found.push(minItem);
 				var li = L.DomUtil.create('li', 'search-result');
 				if(control._whichName === 'latin') {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
 				} else {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
 				}
+				li._latin = minItem;
+				li._common = control._nameMappings[minItem].common;
+				li._id = control._nameMappings[minItem].id;
 				li.style.margin = '0px';
 				li.style.listStylePosition = 'inside';
 				li.style.backgroundColor = '#292928';
@@ -978,6 +1121,55 @@ var control,
 				li.style.lineHeight = '31px';
 				li.style.width = '370px';
 				li.style.cursor = 'pointer';
+				li.onclick = function() {
+					if(control._selectedSpecies[1] !== undefined) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+
+						if(control._showObservations) {
+							NPMap.config.L.removeLayer(control._speciesSightings[1]);
+						}
+					}
+
+					control._selectedSpecies[1] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_pink'
+					}).addTo(NPMap.config.L);
+					control._selectedSpecies[1]._idNumber = this._id;
+					control._selectedSpecies[1]._latin = this._latin;
+					control._selectedSpecies[1]._common = this._common;
+
+					control._speciesSightings[1] = L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#f28e43',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#f28e43'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#f28e43',
+							fillColor: '#f28e43'
+						}
+					});
+
+					if(control._showObservations) {
+						control._speciesSightings[1].addTo(NPMap.config.L);
+					}
+					
+					control._environmentResultsListOne.style.display = 'none';
+				}
 				environmentResultsListOne.appendChild(li);
 			}
 			control._enviroOneSelected = false;
@@ -1007,24 +1199,27 @@ var control,
 			environmentResultsListTwo.style.zIndex = 99;
 			var found = [ control._selectedSpecies[0]._latin ];
 			for(var i = 0; i < 15; i++) {
-				var max = -1;
-				var maxItem = '';
-				var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+				var min = 1000000000;
+				var minItem = '';
+				var spList = control._similarEnvironments[control._selectedSpecies[0]._latin];
 
 				for(var key in spList) {
-					if(spList[key] > max && found.indexOf(key) === -1) {
-						maxItem = key;
-						max = spList[key];
+					if(spList[key] < min && found.indexOf(key) === -1) {
+						minItem = key;
+						min = spList[key];
 					}
 				}
 
-				found.push(maxItem);
+				found.push(minItem);
 				var li = L.DomUtil.create('li', 'search-result');
 				if(control._whichName === 'latin') {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
 				} else {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + results[i].common_name.replace(/_/g, ' ');
+					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
 				}
+				li._latin = minItem;
+				li._common = control._nameMappings[minItem].common;
+				li._id = control._nameMappings[minItem].id;
 				li.style.margin = '0px';
 				li.style.listStylePosition = 'inside';
 				li.style.backgroundColor = '#292928';
@@ -1035,6 +1230,55 @@ var control,
 				li.style.lineHeight = '31px';
 				li.style.width = '370px';
 				li.style.cursor = 'pointer';
+				li.onclick = function() {
+					if(control._selectedSpecies[2] !== undefined) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[2]);
+
+						if(control._showObservations) {
+							NPMap.config.L.removeLayer(control._speciesSightings[2]);
+						}
+					}
+
+					control._selectedSpecies[2] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_orange'
+					}).addTo(NPMap.config.L);
+					control._selectedSpecies[2]._idNumber = this._id;
+					control._selectedSpecies[2]._latin = this._latin;
+					control._selectedSpecies[2]._common = this._common;
+
+					control._speciesSightings[2] = L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#f28e43',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#f28e43'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#f28e43',
+							fillColor: '#f28e43'
+						}
+					});
+
+					if(control._showObservations) {
+						control._speciesSightings[2].addTo(NPMap.config.L);
+					}
+					
+					control._environmentResultsListTwo.style.display = 'none';
+				}
 				environmentResultsListTwo.appendChild(li);
 			}
 			control._enviroTwoSelected = false;
