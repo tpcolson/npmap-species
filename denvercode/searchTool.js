@@ -767,6 +767,19 @@ var control,
 		}
 	},
 	_changeCompare: function(whichCompare) {
+		if(control._selectedSpecies[1] !== undefined) {
+			NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+			if(control._showObservations) {
+				NPMap.config.L.removeLayer(control._speciesSightings[1]);
+			}
+		}
+		if(control._selectedSpecies[2] !== undefined) {
+			NPMap.config.L.removeLayer(control._selectedSpecies[2]);
+			if(control._showObservations) {
+				NPMap.config.L.removeLayer(control._speciesSightings[2]);
+			}
+		}
+
 		if(whichCompare === 'distribution') {
 			jQuery('.compare-distribution').animate({
 				width: '740px'
