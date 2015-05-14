@@ -580,6 +580,7 @@ var control,
 		control._groupPane = groupPane;
 		control._groupPaneImage = groupPaneImage;
 		control._groupPaneSpecies = groupPaneSpecies;
+		control._numSelected = 0;
 	},
 	_createNameSwitcher: function(control) {
 		var nameSwitcherText = L.DomUtil.create('div', 'utk-name-switcher-text'),
@@ -1636,6 +1637,101 @@ var control,
 		}
 	},
 	_toggleGroupLayer: function(el) {
-		console.log(this);
+		if(!el.checked) {
+			control._numSelected--;
+			NPMap.config.L.removeLayer(control._selectedSpecies[el._layer]);
+
+			if(control._showObservations) {
+				NPMap.config.L.removeLayer(control._speciesSightings[el._layer]);
+			}
+
+			el.parentNode.getElementsByTagName('label')[0].style.color = '#f5faf2';
+		} else {
+			if(control._numSelected === 0) {
+				control._numSelected++;
+				control._selectedSpecies[1] = L.npmap.layer.mapbox({
+					name: el.value,
+					opacity: .5,
+					id: 'nps.GRSM_' + control._nameMappings[el.value].id + '_pink'
+				}).addTo(NPMap.config.L);
+				el._layer = 1;
+				control._selectedSpecies[1]._latin = el.value;
+				control._selectedSpecies[1]._idNumber = control._nameMappings[el.value].id;
+				control._selectedSpecies[1]._common = control._nameMappings[el.value].common;
+
+				control._speciesSightings[1] = L.npmap.layer.geojson({
+					name: el.value + '_observations',
+					url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + el.value + '.geojson',
+					type: 'geojson',
+					popup: {
+						title: el.value.replace(/_/g, ' ') + ' sighting',
+						description: 'Coordinates: {{coordinates}}'
+					},
+					styles: {
+						point: {
+							'marker-color': '#ca1892',
+							'marker-size': 'small'
+						}
+					},
+					cluster: {
+						clusterIcon: '#ca1892'
+					},
+					showCoverageOnHover: true,
+					disableClusteringAtZoom: 15,
+					polygonOptions: {
+						color: '#ca1892',
+						fillColor: '#ca1892'
+					}
+				});
+
+				if(control._showObservations) {
+					control._speciesSightings[1].addTo(NPMap.config.L);
+				}
+				
+				el.parentNode.getElementsByTagName('label')[0].style.color = '#ca1892';
+			} else if(control._numSelected === 1) {
+				control._numSelected++;
+				control._selectedSpecies[2] = L.npmap.layer.mapbox({
+					name: el.value,
+					opacity: .5,
+					id: 'nps.GRSM_' + control._nameMappings[el.value].id + '_orange'
+				}).addTo(NPMap.config.L);
+				el._layer = 2;
+				control._selectedSpecies[2]._latin = el.value;
+				control._selectedSpecies[2]._idNumber = control._nameMappings[el.value].id;
+				control._selectedSpecies[2]._common = control._nameMappings[el.value].common;
+
+				control._speciesSightings[2] = L.npmap.layer.geojson({
+					name: el.value + '_observations',
+					url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + el.value + '.geojson',
+					type: 'geojson',
+					popup: {
+						title: el.value.replace(/_/g, ' ') + ' sighting',
+						description: 'Coordinates: {{coordinates}}'
+					},
+					styles: {
+						point: {
+							'marker-color': '#f28e43',
+							'marker-size': 'small'
+						}
+					},
+					cluster: {
+						clusterIcon: '#f28e43'
+					},
+					showCoverageOnHover: true,
+					disableClusteringAtZoom: 15,
+					polygonOptions: {
+						color: '#f28e43',
+						fillColor: '#f28e43'
+					}
+				});
+
+				if(control._showObservations) {
+					control._speciesSightings[2].addTo(NPMap.config.L);
+				}
+				
+				el.parentNode.getElementsByTagName('label')[0].style.color = '#f28e43';
+			}
+		}
 	}
 });
