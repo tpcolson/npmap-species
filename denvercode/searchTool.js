@@ -50,6 +50,29 @@ var control,
 
 		jQuery.ajax({
 			type: 'GET',
+			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/atbirecords/groups.txt',
+			dataType: 'json',
+			success: function(data) {
+				control._groupings = {};
+				var contents = window.atob(data.content.replace(/\s/g, ''));
+				var lines = contents.split('\n');
+				var group = [];
+				for(var i = 0; i < lines.length; i++) {
+					var line = lines[i];
+					if(line != '') {
+						group.push(line);
+						for(var j = 0; j < group.length; j++) {
+							control._groupings[group[j]] = group.slice();
+						}
+					} else {
+						group = [];
+					}
+				}
+			}
+		});
+
+		jQuery.ajax({
+			type: 'GET',
 			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/trees/gh-pages:atbirecords',
 			dataType: 'jsonp',
 			success: function(data) {
@@ -530,6 +553,33 @@ var control,
 		control._currentComparison = '';
 	},
 	_createGroupResults: function(control) {
+		var groupPane = L.DomUtil.create('div', 'group-pane');
+
+		var groupPaneImage = L.DomUtil.create('div', 'image-normal vignette');
+		groupPaneImage.onmouseover = function() {
+			control._groupPane.style.zIndex = -3;
+			document.getElementById('searchButton').style.zIndex = -3;
+			document.getElementById('settingsButton').style.zIndex = -3;
+		}
+		groupPaneImage.onmouseout = function() {
+			setTimeout(function() {
+				control._groupPane.style.zIndex = 1
+				document.getElementById('searchButton').style.zIndex = 1;
+				document.getElementById('settingsButton').style.zIndex = 1;
+			}, 200);
+		}
+		var innerImage = L.DomUtil.create('img', 'inner-image');
+		innerImage.src = 'images/abies_fraseri.jpg';
+		groupPaneImage.appendChild(innerImage);
+		groupPane.appendChild(groupPaneImage);
+
+		var groupPaneSpecies = L.DomUtil.create('div', 'utk-search-species');
+		groupPaneSpecies.innerHTML = '';
+		groupPane.appendChild(groupPaneSpecies);
+
+		control._groupPane = groupPane;
+		control._groupPaneImage = groupPaneImage;
+		control._groupPaneSpecies = groupPaneSpecies;
 	},
 	_createNameSwitcher: function(control) {
 		var nameSwitcherText = L.DomUtil.create('div', 'utk-name-switcher-text'),
@@ -747,10 +797,12 @@ var control,
 				control._breadcrumb.innerHTML += ' > ' + this._latin.replace(/_/g, ' ').toUpperCase();
 				if(control._whichName === 'latin') {
 					control._comparisonPaneSpecies.innerHTML = this._latin.replace(/_/g, ' ');
+					control._groupPaneSpecies.innerHTML = this._latin.replace(/_/g, ' ');
 				} else {
-					control._comparisonPaneSpecies.innerHTML = this._common.replace(/_/g, ' ');
+					control._groupPaneSpecies.innerHTML = this._common.replace(/_/g, ' ');
 				}
-				if(control._started === undefined) {
+
+				if(document.getElementsByName('lexicalType')[0].checked) {
 					control._selectedSpeciesRef = control._selectedSpecies[0];
 					control._searchDiv.removeChild(control._initialSearchDiv);
 					control._searchDiv.appendChild(control._comparisonPane);
@@ -759,7 +811,50 @@ var control,
 					control._searchDiv.appendChild(control._nameSwitcherText);
 					control._searchDiv.appendChild(control._nameSwitcherButton);
 					control._lastSearchPage = control._comparisonPane;
-					control._started = true;
+				} else {
+					control._selectedSpeciesRef = control._selectedSpecies[0];
+					control._searchDiv.removeChild(control._initialSearchDiv);
+					control._searchDiv.appendChild(control._groupPane);
+					control._searchDiv.removeChild(control._nameSwitcherText);
+					control._searchDiv.removeChild(control._nameSwitcherButton);
+					control._searchDiv.appendChild(control._nameSwitcherText);
+					control._searchDiv.appendChild(control._nameSwitcherButton);
+					control._lastSearchPage = control._groupPane;
+
+					var groupLabel = L.DomUtil.create('div', 'subhead2');
+					groupLabel.style.position = 'absolute';
+					groupLabel.style.top = '33px';
+					groupLabel.style.left = '232px';
+					groupLabel.innerHTML = 'COMPARE WITH ...';
+					var groupLabelMain = L.DomUtil.create('div', 'subhead');
+					groupLabelMain.style.position = 'absolute';
+					groupLabelMain.style.paddingTop = '5px';
+					groupLabelMain.style.top = '52px';
+					groupLabelMain.style.left = '232px';
+					groupLabelMain.style.lineHeight = '25px';
+					groupLabelMain.innerHTML = 'OTHER SPECIES IN<br>THIS GROUP';
+					control._groupPane.appendChild(groupLabel);
+					control._groupPane.appendChild(groupLabelMain);
+
+					var groupUl = L.DomUtil.create('ul', 'group-checkboxes');
+					groupUl.style.position = 'absolute';
+					groupUl.style.left = '422px';
+					groupUl.style.top = '0px';
+					for(var i = 0; i < control._groupings[this._latin].length; i++) {
+						var spName = control._groupings[this._latin][i];
+
+						if(spName != this._latin) {
+							var groupLi = L.DomUtil.create('li', 'group-checkbox');
+							groupLi.style.width = '220px';
+							groupLi.style.letterSpacing = '.001em';
+							groupLi.style.fontSize = '9pt';
+							groupLi.style.float = 'left';
+							groupLi.style.color = '#f5faf2';
+							groupLi.innerHTML = '<input type="checkbox" name="' + spName + '" value="' + spName + '" onchange="control._toggleGroupLayer(this);"></input><label for="group' + i + '"> ' + spName.replace(/_/g, ' ') + '</label>';
+							groupUl.appendChild(groupLi);
+						}
+					}
+					control._groupPane.appendChild(groupUl);
 				}
 			}
 
@@ -1539,5 +1634,8 @@ var control,
 			control._areaPaneLabelMain.style.fontSize = '16pt';
 			control._areaPaneLabelMain.style.lineHeight = '25px';
 		}
+	},
+	_toggleGroupLayer: function(el) {
+		console.log(this);
 	}
 });
