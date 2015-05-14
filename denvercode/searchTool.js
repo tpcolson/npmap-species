@@ -365,11 +365,15 @@ var control,
 		comparisonPaneImage.onmouseover = function() {
 			control._comparisonDistributionPane.style.zIndex = -2;
 			control._comparisonEnvironmentPane.style.zIndex = -2;
+			document.getElementById('searchButton').style.zIndex = -3;
+			document.getElementById('settingsButton').style.zIndex = -3;
 		}
 		comparisonPaneImage.onmouseout = function() {
 			setTimeout(function() {
 				control._comparisonDistributionPane.style.zIndex = 1;
 				control._comparisonEnvironmentPane.style.zIndex = 1;
+				document.getElementById('searchButton').style.zIndex = 1;
+				document.getElementById('settingsButton').style.zIndex = 1;
 			}, 200);
 		}
 		var innerImage = L.DomUtil.create('img', 'inner-image');
@@ -661,8 +665,12 @@ var control,
 
 		if(results.length > 0) {
 			ul.style.display = 'block';
+			document.getElementById('searchButton').style.zIndex = -3;
+			document.getElementById('settingsButton').style.zIndex = -3;
 		} else {
 			ul.style.display = 'none';
+			document.getElementById('searchButton').style.zIndex = 1;
+			document.getElementById('settingsButton').style.zIndex = 1;
 		}
 
 		ul.innerHTML = '';
