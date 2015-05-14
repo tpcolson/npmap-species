@@ -557,13 +557,15 @@ var control,
 
 		var groupPaneImage = L.DomUtil.create('div', 'image-normal vignette');
 		groupPaneImage.onmouseover = function() {
-			control._groupPane.style.zIndex = -3;
+			control._groupLabel.style.zIndex = -3;
+			control._groupLabelMain.style.zIndex = -3;
 			document.getElementById('searchButton').style.zIndex = -3;
 			document.getElementById('settingsButton').style.zIndex = -3;
 		}
 		groupPaneImage.onmouseout = function() {
 			setTimeout(function() {
-				control._groupPane.style.zIndex = 1
+				control._groupLabel.style.zIndex = 1;
+				control._groupLabelMain.style.zIndex = 1;
 				document.getElementById('searchButton').style.zIndex = 1;
 				document.getElementById('settingsButton').style.zIndex = 1;
 			}, 200);
@@ -902,6 +904,8 @@ var control,
 					groupLabelMain.innerHTML = 'OTHER SPECIES IN<br>THIS GROUP';
 					control._groupPane.appendChild(groupLabel);
 					control._groupPane.appendChild(groupLabelMain);
+					control._groupLabel = groupLabel;
+					control._groupLabelMain = groupLabelMain;
 
 					var groupUl = L.DomUtil.create('ul', 'group-checkboxes');
 					groupUl.style.position = 'absolute';
