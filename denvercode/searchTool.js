@@ -594,11 +594,44 @@ var control,
 					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
 				}
 
+				if(control._distributionResultsListOne !== undefined) {
+					for(var i = 0; i < control._distributionResultsListOne.children.length; i++) {
+						var el = control._distributionResultsListOne.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
+					}
+
+					for(var i = 0; i < control._distributionResultsListTwo.children.length; i++) {
+						var el = control._distributionResultsListTwo.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
+					}
+
+					for(var i = 0; i < control._environmentResultsListOne.children.length; i++) {
+						var el = control._environmentResultsListOne.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
+					}
+
+					for(var i = 0; i < control._environmentResultsListTwo.children.length; i++) {
+						var el = control._environmentResultsListTwo.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
+					}
+				}
+
+				for(var i = 0; i < document.getElementsByClassName('group-checkbox').length; i++) {
+					var el = document.getElementsByClassName('group-checkbox')[i];
+					el._value = el.getElementsByTagName('input')[0].value;
+					if(el.checked) {
+						el.innerHTML = '<input checked type="checkbox" name="' + el._value + '" value="' + el._value + '" onchange="control._toggleGroupLayer(this);"></input><label for="group' + i + '"> ' + control._nameMappings[el._value].common.replace(/_/g, ' ') + '</label>';
+					} else {
+						el.innerHTML = '<input type="checkbox" name="' + el._value + '" value="' + el._value + '" onchange="control._toggleGroupLayer(this);"></input><label for="group' + i + '"> ' + control._nameMappings[el._value].common.replace(/_/g, ' ') + '</label>';
+					}
+				}
+
 				control._whichName = 'common';
 				jQuery('.utk-name-switcher-button').animate({'left': '1240px'});
 
 				if(control._selectedSpeciesRef !== undefined) {
 					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef._common.replace(/_/g, ' ');
+					control._groupPaneSpecies.innerHTML = control._selectedSpeciesRef._common.replace(/_/g, ' ');
 				}
 			} else {
 				for(var i = 0; i < control._resultsList.children.length; i++) {
@@ -606,11 +639,44 @@ var control,
 					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
 				}
 
+				if(control._distributionResultsListOne !== undefined) {
+					for(var i = 0; i < control._distributionResultsListOne.children.length; i++) {
+						var el = control._distributionResultsListOne.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+					}
+
+					for(var i = 0; i < control._distributionResultsListTwo.children.length; i++) {
+						var el = control._distributionResultsListTwo.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+					}
+
+					for(var i = 0; i < control._environmentResultsListOne.children.length; i++) {
+						var el = control._environmentResultsListOne.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+					}
+
+					for(var i = 0; i < control._environmentResultsListTwo.children.length; i++) {
+						var el = control._environmentResultsListTwo.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+					}
+				}
+
+				for(var i = 0; i < document.getElementsByClassName('group-checkbox').length; i++) {
+					var el = document.getElementsByClassName('group-checkbox')[i];
+					el._value = el.getElementsByTagName('input')[0].value;
+					if(el.checked) {
+						el.innerHTML = '<input checked type="checkbox" name="' + el._value + '" value="' + el._value + '" onchange="control._toggleGroupLayer(this);"></input><label for="group' + i + '"> ' + el._value.replace(/_/g, ' ') + '</label>';
+					} else {
+						el.innerHTML = '<input type="checkbox" name="' + el._value + '" value="' + el._value + '" onchange="control._toggleGroupLayer(this);"></input><label for="group' + i + '"> ' + el._value.replace(/_/g, ' ') + '</label>';
+					}
+				}
+
 				control._whichName = 'latin';
 				jQuery('.utk-name-switcher-button').animate({'left': '1302px'});
 
 				if(control._selectedSpeciesRef !== undefined) {
 					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef._latin.replace(/_/g, ' ');
+					control._groupPaneSpecies.innerHTML = control._selectedSpeciesRef._latin.replace(/_/g, ' ');
 				}
 			}
 		}
