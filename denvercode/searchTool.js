@@ -325,7 +325,7 @@ var control,
 		initialSearchLexBox.placeholder = 'Type a species name';
 		initialSearchLexBox.oninput = function() {
 			var evt = window.event;
-			control._fuseSearch(evt.srcElement.value, resultsList);
+			control._fuseSearch(evt.srcElement.value, resultsList, 0);
 		}
 		var resultsList = L.DomUtil.create('ul', 'init-lexical-results');
 		resultsList.style.display = 'none';
@@ -779,7 +779,7 @@ var control,
 			}
 		}
 	},
-	_fuseSearch: function(value, ul) {
+	_fuseSearch: function(value, ul, index) {
 		var results = control._fuser.search(value);
 
 		if(results.length > 0) {
@@ -812,24 +812,32 @@ var control,
 			li.style.lineHeight = '31px';
 			li.style.cursor = 'pointer';
 			li.onclick = function() {
-				if(control._selectedSpecies[0] !== undefined) {
-					NPMap.config.L.removeLayer(control._selectedSpecies[0]);
+				if(control._selectedSpecies[index] !== undefined) {
+					NPMap.config.L.removeLayer(control._selectedSpecies[index]);
 
 					if(control._showObservations) {
-						NPMap.config.L.removeLayer(control._speciesSightings[0]);
+						NPMap.config.L.removeLayer(control._speciesSightings[index]);
 					}
 				}
 
-				control._selectedSpecies[0] = L.npmap.layer.mapbox({
-					name: this._latin,
-					opacity: .5,
-					id: 'nps.GRSM_' + this._id + '_blue'
-				}).addTo(NPMap.config.L);
-				control._selectedSpecies[0]._idNumber = this._id;
-				control._selectedSpecies[0]._latin = this._latin;
-				control._selectedSpecies[0]._common = this._common;
+				if(index === 0) {
+					control._selectedSpecies[index] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_blue'
+					}).addTo(NPMap.config.L);
+				} else if(index === 1) {
+					control._selectedSpecies[index] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_pink'
+					}).addTo(NPMap.config.L);
+				}
+				control._selectedSpecies[index]._idNumber = this._id;
+				control._selectedSpecies[index]._latin = this._latin;
+				control._selectedSpecies[index]._common = this._common;
 
-				control._speciesSightings[0] = L.npmap.layer.geojson({
+				control._speciesSightings[index] = L.npmap.layer.geojson({
 					name: this._latin + '_observations',
 					url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
 					type: 'geojson',
@@ -855,7 +863,7 @@ var control,
 				});
 
 				if(control._showObservations) {
-					control._speciesSightings[0].addTo(NPMap.config.L);
+					control._speciesSightings[index].addTo(NPMap.config.L);
 				}
 
 				ul.style.display = 'none';
@@ -1619,7 +1627,7 @@ var control,
 			compareLexBox.placeholder = 'Type a species name';
 			compareLexBox.oninput = function() {
 				var evt = window.event;
-				control._fuseSearch(evt.srcElement.value, lexResultsList);
+				control._fuseSearch(evt.srcElement.value, lexResultsList, 1);
 			}
 			var lexResultsList = L.DomUtil.create('ul', 'init-lexical-results');
 			lexResultsList.style.position = 'absolute';
