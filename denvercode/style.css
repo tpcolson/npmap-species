@@ -458,6 +458,15 @@
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	-ms-user-select: none;
+	cursor: pointer;
+}
+
+.triangle {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #f5faf2;
 }
 
 .comp-lexical-box {
