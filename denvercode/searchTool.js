@@ -792,6 +792,7 @@ var control,
 			dOneTriangle.style.left = '360px';
 			dOneTriangle.style.float = 'left';
 			distributionDropdownOne.appendChild(dOneTriangle);
+			control._dOneTriangle = dOneTriangle;
 			var distributionResultsListOne = L.DomUtil.create('ul', 'dist-results');
 			distributionResultsListOne.style.position = 'absolute';
 			distributionResultsListOne.style.top = '33px';
@@ -879,6 +880,12 @@ var control,
 						control._speciesSightings[1].addTo(NPMap.config.L);
 					}
 					
+					distributionDropdownOne.innerHTML = this.innerHTML;
+					distributionDropdownOne.style.backgroundColor = '#ca1892';
+					distributionDropdownOne.style.letterSpacing = '.025em';
+					distributionDropdownOne.style.fontSize = '14pt';
+					distributionDropdownOne.style.color = '#f5faf2';
+					distributionDropdownOne.appendChild(dOneTriangle);
 					control._distributionResultsListOne.style.display = 'none';
 				}
 
@@ -908,6 +915,7 @@ var control,
 			dTwoTriangle.style.left = '360px';
 			dTwoTriangle.style.float = 'left';
 			distributionDropdownTwo.appendChild(dTwoTriangle);
+			control._dTwoTriangle = dTwoTriangle;
 			var distributionResultsListTwo = L.DomUtil.create('ul', 'dist-results');
 			distributionResultsListTwo.style.position = 'absolute';
 			distributionResultsListTwo.style.top = '84px';
@@ -995,6 +1003,12 @@ var control,
 						control._speciesSightings[2].addTo(NPMap.config.L);
 					}
 					
+					distributionDropdownTwo.innerHTML = this.innerHTML;
+					distributionDropdownTwo.style.backgroundColor = '#f28e43';
+					distributionDropdownTwo.style.letterSpacing = '.025em';
+					distributionDropdownTwo.style.fontSize = '14pt';
+					distributionDropdownTwo.style.color = '#f5faf2';
+					distributionDropdownTwo.appendChild(dTwoTriangle);
 					control._distributionResultsListTwo.style.display = 'none';
 				}
 				distributionResultsListTwo.appendChild(li);
@@ -1107,6 +1121,7 @@ var control,
 			eOneTriangle.style.left = '360px';
 			eOneTriangle.style.float = 'left';
 			environmentDropdownOne.appendChild(eOneTriangle);
+			control._eOneTriangle = eOneTriangle;
 			var environmentResultsListOne = L.DomUtil.create('ul', 'dist-results');
 			environmentResultsListOne.style.position = 'absolute';
 			environmentResultsListOne.style.top = '33px';
@@ -1175,18 +1190,18 @@ var control,
 						},
 						styles: {
 							point: {
-								'marker-color': '#f28e43',
+								'marker-color': '#ca1892',
 								'marker-size': 'small'
 							}
 						},
 						cluster: {
-							clusterIcon: '#f28e43'
+							clusterIcon: '#ca1892'
 						},
 						showCoverageOnHover: true,
 						disableClusteringAtZoom: 15,
 						polygonOptions: {
-							color: '#f28e43',
-							fillColor: '#f28e43'
+							color: '#ca1892',
+							fillColor: '#ca1892'
 						}
 					});
 
@@ -1194,6 +1209,12 @@ var control,
 						control._speciesSightings[1].addTo(NPMap.config.L);
 					}
 					
+					environmentDropdownOne.innerHTML = this.innerHTML;
+					environmentDropdownOne.style.backgroundColor = '#ca1892';
+					environmentDropdownOne.style.letterSpacing = '.025em';
+					environmentDropdownOne.style.fontSize = '14pt';
+					environmentDropdownOne.style.color = '#f5faf2';
+					environmentDropdownOne.appendChild(eOneTriangle);
 					control._environmentResultsListOne.style.display = 'none';
 				}
 				environmentResultsListOne.appendChild(li);
@@ -1222,6 +1243,7 @@ var control,
 			eTwoTriangle.style.left = '360px';
 			eTwoTriangle.style.float = 'left';
 			environmentDropdownTwo.appendChild(eTwoTriangle);
+			control._eTwoTriangle = eTwoTriangle;
 			var environmentResultsListTwo = L.DomUtil.create('ul', 'dist-results');
 			environmentResultsListTwo.style.position = 'absolute';
 			environmentResultsListTwo.style.top = '84px';
@@ -1309,6 +1331,12 @@ var control,
 						control._speciesSightings[2].addTo(NPMap.config.L);
 					}
 					
+					environmentDropdownTwo.innerHTML = this.innerHTML;
+					environmentDropdownTwo.style.backgroundColor = '#f28e43';
+					environmentDropdownTwo.style.letterSpacing = '.025em';
+					environmentDropdownTwo.style.fontSize = '14pt';
+					environmentDropdownTwo.style.color = '#f5faf2';
+					environmentDropdownTwo.appendChild(eTwoTriangle);
 					control._environmentResultsListTwo.style.display = 'none';
 				}
 				environmentResultsListTwo.appendChild(li);
