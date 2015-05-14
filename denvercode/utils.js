@@ -88,14 +88,10 @@ window.onload = function() {
 		}
 	}
 
-	/* add in new print control */
-	var pc = new PrintControl();
-	NPMap.config.L.addControl(pc);
-
 	/* add in search tool */
 	var st = new SearchTool();
 	NPMap.config.L.addControl(st);
 
 	/* add in floating div */
-	//addFloatationDevice();
+	addColorLegend();
 }
