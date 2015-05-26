@@ -49,8 +49,9 @@ var control,
 		jQuery.ajax({
 			type: 'GET',
 			url: 'npmap-species/atbirecords/groups.txt',
-			dataType: 'json',
+			dataType: 'text',
 			success: function(data) {
+			console.log(data);
 				control._groupings = {};
 				var lines = data.split('\n');
 				var group = [];
