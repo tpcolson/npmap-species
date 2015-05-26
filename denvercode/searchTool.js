@@ -24,11 +24,10 @@ var control,
 		/* Load various GitHub resourses needed by this control */
 		jQuery.ajax({
 			type: 'GET',
-			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/atbirecords/lexical_index.json',
+			url: 'npmap-species/atbirecords/lexical_index.json',
 			dataType: 'json',
 			success: function(data) {
-				var contents = window.atob(data.content.replace(/\s/g, '')),
-					index = jQuery.parseJSON(contents)['items'],
+				var index = data.items,
 					options = {
 						keys: ['latin_name_ref', 'common_name'],
 						threshold: 0.5
@@ -40,22 +39,20 @@ var control,
 
 		jQuery.ajax({
 			type: 'GET',
-			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/atbirecords/irma_mapping.json',
+			url: 'npmap-species/atbirecords/irma_mapping.json',
 			dataType: 'json',
 			success: function(data) {
-				var contents = window.atob(data.content.replace(/\s/g, ''));
-				control._nameMappings = jQuery.parseJSON(contents);
+				control._nameMappings = data;
 			}
 		});
 
 		jQuery.ajax({
 			type: 'GET',
-			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/atbirecords/groups.txt',
+			url: 'npmap-species/atbirecords/groups.txt',
 			dataType: 'json',
 			success: function(data) {
 				control._groupings = {};
-				var contents = window.atob(data.content.replace(/\s/g, ''));
-				var lines = contents.split('\n');
+				var lines = data.split('\n');
 				var group = [];
 				for(var i = 0; i < lines.length; i++) {
 					var line = lines[i];
@@ -73,51 +70,19 @@ var control,
 
 		jQuery.ajax({
 			type: 'GET',
-			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/trees/gh-pages:atbirecords',
-			dataType: 'jsonp',
+			url: 'npmap-species/atbirecords/most_similar_distribution.json',
+			dataType: 'json',
 			success: function(data) {
-				var iterator, target_sha;
-				iterator = data['data']['tree'];
-				for(var i = 0; i < iterator.length; i++) {
-					if(iterator[i]['path'] == 'most_similar_distribution.json') {
-						target_sha = iterator[i]['sha'];
-					}
-				}
-
-				jQuery.ajax({
-					type: 'GET',
-					url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/blobs/' + target_sha,
-					dataType: 'json',
-					success: function(data) {
-						var contents = window.atob(data.content.replace(/\s/g, ''));
-						control._similarDistributions = jQuery.parseJSON(contents);
-					}
-				});
+				control._similarDistributions = data;
 			}
 		});
 
 		jQuery.ajax({
 			type: 'GET',
-			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/trees/gh-pages:atbirecords',
-			dataType: 'jsonp',
+			url: 'npmap-species/atbirecords/most_similar_environment.json',
+			dataType: 'json',
 			success: function(data) {
-				var iterator, target_sha;
-				iterator = data['data']['tree'];
-				for(var i = 0; i < iterator.length; i++) {
-					if(iterator[i]['path'] == 'most_similar_environment.json') {
-						target_sha = iterator[i]['sha'];
-					}
-				}
-
-				jQuery.ajax({
-					type: 'GET',
-					url: 'https://api.github.com/repos/nationalparkservice/npmap-species/git/blobs/' + target_sha,
-					dataType: 'json',
-					success: function(data) {
-						var contents = window.atob(data.content.replace(/\s/g, ''));
-						control._similarEnvironments = jQuery.parseJSON(contents);
-					}
-				});
+				control._similarEnvironments = data;
 			}
 		});
 
@@ -839,7 +804,7 @@ var control,
 
 				control._speciesSightings[index] = L.npmap.layer.geojson({
 					name: this._latin + '_observations',
-					url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+					url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
 					type: 'geojson',
 					popup: {
 						title: this._latin.replace(/_/g, ' ') + ' sighting',
@@ -1040,7 +1005,7 @@ var control,
 
 					control._speciesSightings[1] = L.npmap.layer.geojson({
 						name: this._latin + '_observations',
-						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
 						type: 'geojson',
 						popup: {
 							title: this._latin.replace(/_/g, ' ') + ' sighting',
@@ -1163,7 +1128,7 @@ var control,
 
 					control._speciesSightings[2] = L.npmap.layer.geojson({
 						name: this._latin + '_observations',
-						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
 						type: 'geojson',
 						popup: {
 							title: this._latin.replace(/_/g, ' ') + ' sighting',
@@ -1369,7 +1334,7 @@ var control,
 
 					control._speciesSightings[1] = L.npmap.layer.geojson({
 						name: this._latin + '_observations',
-						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
 						type: 'geojson',
 						popup: {
 							title: this._latin.replace(/_/g, ' ') + ' sighting',
@@ -1491,7 +1456,7 @@ var control,
 
 					control._speciesSightings[2] = L.npmap.layer.geojson({
 						name: this._latin + '_observations',
-						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
 						type: 'geojson',
 						popup: {
 							title: this._latin.replace(/_/g, ' ') + ' sighting',
@@ -1739,7 +1704,7 @@ var control,
 
 				control._speciesSightings[1] = L.npmap.layer.geojson({
 					name: el.value + '_observations',
-					url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + el.value + '.geojson',
+					url: 'npmap-species/atbirecords/Geojsons/all/' + el.value + '.geojson',
 					type: 'geojson',
 					popup: {
 						title: el.value.replace(/_/g, ' ') + ' sighting',
@@ -1781,7 +1746,7 @@ var control,
 
 				control._speciesSightings[2] = L.npmap.layer.geojson({
 					name: el.value + '_observations',
-					url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + el.value + '.geojson',
+					url: 'npmap-species/atbirecords/Geojsons/all/' + el.value + '.geojson',
 					type: 'geojson',
 					popup: {
 						title: el.value.replace(/_/g, ' ') + ' sighting',
