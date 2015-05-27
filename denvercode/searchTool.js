@@ -51,7 +51,6 @@ var control,
 			url: 'npmap-species/atbirecords/groups.txt',
 			dataType: 'text',
 			success: function(data) {
-			console.log(data);
 				control._groupings = {};
 				var lines = data.split('\n');
 				var group = [];
@@ -260,7 +259,38 @@ var control,
 
 		/* add breadcrumb to search div todo: make this dynamic */
 		var breadcrumb = L.DomUtil.create('div', 'utk-search-breadcrumb');
-		breadcrumb.innerHTML = 'SEARCH';
+		var breadcrumbBase = L.DomUtil.create('div', '');
+		breadcrumbBase.style.display = 'inline-block';
+		breadcrumbBase.style.float = 'left';
+		breadcrumbBase.style.marginRight = '5px';
+		breadcrumbBase.innerHTML = 'SEARCH';
+		breadcrumbBase.style.cursor = 'pointer';
+		breadcrumbBase.onclick = function() {
+			for(var i = 1; i < control._searchDiv.children.length; i++) {
+				control._searchDiv.children[i--].remove();
+			}
+			control._searchDiv.appendChild(control._initialSearchDiv);
+
+			for(var i = 1; i < control._breadcrumb.children.length; i++) {
+				control._breadcrumb.children[i--].remove();
+			}
+
+			for(var i = 0; i < control._selectedSpecies.length; i++) {
+				if(control._selectedSpecies[i] !== undefined) {
+					NPMap.config.L.removeLayer(control._selectedSpecies[i]);
+
+					if(control._showObservations) {
+						NPMap.config.L.removeLayer(control._speciesSightings[i]);
+					}
+
+					control._selectedSpecies[i] = undefined;
+				}
+			}
+
+			control._searchDiv.appendChild(control._nameSwitcherText);
+			control._searchDiv.appendChild(control._nameSwitcherButton);
+		}
+		breadcrumb.appendChild(breadcrumbBase);
 		searchDiv.appendChild(breadcrumb);
 
 		/* create initial search page */
@@ -276,6 +306,7 @@ var control,
 		control._createNameSwitcher(control);
 
 		control._breadcrumb = breadcrumb;
+		control._breadcrumbBase = breadcrumbBase;
 		control._lastSearchPage = control._initialSearchDiv;
 		control._selectedSpecies = [];
 		control._speciesSightings = [];
@@ -562,6 +593,10 @@ var control,
 					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
 				}
 
+				if(control._breadcrumbSpecies !== undefined) {
+					control._breadcrumbSpecies.innerHTML = '> ' + control._breadcrumbSpecies._common.replace(/_/g, ' ').toUpperCase();
+				}
+
 				if(control._distributionResultsListOne !== undefined) {
 					for(var i = 0; i < control._distributionResultsListOne.children.length; i++) {
 						var el = control._distributionResultsListOne.children[i];
@@ -605,6 +640,10 @@ var control,
 				for(var i = 0; i < control._resultsList.children.length; i++) {
 					var el = control._resultsList.children[i];
 					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+				}
+
+				if(control._breadcrumbSpecies !== undefined) {
+					control._breadcrumbSpecies.innerHTML = '> ' + control._breadcrumbSpecies._latin.replace(/_/g, ' ').toUpperCase();
 				}
 
 				if(control._distributionResultsListOne !== undefined) {
@@ -837,11 +876,28 @@ var control,
 				control._initialSearchLexBox.value = '';
 				if(control._lexSearchBox !== undefined) control._lexSearchBox.value = '';
 
-				control._breadcrumb.innerHTML += ' > ' + this._latin.replace(/_/g, ' ').toUpperCase();
 				if(control._whichName === 'latin') {
+					var breadcrumbSpecies = L.DomUtil.create('div', '');
+					breadcrumbSpecies.style.display = 'inline-block';
+					breadcrumbSpecies.style.float = 'left';
+					breadcrumbSpecies.innerHTML = '> ' + this._latin.replace(/_/g, ' ').toUpperCase();
+					breadcrumbSpecies._latin = this._latin;
+					breadcrumbSpecies._common = this._common;
+					control._breadcrumb.appendChild(breadcrumbSpecies);
+					control._breadcrumbSpecies = breadcrumbSpecies;
+
 					control._comparisonPaneSpecies.innerHTML = this._latin.replace(/_/g, ' ');
 					control._groupPaneSpecies.innerHTML = this._latin.replace(/_/g, ' ');
 				} else {
+					var breadcrumbSpecies = L.DomUtil.create('div', '');
+					breadcrumbSpecies.style.display = 'inline-block';
+					breadcrumbSpecies.style.float = 'left';
+					breadcrumbSpecies.innerHTML = ' > ' + this._common.replace(/_/g, ' ').toUpperCase();
+					breadcrumbSpecies._latin = this._latin;
+					breadcrumbSpecies._common = this._common;
+					control._breadcrumb.appendChild(breadcrumbSpecies);
+					control._breadcrumbSpecies = breadcrumbSpecies;
+
 					control._groupPaneSpecies.innerHTML = this._common.replace(/_/g, ' ');
 				}
 
