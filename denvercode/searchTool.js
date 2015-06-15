@@ -598,21 +598,43 @@ var control,
 				}
 
 				if(control._distributionResultsListOne !== undefined) {
+					if(control._whichCompare === 'distribution' && control._distributionDropdownOne._latin != '') {
+						control._distributionDropdownOne.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._distributionDropdownOne._common.replace(/_/g, ' ');
+						control._distributionDropdownOne.appendChild(dOneTriangle);
+					}
 					for(var i = 0; i < control._distributionResultsListOne.children.length; i++) {
 						var el = control._distributionResultsListOne.children[i];
 						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
 					}
+				}
 
+				if(control._distributionResultsListTwo !== undefined) {
+					if(control._whichCompare === 'distribution' && control._distributionDropdownTwo._latin != '') {
+						control._distributionDropdownTwo.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._distributionDropdownTwo._common.replace(/_/g, ' ');
+						control._distributionDropdownTwo.appendChild(dTwoTriangle);
+					}
 					for(var i = 0; i < control._distributionResultsListTwo.children.length; i++) {
 						var el = control._distributionResultsListTwo.children[i];
 						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
 					}
+				}
 
+				if(control._environmentResultsListOne !== undefined) {
+					if(control._whichCompare === 'environment' && control._environmentDropdownOne._latin != '') {
+						control._environmentDropdownOne.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._environmentDropdownOne._common.replace(/_/g, ' ');
+						control._environmentDropdownOne.appendChild(eOneTriangle);
+					}
 					for(var i = 0; i < control._environmentResultsListOne.children.length; i++) {
 						var el = control._environmentResultsListOne.children[i];
 						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
 					}
+				}
 
+				if(control._environmentResultsListTwo !== undefined) {
+					if(control._whichCompare === 'environment' && control._environmentDropdownTwo._latin != '') {
+						control._environmentDropdownTwo.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._environmentDropdownTwo._common.replace(/_/g, ' ');
+						control._environmentDropdownTwo.appendChild(eTwoTriangle);
+					}
 					for(var i = 0; i < control._environmentResultsListTwo.children.length; i++) {
 						var el = control._environmentResultsListTwo.children[i];
 						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
@@ -647,21 +669,43 @@ var control,
 				}
 
 				if(control._distributionResultsListOne !== undefined) {
+					if(control._whichCompare === 'distribution' && control._distributionDropdownOne._common != '') {
+						control._distributionDropdownOne.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._distributionDropdownOne._latin.replace(/_/g, ' ');
+						control._distributionDropdownOne.appendChild(dOneTriangle);
+					}
 					for(var i = 0; i < control._distributionResultsListOne.children.length; i++) {
 						var el = control._distributionResultsListOne.children[i];
 						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
 					}
+				}
 
+				if(control._distributionResultsListTwo !== undefined) {
+					if(control._whichCompare === 'distribution' && control._distributionDropdownTwo._common != '') {
+						control._distributionDropdownTwo.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._distributionDropdownTwo._latin.replace(/_/g, ' ');
+						control._distributionDropdownTwo.appendChild(dTwoTriangle);
+					}
 					for(var i = 0; i < control._distributionResultsListTwo.children.length; i++) {
 						var el = control._distributionResultsListTwo.children[i];
 						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
 					}
+				}
 
+				if(control._environmentResultsListOne !== undefined) {
+					if(control._whichCompare === 'environment' && control._environmentDropdownOne._common != '') {
+						control._environmentDropdownOne.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._environmentDropdownOne._latin.replace(/_/g, ' ');
+						control._environmentDropdownOne.appendChild(eOneTriangle);
+					}
 					for(var i = 0; i < control._environmentResultsListOne.children.length; i++) {
 						var el = control._environmentResultsListOne.children[i];
 						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
 					}
+				}
 
+				if(control._environmentResultsListTwo !== undefined) {
+					if(control._whichCompare === 'environment' && control._environmentDropdownTwo._common != '') {
+						control._environmentDropdownTwo.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._environmentDropdownTwo._latin.replace(/_/g, ' ');
+						control._environmentDropdownTwo.appendChild(eTwoTriangle);
+					}
 					for(var i = 0; i < control._environmentResultsListTwo.children.length; i++) {
 						var el = control._environmentResultsListTwo.children[i];
 						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
@@ -963,6 +1007,8 @@ var control,
 		}
 	},
 	_changeCompare: function(whichCompare) {
+		control._whichCompare = whichCompare;
+
 		if(control._selectedSpecies[1] !== undefined) {
 			NPMap.config.L.removeLayer(control._selectedSpecies[1]);
 			if(control._showObservations) {
@@ -988,6 +1034,8 @@ var control,
 
 			/* distribution pane content */
 			var distributionDropdownOne = L.DomUtil.create('div', 'dropdown');
+			distributionDropdownOne._latin = '';
+			distributionDropdownOne._common = '';
 			distributionDropdownOne.innerHTML = 'SELECT SPECIES 1';
 			distributionDropdownOne.style.position = 'absolute';
 			distributionDropdownOne.style.lineHeight = '33px';
@@ -1089,6 +1137,8 @@ var control,
 						control._speciesSightings[1].addTo(NPMap.config.L);
 					}
 					
+					distributionDropdownOne._latin = this._latin;
+					distributionDropdownOne._common = this._common;
 					distributionDropdownOne.innerHTML = this.innerHTML;
 					distributionDropdownOne.style.backgroundColor = '#ca1892';
 					distributionDropdownOne.style.letterSpacing = '.025em';
@@ -1111,6 +1161,8 @@ var control,
 				}
 			}
 			var distributionDropdownTwo = L.DomUtil.create('div', 'dropdown');
+			distributionDropdownTwo._latin = '';
+			distributionDropdownTwo._common = '';
 			distributionDropdownTwo.innerHTML = 'SELECT SPECIES 2';
 			distributionDropdownTwo.style.position = 'absolute';
 			distributionDropdownTwo.style.lineHeight = '33px';
@@ -1212,6 +1264,8 @@ var control,
 						control._speciesSightings[2].addTo(NPMap.config.L);
 					}
 					
+					distributionDropdownTwo._latin = this._latin;
+					distributionDropdownTwo._common = this._common;
 					distributionDropdownTwo.innerHTML = this.innerHTML;
 					distributionDropdownTwo.style.backgroundColor = '#f28e43';
 					distributionDropdownTwo.style.letterSpacing = '.025em';
@@ -1317,6 +1371,8 @@ var control,
 
 			/* environment pane content */
 			var environmentDropdownOne = L.DomUtil.create('div', 'dropdown');
+			environmentDropdownOne._latin = '';
+			environmentDropdownOne._common = '';
 			environmentDropdownOne.innerHTML = 'SELECT SPECIES 1';
 			environmentDropdownOne.style.position = 'absolute';
 			environmentDropdownOne.style.lineHeight = '33px';
@@ -1418,6 +1474,8 @@ var control,
 						control._speciesSightings[1].addTo(NPMap.config.L);
 					}
 					
+					environmentDropdownOne._latin = this._latin;
+					environmentDropdownOne._common = this._common;
 					environmentDropdownOne.innerHTML = this.innerHTML;
 					environmentDropdownOne.style.backgroundColor = '#ca1892';
 					environmentDropdownOne.style.letterSpacing = '.025em';
@@ -1439,6 +1497,8 @@ var control,
 				}
 			}
 			var environmentDropdownTwo = L.DomUtil.create('div', 'dropdown');
+			environmentDropdownTwo._latin = '';
+			environmentDropdownTwo._common = '';
 			environmentDropdownTwo.innerHTML = 'SELECT SPECIES 2';
 			environmentDropdownTwo.style.position = 'absolute';
 			environmentDropdownTwo.style.lineHeight = '33px';
@@ -1540,6 +1600,8 @@ var control,
 						control._speciesSightings[2].addTo(NPMap.config.L);
 					}
 					
+					environmentDropdownTwo._latin = this._latin;
+					environmentDropdownTwo._common = this._common;
 					environmentDropdownTwo.innerHTML = this.innerHTML;
 					environmentDropdownTwo.style.backgroundColor = '#f28e43';
 					environmentDropdownTwo.style.letterSpacing = '.025em';
