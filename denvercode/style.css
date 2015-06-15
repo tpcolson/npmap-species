@@ -6,7 +6,7 @@
 	top: 200px;
 	z-index: 150;
 	background-color: black;
-	opacity: 0.9;
+	opacity: 1.0;
 }
 
 #searchTool {
@@ -19,7 +19,7 @@
 	top: 0px;
 	left: 0px;
 	background-color: #000000;
-	opacity: 0.9;
+	opacity: 1.0;
 }
 
 .utk-search-pane {
