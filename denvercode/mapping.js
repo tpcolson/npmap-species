@@ -31,7 +31,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			}
 		}, {
 			name: 'Roads',
-			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_Road_Centerline/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
+			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_ROAD_CENTERLINES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
 			type: 'geojson',
 			styles: {
 				line: {
