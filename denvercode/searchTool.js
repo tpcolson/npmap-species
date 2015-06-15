@@ -211,7 +211,7 @@ var control,
 			'Shelters',
 			'Roads'
 		];
-		poiLabel.innerHTML = '<b>SELECT POINTS OF INTEREST</b>';
+		poiLabel.innerHTML = '<b>SELECT MAP LAYERS</b>';
 		poiCheckboxes.innerHTML = '<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="trails" value="Trails" onchange="control._togglePOI(this);"></input><label for="trails"> Trails</label></li>' +
 									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 52%"><input type="checkbox" name="visitors" value="visitors" onchange="control._togglePOI(this);" disabled></input><label for="visitors"> Visitor Centers</label></li>' + //todo: add this layer
 									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="shelters" value="Shelters" onchange="control._togglePOI(this);"></input><label for="shelters"> Shelters</label></li>' +
