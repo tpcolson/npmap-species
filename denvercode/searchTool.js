@@ -1036,7 +1036,7 @@ var control,
 			var distributionDropdownOne = L.DomUtil.create('div', 'dropdown');
 			distributionDropdownOne._latin = '';
 			distributionDropdownOne._common = '';
-			distributionDropdownOne.innerHTML = 'SELECT SPECIES 1';
+			distributionDropdownOne.innerHTML = 'SELECT SPECIES 2';
 			distributionDropdownOne.style.position = 'absolute';
 			distributionDropdownOne.style.lineHeight = '33px';
 			distributionDropdownOne.style.fontSize = '10pt';
@@ -1163,7 +1163,7 @@ var control,
 			var distributionDropdownTwo = L.DomUtil.create('div', 'dropdown');
 			distributionDropdownTwo._latin = '';
 			distributionDropdownTwo._common = '';
-			distributionDropdownTwo.innerHTML = 'SELECT SPECIES 2';
+			distributionDropdownTwo.innerHTML = 'SELECT SPECIES 3';
 			distributionDropdownTwo.style.position = 'absolute';
 			distributionDropdownTwo.style.lineHeight = '33px';
 			distributionDropdownTwo.style.fontSize = '10pt';
@@ -1373,7 +1373,7 @@ var control,
 			var environmentDropdownOne = L.DomUtil.create('div', 'dropdown');
 			environmentDropdownOne._latin = '';
 			environmentDropdownOne._common = '';
-			environmentDropdownOne.innerHTML = 'SELECT SPECIES 1';
+			environmentDropdownOne.innerHTML = 'SELECT SPECIES 2';
 			environmentDropdownOne.style.position = 'absolute';
 			environmentDropdownOne.style.lineHeight = '33px';
 			environmentDropdownOne.style.fontSize = '10pt';
@@ -1499,7 +1499,7 @@ var control,
 			var environmentDropdownTwo = L.DomUtil.create('div', 'dropdown');
 			environmentDropdownTwo._latin = '';
 			environmentDropdownTwo._common = '';
-			environmentDropdownTwo.innerHTML = 'SELECT SPECIES 2';
+			environmentDropdownTwo.innerHTML = 'SELECT SPECIES 3';
 			environmentDropdownTwo.style.position = 'absolute';
 			environmentDropdownTwo.style.lineHeight = '33px';
 			environmentDropdownTwo.style.fontSize = '10pt';
