@@ -39,6 +39,16 @@ var subNavZ, headerZ, divHeader, divSubNav,
 					'stroke-opacity': 0.75
 				}
 			}
+		}, {
+			name: 'Park Boundary',
+			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/Great_Smoky_Mountains_National_Park_Boundary/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
+			type: 'geojson',
+			styles: {
+				line: {
+					'stroke': '#996515',
+					'stroke-opacity': 1.0
+				}
+			}
 		}],
 		zoom: 10,
 		center: { lat: 35.6, lng: -83.52 },
