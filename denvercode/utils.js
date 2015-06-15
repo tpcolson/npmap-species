@@ -1,4 +1,5 @@
 function enterfullscreen() {
+	document.getElementsByClassName('fullscreen')[0].title = 'Exit fullscreen';
 	headerZ = divHeader.style.zIndex;
 	subNavZ = divSubNav.style.zIndex;
 	divHeader.style.zIndex = 0;
@@ -6,6 +7,7 @@ function enterfullscreen() {
 }
 
 function exitfullscreen() {
+	document.getElementsByClassName('fullscreen')[0].title = 'Enter fullscreen';
 	if(headerZ !== undefined && subNavZ !== undefined) {
 		divHeader.style.zIndex = headerZ;
 		divSubNav.style.zIndex = subNavZ;
@@ -94,4 +96,7 @@ window.onload = function() {
 
 	/* add in floating div */
 	addColorLegend();
+
+	/* add tooltip to fullscreen button */
+	document.getElementsByClassName('fullscreen')[0].title = 'Enter fullscreen';
 }
