@@ -861,6 +861,7 @@ var control,
 			li.style.lineHeight = '31px';
 			li.style.cursor = 'pointer';
 			li.onclick = function() {
+				var first = (control._selectedSpecies[0] === undefined);
 				if(control._selectedSpecies[index] !== undefined) {
 					NPMap.config.L.removeLayer(control._selectedSpecies[index]);
 
@@ -954,6 +955,11 @@ var control,
 					control._searchDiv.appendChild(control._nameSwitcherText);
 					control._searchDiv.appendChild(control._nameSwitcherButton);
 					control._lastSearchPage = control._comparisonPane;
+					if(control._firstLexicalSearch === undefined) {
+						control._firstLexicalSearch = false;
+					} else {
+						control._changeCompare(control._whichCompare);
+					}
 				} else {
 					control._selectedSpeciesRef = control._selectedSpecies[0];
 					control._searchDiv.removeChild(control._initialSearchDiv);
