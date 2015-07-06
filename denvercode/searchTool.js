@@ -1033,6 +1033,7 @@ var control,
 			control._distributionPaneLabelMain.style.lineHeight = '25px';
 
 			/* distribution pane content */
+			control._hiddenSpeciesTwo = undefined;
 			var distributionDropdownOne = L.DomUtil.create('div', 'dropdown');
 			distributionDropdownOne._latin = '';
 			distributionDropdownOne._common = '';
@@ -1077,6 +1078,7 @@ var control,
 				} else {
 					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
 				}
+				li._idx = i;
 				li._latin = maxItem;
 				li._common = control._nameMappings[maxItem].common;
 				li._id = control._nameMappings[maxItem].id;
@@ -1091,6 +1093,12 @@ var control,
 				li.style.width = '370px';
 				li.style.cursor = 'pointer';
 				li.onclick = function() {
+					if(control._hiddenSpeciesTwo !== undefined) {
+						control._distributionResultsListTwo.insertBefore(control._hiddenSpeciesTwo, control._distributionResultsListTwo.children[control._hiddenSpeciesTwo._idx]);
+					}
+					control._hiddenSpeciesTwo = this;
+					control._distributionResultsListTwo.removeChild(control._distributionResultsListTwo.children[this._idx]);
+
 					if(control._selectedSpecies[1] !== undefined) {
 						NPMap.config.L.removeLayer(control._selectedSpecies[1]);
 
@@ -1160,6 +1168,7 @@ var control,
 					distributionResultsListOne.style.display = 'block';
 				}
 			}
+			control._hiddenSpeciesOne = undefined;
 			var distributionDropdownTwo = L.DomUtil.create('div', 'dropdown');
 			distributionDropdownTwo._latin = '';
 			distributionDropdownTwo._common = '';
@@ -1204,6 +1213,7 @@ var control,
 				} else {
 					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
 				}
+				li._idx = i;
 				li._latin = maxItem;
 				li._common = control._nameMappings[maxItem].common;
 				li._id = control._nameMappings[maxItem].id;
@@ -1218,6 +1228,12 @@ var control,
 				li.style.width = '370px';
 				li.style.cursor = 'pointer';
 				li.onclick = function() {
+					if(control._hiddenSpeciesOne !== undefined) {
+						control._distributionResultsListOne.insertBefore(control._hiddenSpeciesOne, control._distributionResultsListOne.children[control._hiddenSpeciesOne._idx]);
+					}
+					control._hiddenSpeciesOne = this;
+					control._distributionResultsListOne.removeChild(control._distributionResultsListOne.children[this._idx]);
+
 					if(control._selectedSpecies[2] !== undefined) {
 						NPMap.config.L.removeLayer(control._selectedSpecies[2]);
 
@@ -1370,6 +1386,7 @@ var control,
 			control._environmentPaneLabelMain.style.lineHeight = '25px';
 
 			/* environment pane content */
+			control._hiddenSpeciesTwo = undefined;
 			var environmentDropdownOne = L.DomUtil.create('div', 'dropdown');
 			environmentDropdownOne._latin = '';
 			environmentDropdownOne._common = '';
@@ -1414,6 +1431,7 @@ var control,
 				} else {
 					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
 				}
+				li._idx = i;
 				li._latin = minItem;
 				li._common = control._nameMappings[minItem].common;
 				li._id = control._nameMappings[minItem].id;
@@ -1428,6 +1446,12 @@ var control,
 				li.style.width = '370px';
 				li.style.cursor = 'pointer';
 				li.onclick = function() {
+					if(control._hiddenSpeciesTwo !== undefined) {
+						control._environmentResultsListTwo.insertBefore(control._hiddenSpeciesTwo, control._environmentResultsListTwo.children[control._hiddenSpeciesTwo._idx]);
+					}
+					control._hiddenSpeciesTwo = this;
+					control._environmentResultsListTwo.removeChild(control._environmentResultsListTwo.children[this._idx]);
+
 					if(control._selectedSpecies[1] !== undefined) {
 						NPMap.config.L.removeLayer(control._selectedSpecies[1]);
 
@@ -1496,6 +1520,7 @@ var control,
 					environmentResultsListOne.style.display = 'block';
 				}
 			}
+			control._hiddenSpeciesOne = undefined;
 			var environmentDropdownTwo = L.DomUtil.create('div', 'dropdown');
 			environmentDropdownTwo._latin = '';
 			environmentDropdownTwo._common = '';
@@ -1540,6 +1565,7 @@ var control,
 				} else {
 					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
 				}
+				li._idx = i;
 				li._latin = minItem;
 				li._common = control._nameMappings[minItem].common;
 				li._id = control._nameMappings[minItem].id;
@@ -1554,6 +1580,12 @@ var control,
 				li.style.width = '370px';
 				li.style.cursor = 'pointer';
 				li.onclick = function() {
+					if(control._hiddenSpeciesOne !== undefined) {
+						control._environmentResultsListOne.insertBefore(control._hiddenSpeciesOne, control._environmentResultsListOne.children[control._hiddenSpeciesOne._idx]);
+					}
+					control._hiddenSpeciesOne = this;
+					control._environmentResultsListOne.removeChild(control._environmentResultsListOne.children[this._idx]);
+
 					if(control._selectedSpecies[2] !== undefined) {
 						NPMap.config.L.removeLayer(control._selectedSpecies[2]);
 
