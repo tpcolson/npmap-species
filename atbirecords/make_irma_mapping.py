@@ -12,7 +12,7 @@ for line in csvreader:
         sys.stderr.write('error: invalid CSV file\n')
         exit(1)
     else:
-        latin_name = line[0]
+        latin_name = line[0].capitalize()
         common_name = line[3]
         id_num = int(line[2].replace(',', ''))
         encountered[latin_name] = {
