@@ -1080,9 +1080,19 @@ var control,
 				found.push(maxItem);
 				var li = L.DomUtil.create('li', 'search-result');
 				if(control._whichName === 'latin') {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+					if(maxItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = maxItem.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+					}
 				} else {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					if(maxItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					}
 				}
 				li._idx = i;
 				li._latin = maxItem;
@@ -1215,9 +1225,19 @@ var control,
 				found.push(maxItem);
 				var li = L.DomUtil.create('li', 'search-result');
 				if(control._whichName === 'latin') {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+					if(maxItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = maxItem.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+					}
 				} else {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					if(maxItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					}
 				}
 				li._idx = i;
 				li._latin = maxItem;
@@ -1433,9 +1453,19 @@ var control,
 				found.push(minItem);
 				var li = L.DomUtil.create('li', 'search-result');
 				if(control._whichName === 'latin') {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
+					if(minItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = minItem.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
+					}
 				} else {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
+					if(minItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = control._nameMappings[minItem].common.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
+					}
 				}
 				li._idx = i;
 				li._latin = minItem;
@@ -1567,9 +1597,19 @@ var control,
 				found.push(minItem);
 				var li = L.DomUtil.create('li', 'search-result');
 				if(control._whichName === 'latin') {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
+					if(minItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = minItem.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
+					}
 				} else {
-					li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
+					if(minItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = control._nameMappings[minItem].common.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
+					}
 				}
 				li._idx = i;
 				li._latin = minItem;
