@@ -112,4 +112,10 @@ window.onload = function() {
 		editControls.children[i].style.float = 'left';
 	}
 	control._annotationDiv.appendChild(editControls);
+
+	/* fix issue with top-right toolbar buttons being too tall */
+	var toolbar = document.getElementsByClassName('npmap-toolbar')[0].children[1];
+	for(var i = 0; i < toolbar.children.length; i++) {
+		toolbar.children[i].style.margin = '0px';
+	}
 }
