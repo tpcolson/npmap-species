@@ -227,15 +227,8 @@ var control,
 		var annotationLabel = L.DomUtil.create('div', 'utk-search-annotation-label');
 		annotationLabel.innerHTML = '<b>ANNOTATE MAP</b>';
 		annotationLabel.style.color = '#f5faf2';
-		var annotationTools = L.DomUtil.create('div', 'utk-search-annotation-tools');
-		annotationTools.innerHTML = '<button class="marker"></button>' +
-									'<button class="polyline"></button>' +
-									'<button class="polygon"></button>' +
-									'<button class="rectangle"></button>' +
-									'<button class="circle"></button>';
 
 		annotationDiv.appendChild(annotationLabel);
-		annotationDiv.appendChild(annotationTools);
 		optionsDiv.appendChild(annotationDiv);
 
 		control._optionsDiv = optionsDiv;
@@ -251,7 +244,6 @@ var control,
 		control._poiCheckboxes = poiCheckboxes;
 		control._annotationDiv = annotationDiv;
 		control._annotationLabel= annotationLabel;
-		control._annotationTools = annotationTools;
 	},
 	_createSearchDiv: function(control) {
 		var searchDiv = L.DomUtil.create('div', 'utk-search-div');
@@ -1608,7 +1600,7 @@ var control,
 					if(control._showObservations) {
 						control._speciesSightings[1].addTo(NPMap.config.L);
 					}
-					
+
 					distributionDropdownOne._latin = this._latin;
 					distributionDropdownOne._common = this._common;
 					distributionDropdownOne.innerHTML = this.innerHTML;
@@ -1753,7 +1745,7 @@ var control,
 					if(control._showObservations) {
 						control._speciesSightings[2].addTo(NPMap.config.L);
 					}
-					
+
 					distributionDropdownTwo._latin = this._latin;
 					distributionDropdownTwo._common = this._common;
 					distributionDropdownTwo.innerHTML = this.innerHTML;
@@ -1981,7 +1973,7 @@ var control,
 					if(control._showObservations) {
 						control._speciesSightings[1].addTo(NPMap.config.L);
 					}
-					
+
 					environmentDropdownOne._latin = this._latin;
 					environmentDropdownOne._common = this._common;
 					environmentDropdownOne.innerHTML = this.innerHTML;
@@ -2125,7 +2117,7 @@ var control,
 					if(control._showObservations) {
 						control._speciesSightings[2].addTo(NPMap.config.L);
 					}
-					
+
 					environmentDropdownTwo._latin = this._latin;
 					environmentDropdownTwo._common = this._common;
 					environmentDropdownTwo.innerHTML = this.innerHTML;
@@ -2375,7 +2367,7 @@ var control,
 				if(control._showObservations) {
 					control._speciesSightings[1].addTo(NPMap.config.L);
 				}
-				
+
 				el.parentNode.getElementsByTagName('label')[0].style.color = '#ca1892';
 			} else if(control._numSelected === 1) {
 				control._numSelected++;
@@ -2417,7 +2409,7 @@ var control,
 				if(control._showObservations) {
 					control._speciesSightings[2].addTo(NPMap.config.L);
 				}
-				
+
 				el.parentNode.getElementsByTagName('label')[0].style.color = '#f28e43';
 			}
 		}

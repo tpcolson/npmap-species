@@ -67,7 +67,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		//},
 		//locateControl: true, //TODO: Check if Tom wants this
 		measureControl: true,
-		//editControl: true,
+		editControl: true,
 		//scaleControl: true,
 		events: [{
 			fn: function() {

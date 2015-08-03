@@ -99,4 +99,17 @@ window.onload = function() {
 
 	/* add tooltip to fullscreen button */
 	document.getElementsByClassName('fullscreen')[0].title = 'Enter fullscreen';
+
+	/* restyle and move edit utils to our tool */
+	var editControls = document.getElementsByClassName('leaflet-control-edit')[0];
+	editControls.style.width = '140px';
+	editControls.style.height = '28px';
+	editControls.children[0].style.borderTop = '0px';
+	editControls.children[0].style.borderRadius = '4px 0px 0px 4px';
+	editControls.children[4].style.borderRadius = '0px 4px 4px 0px';
+	for(var i = 0; i < editControls.children.length; i++) {
+		editControls.children[i].style.height = '26px';
+		editControls.children[i].style.float = 'left';
+	}
+	control._annotationDiv.appendChild(editControls);
 }
