@@ -28,12 +28,17 @@ var control,
 			dataType: 'json',
 			success: function(data) {
 				var index = data.items,
-					options = {
-						keys: ['latin_name_ref', 'common_name'],
+					latinOptions = {
+						keys: ['latin_name_ref'],
+						threshold: 0.5
+					},
+					commonOptions = {
+						keys: ['common_name'],
 						threshold: 0.5
 					}
 
-				control._fuser = new Fuse(index, options);
+				control._latinFuser = new Fuse(index, latinOptions);
+				control._commonFuser = new Fuse(index, commonOptions);
 			}
 		});
 
@@ -821,7 +826,11 @@ var control,
 		}
 	},
 	_fuseSearch: function(value, ul, index) {
-		var results = control._fuser.search(value);
+		if(control._whichName === 'latin') {
+			var results = control._latinFuser.search(value);
+		} else {
+			var results = control._commonFuser.search(value);
+		}
 
 		if(results.length > 0) {
 			ul.style.display = 'block';
