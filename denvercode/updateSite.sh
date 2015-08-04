@@ -6,7 +6,7 @@
 
 # set up (you'll want to change this)
 INDEX="index.html"
-PUB_FILES=("style.css" "colorLegend.js" "fuseSearch.js" "mapping.js" "print.js"
+PUB_FILES=("style.css" "colorLegend.js" "mapping.js" "print.js"
            "scrollUtil.js" "searchTool.js" "utils.js")
 PRIV_FILES=("updateRepo.py")
 USER="jduggan1"
