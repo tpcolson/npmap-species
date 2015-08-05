@@ -7,7 +7,6 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			'esri-topographic',
 			'esri-imagery'
 		],
-		//TODO: overlays need to be able to be toggled on and off (nothing too scary)
 		overlays: [{
 			name: 'Trails',
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
@@ -19,8 +18,19 @@ var subNavZ, headerZ, divHeader, divSubNav,
 				}
 			}
 		}, {
+			name: 'Visitor Centers',
+			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_VISITOR_CENTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
+			type: 'geojson',
+			styles: {
+				point: {
+					'marker-color': '#663300',
+					'marker-size': 'small',
+					'marker-symbol': 'building'
+				}
+			}
+		}, {
 			name: 'Shelters',
-			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_BACK_COUNTY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
+			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
 			type: 'geojson',
 			styles: {
 				point: {
@@ -37,6 +47,17 @@ var subNavZ, headerZ, divHeader, divSubNav,
 				line: {
 					'stroke': '#222222',
 					'stroke-opacity': 0.75
+				}
+			}
+		}, {
+			name: 'Campsites',
+			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_CAMPSITES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
+			type: 'geojson',
+			styles: {
+				point: {
+					'marker-color': '#cb9733',
+					'marker-size': 'small',
+					'marker-symbol': 'campsite'
 				}
 			}
 		}, {

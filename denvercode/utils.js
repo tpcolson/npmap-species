@@ -84,7 +84,7 @@ window.onload = function() {
 		var overlay = NPMap.config.overlays[i];
 
 		/* todo: remove this if statement once everything else is done */
-		if(overlay.name === 'Trails' || overlay.name === 'Roads' || overlay.name === 'Shelters') {
+		if(overlay.name === 'Trails' || overlay.name === 'Visitor Centers' || overlay.name === 'Roads' || overlay.name === 'Shelters' || overlay.name === 'Campsites') {
 			overlay.visible = false;
 			NPMap.config.L.removeLayer(overlay.L);
 		}
