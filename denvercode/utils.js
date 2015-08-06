@@ -9,8 +9,9 @@ function loadResourceWithTries(url, callback, tries) {
 		dataType: 'json',
 		success: callback,
 		error: function() {
-			if(tries < 5)
-			loadResourceWithTries(url, callback, tries+1);
+			if(tries < 5) {
+				loadResourceWithTries(url, callback, tries+1);
+			}
 		}
 	});
 }
