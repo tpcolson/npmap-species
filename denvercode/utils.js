@@ -10,7 +10,7 @@ function loadResourceWithTries(url, callback, tries) {
 		success: callback,
 		error: function() {
 			if(tries < 5)
-			loadResource(url, callback, tries+1);
+			loadResourceWithTries(url, callback, tries+1);
 		}
 	});
 }
