@@ -22,73 +22,48 @@ var control,
 		L.DomEvent.disableClickPropagation(container); /* I don't want double-clicking on this to zoom the map */
 
 		/* Load various GitHub resourses needed by this control */
-		jQuery.ajax({
-			type: 'GET',
-			url: 'npmap-species/atbirecords/lexical_index.json',
-			dataType: 'json',
-			success: function(data) {
-				var index = data.items,
-					latinOptions = {
-						keys: ['latin_name_ref'],
-						threshold: 0.5
-					},
-					commonOptions = {
-						keys: ['common_name'],
-						threshold: 0.5
-					}
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/lexical_index.json', function(data) {
+			var index = data.items,
+				latinOptions = {
+					keys: ['latin_name_ref'],
+					threshold: 0.5
+				},
+				commonOptions = {
+					keys: ['common_name'],
+					threshold: 0.5
+				}
 
-				control._latinFuser = new Fuse(index, latinOptions);
-				control._commonFuser = new Fuse(index, commonOptions);
-			}
+			control._latinFuser = new Fuse(index, latinOptions);
+			control._commonFuser = new Fuse(index, commonOptions);
 		});
 
-		jQuery.ajax({
-			type: 'GET',
-			url: 'npmap-species/atbirecords/irma_mapping.json',
-			dataType: 'json',
-			success: function(data) {
-				control._nameMappings = data;
-			}
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/irma_mapping.json', function(data) {
+			control._nameMappings = data;
 		});
 
-		jQuery.ajax({
-			type: 'GET',
-			url: 'npmap-species/atbirecords/groups.txt',
-			dataType: 'text',
-			success: function(data) {
-				control._groupings = {};
-				var lines = data.split('\n');
-				var group = [];
-				for(var i = 0; i < lines.length; i++) {
-					var line = lines[i];
-					if(line != '') {
-						group.push(line);
-						for(var j = 0; j < group.length; j++) {
-							control._groupings[group[j]] = group.slice();
-						}
-					} else {
-						group = [];
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/groups.txt', function(data) {
+			control._groupings = {};
+			var lines = data.split('\n');
+			var group = [];
+			for(var i = 0; i < lines.length; i++) {
+				var line = lines[i];
+				if(line != '') {
+					group.push(line);
+					for(var j = 0; j < group.length; j++) {
+						control._groupings[group[j]] = group.slice();
 					}
+				} else {
+					group = [];
 				}
 			}
 		});
 
-		jQuery.ajax({
-			type: 'GET',
-			url: 'npmap-species/atbirecords/most_similar_distribution.json',
-			dataType: 'json',
-			success: function(data) {
-				control._similarDistributions = data;
-			}
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_distribution.json', function(data) {
+			control._similarDistributions = data;
 		});
 
-		jQuery.ajax({
-			type: 'GET',
-			url: 'npmap-species/atbirecords/most_similar_environment.json',
-			dataType: 'json',
-			success: function(data) {
-				control._similarEnvironments = data;
-			}
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_environment.json', function(data) {
+			control._similarEnvironments = data;
 		});
 
 		/* We need to move the top left controls down the page */

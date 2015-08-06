@@ -1,3 +1,20 @@
+function loadResource(url, callback) {
+	loadResourceWithTries(url, callback, 1);
+}
+
+function loadResourceWithTries(url, callback, tries) {
+	jQuery.ajax({
+		type: 'GET',
+		url: url,
+		dataType: 'json',
+		success: callback,
+		error: function() {
+			if(tries < 5)
+			loadResource(url, callback, tries+1);
+		}
+	});
+}
+
 function enterfullscreen() {
 	document.getElementsByClassName('fullscreen')[0].title = 'Exit fullscreen';
 	headerZ = divHeader.style.zIndex;
