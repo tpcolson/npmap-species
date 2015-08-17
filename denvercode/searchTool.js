@@ -309,46 +309,12 @@ var control,
 		initialSearchLexical.appendChild(initialSearchLexOptions);
 		initialSearchDiv.appendChild(initialSearchLexical);
 
-		var initialSearchArea = L.DomUtil.create('div', 'utk-search-init-area');
-		var initialSearchAreaLabel = L.DomUtil.create('div', 'init-area-label');
-		initialSearchAreaLabel.innerHTML = 'SEARCH BY SPECIFIC AREA ON MAP';
-		var searchCircle = L.DomUtil.create('canvas', '');
-		searchCircle.id = 'init-area-circle';
-		searchCircle.width = 30;
-		searchCircle.height = 30;
-		var ctx = searchCircle.getContext('2d');
-		ctx.beginPath();
-		ctx.arc(15, 15, 15, 0, 2*Math.PI);
-		ctx.strokeStyle = '#f5faf2';
-		ctx.stroke();
-		ctx.fillStyle = '#f5faf2';
-		ctx.fill();
-		var searchRectangle = L.DomUtil.create('canvas', '');
-		searchRectangle.id = 'init-area-rect';
-		searchRectangle.width = 30;
-		searchRectangle.height = 30;
-		var ctx = searchRectangle.getContext('2d');
-		ctx.fillStyle = '#f5faf2';
-		ctx.fillRect(0, 0, 30, 30);
-		var radiusInput = L.DomUtil.create('div', 'init-area-radius');
-		radiusInput.innerHTML = 'Set shape size: <input name="init-radius" value="0" size="10"/> m';
-
-		initialSearchArea.appendChild(initialSearchAreaLabel);
-		initialSearchArea.appendChild(searchCircle);
-		initialSearchArea.appendChild(searchRectangle);
-		initialSearchArea.appendChild(radiusInput);
-		initialSearchDiv.appendChild(initialSearchArea);
-
 		control._initialSearchDiv = initialSearchDiv;
 		control._initialSearchLexical = initialSearchLexical;
 		control._initialSearchLexLabel = initialSearchLexLabel;
 		control._initialSearchLexBox = initialSearchLexBox;
 		control._resultsList = resultsList;
 		control._initialSearchLexOptions = initialSearchLexOptions;
-		control._initialSearchArea = initialSearchArea;
-		control._searchCircle = searchCircle;
-		control._searchRectangle = searchRectangle;
-		control._radiusInput = radiusInput;
 	},
 	_createSearchResults: function(control) {
 		var comparisonPane = L.DomUtil.create('div', 'utk-search-compare');
@@ -465,39 +431,9 @@ var control,
 		comparisonLexicalPane.appendChild(lexicalPaneLabelMain);
 		comparisonLexicalPane.appendChild(lexicalRadioButton);
 
-		var comparisonAreaPane = L.DomUtil.create('div', 'compare-area');
-		var areaPaneLabelTop = L.DomUtil.create('div', 'subhead2');
-		areaPaneLabelTop.innerHTML = 'COMPARE WITH';
-		areaPaneLabelTop.style.position = 'absolute';
-		areaPaneLabelTop.style.top = '0px';
-		areaPaneLabelTop.style.left = '20px';
-		var areaPaneLabelMain = L.DomUtil.create('div', 'subhead');
-		areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA IN THE PARK';
-		areaPaneLabelMain.style.position = 'absolute';
-		areaPaneLabelMain.style.top = '25px';
-		areaPaneLabelMain.style.left = '20px';
-		areaPaneLabelMain.style.lineHeight = '25px';
-		var areaRadioButton = L.DomUtil.create('input', '');
-		areaRadioButton.type = 'radio';
-		areaRadioButton.name = 'which-pane';
-		areaRadioButton.value = 'area';
-		areaRadioButton.style.position = 'absolute';
-		areaRadioButton.style.top = '32px';
-		areaRadioButton.style.left = '0px';
-		areaRadioButton.onclick = function() {
-			if(control._currentComparison !== 'area') {
-				control._currentComparison = 'area';
-				control._changeCompare('area');
-			}
-		}
-		comparisonAreaPane.appendChild(areaPaneLabelTop);
-		comparisonAreaPane.appendChild(areaPaneLabelMain);
-		comparisonAreaPane.appendChild(areaRadioButton);
-
 		comparisonPane.appendChild(comparisonDistributionPane);
 		comparisonPane.appendChild(comparisonEnvironmentPane);
 		comparisonPane.appendChild(comparisonLexicalPane);
-		comparisonPane.appendChild(comparisonAreaPane);
 
 		control._comparisonPane = comparisonPane;
 		control._comparisonPaneImage = comparisonPaneImage;
@@ -515,10 +451,6 @@ var control,
 		control._lexicalPaneLabelTop = lexicalPaneLabelTop;
 		control._lexicalPaneLabelMain = lexicalPaneLabelMain;
 		control._lexicalRadioButton = lexicalRadioButton;
-		control._comparisonAreaPane = comparisonAreaPane;
-		control._areaPaneLabelTop = areaPaneLabelTop;
-		control._areaPaneLabelMain = areaPaneLabelMain;
-		control._areaRadioButton = areaRadioButton;
 		control._currentComparison = '';
 	},
 	_createGroupResults: function(control) {
@@ -1796,15 +1728,6 @@ var control,
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
 			control._lexicalPaneLabelMain.style.lineHeight = '18px';
-			jQuery('.compare-area').animate({
-				left: '1256px',
-				width: '105px'
-			});
-			control._areaPaneLabelTop.innerHTML = '';
-			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
-			control._areaPaneLabelMain.style.color = '#909090';
-			control._areaPaneLabelMain.style.fontSize = '10pt';
-			control._areaPaneLabelMain.style.lineHeight = '18px';
 		} else if(whichCompare === 'environment') {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -2148,15 +2071,6 @@ var control,
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
 			control._lexicalPaneLabelMain.style.lineHeight = '18px';
-			jQuery('.compare-area').animate({
-				left: '1256px',
-				width: '105px'
-			});
-			control._areaPaneLabelTop.innerHTML = '';
-			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
-			control._areaPaneLabelMain.style.color = '#909090';
-			control._areaPaneLabelMain.style.fontSize = '10pt';
-			control._areaPaneLabelMain.style.lineHeight = '18px';
 		} else if(whichCompare === 'lexical') {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -2226,16 +2140,6 @@ var control,
 			control._comparisonLexicalPane.appendChild(lexResultsList);
 			control._compareLexBox = compareLexBox;
 			control._lexResultsList = lexResultsList;
-
-			jQuery('.compare-area').animate({
-				left: '1256px',
-				width: '105px'
-			});
-			control._areaPaneLabelTop.innerHTML = '';
-			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
-			control._areaPaneLabelMain.style.color = '#909090';
-			control._areaPaneLabelMain.style.fontSize = '10pt';
-			control._areaPaneLabelMain.style.lineHeight = '18px';
 		} else {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -2289,15 +2193,6 @@ var control,
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
 			control._lexicalPaneLabelMain.style.lineHeight = '18px';
-			jQuery('.compare-area').animate({
-				left: '640px',
-				width: '720px'
-			});
-			control._areaPaneLabelTop.innerHTML = 'COMPARE WITH ...';
-			control._areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA WITHIN THE PARK';
-			control._areaPaneLabelMain.style.color = '#f5faf2';
-			control._areaPaneLabelMain.style.fontSize = '16pt';
-			control._areaPaneLabelMain.style.lineHeight = '25px';
 		}
 	},
 	_toggleGroupLayer: function(el) {
