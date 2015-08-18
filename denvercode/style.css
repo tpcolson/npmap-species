@@ -343,18 +343,6 @@
 	color: #f5faf2;
 }
 
-.description {
-	position: absolute;
-	width: 380px;
-	height: 51px;
-	top: 75px;
-	left: 212px;
-	font-size: 12pt;
-	letter-spacing: .001em;
-	color: #f5faf2;
-	line-height: 100%;
-}
-
 .compare-distribution {
 	position: absolute;
 	top: 20px;
