@@ -147,15 +147,8 @@ var control,
 				newLayer.L = L.npmap.layer[newLayer.type](newLayer);
 			}
 			newLayer.visible = true;
+			control._currentBaseLayer = newLayer.L;
 			NPMap.config.L.addLayer(newLayer.L);
-
-			for(var i = 0; i < control._selectedSpecies.length; i++) {
-				L.npmap.layer.mapbox({
-					name: control._selectedSpecies[i],
-					opacity: 0.5,
-					id: 'nps.GRSM_' + control._selectedSpecies[i].id
-				}).addTo(NPMap.config.L);
-			}
 
 			control._lastBaseIndex = this.selectedIndex;
 		}

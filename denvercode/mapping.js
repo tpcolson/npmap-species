@@ -156,5 +156,33 @@ var subNavZ, headerZ, divHeader, divSubNav,
 				control._levelView.innerHTML = '<i>level ' + currentZoom + ': ' + dist.toFixed(1) + 'm per pixel</i>'; //todo: add data resolution
 			},
 			type: 'zoomend'
+		}, {
+			fn: function(evt) {
+				if(control && control._currentBaseLayer && evt.layer._leaflet_id === control._currentBaseLayer._leaflet_id) {
+					for(var i = 0; i < control._selectedSpecies.length; i++) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[i]);
+
+						var color;
+						if(i === 0) {
+							color = 'blue';
+						} else if(i === 1) {
+							color = 'pink';
+						} else {
+							color = 'orange';
+						}
+
+						var latin = control._selectedSpecies[i]._latin;
+						var idNumber = control._selectedSpecies[i]._idNumber;
+						control._selectedSpecies[i] = L.npmap.layer.mapbox({
+							name: latin,
+							opacity: .5,
+							id: 'nps.GRSM_' + idNumber + '_' + color
+						}).addTo(NPMap.config.L);
+						control._selectedSpecies[i]._latin = latin;
+						control._selectedSpecies[i]._idNumber = idNumber;
+					}
+				}
+			},
+			type: 'layeradd'
 		}]
 	};
