@@ -16,6 +16,32 @@ function loadResourceWithTries(url, callback, tries) {
 	});
 }
 
+function tryEnableSearch(idx) {
+	control._resourcesReady[idx] = true;
+
+	var ready = true;
+	var count = 0;
+	for(var i = 0; i < control._resourcesReady.length; i++) {
+		if(control._resourcesReady[i]) {
+			count++;
+		} else {
+			ready = false;
+		}
+	}
+
+	if(ready) {
+		document.getElementById('settingsButton').title = 'Map Options';
+		document.getElementById('searchButton').title = 'Search';
+		document.getElementById('settingsButton').disabled = false;
+		document.getElementById('searchButton').disabled = false;
+	} else {
+		document.getElementById('settingsButton').title = 'Loading...'
+			+ (100*count)/control._resourcesReady.length + '%';
+		document.getElementById('searchButton').title = 'Loading...'
+			+ (100*count)/control._resourcesReady.length + '%';
+	}
+}
+
 function enterfullscreen() {
 	document.getElementsByClassName('fullscreen')[0].title = 'Exit fullscreen';
 	headerZ = divHeader.style.zIndex;

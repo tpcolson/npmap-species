@@ -22,6 +22,13 @@ var control,
 		L.DomEvent.disableClickPropagation(container); /* I don't want double-clicking on this to zoom the map */
 
 		/* Load various GitHub resourses needed by this control */
+		this._resourcesReady = [
+			false, // lexical index
+			false, // name mappings
+			false, // distribution index
+			false  // environment index
+		];
+
 		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/lexical_index.json', function(data) {
 			var index = data.items,
 				latinOptions = {
@@ -35,18 +42,26 @@ var control,
 
 			control._latinFuser = new Fuse(index, latinOptions);
 			control._commonFuser = new Fuse(index, commonOptions);
+
+			tryEnableSearch(0);
 		});
 
 		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/irma_mapping.json', function(data) {
 			control._nameMappings = data;
+
+		tryEnableSearch(1);
 		});
 
 		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_distribution.json', function(data) {
 			control._similarDistributions = data;
+
+			tryEnableSearch(2);
 		});
 
 		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_environment.json', function(data) {
 			control._similarEnvironments = data;
+
+			tryEnableSearch(3);
 		});
 
 		/* We need to move the top left controls down the page */
@@ -567,14 +582,18 @@ var control,
 		var settingsButton = L.DomUtil.create('button', 'utk-tab-settings');
 		var searchButton = L.DomUtil.create('button', 'utk-tab-search');
 		settingsButton.id = 'settingsButton';
+		searchButton.id = 'searchButton';
+		settingsButton.disabled = true;
+		searchButton.disabled = true;
+		settingsButton.title = 'Loading...0%';
+		searchButton.title = 'Loading...0%';
 		settingsButton.onclick = function() {
 			control._expandSearch('settingsButton');
 		}
-		settingsButton.innerHTML = '<img src="images/settingsButton.png"></img>';
-		searchButton.id = 'searchButton';
 		searchButton.onclick = function() {
 			control._expandSearch('searchButton');
 		}
+		settingsButton.innerHTML = '<img src="images/settingsButton.png"></img>';
 		searchButton.innerHTML = '<img src="images/searchButton.png"></img>';
 
 		control._container.appendChild(settingsButton);
