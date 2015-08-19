@@ -239,6 +239,7 @@ var control,
 			for(var i = 1; i < control._searchDiv.children.length; i++) {
 				control._searchDiv.children[i--].remove();
 			}
+			control._lastSearchPage = control._initialSearchDiv;
 			control._searchDiv.appendChild(control._initialSearchDiv);
 
 			for(var i = 1; i < control._breadcrumb.children.length; i++) {
