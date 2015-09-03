@@ -97,6 +97,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			{ lat: 35.25, lng: -84.25 },
 			{ lat: 35.9, lng: -82.75 }
 		],
+		homeControl: false,
 		editControl: true,
 		measureControl: true,
 		scaleControl: true/*,
