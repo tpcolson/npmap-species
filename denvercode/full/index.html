@@ -4,6 +4,7 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no'>
     <link rel='stylesheet' href='style.css'></link>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <script src='mapping.js'></script>
     <title>Species Mapper</title>
   </head>
@@ -14,7 +15,40 @@
         <div id='search-banner'></div>
         <div id='search-initial'></div>
         <div id='search-compare'></div>
-        <div id='search-options'></div>
+        <div id='search-options'>
+          <div id='options-label'>MAP CONTROLS</div>
+          <div id='options-background'>
+            <select id='options-background-dropdown' class='search-dropdown'>
+              <option>Select Map Background</option>
+              <option>Park Tiles</option>
+              <option>Mapbox Terrain</option>
+              <option>Esri Topo</option>
+              <option>Esri Imagery</option>
+            </select>
+          </div>
+          <div id='options-overlays'>
+            <select id='options-overlays-dropdown' class='search-dropdown'>
+              <option>Select Map Overlays</option>
+              <option>Trails</option>
+              <option>Visitor Centers</option>
+              <option>Shelters</option>
+              <option>Roads</option>
+              <option>Campsites</option>
+            </select>
+          </div>
+          <div id='options-predicted' class='search-checkbox'>
+            <input type='checkbox' id='options-predicted-checkbox'></input>
+            <label for='options-predicted-checkbox'></label>
+          </div>
+          <div id='options-predicted-label'>View Predicted Species</div>
+          <br>
+          <div id='options-observed' class='search-checkbox'>
+            <input type='checkbox' id='options-observed-checkbox'></input>
+            <label for='options-observed-checkbox'></label>
+          </div>
+          <div id='options-predicted-label'>View Observed Species</div>
+          <div id='options-annotations'></div>
+        </div>
       </div>
     </div>
     <script src='http://www.nps.gov/lib/npmap.js/2.0.0/npmap-bootstrap.min.js'></script>
