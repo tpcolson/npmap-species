@@ -66,7 +66,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_CAMPSITES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
 			type: 'geojson',
 			popup: {
-				title: '<center>{{TEXT_NAME}}</center>'
+				title: '<center>{{LABEL}}</center>'
 			},
 			styles: {
 				point: {
@@ -100,7 +100,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		homeControl: false,
 		editControl: true,
 		measureControl: true,
-		scaleControl: true/*,
+		scaleControl: { metric: true }/*,
 		events: [{
 			fn: function(evt) {
 				if(control && control._currentBaseLayer && evt.layer._leaflet_id === control._currentBaseLayer._leaflet_id) {
