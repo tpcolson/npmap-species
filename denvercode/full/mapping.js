@@ -94,8 +94,8 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		minZoom: 10,
 		maxZoom: 16,
 		maxBounds: [
-			{ lat: 35.25, lng: -84.25 },
-			{ lat: 35.9, lng: -82.75 }
+			{ lat: 35, lng: -84.5 },
+			{ lat: 36.25, lng: -82.5 }
 		],
 		homeControl: false,
 		editControl: true,
