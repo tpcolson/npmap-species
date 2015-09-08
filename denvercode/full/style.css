@@ -30,6 +30,7 @@
   margin: inherit;
   border-left: 1px solid #40403d;
   border-right: 1px solid #40403d;
+  overflow: hidden;
 }
 
 #search-banner {
@@ -84,6 +85,42 @@
 
 #options-predicted {
   padding-bottom: 10px;
+}
+
+#options-annotations {
+  padding: 5px;
+  position: relative;
+  left: 200px;
+  top: -110px;
+  width: 90px;
+  height: 80px;
+  border: 1px solid #40403d;
+  background-color: #202020;
+  color: #a5aaa2;
+  font-style: italic;
+  font-size: 9pt;
+  letter-spacing: .001em;
+}
+
+#options-annotations-buttons {
+  padding-top: 5px;
+  left: 3px;
+}
+
+#options-annotations > center > button {
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+  color: #a5aaa2;
+  font-size: 8pt;
+  font-style: italic;
+  letter-spacing: .001em;
+}
+
+#options-annotations > center > button:hover {
+  background-color: #40403d;
 }
 
 .search-checkbox {
