@@ -39,3 +39,33 @@ window.onload = function() {
 	}
 	document.getElementById('options-annotations-buttons').appendChild(editControls);
 }
+
+var tooltipsEnabled = true;
+function toggleTooltips() {
+	var tooltipsButton = document.getElementById('search-banner-help-tooltips').children[0].children[0];
+	if(tooltipsEnabled) {
+		tooltipsButton.innerHTML = 'TOOLTIPS OFF'
+		// disable all tooltips
+	} else {
+		tooltipsButton.innerHTML = 'TOOLTIPS ON'
+		// enable all tooltips
+	}
+
+	tooltipsEnabled = !tooltipsEnabled;
+}
+
+var minimized = false;
+function toggleMinimized() {
+	var minButton = document.getElementById('search-banner-help-minimizer').children[0].children[0];
+	if(minimized) {
+		minButton.innerHTML = '+';
+		$('#search-tool').animate({height:'40px'});
+		$('.leaflet-top.leaflet-left').animate({top: '40px'});
+	} else {
+		minButton.innerHTML = 'X';
+		$('#search-tool').animate({height:'189px'});
+		$('.leaflet-top.leaflet-left').animate({top: '189px'});
+	}
+
+	minimized = !minimized;
+}

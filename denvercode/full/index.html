@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='style.css'></link>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <script src='mapping.js'></script>
+    <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
     <title>Species Mapper</title>
   </head>
   <body>
@@ -24,10 +25,10 @@
             <center><a href='http://seelab.eecs.utk.edu/help' target='_blank'>HOW TO USE</a></center>
           </div>
           <div id='search-banner-help-tooltips'>
-            <center><button>TOOLTIPS ON</button></center>
+            <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
           </div>
           <div id='search-banner-help-minimizer'>
-            <center><button>X</button></center>
+            <center><button onclick='toggleMinimized();'>X</button></center>
           </div>
         </div>
         <div id='search-initial'></div>

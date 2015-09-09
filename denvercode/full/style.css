@@ -20,6 +20,7 @@
   opacity: 1.0;
   filter: alpha(opacity=100); /* IE8 and lower */
   z-index: 100;
+  overflow: hidden;
 }
 
 #search-tool-contents {
@@ -30,7 +31,6 @@
   margin: inherit;
   border-left: 1px solid #40403d;
   border-right: 1px solid #40403d;
-  overflow: hidden;
 }
 
 #search-banner {
