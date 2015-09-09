@@ -57,7 +57,8 @@ function toggleTooltips() {
 	tooltipsEnabled = !tooltipsEnabled;
 }
 
-var minimized = false;
+var minimized = false,
+	currentBaseLayer = undefined;
 function toggleMinimized() {
 	var minButton = document.getElementById('search-banner-help-minimizer').children[0].children[0];
 	if(!minimized) {
@@ -91,6 +92,7 @@ function updateBaseLayer() {
 			newLayer.L = L.npmap.layer[newLayer.type](newLayer);
 		}
 		newLayer.visible = true;
+		currentBaseLayer = newLayer.L;
 		NPMap.config.L.addLayer(newLayer.L);
 
 		lastBaseIndex = selector.selectedIndex-1;
@@ -124,11 +126,27 @@ function toggleOverlay() {
 var showPredicted = true;
 function togglePredicted() {
 	showPredicted = !showPredicted;
+
+	for(var i = 0; i < control._selectedSpecies.length; i++) {
+		if(showPredicted) {
+			control._selectedSpecies[i].predicted.addTo(NPMap.config.L);
+		} else {
+			NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
+		}
+	}
 }
 
 var showObserved = false;
 function toggleObserved() {
 	showObserved = !showObserved;
+
+	for(var i = 0; i < control._selectedSpecies.length; i++) {
+		if(showObserved) {
+			control._selectedSpecies[i].observed.addTo(NPMap.config.L);
+		} else {
+			NPMap.config.L.removeLayer(control._selectedSpecies[i].observed);
+		}
+	}
 }
 
 var whichName = 'common';

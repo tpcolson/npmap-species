@@ -100,12 +100,12 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		homeControl: false,
 		editControl: true,
 		measureControl: true,
-		scaleControl: { metric: true }/*,
+		scaleControl: { metric: true },
 		events: [{
 			fn: function(evt) {
-				if(control && control._currentBaseLayer && evt.layer._leaflet_id === control._currentBaseLayer._leaflet_id) {
+				if(currentBaseLayer && evt.layer._leaflet_id === currentBaseLayer._leaflet_id) {
 					for(var i = 0; i < control._selectedSpecies.length; i++) {
-						NPMap.config.L.removeLayer(control._selectedSpecies[i]);
+						NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
 
 						var color;
 						if(i === 0) {
@@ -116,18 +116,14 @@ var subNavZ, headerZ, divHeader, divSubNav,
 							color = 'orange';
 						}
 
-						var latin = control._selectedSpecies[i]._latin;
-						var idNumber = control._selectedSpecies[i]._idNumber;
-						control._selectedSpecies[i] = L.npmap.layer.mapbox({
-							name: latin,
+						control._selectedSpecies[i].predicted = L.npmap.layer.mapbox({
+							name: control._selectedSpecies[i]._latin,
 							opacity: .5,
-							id: 'nps.GRSM_' + idNumber + '_' + color
+							id: 'nps.GRSM_' + control._selectedSpecies[i]._id + '_' + color
 						}).addTo(NPMap.config.L);
-						control._selectedSpecies[i]._latin = latin;
-						control._selectedSpecies[i]._idNumber = idNumber;
 					}
 				}
 			},
 			type: 'layeradd'
-		}]*/
+		}]
 	};

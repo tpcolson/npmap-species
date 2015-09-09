@@ -2,7 +2,8 @@ var control = {
   _latinFuser: undefined,
   _commonFuser: undefined,
   _nameMappings: undefined,
-  _commonToLatin: undefined
+  _commonToLatin: undefined,
+  _selectedSpecies: []
 }
 
 function prepareSearchTool() {
@@ -56,13 +57,20 @@ function populateResults() {
 
   var li = document.createElement('li');
   li.innerHTML = 'Clear selection';
+  li.onclick = function() {
+    clearSearch();
+  }
   document.getElementById('search-initial-dropdown-results').appendChild(li);
 
   for(var i = 0; i < keys.length; i++) {
     li = document.createElement('li');
-
+    li._latin = keys[i];
+    li._id = control._nameMappings[keys[i]].id;
+    li._common = control._nameMappings[keys[i]].common;
     li.innerHTML = keys[i].replace(/_/g, ' ');
-
+    li.onclick = function() {
+      selectInitialSpecies(this);
+    }
     document.getElementById('search-initial-dropdown-results').appendChild(li);
   }
 }
@@ -76,4 +84,83 @@ function toggleSearchList() {
   }
 
   listShown = !listShown;
+}
+
+function clearSearch() {
+  toggleSearchList();
+
+  // remove all selected species
+  document.getElementById('search-initial-dropdown').children[0].innerHTML = 'Select a species';
+  document.getElementById('search-initial-dropdown').style.backgroundColor = '#40403d';
+
+  for(var i = 0; i < control._selectedSpecies.length; i++) {
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
+    }
+    if(showObserved) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[i].observed);
+    }
+  }
+
+  control._selectedSpecies = [];
+}
+
+function selectInitialSpecies(li) {
+  toggleSearchList();
+
+  document.getElementById('search-initial-dropdown').children[0].innerHTML = li.innerHTML;
+  document.getElementById('search-initial-dropdown').style.backgroundColor = '#40b5c6';
+
+  if(control._selectedSpecies[0] !== undefined) {
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
+    }
+
+    if(showObserved) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[0].observed);
+    }
+  }
+
+  control._selectedSpecies[0] = {};
+  control._selectedSpecies[0]._id = li._id;
+  control._selectedSpecies[0]._latin = li._latin;
+  control._selectedSpecies[0]._common = li._common;
+  control._selectedSpecies[0].predicted = L.npmap.layer.mapbox({
+    name: li._latin,
+    opacity: .5,
+    id: 'nps.GRSM_' + li._id + '_blue'
+  });
+
+  control._selectedSpecies[0].observed = L.npmap.layer.geojson({
+    name: li._latin + '_observations',
+    url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
+    type: 'geojson',
+    popup: {
+      title: li._latin.replace(/_/g, ' ') + ' sighting',
+      description: 'Coordinates: {{coordinates}}'
+    },
+    styles: {
+      point: {
+        'marker-color': '#2b80b6',
+        'marker-size': 'small'
+      }
+    },
+    cluster: {
+      clusterIcon: '#2b80b6'
+    },
+    showCoverageOnHover: true,
+    disableClusteringAtZoom: 15,
+    polygonOptions: {
+      color: '#2b80b6',
+      fillColor: '#2b80b6'
+    }
+  });
+
+  if(showPredicted) {
+    control._selectedSpecies[0].predicted.addTo(NPMap.config.L);
+  }
+
+  if(showObserved) {
+    control._selectedSpecies[0].observed.addTo(NPMap.config.L);
+  }
 }
