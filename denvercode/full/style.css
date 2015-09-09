@@ -62,6 +62,12 @@
   line-height: 30px;
 }
 
+#search-banner-buffer {
+  width: 867px;
+  height: 30px;
+  float: left;
+}
+
 #search-banner-help-link {
   float: left;
   height: 30px;
@@ -123,18 +129,106 @@
   line-height: 30px;
 }
 
-#search-banner-buffer {
-  width: 867px;
-  height: 30px;
-  float: left;
-}
-
 #search-initial {
-  width: 300px;
+  width: 280px;
   height: 128px;
   float: left;
   padding: inherit;
-  margin: 10px 0px 10px 0px;
+  margin: 10px;
+}
+
+#search-initial-lexical {
+  background:none;
+  border: none;
+  margin:0;
+  padding:0;
+  outline:none;
+  cursor:pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: #40403d;
+}
+
+#search-initial-lexical > img {
+  height: 20px;
+  width: 20px;
+}
+
+#search-initial-dropdown {
+  position: relative;
+  top: -30px;
+  left: 40px;
+}
+
+#search-initial-image {
+  position: relative;
+  top: -20px;
+  width: 90px;
+  height: 90px;
+  border-radius: 4px;
+  background-color: #202020;
+}
+
+#search-initial-image-placeholder > div {
+  width: 100%;
+  height: 90px;
+  color: #f5faf2;
+  font-weight: bold;
+  font-size: 10pt;
+  line-height: 30px;
+}
+
+#search-initial-switch {
+  width: 100px;
+  height: 30px;
+  position: relative;
+  top: -110px;
+  left: 175px;
+  background-color: #202020;
+  border-radius: 4px;
+}
+
+#search-initial-switch-button {
+  width: 100%;
+  height: 30px;
+  position: relative;
+  top: -30px;
+  background:none;
+  border-radius: 4px;
+  border: none;
+  margin:0;
+  padding:0;
+  outline:none;
+  cursor:pointer;
+}
+
+#search-initial-switch-button > div {
+  width: 50px;
+  position: relative;
+  left: 50px;
+  border-radius: 4px;
+  background-color: #80807d;
+  color: #202020;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+#search-initial-switch-button > div > div {
+  width: 50px;
+  position: relative;
+  top: -2px;
+  color: #202020;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+#search-initial-switch > div > center > div {
+  color: #f5faf2;
+  font-size: 8pt;
+  line-height: 30px;
+  width: 50%;
+  float: left;
 }
 
 #search-compare {
@@ -144,6 +238,15 @@
   padding: inherit;
   margin: 10px 0px 10px 0px;
   border-left: 1px dotted #40403d;
+}
+
+#search-compare-placeholder > div {
+  width: 100%;
+  height: 128px;
+  color: #f5faf2;
+  font-weight: bold;
+  font-size: 18pt;
+  line-height: 128px;
 }
 
 #search-options {
@@ -238,6 +341,30 @@ button {
   font-family: 'Source Sans Pro', sans-serif;
   font-style: italic;
 	letter-spacing: .001em;
+}
+
+.species-dropdown {
+  height: 30px;
+  width: 230px;
+  font-size: 10pt;
+  color: #f5faf2;
+  letter-spacing: .001em;
+  line-height: 30px;
+  border-radius: 4px;
+  background-color: #40403d;
+  cursor: pointer;
+  padding-left: 5px;
+}
+
+.triangle {
+  position: relative;
+  top: -17px;
+  left: 210px;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #f5faf2;
 }
 
 @media (min-width: 1364px) {

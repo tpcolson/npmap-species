@@ -15,7 +15,7 @@
       <div id='search-tool-contents'>
         <div id='search-banner'>
           <div id='search-banner-logo'>
-            <img src='nps-logo.svg'></img>
+            <img src='images/nps-logo.svg'></img>
           </div>
           <div id='search-banner-title'>
             <center>National Park Service Species Mapper</center>
@@ -28,11 +28,29 @@
             <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
           </div>
           <div id='search-banner-help-minimizer'>
-            <center><button onclick='toggleMinimized();'>X</button></center>
+            <center><button onclick='toggleMinimized();'>&#8212;</button></center>
           </div>
         </div>
-        <div id='search-initial'></div>
-        <div id='search-compare'></div>
+        <div id='search-initial'>
+          <button id='search-initial-lexical'>
+            <img src='images/searchButton.png'></img>
+          </button>
+          <div id='search-initial-dropdown' class='species-dropdown'>
+            <div class='dropdown-text'>SELECT A SPECIES</div>
+            <div class='triangle'></div>
+          </div>
+          <div id='search-initial-image'>
+            <center id='search-initial-image-placeholder'><div>NO<br>IMAGE<br>AVAILABLE</div></center>
+          </div>
+          <div id='search-initial-switch'>
+            <div><center><div>COMMON</div></center></div>
+            <div><center><div>LATIN</div></center></div>
+            <button id='search-initial-switch-button' onclick='toggleName();'><div><div>...</div></div></button>
+          </div>
+        </div>
+        <div id='search-compare'>
+          <center id='search-compare-placeholder'><div>SELECT A SPECIES TO BEGIN</div></center>
+        </div>
         <div id='search-options'>
           <div id='options-label'>MAP CONTROLS</div>
           <div id='options-background'>

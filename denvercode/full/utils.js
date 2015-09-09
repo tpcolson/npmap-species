@@ -57,12 +57,12 @@ function toggleTooltips() {
 var minimized = false;
 function toggleMinimized() {
 	var minButton = document.getElementById('search-banner-help-minimizer').children[0].children[0];
-	if(minimized) {
+	if(!minimized) {
 		minButton.innerHTML = '+';
 		$('#search-tool').animate({height:'40px'});
 		$('.leaflet-top.leaflet-left').animate({top: '40px'});
 	} else {
-		minButton.innerHTML = 'X';
+		minButton.innerHTML = '\u2014';
 		$('#search-tool').animate({height:'189px'});
 		$('.leaflet-top.leaflet-left').animate({top: '189px'});
 	}
@@ -124,4 +124,15 @@ function togglePredicted() {
 var showObserved = false;
 function toggleObserved() {
 	showObserved = !showObserved;
+}
+
+var whichName = 'common';
+function toggleName() {
+	if(whichName === 'common') {
+		$('#search-initial-switch-button').children().animate({left:'0px'});
+		whichName = 'latin';
+	} else {
+		$('#search-initial-switch-button').children().animate({left:'50px'});
+		whichName = 'common';
+	}
 }
