@@ -34,16 +34,104 @@
 }
 
 #search-banner {
-  width: 100%;
+  width: 1354px;
   height: 30px;
-  padding: inherit;
-  margin: inherit;
+  padding: 5px 0px 5px 5px;
+  margin: 0 auto;
   border-bottom: 1px solid #40403d;
+}
+
+#search-banner-logo {
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+
+#search-banner-logo > img {
+  width: 100%;
+  height: 100%;
+}
+
+#search-banner-title {
+  width: 225px;
+  height: 30px;
+  float: left;
+  color: #f5faf2;
+  font-size: 10pt;
+  letter-spacing: .001em;
+  line-height: 30px;
+}
+
+#search-banner-help-link {
+  float: left;
+  height: 30px;
+  width: 100px;
+  border-right: 1px solid #40403d;
+}
+
+#search-banner-help-link > center > a {
+  color: #f5faf2;
+  font-size: 10pt;
+  font-weight: bold;
+  letter-spacing: .001em;
+  text-decoration: none;
+  line-height: 30px;
+}
+
+#search-banner-help-link > center > a:hover {
+  cursor: pointer;
+}
+
+#search-banner-help-tooltips {
+  float: left;
+  height: 30px;
+  width: 100px;
+  border-right: 1px solid #40403d;
+}
+
+#search-banner-help-tooltips > center > button {
+  background:none;
+  border:none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  color: #f5faf2;
+  font-weight: bold;
+  font-size: 10pt;
+  letter-spacing: .001em;
+  line-height: 30px;
+}
+
+#search-banner-help-minimizer {
+  float: left;
+  height: 30px;
+  width: 30px;
+}
+
+#search-banner-help-minimizer > center > button {
+  background:none;
+  border:none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  color: #f5faf2;
+  font-weight: bold;
+  font-size: 10pt;
+  letter-spacing: .001em;
+  line-height: 30px;
+}
+
+#search-banner-buffer {
+  width: 867px;
+  height: 30px;
+  float: left;
 }
 
 #search-initial {
   width: 300px;
-  height: 138px;
+  height: 128px;
   float: left;
   padding: inherit;
   margin: 10px 0px 10px 0px;
@@ -51,7 +139,7 @@
 
 #search-compare {
   width: 722px;
-  height: 138px;
+  height: 128px;
   float: left;
   padding: inherit;
   margin: 10px 0px 10px 0px;
@@ -60,7 +148,7 @@
 
 #search-options {
   width: 325px;
-  height: 138px;
+  height: 128px;
   float: left;
   padding: 0px 5px 0px 10px;
   margin: 10px 0px 10px 0px;
@@ -90,7 +178,7 @@
 #options-annotations {
   padding: 5px;
   position: relative;
-  left: 200px;
+  left: 190px;
   top: -110px;
   width: 90px;
   height: 80px;
@@ -112,6 +200,7 @@
   border:none;
   margin:0;
   padding:0;
+  outline: none;
   cursor: pointer;
   color: #a5aaa2;
   font-size: 8pt;
@@ -119,8 +208,8 @@
   letter-spacing: .001em;
 }
 
-#options-annotations > center > button:hover {
-  background-color: #40403d;
+button {
+  font-family: 'Source Sans Pro', serif;
 }
 
 .search-checkbox {
@@ -161,10 +250,18 @@
   #search-options {
     display: none;
   }
+
+  #search-banner-buffer {
+    width: 550px;
+  }
 }
 
 @media (max-width: 1065px) {
   #search-compare {
     display: none;
+  }
+
+  #search-banner-buffer {
+    width: 0px;
   }
 }
