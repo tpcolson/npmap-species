@@ -69,3 +69,59 @@ function toggleMinimized() {
 
 	minimized = !minimized;
 }
+
+var lastBaseIndex = 0;
+function updateBaseLayer() {
+	var selector = document.getElementById('options-background-dropdown');
+	if(selector.selectedIndex > 0) {
+		/* remove last layer (taken from NPMap.js switcher.js) */
+		NPMap.config.baseLayers[lastBaseIndex].visible = false;
+		NPMap.config.L.removeLayer(NPMap.config.baseLayers[lastBaseIndex].L);
+
+		/* add new layer (taken from NPMap.js switcher.js) */
+		var newLayer = NPMap.config.baseLayers[selector.selectedIndex-1];
+		if (newLayer.type === 'arcgisserver') {
+			newLayer.L = L.npmap.layer[newLayer.type][newLayer.tiled === true ? 'tiled' : 'dynamic'](newLayer);
+		} else {
+			newLayer.L = L.npmap.layer[newLayer.type](newLayer);
+		}
+		newLayer.visible = true;
+		NPMap.config.L.addLayer(newLayer.L);
+
+		lastBaseIndex = selector.selectedIndex-1;
+	}
+}
+
+function prepareOverlay() {
+	var selector = document.getElementById('options-overlays-dropdown');
+	selector.selectedIndex = 0;
+}
+
+function toggleOverlay() {
+	var selector = document.getElementById('options-overlays-dropdown'),
+		idx = selector.selectedIndex - 1,
+		text = selector.options[idx+1].text;
+	if(idx >= 0) {
+		var overlay = NPMap.config.overlays[idx];
+		if(text.charAt(0) !== '\u2714') {
+			selector.options[idx+1].text = '\u2714 ' + text;
+			overlay.visible = true;
+			NPMap.config.L.addLayer(overlay.L);
+		} else {
+			selector.options[idx+1].text = text.substring(2, text.length);
+			overlay.visible = false;
+			NPMap.config.L.removeLayer(overlay.L);
+		}
+	}
+	selector.selectedIndex = 0;
+}
+
+var showPredicted = true;
+function togglePredicted() {
+	showPredicted = !showPredicted;
+}
+
+var showObserved = false;
+function toggleObserved() {
+	showObserved = !showObserved;
+}
