@@ -6,8 +6,9 @@
     <link rel='stylesheet' href='style.css'></link>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <script src='mapping.js'></script>
+    <script src='fuse.min.js'></script>
     <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
-    <title>Species Mapper</title>
+    <title>National Park Service Species Mapper</title>
   </head>
   <body>
     <div id='map'></div>
@@ -15,7 +16,7 @@
       <div id='search-tool-contents'>
         <div id='search-banner'>
           <div id='search-banner-logo'>
-            <img src='images/nps-logo.svg'></img>
+            <img src='images/npsLogo.svg'></img>
           </div>
           <div id='search-banner-title'>
             <center>National Park Service Species Mapper</center>
@@ -35,7 +36,7 @@
           <button id='search-initial-lexical'>
             <img src='images/searchButton.png'></img>
           </button>
-          <div id='search-initial-dropdown' class='species-dropdown'>
+          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();'>
             <div class='dropdown-text'>SELECT A SPECIES</div>
             <div class='triangle'></div>
           </div>
@@ -47,6 +48,7 @@
             <div><center><div>LATIN</div></center></div>
             <button id='search-initial-switch-button' onclick='toggleName();'><div><div>...</div></div></button>
           </div>
+          <ul id='search-initial-dropdown-results'></ul>
         </div>
         <div id='search-compare'>
           <center id='search-compare-placeholder'><div>SELECT A SPECIES TO BEGIN</div></center>
@@ -90,6 +92,7 @@
       </div>
     </div>
     <script src='http://www.nps.gov/lib/npmap.js/2.0.0/npmap-bootstrap.min.js'></script>
+    <script src='searchUtils.js'></script>
     <script src='utils.js'></script>
   </body>
 </html>

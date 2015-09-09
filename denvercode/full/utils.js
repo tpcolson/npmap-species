@@ -38,6 +38,9 @@ window.onload = function() {
 		editControls.children[i].style.float = 'left';
 	}
 	document.getElementById('options-annotations-buttons').appendChild(editControls);
+
+	/* prepare search tool */
+	prepareSearchTool();
 }
 
 var tooltipsEnabled = true;
@@ -59,10 +62,12 @@ function toggleMinimized() {
 	var minButton = document.getElementById('search-banner-help-minimizer').children[0].children[0];
 	if(!minimized) {
 		minButton.innerHTML = '+';
+		$('#search-tool').css({overflow: 'hidden'});
 		$('#search-tool').animate({height:'40px'});
 		$('.leaflet-top.leaflet-left').animate({top: '40px'});
 	} else {
 		minButton.innerHTML = '\u2014';
+		$('#search-tool').css({overflow: 'visible'});
 		$('#search-tool').animate({height:'189px'});
 		$('.leaflet-top.leaflet-left').animate({top: '189px'});
 	}
