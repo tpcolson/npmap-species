@@ -68,8 +68,9 @@ function toggleMinimized() {
 		$('.leaflet-top.leaflet-left').animate({top: '40px'});
 	} else {
 		minButton.innerHTML = '\u2014';
-		$('#search-tool').css({overflow: 'visible'});
-		$('#search-tool').animate({height:'189px'});
+		$('#search-tool').animate({height:'189px'}, function() {
+			$('#search-tool').css({overflow: 'visible'});
+		});
 		$('.leaflet-top.leaflet-left').animate({top: '189px'});
 	}
 
