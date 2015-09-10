@@ -60,27 +60,83 @@ function populateResults() {
   li.onclick = function() {
     clearSearch();
   }
-  document.getElementById('search-initial-dropdown-results').appendChild(li);
-
+  document.getElementById('search-initial-dropdown-latin').appendChild(li);
   for(var i = 0; i < keys.length; i++) {
+    var latin = keys[i];
+    var common = control._nameMappings[keys[i]].common;
+    var id = control._nameMappings[keys[i]].id;
+
     li = document.createElement('li');
-    li._latin = keys[i];
-    li._id = control._nameMappings[keys[i]].id;
-    li._common = control._nameMappings[keys[i]].common;
-    li.innerHTML = keys[i].replace(/_/g, ' ');
+    li._latin = latin;
+    li._id = id;
+    li._common = common;
+    li.innerHTML = li._latin.replace(/_/g, ' ');
+    li.title = li._common.replace(/_/g, ' ');
     li.onclick = function() {
       selectInitialSpecies(this);
     }
-    document.getElementById('search-initial-dropdown-results').appendChild(li);
+    document.getElementById('search-initial-dropdown-latin').appendChild(li);
+  }
+
+  var commonNames = [];
+  for(var i = 0; i < keys.length; i++) {
+    var common = control._nameMappings[keys[i]].common;
+    var latin = keys[i];
+    var id = control._nameMappings[keys[i]].id;
+    if(!(common in commonNames)) {
+      commonNames[common] = [];
+    }
+    commonNames[common].push({
+      _latin: latin,
+      _id: id
+    });
+  }
+
+  keys = [];
+  for(key in commonNames) {
+    if(key !== 'Unspecified') {
+      keys.push(key);
+    }
+  }
+  keys.sort();
+
+  li = document.createElement('li');
+  li.innerHTML = 'Clear selection';
+  li.onclick = function() {
+    clearSearch();
+  }
+  document.getElementById('search-initial-dropdown-common').appendChild(li);
+  for(var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    for(var j = 0; j < commonNames[key].length; j++) {
+      li = document.createElement('li');
+      li._latin = commonNames[key][j]._latin;
+      li._id = commonNames[key][j]._id;
+      li._common = key;
+      li.innerHTML = li._common.replace(/_/g, ' ');
+      li.title = li._latin.replace(/_/g, ' ');
+      li.onclick = function() {
+        selectInitialSpecies(this);
+      }
+      document.getElementById('search-initial-dropdown-common').appendChild(li);
+    }
   }
 }
 
 var listShown = false;
 function toggleSearchList() {
   if(!listShown) {
-    $('#search-initial-dropdown-results').animate({height: '400px'});
+    if(whichName === 'common') {
+      $('#search-initial-dropdown-common').animate({height: '400px'});
+    } else {
+      $('#search-initial-dropdown-latin').animate({height: '400px'});
+    }
   } else {
-    $('#search-initial-dropdown-results').animate({height: '0px'});
+    if(whichName === 'common') {
+      $('#search-initial-dropdown-common').animate({height: '0px'});
+    } else {
+      $('#search-initial-dropdown-latin').animate({height: '0px'});
+    }
   }
 
   listShown = !listShown;
@@ -91,6 +147,7 @@ function clearSearch() {
 
   // remove all selected species
   document.getElementById('search-initial-dropdown').children[0].innerHTML = 'Select a species';
+  document.getElementById('search-initial-dropdown').children[0].title = '';
   document.getElementById('search-initial-dropdown').style.backgroundColor = '#40403d';
 
   for(var i = 0; i < control._selectedSpecies.length; i++) {
@@ -109,6 +166,7 @@ function selectInitialSpecies(li) {
   toggleSearchList();
 
   document.getElementById('search-initial-dropdown').children[0].innerHTML = li.innerHTML;
+  document.getElementById('search-initial-dropdown').children[0].title = li.title;
   document.getElementById('search-initial-dropdown').style.backgroundColor = '#40b5c6';
 
   if(control._selectedSpecies[0] !== undefined) {

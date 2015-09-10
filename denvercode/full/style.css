@@ -163,7 +163,7 @@
   left: 40px;
 }
 
-#search-initial-dropdown-results {
+#search-initial-dropdown-common {
   height: 0px;
   width: 230px;
   position: relative;
@@ -177,7 +177,33 @@
   border-radius: 4px;
 }
 
-#search-initial-dropdown-results > li {
+#search-initial-dropdown-common > li {
+  height: 20px;
+  width: 230px;
+  margin: 0px;
+  color: #f5faf2;
+  font-size: 8pt;
+  font-style: italic;
+  line-height: 20px;
+  cursor: pointer;
+  border-bottom: 1px dotted #f5faf2;
+}
+
+#search-initial-dropdown-latin {
+  height: 0px;
+  width: 230px;
+  position: relative;
+  top: -130px;
+  left: 40px;
+  padding-left: 5px;
+  margin: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #40403d;
+  border-radius: 4px;
+}
+
+#search-initial-dropdown-latin > li {
   height: 20px;
   width: 230px;
   margin: 0px;

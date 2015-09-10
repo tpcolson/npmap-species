@@ -159,4 +159,13 @@ function toggleName() {
 		$('#search-initial-switch-button').children().animate({left:'50px'});
 		whichName = 'common';
 	}
+
+	var swapNeeded = $('#search-initial-dropdown').css('backgroundColor') === 'rgb(64, 181, 198)';
+	if(swapNeeded) {
+		var el = $('#search-initial-dropdown').children()[0],
+			tmp = el.innerHTML;
+
+		el.innerHTML = el.title;
+		el.title = tmp;
+	}
 }
