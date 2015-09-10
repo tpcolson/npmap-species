@@ -64,10 +64,14 @@ function toggleMinimized() {
 	if(!minimized) {
 		minButton.innerHTML = '+';
 		$('#search-tool').css({overflow: 'hidden'});
+		$('#search-tool').stop();
+		$('.leaflet-top.leaflet-left').stop();
 		$('#search-tool').animate({height:'40px'});
 		$('.leaflet-top.leaflet-left').animate({top: '40px'});
 	} else {
 		minButton.innerHTML = '\u2014';
+		$('#search-tool').stop();
+		$('.leaflet-top.leaflet-left').stop();
 		$('#search-tool').animate({height:'189px'}, function() {
 			$('#search-tool').css({overflow: 'visible'});
 		});
@@ -153,9 +157,11 @@ function toggleObserved() {
 var whichName = 'common';
 function toggleName() {
 	if(whichName === 'common') {
+		$('#search-initial-switch-button').children().stop();
 		$('#search-initial-switch-button').children().animate({left:'0px'});
 		whichName = 'latin';
 	} else {
+		$('#search-initial-switch-button').children().stop();
 		$('#search-initial-switch-button').children().animate({left:'50px'});
 		whichName = 'common';
 	}
