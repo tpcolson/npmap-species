@@ -129,14 +129,18 @@ var listShown = false;
 function toggleSearchList() {
   if(!listShown) {
     if(whichName === 'common') {
+      $('#search-initial-dropdown-common').stop();
       $('#search-initial-dropdown-common').animate({height: '400px'});
     } else {
+      $('#search-initial-dropdown-latin').stop();
       $('#search-initial-dropdown-latin').animate({height: '400px'});
     }
   } else {
     if(whichName === 'common') {
+      $('#search-initial-dropdown-common').stop();
       $('#search-initial-dropdown-common').animate({height: '0px'});
     } else {
+      $('#search-initial-dropdown-latin').stop();
       $('#search-initial-dropdown-latin').animate({height: '0px'});
     }
   }
