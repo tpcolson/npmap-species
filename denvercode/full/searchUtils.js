@@ -11,11 +11,11 @@ function prepareSearchTool() {
     var index = data.items,
       latinOptions = {
         keys: ['latin_name_ref'],
-        threshold: 0.5
+        threshold: 0.3
       },
       commonOptions = {
         keys: ['common_name'],
-        threshold: 0.5
+        threshold: 0.3
       }
 
     control._latinFuser = new Fuse(index, latinOptions);
