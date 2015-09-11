@@ -33,7 +33,7 @@
           </div>
         </div>
         <div id='search-initial'>
-          <button id='search-initial-lexical'>
+          <button id='search-initial-lexical' onclick='toggleLexicalSearch();'>
             <img src='images/searchButton.png'></img>
           </button>
           <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();'>
@@ -50,6 +50,10 @@
           </div>
           <ul id='search-initial-dropdown-common'></ul>
           <ul id='search-initial-dropdown-latin'></ul>
+          <div id='search-initial-box'>
+            <input id='search-initial-box-input' type='text' name='initial-search' placeholder='Find a species...' oninput='fuseSearch();'></input>
+            <ul></ul>
+          </div>
         </div>
         <div id='search-compare'>
           <center id='search-compare-placeholder'><div>SELECT A SPECIES TO BEGIN</div></center>

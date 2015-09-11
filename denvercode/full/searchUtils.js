@@ -73,6 +73,7 @@ function populateResults() {
     li.innerHTML = li._latin.replace(/_/g, ' ');
     li.title = li._common.replace(/_/g, ' ');
     li.onclick = function() {
+      toggleSearchList();
       selectInitialSpecies(this);
     }
     document.getElementById('search-initial-dropdown-latin').appendChild(li);
@@ -116,6 +117,7 @@ function populateResults() {
       li.innerHTML = li._common.replace(/_/g, ' ');
       li.title = li._latin.replace(/_/g, ' ');
       li.onclick = function() {
+        toggleSearchList();
         selectInitialSpecies(this);
       }
       document.getElementById('search-initial-dropdown-common').appendChild(li);
@@ -163,8 +165,6 @@ function clearSearch() {
 }
 
 function selectInitialSpecies(li) {
-  toggleSearchList();
-
   document.getElementById('search-initial-dropdown').children[0].innerHTML = li.innerHTML;
   document.getElementById('search-initial-dropdown').children[0].title = li.title;
   document.getElementById('search-initial-dropdown').style.backgroundColor = '#40b5c6';
@@ -220,5 +220,49 @@ function selectInitialSpecies(li) {
 
   if(showObserved) {
     control._selectedSpecies[0].observed.addTo(NPMap.config.L);
+  }
+}
+
+var searchActive = false;
+function toggleLexicalSearch() {
+  searchActive = !searchActive;
+
+  if(searchActive) {
+    document.getElementById('search-initial-box').style.display = 'block';
+    document.getElementById('search-initial-box-input').focus();
+  } else {
+    document.getElementById('search-initial-box').style.display = 'none';
+  }
+}
+
+function fuseSearch() {
+  var value = document.getElementById('search-initial-box-input').value,
+    results = (whichName === 'common')
+      ? control._commonFuser.search(value).slice(0, 15)
+      : control._latinFuser.search(value).slice(0, 15);
+
+  $('#search-initial-box').stop();
+  $('#search-initial-box').animate({
+    height: 20+results.length*21 + 'px'
+  });
+
+  document.getElementById('search-initial-box').children[1].innerHTML = '';
+  for(var i = 0; i < results.length; i++) {
+    var li = document.createElement('li');
+    li._latin = results[i].latin_name;
+    li._id = results[i].irma_id;
+    li._common = results[i].common_name;
+    if(whichName === 'common') {
+      li.innerHTML = li._common.replace(/_/g, ' ');
+      li.title = li._latin.replace(/_/g, ' ');
+    } else {
+      li.innerHTML = li._latin.replace(/_/g, ' ');
+      li.title = li._common.replace(/_/g, ' ');
+    }
+    li.onclick = function() {
+      toggleLexicalSearch();
+      selectInitialSpecies(this);
+    }
+    document.getElementById('search-initial-box').children[1].appendChild(li);
   }
 }
