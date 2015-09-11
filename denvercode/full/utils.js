@@ -86,10 +86,12 @@ function updateBaseLayer() {
 	var selector = document.getElementById('options-background-dropdown');
 	if(selector.selectedIndex > 0) {
 		/* remove last layer (taken from NPMap.js switcher.js) */
+		selector.children[lastBaseIndex+1].innerHTML = selector.children[lastBaseIndex+1].innerHTML.substring(2, selector.children[lastBaseIndex+1].innerHTML.length);
 		NPMap.config.baseLayers[lastBaseIndex].visible = false;
 		NPMap.config.L.removeLayer(NPMap.config.baseLayers[lastBaseIndex].L);
 
 		/* add new layer (taken from NPMap.js switcher.js) */
+		selector.children[selector.selectedIndex].innerHTML = '\u2714 ' + selector.children[selector.selectedIndex].innerHTML;
 		var newLayer = NPMap.config.baseLayers[selector.selectedIndex-1];
 		if (newLayer.type === 'arcgisserver') {
 			newLayer.L = L.npmap.layer[newLayer.type][newLayer.tiled === true ? 'tiled' : 'dynamic'](newLayer);
@@ -102,6 +104,7 @@ function updateBaseLayer() {
 
 		lastBaseIndex = selector.selectedIndex-1;
 	}
+	selector.selectedIndex = 0;
 }
 
 function prepareOverlay() {
