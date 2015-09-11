@@ -3,6 +3,7 @@
 
 import sys, json, csv
 
+counts = {}
 encountered = {}
 csvfile = open('ATBI_records.csv', 'rb')
 csvreader = csv.reader(csvfile)
@@ -13,11 +14,16 @@ for line in csvreader:
         exit(1)
     else:
         latin_name = line[0].capitalize()
-        common_name = line[3]
+        common_name = line[3].lstrip()
         id_num = int(line[2].replace(',', ''))
-        encountered[latin_name] = {
-            'common': common_name,
-            'id': str(id_num).zfill(7)
-        }
+
+        if not latin_name in counts:
+            counts[latin_name] = 0
+        counts[latin_name] += 1
+        if counts[latin_name] >= 30:
+            encountered[latin_name] = {
+                'common': common_name,
+                'id': str(id_num).zfill(7)
+            }
 
 print json.dumps(encountered)
