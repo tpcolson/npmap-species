@@ -166,6 +166,9 @@ function clearSearch() {
   }
 
   control._selectedSpecies = [];
+
+  document.getElementById('search-compare-placeholder').style.display = 'block';
+  document.getElementById('search-compare-contents').style.display = 'none';
 }
 
 function selectInitialSpecies(li) {
@@ -225,6 +228,9 @@ function selectInitialSpecies(li) {
   if(showObserved) {
     control._selectedSpecies[0].observed.addTo(NPMap.config.L);
   }
+
+  document.getElementById('search-compare-placeholder').style.display = 'none';
+  document.getElementById('search-compare-contents').style.display = 'block';
 }
 
 var searchActive = false;
