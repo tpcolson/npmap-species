@@ -169,6 +169,7 @@ function clearSearch() {
 
   document.getElementById('search-compare-placeholder').style.display = 'block';
   document.getElementById('search-compare-contents').style.display = 'none';
+  document.getElementById('search-initial-image').style.opacity = '0';
 }
 
 function selectInitialSpecies(li) {
@@ -231,6 +232,7 @@ function selectInitialSpecies(li) {
 
   document.getElementById('search-compare-placeholder').style.display = 'none';
   document.getElementById('search-compare-contents').style.display = 'block';
+  document.getElementById('search-initial-image').style.opacity = '1';
 }
 
 var searchActive = false;
