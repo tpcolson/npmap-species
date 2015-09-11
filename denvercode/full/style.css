@@ -62,7 +62,7 @@
 }
 
 #search-banner-buffer {
-  width: 867px;
+  width: 937px;
   height: 30px;
   float: left;
 }
@@ -70,7 +70,7 @@
 #search-banner-help-link {
   float: left;
   height: 30px;
-  width: 100px;
+  width: 30px;
   border-right: 1px solid #40403d;
 }
 
@@ -365,7 +365,7 @@
 
 #options-label {
 	color: #f5faf2;
-  font-weight: bold;
+  font-weight: semi-bold;
 	font-size: 12pt;
 	letter-spacing: .001em;
   padding-bottom: 5px;

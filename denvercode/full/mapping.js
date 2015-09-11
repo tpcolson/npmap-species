@@ -84,8 +84,9 @@ var subNavZ, headerZ, divHeader, divSubNav,
 			},
 			styles: {
 				line: {
-					'stroke': '#996515',
-					'stroke-opacity': 1.0
+					'stroke': '#ab6124',
+					'stroke-opacity': 0.9,
+					'stroke-width': '2px'
 				}
 			}
 		}],
