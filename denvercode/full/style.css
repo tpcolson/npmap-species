@@ -387,7 +387,7 @@
   padding: 5px;
   position: relative;
   left: 190px;
-  top: -110px;
+  top: -102px;
   width: 90px;
   height: 80px;
   border: 1px solid #40403d;
@@ -481,25 +481,5 @@ button {
 @media (min-width: 1364px) {
   #search-tool-contents {
     margin: 0 auto;
-  }
-}
-
-@media (max-width: 1364px) {
-  #search-options {
-    display: none;
-  }
-
-  #search-banner-buffer {
-    width: 550px;
-  }
-}
-
-@media (max-width: 1065px) {
-  #search-compare {
-    display: none;
-  }
-
-  #search-banner-buffer {
-    width: 0px;
   }
 }
