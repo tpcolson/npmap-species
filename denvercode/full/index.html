@@ -22,11 +22,11 @@
             <center>National Park Service Species Mapper</center>
           </div>
           <div id='search-banner-buffer'></div>
-          <div id='search-banner-help-tooltips'>
+          <div id='search-banner-help-tooltips' class='bordered'>
             <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
           </div>
-          <div id='search-banner-help-link'>
-            <center><a href='http://seelab.eecs.utk.edu/help' target='_blank'>&#10067;</a></center>
+          <div id='search-banner-help-link' class='bordered'>
+            <center><a href='http://seelab.eecs.utk.edu/help' target='_blank'>?</a></center>
           </div>
           <div id='search-banner-help-minimizer'>
             <center><button onclick='toggleMinimized();'>&#8212;</button></center>
@@ -55,11 +55,11 @@
             <ul></ul>
           </div>
         </div>
-        <div id='search-compare'>
+        <div id='search-compare' class='bordered'>
           <div id='search-compare-placeholder'><img src='images/center_graphic.png'></img></div>
           <div id='search-compare-contents'></div>
         </div>
-        <div id='search-options'>
+        <div id='search-options' class='bordered'>
           <div id='options-label'>MAP CONTROLS</div>
           <div id='options-background'>
             <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();'>

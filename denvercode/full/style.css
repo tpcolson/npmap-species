@@ -1,7 +1,13 @@
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
 #map {
   position: absolute;
   left: 0px;
   top: 0px;
+  min-width: 1366px;
   width: 100%;
   height: 100%;
   padding: 0px;
@@ -9,10 +15,9 @@
 }
 
 #search-tool {
-  position: absolute;
-  left: 0px;
-  top: 0px;
+  position: relative;
   width: 100%;
+  min-width: 1366px;
   height: 189px;
   padding: 0px;
   margin: 0px;
@@ -25,8 +30,7 @@
   font-family: 'Source Sans Pro', sans-serif;
   width: 1364px;
   height: 100%;
-  padding: inherit;
-  margin: inherit;
+  margin: 0 auto;
   border-left: 1px solid #40403d;
   border-right: 1px solid #40403d;
 }
@@ -417,6 +421,13 @@
 
 button {
   font-family: 'Source Sans Pro', serif;
+}
+
+.bordered {
+  border-width: 1px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 .vignette:after {

@@ -33,8 +33,9 @@ window.onload = function() {
 	editControls.children[0].style.borderRadius = '4px 0px 0px 4px';
 	editControls.children[2].style.borderRadius = '0px 4px 4px 0px';
 	for(var i = 0; i < editControls.children.length; i++) {
-		editControls.children[i].style.height = '26px';
-		editControls.children[i].style.width = '26px';
+		editControls.children[i].style.boxSizing = 'border-box';
+		editControls.children[i].style.height = '28px';
+		editControls.children[i].style.width = '28px';
 		editControls.children[i].style.float = 'left';
 	}
 	document.getElementById('options-annotations-buttons').appendChild(editControls);
