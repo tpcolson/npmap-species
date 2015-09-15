@@ -3,6 +3,7 @@
   <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no'>
+    <link rel='stylesheet' href='reset.css'></link>
     <link rel='stylesheet' href='style.css'></link>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <script src='mapping.js'></script>
@@ -33,9 +34,9 @@
           </div>
         </div>
         <div id='search-initial'>
-          <button id='search-initial-lexical' onclick='toggleLexicalSearch();'>
+          <div id='search-initial-lexical' onclick='toggleLexicalSearch();'>
             <img src='images/searchButton.png'></img>
-          </button>
+          </div>
           <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();'>
             <div class='dropdown-text'>Select a species</div>
             <div class='triangle'></div>
@@ -44,9 +45,9 @@
             <img src='images/no_image.png'></img>
           </div>
           <div id='search-initial-switch'>
-            <div><center><div>COMMON</div></center></div>
-            <div><center><div>LATIN</div></center></div>
-            <button id='search-initial-switch-button' onclick='toggleName();'><div><div>...</div></div></button>
+            <div><center><div onclick='toggleName();'>COMMON</div></center></div>
+            <div><center><div onclick='toggleName();'>LATIN</div></center></div>
+            <div id='search-initial-switch-button'><div onclick='toggleName();'><span>...</span></div></div>
           </div>
           <ul id='search-initial-dropdown-common'></ul>
           <ul id='search-initial-dropdown-latin'></ul>
@@ -90,7 +91,7 @@
           </div>
           <div id='options-annotations'>
             <center>Draw on Map</center>
-            <center><div id='options-annotations-buttons' class='npmap'></div></center><br><br>
+            <center><div id='options-annotations-buttons' class='npmap'></div></center>
             <center><button>Show/Hide</button></center>
             <center><button>Clear All</button></center>
           </div>

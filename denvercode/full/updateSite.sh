@@ -5,7 +5,7 @@
 # date: September 2, 2015
 
 # set up (you'll want to change this)
-PUB_FILES=("index.html" "style.css" "mapping.js" "utils.js" "searchUtils.js")
+PUB_FILES=("index.html" "style.css" "mapping.js" "utils.js" "searchUtils.js" "reset.css")
 USER="jduggan1"
 TAR_HOST="seelab.eecs.utk.edu"
 TAR_DIR="/export/home/seelab/huangj/seelabwww/full"
