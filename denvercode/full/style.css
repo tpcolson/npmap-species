@@ -44,8 +44,9 @@ body, html {
 }
 
 #search-banner-logo {
-  width: 30px;
+  width: 23px;
   height: 30px;
+  padding: 0px 3.5px 0px 3.5px;
   float: left;
 }
 
