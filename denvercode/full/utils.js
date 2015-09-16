@@ -217,4 +217,16 @@ function toggleName() {
 		el.innerHTML = el.title;
 		el.title = tmp;
 	}
+
+	/* switch compare names */
+	$('ul', '#search-compare-one-box').children().each(function() {
+		var tmp = this.innerHTML;
+		this.innerHTML = this.title;
+		this.title = tmp;
+	});
+	$('ul', '#search-compare-two-box').children().each(function() {
+		var tmp = this.innerHTML;
+		this.innerHTML = this.title;
+		this.title = tmp;
+	});
 }

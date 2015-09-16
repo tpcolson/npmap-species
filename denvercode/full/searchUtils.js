@@ -173,6 +173,8 @@ function clearSearch() {
 }
 
 function selectInitialSpecies(li) {
+  clearComparisons();
+
   document.getElementById('search-initial-dropdown').children[0].innerHTML = li.innerHTML;
   document.getElementById('search-initial-dropdown').children[0].title = li.title;
   document.getElementById('search-initial-dropdown').style.backgroundColor = '#40b5c6';
@@ -210,16 +212,16 @@ function selectInitialSpecies(li) {
         'marker-color': '#2b80b6',
         'marker-size': 'small'
       }
-    },
+    }/*,
     cluster: {
-      clusterIcon: '#2b80b6'
+      clusterIcon: '#000000'
     },
     showCoverageOnHover: true,
     disableClusteringAtZoom: 15,
     polygonOptions: {
       color: '#2b80b6',
       fillColor: '#2b80b6'
-    }
+    }*/
   });
 
   if(showPredicted) {
@@ -235,6 +237,175 @@ function selectInitialSpecies(li) {
   document.getElementById('search-initial-image').style.opacity = '1';
 }
 
+function clearCompareOne() {
+  $('#search-compare-one-box-input').val('');
+  $('#search-compare-one-box-input').trigger('input');
+  $('#search-compare-one-box-name').css({display:'none'});
+  $('#search-compare-one-box-clear').css({display:'none'});
+
+  if(control._selectedSpecies[1] !== undefined) {
+    if(showObserved) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[1].observed);
+    }
+
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
+    }
+  }
+}
+
+function selectSecondSpecies(li) {
+  $('#search-compare-one-box-input').val('');
+  $('#search-compare-one-box-input').trigger('input');
+
+  if(whichName === 'common') {
+    $('#search-compare-one-box-name').html(li._common);
+  } else {
+    $('#search-compare-one-box-name').html(li._latin);
+  }
+  $('#search-compare-one-box-name').css({display:'block'});
+  $('#search-compare-one-box-clear').css({display:'block'});
+
+  if(control._selectedSpecies[1] !== undefined) {
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
+    }
+
+    if(showObserved) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[1].observed);
+    }
+  }
+
+  control._selectedSpecies[1] = {};
+  control._selectedSpecies[1]._id = li._id;
+  control._selectedSpecies[1]._latin = li._latin;
+  control._selectedSpecies[1]._common = li._common;
+  control._selectedSpecies[1].predicted = L.npmap.layer.mapbox({
+    name: li._latin,
+    opacity: .5,
+    id: 'nps.GRSM_' + li._id + '_pink'
+  });
+
+  control._selectedSpecies[1].observed = L.npmap.layer.geojson({
+    name: li._latin + '_observations',
+    url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
+    type: 'geojson',
+    popup: {
+      title: li._latin.replace(/_/g, ' ') + ' sighting',
+      description: 'Coordinates: {{coordinates}}'
+    },
+    styles: {
+      point: {
+        'marker-color': '#ca1892',
+        'marker-size': 'small'
+      }
+    }/**,
+    cluster: {
+      clusterIcon: '#000000'
+    },
+    showCoverageOnHover: true,
+    disableClusteringAtZoom: 15,
+    polygonOptions: {
+      color: '#ca1892',
+      fillColor: '#ca1892'
+    }*/
+  });
+
+  if(showPredicted) {
+    control._selectedSpecies[1].predicted.addTo(NPMap.config.L);
+  }
+
+  if(showObserved) {
+    control._selectedSpecies[1].observed.addTo(NPMap.config.L);
+  }
+}
+
+function clearCompareTwo() {
+  $('#search-compare-two-box-input').val('');
+  $('#search-compare-two-box-input').trigger('input');
+  $('#search-compare-two-box-name').css({display:'none'});
+  $('#search-compare-two-box-clear').css({display:'none'});
+
+  if(control._selectedSpecies[2] !== undefined) {
+    if(showObserved) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[2].observed);
+    }
+
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[2].predicted);
+    }
+  }
+}
+
+function selectThirdSpecies(li) {
+  $('#search-compare-two-box-input').val('');
+  $('#search-compare-two-box-input').trigger('input');
+
+  if(whichName === 'common') {
+    $('#search-compare-two-box-name').html(li._common);
+  } else {
+    $('#search-compare-two-box-name').html(li._latin);
+  }
+  $('#search-compare-two-box-name').css({display:'block'});
+  $('#search-compare-two-box-clear').css({display:'block'});
+
+  if(control._selectedSpecies[2] !== undefined) {
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[2].predicted);
+    }
+
+    if(showObserved) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[2].observed);
+    }
+  }
+
+  control._selectedSpecies[2] = {};
+  control._selectedSpecies[2]._id = li._id;
+  control._selectedSpecies[2]._latin = li._latin;
+  control._selectedSpecies[2]._common = li._common;
+  control._selectedSpecies[2].predicted = L.npmap.layer.mapbox({
+    name: li._latin,
+    opacity: .5,
+    id: 'nps.GRSM_' + li._id + '_orange'
+  });
+
+  control._selectedSpecies[2].observed = L.npmap.layer.geojson({
+    name: li._latin + '_observations',
+    url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
+    type: 'geojson',
+    popup: {
+      title: li._latin.replace(/_/g, ' ') + ' sighting',
+      description: 'Coordinates: {{coordinates}}'
+    },
+    styles: {
+      point: {
+        'marker-color': '#f28e43',
+        'marker-size': 'small'
+      }
+    }/**,
+    cluster: {
+      clusterIcon: '#000000'
+    },
+    iconCreateFunction: function() {
+      console.log('hello');
+    },
+    showCoverageOnHover: true,
+    disableClusteringAtZoom: 15,
+    polygonOptions: {
+      color: '#f28e43',
+      fillColor: '#f28e43'
+    }*/
+  });
+
+  if(showPredicted) {
+    control._selectedSpecies[2].predicted.addTo(NPMap.config.L);
+  }
+
+  if(showObserved) {
+    control._selectedSpecies[2].observed.addTo(NPMap.config.L);
+  }
+}
+
 var searchActive = false;
 function toggleLexicalSearch() {
   searchActive = !searchActive;
@@ -247,23 +418,48 @@ function toggleLexicalSearch() {
   }
 }
 
-function fuseSearch() {
-  var value = document.getElementById('search-initial-box-input').value,
+var compareOneActive = false;
+function toggleCompareOne() {
+  compareOneActive = !compareOneActive;
+
+  if(compareOneActive) {
+
+  } else {
+
+  }
+}
+
+function fuseSearch(idx, value) {
+  var value = value,
     results = (whichName === 'common')
       ? control._commonFuser.search(value).slice(0, 15)
       : control._latinFuser.search(value).slice(0, 15);
 
-  $('#search-initial-box').stop();
-  $('#search-initial-box').animate({
+  switch(idx) {
+    case 0:
+      elString = '#search-initial-box';
+      break;
+    case 1:
+      elString = '#search-compare-one-box';
+      break;
+    case 2:
+      elString = '#search-compare-two-box';
+      break;
+    default:
+      return;
+  }
+  $(elString).stop();
+  $(elString).animate({
     height: 20+results.length*21 + 'px'
   });
 
-  document.getElementById('search-initial-box').children[1].innerHTML = '';
+  document.getElementById(elString.substring(1)).children[1].innerHTML = '';
   for(var i = 0; i < results.length; i++) {
     var li = document.createElement('li');
     li._latin = results[i].latin_name;
     li._id = results[i].irma_id;
     li._common = results[i].common_name;
+    li._idx = idx;
     if(whichName === 'common') {
       li.innerHTML = li._common.replace(/_/g, ' ');
       li.title = li._latin.replace(/_/g, ' ');
@@ -272,14 +468,33 @@ function fuseSearch() {
       li.title = li._common.replace(/_/g, ' ');
     }
     li.onclick = function() {
-      toggleLexicalSearch();
-      selectInitialSpecies(this);
+      switch(this._idx) {
+        case 0:
+          toggleLexicalSearch();
+          selectInitialSpecies(this);
+          break;
+        case 1:
+          selectSecondSpecies(this);
+          break;
+        case 2:
+          selectThirdSpecies(this);
+          break;
+        default:
+          break;
+      }
     }
-    document.getElementById('search-initial-box').children[1].appendChild(li);
+    document.getElementById(elString.substring(1)).children[1].appendChild(li);
   }
 }
 
+function clearComparisons() {
+  clearCompareOne();
+  clearCompareTwo();
+}
+
 function lexFocus() {
+  clearComparisons();
+
   $('#search-compare-lexical').animate({width:'481px'});
   $('.subhead', '#search-compare-lexical').css({display:'block'});
   $('.subhead2', '#search-compare-lexical').css({
@@ -289,6 +504,8 @@ function lexFocus() {
     width:'200px'
   });
   $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES IN THE PARK');
+  $('#search-compare-one-box').css({display:'block'});
+  $('#search-compare-two-box').css({display:'block'});
 
   $('#search-compare-distribution').animate({width:'120px'});
   $('.subhead', '#search-compare-distribution').css({display:'none'});
@@ -299,6 +516,8 @@ function lexFocus() {
     width:'80px'
   });
   $('.subhead2', '#search-compare-distribution').html('COMPARE DISTRIBUTION');
+  $('#compare-dist-one').css({display:'none'});
+  $('#compare-dist-two').css({display:'none'});
 
   $('#search-compare-environment').animate({width:'120px'});
   $('.subhead', '#search-compare-environment').css({display:'none'});
@@ -312,6 +531,8 @@ function lexFocus() {
 }
 
 function distFocus() {
+  clearComparisons();
+
   $('#search-compare-lexical').animate({width:'121px'});
   $('.subhead', '#search-compare-lexical').css({display:'none'});
   $('.subhead2', '#search-compare-lexical').css({
@@ -321,6 +542,8 @@ function distFocus() {
     width:'80px'
   });
   $('.subhead2', '#search-compare-lexical').html('COMPARE SPECIES');
+  $('#search-compare-one-box').css({display:'none'});
+  $('#search-compare-two-box').css({display:'none'});
 
   $('#search-compare-distribution').animate({width:'480px'});
   $('.subhead', '#search-compare-distribution').css({display:'block'});
@@ -331,6 +554,8 @@ function distFocus() {
     width:'200px'
   });
   $('.subhead2', '#search-compare-distribution').html('SPECIES WITH SIMILAR DISTRIBUTION');
+  $('#compare-dist-one').css({display:'block'});
+  $('#compare-dist-two').css({display:'block'});
 
   $('#search-compare-environment').animate({width:'120px'});
   $('.subhead', '#search-compare-environment').css({display:'none'});
@@ -344,6 +569,8 @@ function distFocus() {
 }
 
 function envFocus() {
+  clearComparisons();
+
   $('#search-compare-lexical').animate({width:'121px'});
   $('.subhead', '#search-compare-lexical').css({display:'none'});
   $('.subhead2', '#search-compare-lexical').css({
@@ -353,6 +580,8 @@ function envFocus() {
     width:'80px'
   });
   $('.subhead2', '#search-compare-lexical').html('COMPARE SPECIES');
+  $('#search-compare-one-box').css({display:'none'});
+  $('#search-compare-two-box').css({display:'none'});
 
   $('#search-compare-distribution').animate({width:'120px'});
   $('.subhead', '#search-compare-distribution').css({display:'none'});
@@ -363,6 +592,8 @@ function envFocus() {
     width:'80px'
   });
   $('.subhead2', '#search-compare-distribution').html('COMPARE DISTRIBUTION');
+  $('#compare-dist-one').css({display:'none'});
+  $('#compare-dist-two').css({display:'none'});
 
   $('#search-compare-environment').animate({width:'480px'});
   $('.subhead', '#search-compare-environment').css({display:'block'});

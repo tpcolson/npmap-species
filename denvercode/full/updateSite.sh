@@ -12,13 +12,3 @@ TAR_DIR="/export/home/seelab/huangj/seelabwww/full"
 
 # let's copy over the files to the site
 scp "${PUB_FILES[@]}" "${PRIV_FILES[@]}" ${USER}@${TAR_HOST}:${TAR_DIR}
-
-# change file permissions as appropriate (also rename index)
-ssh ${USER}@${TAR_HOST} << ENDSSH
-	for file in "${PUB_FILES[@]}"
-	do
-		chmod 644 ${TAR_DIR}/$file
-	done
-	chmod 755 ${TAR_DIR}
-	exit
-ENDSSH

@@ -52,7 +52,7 @@
           <ul id='search-initial-dropdown-common'></ul>
           <ul id='search-initial-dropdown-latin'></ul>
           <div id='search-initial-box'>
-            <input id='search-initial-box-input' type='text' name='initial-search' placeholder='Find a species...' oninput='fuseSearch();'></input>
+            <input id='search-initial-box-input' type='text' name='initial-search' placeholder='Find a species...' oninput='fuseSearch(0, this.value);'></input>
             <ul></ul>
           </div>
         </div>
@@ -63,11 +63,33 @@
               <input type='radio' name='comparator' value='lexical' onclick='lexFocus();'></input>
               <div class='subhead'>COMPARE WITH</div>
               <div class='subhead2'>ANOTHER SPECIES IN THE PARK</div>
+              <div id='search-compare-one-box'>
+                <input id='search-compare-one-box-input' type='text' name='compare-one-search' placeholder='Find a second species...' oninput='fuseSearch(1, this.value);'></input>
+                <ul></ul>
+                <div id='search-compare-one-box-name'></div>
+                <div id='search-compare-one-box-clear' onclick='clearCompareOne();'>Clear</div>
+              </div>
+              <div id='search-compare-two-box'>
+                <input id='search-compare-two-box-input' type='text' name='compare-two-search' placeholder='Find a third species...' oninput='fuseSearch(2, this.value);'></input>
+                <ul></ul>
+                <div id='search-compare-two-box-name'></div>
+                <div id='search-compare-two-box-clear' onclick='clearCompareTwo();'>Clear</div>
+              </div>
             </div>
             <div id='search-compare-distribution'>
               <input type='radio' name='comparator' value='distribution' onclick='distFocus();'></input>
               <div class='subhead'>COMPARE WITH</div>
               <div class='subhead2'>SPECIES WITH SIMILAR DISTRIBUTION</div>
+              <div id='compare-dist-one' onclick='toggleCompareOne();'>
+                <div id='compare-dist-one-name'>Select a second species</div>
+                <div class='triangle'></div>
+                <ul></ul>
+              </div>
+              <div id='compare-dist-two' onclick='toggleCompareTwo();'>
+                <div id='compare-dist-two-name'>Select a third species</div>
+                <div class='triangle'></div>
+                <ul></ul>
+              </div>
             </div>
             <div id='search-compare-environment'>
               <input type='radio' name='comparator' value='environment' onclick='envFocus();'></input>

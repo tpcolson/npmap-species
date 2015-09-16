@@ -363,7 +363,181 @@ body, html {
 }
 
 #search-compare-lexical {
+  position: relative;
   width: 241px;
+  height: 128px;
+  float: left;
+  box-sizing: border-box;
+  border-right: 1px dotted #40403d;
+}
+
+#search-compare-one-box {
+  display: none;
+  position: absolute;
+  top: 25px;
+  left: 225px;
+  width: 245px;
+  height: 20px;
+  background-color: #40403d;
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+#search-compare-one-box-input {
+  position: relative;
+  width: 240px;
+  height: 20px;
+  background-color: #40403d;
+  border-radius: 4px;
+  outline: 0;
+  margin: 0;
+  border: 0;
+  padding: 0px 0px 0px 5px;
+  font-family: 'Source Sans Pro', serif;
+  color: #f5faf2;
+  letter-spacing: .001em;
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+#search-compare-one-box-name {
+  position: relative;
+  display: none;
+  top: -20px;
+  width: 240px;
+  height: 20px;
+  background-color: #ca1892;
+  border-radius: 4px;
+  outline: 0;
+  margin: 0;
+  border: 0;
+  padding: 0px 0px 0px 5px;
+  font-family: 'Source Sans Pro', serif;
+  color: #f5faf2;
+  letter-spacing: .001em;
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+#search-compare-one-box-clear {
+  position: relative;
+  display: none;
+  top: -40px;
+  left: 215px;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  font-family: 'Source Sans Pro', serif;
+  color: #f5faf2;
+  letter-spacing: .001em;
+  font-size: 8pt;
+  font-style: italic;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+#search-compare-one-box > ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+#search-compare-one-box > ul > li {
+  border-top: 1px dotted #f5faf2;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 5px;
+  color: #f5faf2;
+  font-size: 8pt;
+  font-style: italic;
+  overflow-x: hidden;
+  cursor: pointer;
+}
+
+#search-compare-two-box {
+  display: none;
+  position: absolute;
+  top: 75px;
+  left: 225px;
+  width: 245px;
+  height: 20px;
+  background-color: #40403d;
+  border-radius: 4px;
+}
+
+#search-compare-two-box-input {
+  position: relative;
+  width: 240px;
+  height: 20px;
+  background-color: #40403d;
+  border-radius: 4px;
+  outline: 0;
+  margin: 0;
+  border: 0;
+  padding: 0px 0px 0px 5px;
+  font-family: 'Source Sans Pro', serif;
+  color: #f5faf2;
+  letter-spacing: .001em;
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+#search-compare-two-box-name {
+  position: relative;
+  display: none;
+  top: -20px;
+  width: 240px;
+  height: 20px;
+  background-color: #f28e43;
+  border-radius: 4px;
+  padding: 0px 0px 0px 5px;
+  font-family: 'Source Sans Pro', serif;
+  color: #f5faf2;
+  letter-spacing: .001em;
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+#search-compare-two-box-clear {
+  position: relative;
+  display: none;
+  top: -40px;
+  left: 215px;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  font-family: 'Source Sans Pro', serif;
+  color: #f5faf2;
+  letter-spacing: .001em;
+  font-size: 8pt;
+  font-style: italic;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+#search-compare-two-box > ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+#search-compare-two-box > ul > li {
+  border-top: 1px dotted #f5faf2;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 5px;
+  color: #f5faf2;
+  font-size: 8pt;
+  font-style: italic;
+  overflow-x: hidden;
+  cursor: pointer;
+}
+
+#search-compare-distribution {
+  position: relative;
+  width: 240px;
   height: 128px;
   float: left;
   box-sizing: border-box;
@@ -371,13 +545,60 @@ body, html {
   overflow-x: hidden;
 }
 
-#search-compare-distribution {
+#compare-dist-one {
+  display: none;
+  position: absolute;
+  top: 25px;
+  left: 225px;
+  width: 245px;
+  height: 20px;
+  background-color: #40403d;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#compare-dist-one > .triangle {
+  left: 225px;
+}
+
+#compare-dist-one-name {
   width: 240px;
-  height: 128px;
-  float: left;
-  box-sizing: border-box;
-  border-right: 1px dotted #40403d;
-  overflow-x: hidden;
+  height: 20px;
+  padding: 0px 0px 0px 5px;
+  background-color: #40403d;
+  border-radius: 4px;
+  color: #f5faf2;
+  font-style: italic;
+  font-size: 10pt;
+  line-height: 20px;
+}
+
+#compare-dist-two {
+  display: none;
+  position: absolute;
+  top: 75px;
+  left: 225px;
+  width: 245px;
+  height: 20px;
+  background-color: #40403d;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#compare-dist-two-name {
+  width: 240px;
+  height: 20px;
+  padding: 0px 0px 0px 5px;
+  background-color: #40403d;
+  border-radius: 4px;
+  color: #f5faf2;
+  font-style: italic;
+  font-size: 10pt;
+  line-height: 20px;
+}
+
+#compare-dist-two > .triangle {
+  left: 225px;
 }
 
 #search-compare-environment {
