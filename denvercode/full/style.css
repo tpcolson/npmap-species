@@ -542,7 +542,6 @@ body, html {
   float: left;
   box-sizing: border-box;
   border-right: 1px dotted #40403d;
-  overflow-x: hidden;
 }
 
 #compare-dist-one {
@@ -554,6 +553,27 @@ body, html {
   height: 20px;
   background-color: #40403d;
   border-radius: 4px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#compare-dist-one > ul {
+  display: none;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  top: -4px;
+}
+
+#compare-dist-one > ul > li {
+  border-top: 1px dotted #f5faf2;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 5px;
+  color: #f5faf2;
+  font-size: 8pt;
+  font-style: italic;
+  overflow-x: hidden;
   cursor: pointer;
 }
 
@@ -585,6 +605,26 @@ body, html {
   cursor: pointer;
 }
 
+#compare-dist-two > ul {
+  display: none;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  top: -4px;
+}
+
+#compare-dist-two > ul > li {
+  border-top: 1px dotted #f5faf2;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 5px;
+  color: #f5faf2;
+  font-size: 8pt;
+  font-style: italic;
+  overflow-x: hidden;
+  cursor: pointer;
+}
+
 #compare-dist-two-name {
   width: 240px;
   height: 20px;
@@ -605,7 +645,6 @@ body, html {
   width: 240px;
   height: 128px;
   float: left;
-  overflow-x: hidden;
 }
 
 #search-compare-contents input[type='radio'] {
