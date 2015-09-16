@@ -435,6 +435,7 @@ function clearCompareTwo() {
   $('#search-compare-two-box-input').trigger('input');
   $('#search-compare-two-box-name').css({display:'none'});
   $('#search-compare-two-box-clear').css({display:'none'});
+  $('#compare-dist-two-name').html('Select a third species');
   $('#compare-dist-two-name').prop('title', '');
   $('#compare-dist-two-name').css({backgroundColor:'#40403d'});
 
