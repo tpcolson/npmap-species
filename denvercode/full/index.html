@@ -58,7 +58,23 @@
         </div>
         <div id='search-compare' class='bordered'>
           <div id='search-compare-placeholder'><img src='images/center_graphic.png'></img></div>
-          <div id='search-compare-contents'></div>
+          <div id='search-compare-contents'>
+            <div id='search-compare-lexical'>
+              <input type='radio' name='comparator' value='lexical' onclick='lexFocus();'></input>
+              <div class='subhead'>COMPARE WITH</div>
+              <div class='subhead2'>ANOTHER SPECIES IN THE PARK</div>
+            </div>
+            <div id='search-compare-distribution'>
+              <input type='radio' name='comparator' value='distribution' onclick='distFocus();'></input>
+              <div class='subhead'>COMPARE WITH</div>
+              <div class='subhead2'>SPECIES WITH SIMILAR DISTRIBUTION</div>
+            </div>
+            <div id='search-compare-environment'>
+              <input type='radio' name='comparator' value='environment' onclick='envFocus();'></input>
+              <div class='subhead'>COMPARE WITH</div>
+              <div class='subhead2'>SPECIES WITH SIMILAR ENVIRONMENT</div>
+            </div>
+          </div>
         </div>
         <div id='search-options' class='bordered'>
           <div id='options-label'>MAP CONTROLS</div>

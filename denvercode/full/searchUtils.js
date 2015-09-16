@@ -278,3 +278,99 @@ function fuseSearch() {
     document.getElementById('search-initial-box').children[1].appendChild(li);
   }
 }
+
+function lexFocus() {
+  $('#search-compare-lexical').animate({width:'481px'});
+  $('.subhead', '#search-compare-lexical').css({display:'block'});
+  $('.subhead2', '#search-compare-lexical').css({
+    top:'5px',
+    fontSize:'14pt',
+    color:'#f5faf2',
+    width:'200px'
+  });
+  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES IN THE PARK');
+
+  $('#search-compare-distribution').animate({width:'120px'});
+  $('.subhead', '#search-compare-distribution').css({display:'none'});
+  $('.subhead2', '#search-compare-distribution').css({
+    top:'25px',
+    fontSize:'9pt',
+    color:'#909090',
+    width:'80px'
+  });
+  $('.subhead2', '#search-compare-distribution').html('COMPARE DISTRIBUTION');
+
+  $('#search-compare-environment').animate({width:'120px'});
+  $('.subhead', '#search-compare-environment').css({display:'none'});
+  $('.subhead2', '#search-compare-environment').css({
+    top:'25px',
+    fontSize:'9pt',
+    color:'#909090',
+    width:'80px'
+  });
+  $('.subhead2', '#search-compare-environment').html('COMPARE ENVIRONMENT');
+}
+
+function distFocus() {
+  $('#search-compare-lexical').animate({width:'121px'});
+  $('.subhead', '#search-compare-lexical').css({display:'none'});
+  $('.subhead2', '#search-compare-lexical').css({
+    top:'25px',
+    fontSize:'9pt',
+    color:'#909090',
+    width:'80px'
+  });
+  $('.subhead2', '#search-compare-lexical').html('COMPARE SPECIES');
+
+  $('#search-compare-distribution').animate({width:'480px'});
+  $('.subhead', '#search-compare-distribution').css({display:'block'});
+  $('.subhead2', '#search-compare-distribution').css({
+    top:'5px',
+    fontSize:'14pt',
+    color:'#f5faf2',
+    width:'200px'
+  });
+  $('.subhead2', '#search-compare-distribution').html('SPECIES WITH SIMILAR DISTRIBUTION');
+
+  $('#search-compare-environment').animate({width:'120px'});
+  $('.subhead', '#search-compare-environment').css({display:'none'});
+  $('.subhead2', '#search-compare-environment').css({
+    top:'25px',
+    fontSize:'9pt',
+    color:'#909090',
+    width:'80px'
+  });
+  $('.subhead2', '#search-compare-environment').html('COMPARE ENVIRONMENT');
+}
+
+function envFocus() {
+  $('#search-compare-lexical').animate({width:'121px'});
+  $('.subhead', '#search-compare-lexical').css({display:'none'});
+  $('.subhead2', '#search-compare-lexical').css({
+    top:'25px',
+    fontSize:'9pt',
+    color:'#909090',
+    width:'80px'
+  });
+  $('.subhead2', '#search-compare-lexical').html('COMPARE SPECIES');
+
+  $('#search-compare-distribution').animate({width:'120px'});
+  $('.subhead', '#search-compare-distribution').css({display:'none'});
+  $('.subhead2', '#search-compare-distribution').css({
+    top:'25px',
+    fontSize:'9pt',
+    color:'#909090',
+    width:'80px'
+  });
+  $('.subhead2', '#search-compare-distribution').html('COMPARE DISTRIBUTION');
+
+  $('#search-compare-environment').animate({width:'480px'});
+  $('.subhead', '#search-compare-environment').css({display:'block'});
+  $('.subhead2', '#search-compare-environment').css({
+    top:'5px',
+    fontSize:'14pt',
+    color:'#f5faf2',
+    width:'200px'
+  });
+  $('.subhead2', '#search-compare-environment').html('SPECIES WITH SIMILAR ENVIRONMENT');
+}
