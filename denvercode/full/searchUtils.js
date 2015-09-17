@@ -438,6 +438,8 @@ function clearCompareOne() {
       NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
     }
   }
+
+  control._selectedSpecies[1] = undefined;
 }
 
 function selectSecondSpecies(li) {
@@ -541,6 +543,8 @@ function clearCompareTwo() {
       NPMap.config.L.removeLayer(control._selectedSpecies[2].predicted);
     }
   }
+
+  control._selectedSpecies[2] = undefined;
 }
 
 function selectThirdSpecies(li) {
