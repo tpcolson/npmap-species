@@ -88,7 +88,7 @@ make_asc(GRID g)
 	int i, j, index;
 	for(i = 0; i < g->nrows; i++) {
 		for(j = 0; j < g->ncols; j++) {
-			index = i * g->nrows + j;
+			index = i * g->ncols + j;
 			printf("%f ", g->data[index]);
 		}
 		printf("\n");
