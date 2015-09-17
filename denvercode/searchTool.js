@@ -22,20 +22,46 @@ var control,
 		L.DomEvent.disableClickPropagation(container); /* I don't want double-clicking on this to zoom the map */
 
 		/* Load various GitHub resourses needed by this control */
-		jQuery.ajax({
-			type: 'GET',
-			url: 'https://api.github.com/repos/nationalparkservice/npmap-species/contents/atbirecords/lexical_index.json',
-			dataType: 'json',
-			success: function(data) {
-				var contents = window.atob(data.content),
-					index = jQuery.parseJSON(contents)['items'],
-					options = {
-						keys: ['latin_name_ref', 'common_name'],
-						threshold: 0.5
-					}
+		this._resourcesReady = [
+			false, // lexical index
+			false, // name mappings
+			false, // distribution index
+			false  // environment index
+		];
 
-				control._fuser = new Fuse(index, options);
-			}
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/lexical_index.json', function(data) {
+			var index = data.items,
+				latinOptions = {
+					keys: ['latin_name_ref'],
+					threshold: 0.5
+				},
+				commonOptions = {
+					keys: ['common_name'],
+					threshold: 0.5
+				}
+
+			control._latinFuser = new Fuse(index, latinOptions);
+			control._commonFuser = new Fuse(index, commonOptions);
+
+			tryEnableSearch(0);
+		});
+
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/irma_mapping.json', function(data) {
+			control._nameMappings = data;
+
+		tryEnableSearch(1);
+		});
+
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_distribution.json', function(data) {
+			control._similarDistributions = data;
+
+			tryEnableSearch(2);
+		});
+
+		loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_environment.json', function(data) {
+			control._similarEnvironments = data;
+
+			tryEnableSearch(3);
 		});
 
 		/* We need to move the top left controls down the page */
@@ -121,15 +147,8 @@ var control,
 				newLayer.L = L.npmap.layer[newLayer.type](newLayer);
 			}
 			newLayer.visible = true;
+			control._currentBaseLayer = newLayer.L;
 			NPMap.config.L.addLayer(newLayer.L);
-
-			for(var i = 0; i < control._selectedSpecies.length; i++) {
-				L.npmap.layer.mapbox({
-					name: control._selectedSpecies[i],
-					opacity: 0.5,
-					id: 'nps.GRSM_' + control._selectedSpecies[i].id
-				}).addTo(NPMap.config.L);
-			}
 
 			control._lastBaseIndex = this.selectedIndex;
 		}
@@ -140,7 +159,7 @@ var control,
 		levelLabel.innerHTML = '<i>CURRENT VIEW:</i>';
 		levelLabel.style.color = '#f5faf2';
 		levelLabel.style.fontWeight = '600';
-		levelView.innerHTML = '<i>124.3m level 10: ?m resolution data</i>'; //todo: add data resolution
+		levelView.innerHTML = '<i>level 10: 124.3m per pixel</i>'; //todo: add data resolution
 		levelView.style.color = '#f5faf2';
 		levelView.style.fontWeight = '600';
 
@@ -163,12 +182,12 @@ var control,
 			'Shelters',
 			'Roads'
 		];
-		poiLabel.innerHTML = '<b>SELECT POINTS OF INTEREST</b>';
+		poiLabel.innerHTML = '<b>SELECT MAP LAYERS</b>';
 		poiCheckboxes.innerHTML = '<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="trails" value="Trails" onchange="control._togglePOI(this);"></input><label for="trails"> Trails</label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 52%"><input type="checkbox" name="visitors" value="visitors" onchange="control._togglePOI(this);" disabled></input><label for="visitors"> Visitor Centers</label></li>' + //todo: add this layer
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 52%"><input type="checkbox" name="Visitor Centers" value="Visitor Centers" onchange="control._togglePOI(this);"></input><label for="visitors"> Visitor Centers</label></li>' + //todo: add this layer
 									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 35%"><input type="checkbox" name="shelters" value="Shelters" onchange="control._togglePOI(this);"></input><label for="shelters"> Shelters</label></li>' +
 									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 50%"><input type="checkbox" name="roads" value="Roads" onchange="control._togglePOI(this);"></input><label for="roads"> Roads</label></li>' +
-									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 80%"><input type="checkbox" name="campsites" value="campsites" onchange="control._togglePOI(this);" disabled></input><label for="campsites"> Back Country Campsites</label></li>'; //todo: add this layer
+									'<li style="margin: 10px 0px 10px 0px; padding: 0px; width: 80%"><input type="checkbox" name="Campsites" value="Campsites" onchange="control._togglePOI(this);"></input><label for="campsites"> Back Country Campsites</label></li>'; //todo: add this layer
 
 		poiDiv.appendChild(poiLabel);
 		poiDiv.appendChild(poiCheckboxes);
@@ -179,15 +198,8 @@ var control,
 		var annotationLabel = L.DomUtil.create('div', 'utk-search-annotation-label');
 		annotationLabel.innerHTML = '<b>ANNOTATE MAP</b>';
 		annotationLabel.style.color = '#f5faf2';
-		var annotationTools = L.DomUtil.create('div', 'utk-search-annotation-tools');
-		annotationTools.innerHTML = '<button class="marker"></button>' +
-									'<button class="polyline"></button>' +
-									'<button class="polygon"></button>' +
-									'<button class="rectangle"></button>' +
-									'<button class="circle"></button>';
 
 		annotationDiv.appendChild(annotationLabel);
-		annotationDiv.appendChild(annotationTools);
 		optionsDiv.appendChild(annotationDiv);
 
 		control._optionsDiv = optionsDiv;
@@ -203,7 +215,6 @@ var control,
 		control._poiCheckboxes = poiCheckboxes;
 		control._annotationDiv = annotationDiv;
 		control._annotationLabel= annotationLabel;
-		control._annotationTools = annotationTools;
 	},
 	_createSearchDiv: function(control) {
 		var searchDiv = L.DomUtil.create('div', 'utk-search-div');
@@ -211,7 +222,39 @@ var control,
 
 		/* add breadcrumb to search div todo: make this dynamic */
 		var breadcrumb = L.DomUtil.create('div', 'utk-search-breadcrumb');
-		breadcrumb.innerHTML = 'SEARCH';
+		var breadcrumbBase = L.DomUtil.create('div', '');
+		breadcrumbBase.style.display = 'inline-block';
+		breadcrumbBase.style.float = 'left';
+		breadcrumbBase.style.marginRight = '5px';
+		breadcrumbBase.innerHTML = 'SEARCH';
+		breadcrumbBase.style.cursor = 'pointer';
+		breadcrumbBase.onclick = function() {
+			for(var i = 1; i < control._searchDiv.children.length; i++) {
+				control._searchDiv.children[i--].remove();
+			}
+			control._lastSearchPage = control._initialSearchDiv;
+			control._searchDiv.appendChild(control._initialSearchDiv);
+
+			for(var i = 1; i < control._breadcrumb.children.length; i++) {
+				control._breadcrumb.children[i--].remove();
+			}
+
+			for(var i = 0; i < control._selectedSpecies.length; i++) {
+				if(control._selectedSpecies[i] !== undefined) {
+					NPMap.config.L.removeLayer(control._selectedSpecies[i]);
+
+					if(control._showObservations) {
+						NPMap.config.L.removeLayer(control._speciesSightings[i]);
+					}
+
+					control._selectedSpecies[i] = undefined;
+				}
+			}
+
+			control._searchDiv.appendChild(control._nameSwitcherText);
+			control._searchDiv.appendChild(control._nameSwitcherButton);
+		}
+		breadcrumb.appendChild(breadcrumbBase);
 		searchDiv.appendChild(breadcrumb);
 
 		/* create initial search page */
@@ -220,25 +263,11 @@ var control,
 		/* create lexical/area search results page */
 		control._createSearchResults(control);
 
-		/* create group search results */
-		control._createGroupResults(control);
-
-		/* create distribution comparison */
-		control._createDistributionDiv(control);
-
-		/* create environmental page */
-		control._createEnvironmentDiv(control);
-
-		/* create lexical compare page */
-		control._createLexicalDiv(control);
-
-		/* create area compare page */
-		control._createAreaCompareDiv(control);
-
 		/* create name type switcher */
 		control._createNameSwitcher(control);
 
 		control._breadcrumb = breadcrumb;
+		control._breadcrumbBase = breadcrumbBase;
 		control._lastSearchPage = control._initialSearchDiv;
 		control._selectedSpecies = [];
 		control._speciesSightings = [];
@@ -254,66 +283,41 @@ var control,
 		initialSearchLexBox.placeholder = 'Type a species name';
 		initialSearchLexBox.oninput = function() {
 			var evt = window.event;
-			control._fuseSearch(evt.srcElement.value);
+			control._fuseSearch(evt.srcElement.value, resultsList, 0);
 		}
 		var resultsList = L.DomUtil.create('ul', 'init-lexical-results');
 		resultsList.style.display = 'none';
 		resultsList.style.margin = '0px';
-		var initialSearchLexOptions = L.DomUtil.create('div', 'init-lexical-options');
-		initialSearchLexOptions.innerHTML = '<input type="radio" name="lexicalType" value="species" checked /> SPECIES' +
-									'<input type="radio" name="lexicalType" value="groups" style="margin-left:20px" /> GROUPS';
 
 		initialSearchLexical.appendChild(initialSearchLexLabel);
 		initialSearchLexical.appendChild(initialSearchLexBox);
 		initialSearchLexical.appendChild(resultsList);
-		initialSearchLexical.appendChild(initialSearchLexOptions);
 		initialSearchDiv.appendChild(initialSearchLexical);
-
-		var initialSearchArea = L.DomUtil.create('div', 'utk-search-init-area');
-		var initialSearchAreaLabel = L.DomUtil.create('div', 'init-area-label');
-		initialSearchAreaLabel.innerHTML = 'SEARCH BY SPECIFIC AREA ON MAP';
-		var searchCircle = L.DomUtil.create('canvas', '');
-		searchCircle.id = 'init-area-circle';
-		searchCircle.width = 30;
-		searchCircle.height = 30;
-		var ctx = searchCircle.getContext('2d');
-		ctx.beginPath();
-		ctx.arc(15, 15, 15, 0, 2*Math.PI);
-		ctx.strokeStyle = '#f5faf2';
-		ctx.stroke();
-		ctx.fillStyle = '#f5faf2';
-		ctx.fill();
-		var searchRectangle = L.DomUtil.create('canvas', '');
-		searchRectangle.id = 'init-area-rect';
-		searchRectangle.width = 30;
-		searchRectangle.height = 30;
-		var ctx = searchRectangle.getContext('2d');
-		ctx.fillStyle = '#f5faf2';
-		ctx.fillRect(0, 0, 30, 30);
-		var radiusInput = L.DomUtil.create('div', 'init-area-radius');
-		radiusInput.innerHTML = 'Set shape size: <input name="init-radius" value="0" size="10"/> m';
-
-		initialSearchArea.appendChild(initialSearchAreaLabel);
-		initialSearchArea.appendChild(searchCircle);
-		initialSearchArea.appendChild(searchRectangle);
-		initialSearchArea.appendChild(radiusInput);
-		initialSearchDiv.appendChild(initialSearchArea);
 
 		control._initialSearchDiv = initialSearchDiv;
 		control._initialSearchLexical = initialSearchLexical;
 		control._initialSearchLexLabel = initialSearchLexLabel;
 		control._initialSearchLexBox = initialSearchLexBox;
 		control._resultsList = resultsList;
-		control._initialSearchLexOptions = initialSearchLexOptions;
-		control._initialSearchArea = initialSearchArea;
-		control._searchCircle = searchCircle;
-		control._searchRectangle = searchRectangle;
-		control._radiusInput = radiusInput;
 	},
 	_createSearchResults: function(control) {
 		var comparisonPane = L.DomUtil.create('div', 'utk-search-compare');
 
 		var comparisonPaneImage = L.DomUtil.create('div', 'image-normal vignette');
+		comparisonPaneImage.onmouseover = function() {
+			control._comparisonDistributionPane.style.zIndex = -2;
+			control._comparisonEnvironmentPane.style.zIndex = -2;
+			document.getElementById('searchButton').style.zIndex = -3;
+			document.getElementById('settingsButton').style.zIndex = -3;
+		}
+		comparisonPaneImage.onmouseout = function() {
+			setTimeout(function() {
+				control._comparisonDistributionPane.style.zIndex = 1;
+				control._comparisonEnvironmentPane.style.zIndex = 1;
+				document.getElementById('searchButton').style.zIndex = 1;
+				document.getElementById('settingsButton').style.zIndex = 1;
+			}, 200);
+		}
 		var innerImage = L.DomUtil.create('img', 'inner-image');
 		innerImage.src = 'images/abies_fraseri.jpg';
 		comparisonPaneImage.appendChild(innerImage);
@@ -393,6 +397,7 @@ var control,
 		lexicalPaneLabelMain.style.top = '25px';
 		lexicalPaneLabelMain.style.left = '20px';
 		lexicalPaneLabelMain.style.lineHeight = '25px';
+		lexicalPaneLabelMain.style.width = '200px';
 		var lexicalRadioButton = L.DomUtil.create('input', '');
 		lexicalRadioButton.type = 'radio';
 		lexicalRadioButton.name = 'which-pane';
@@ -410,39 +415,9 @@ var control,
 		comparisonLexicalPane.appendChild(lexicalPaneLabelMain);
 		comparisonLexicalPane.appendChild(lexicalRadioButton);
 
-		var comparisonAreaPane = L.DomUtil.create('div', 'compare-area');
-		var areaPaneLabelTop = L.DomUtil.create('div', 'subhead2');
-		areaPaneLabelTop.innerHTML = 'COMPARE WITH';
-		areaPaneLabelTop.style.position = 'absolute';
-		areaPaneLabelTop.style.top = '0px';
-		areaPaneLabelTop.style.left = '20px';
-		var areaPaneLabelMain = L.DomUtil.create('div', 'subhead');
-		areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA IN THE PARK';
-		areaPaneLabelMain.style.position = 'absolute';
-		areaPaneLabelMain.style.top = '25px';
-		areaPaneLabelMain.style.left = '20px';
-		areaPaneLabelMain.style.lineHeight = '25px';
-		var areaRadioButton = L.DomUtil.create('input', '');
-		areaRadioButton.type = 'radio';
-		areaRadioButton.name = 'which-pane';
-		areaRadioButton.value = 'area';
-		areaRadioButton.style.position = 'absolute';
-		areaRadioButton.style.top = '32px';
-		areaRadioButton.style.left = '0px';
-		areaRadioButton.onclick = function() {
-			if(control._currentComparison !== 'area') {
-				control._currentComparison = 'area';
-				control._changeCompare('area');
-			}
-		}
-		comparisonAreaPane.appendChild(areaPaneLabelTop);
-		comparisonAreaPane.appendChild(areaPaneLabelMain);
-		comparisonAreaPane.appendChild(areaRadioButton);
-
 		comparisonPane.appendChild(comparisonDistributionPane);
 		comparisonPane.appendChild(comparisonEnvironmentPane);
 		comparisonPane.appendChild(comparisonLexicalPane);
-		comparisonPane.appendChild(comparisonAreaPane);
 
 		control._comparisonPane = comparisonPane;
 		control._comparisonPaneImage = comparisonPaneImage;
@@ -460,115 +435,7 @@ var control,
 		control._lexicalPaneLabelTop = lexicalPaneLabelTop;
 		control._lexicalPaneLabelMain = lexicalPaneLabelMain;
 		control._lexicalRadioButton = lexicalRadioButton;
-		control._comparisonAreaPane = comparisonAreaPane;
-		control._areaPaneLabelTop = areaPaneLabelTop;
-		control._areaPaneLabelMain = areaPaneLabelMain;
-		control._areaRadioButton = areaRadioButton;
 		control._currentComparison = '';
-	},
-	_createGroupResults: function(control) {
-	},
-	_createDistributionDiv: function(control) {
-								/*
-		var selectedImage = L.DomUtil.create('div', 'image-normal vignette');
-		var innerImage = L.DomUtil.create('img', 'inner-image');
-		innerImage.src = 'thumbnails/abies_fraseri.jpg';
-		selectedImage.appendChild(innerImage);
-		searchDiv.appendChild(selectedImage);
-
-		var selectedSpecies = L.DomUtil.create('div', 'utk-search-species');
-		selectedSpecies.innerHTML = 'Abies fraseri';
-		searchDiv.appendChild(selectedSpecies);
-		
-		var selectedRadioButton = L.DomUtil.create('input', 'selected');
-		selectedRadioButton.name = 'comparison';
-		selectedRadioButton.type = 'radio';
-		selectedRadioButton.checked = 'checked';
-		searchDiv.appendChild(selectedRadioButton);
-
-		var subheadCompare = L.DomUtil.create('div', 'subhead2');
-		subheadCompare.innerHTML = 'COMPARE WITH ...';
-		searchDiv.appendChild(subheadCompare);
-
-		var subheadTitle = L.DomUtil.create('div', 'subhead');
-		subheadTitle.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
-		searchDiv.appendChild(subheadTitle);
-
-		var speciesText = L.DomUtil.create('div', 'description');
-		speciesText.innerHTML = 'Distribution Characteristics: Spread over high elevation regions with a large amount of soil coverage. It\'s a fir tree!';
-		searchDiv.appendChild(speciesText);
-
-		var dropdown1 = L.DomUtil.create('select', 'compare-dropdown-1');
-		dropdown1.innerHTML = '<option value=1><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri</option>' +
-								'<option value=2><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Another abies fraseri</option>' +
-								'<option value=3><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 3</option>' +
-								'<option value=4><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Something else</option>' +
-								'<option value=5><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 4</option>';
-		searchDiv.appendChild(dropdown1);
-
-		var dropdown2 = L.DomUtil.create('select', 'compare-dropdown-2');
-		dropdown2.innerHTML = '<option value=1><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri</option>' +
-								'<option value=2><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Another abies fraseri</option>' +
-								'<option value=3><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 3</option>' +
-								'<option value=4><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Something else</option>' +
-								'<option value=5><img width="43" height="21" src="thumbnails/abies_fraseri.jpg"></img> Abies fraseri 4</option>';
-		distributionDiv.appendChild(dropdown2);
-
-		var numberResults = L.DomUtil.create('div', 'number-results');
-		numberResults.innerHTML = '<i>5 RESULTS</i>';
-		distributionDiv.appendChild(numberResults);
-
-		var radioButton2 = L.DomUtil.create('input', 'radio-button-2');
-		radioButton2.name = 'comparison';
-		radioButton2.type = 'radio';
-		distributionDiv.appendChild(radioButton2);
-
-		var radioButton2Text = L.DomUtil.create('div', 'radio-button-2-text');
-		radioButton2Text.innerHTML = '<center>COMPARE ENVIRONMENT</center>';
-		distributionDiv.appendChild(radioButton2Text);
-
-		var radioButton3 = L.DomUtil.create('input', 'radio-button-3');
-		radioButton3.name = 'comparison';
-		radioButton3.type = 'radio';
-		distributionDiv.appendChild(radioButton3);
-
-		var radioButton3Text = L.DomUtil.create('div', 'radio-button-3-text');
-		radioButton3Text.innerHTML = '<center>COMPARE SPECIES</center>';
-		distributionDiv.appendChild(radioButton3Text);
-
-		var radioButton4 = L.DomUtil.create('input', 'radio-button-4');
-		radioButton4.name = 'comparison';
-		radioButton4.type = 'radio';
-		distributionDiv.appendChild(radioButton4);
-
-		var radioButton4Text = L.DomUtil.create('div', 'radio-button-4-text');
-		radioButton4Text.innerHTML = '<center>COMPARE AREA</center>';
-		distributionDiv.appendChild(radioButton4Text);
-
-		control._distributionDiv = distributionDiv;
-		control._selectedImage = selectedImage;
-		control._innerImage = innerImage;
-		control._selectedSpecies = selectedSpecies;
-		control._selectedRadioButton = selectedRadioButton;
-		control._subheadCompare = subheadCompare;
-		control._subheadTitle = subheadTitle;
-		control._speciesText = speciesText;
-		control._dropdown1 = dropdown1;
-		control._dropdown2 = dropdown2;
-		control._numberResults = numberResults;
-		control._radioButton2 = radioButton2;
-		control._radioButton2Text = radioButton2Text;
-		control._radioButton3 = radioButton3;
-		control._radioButton3Text = radioButton3Text;
-		control._radioButton4 = radioButton4;
-		control._radioButton4Text = radioButton4Text;
-		*/
-	},
-	_createEnvironmentDiv: function(control) {
-	},
-	_createLexicalDiv: function(control) {
-	},
-	_createAreaCompareDiv: function(control) {
 	},
 	_createNameSwitcher: function(control) {
 		var nameSwitcherText = L.DomUtil.create('div', 'utk-name-switcher-text'),
@@ -582,11 +449,59 @@ var control,
 					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
 				}
 
+				if(control._breadcrumbSpecies !== undefined) {
+					control._breadcrumbSpecies.innerHTML = '> ' + control._breadcrumbSpecies._common.replace(/_/g, ' ').toUpperCase();
+				}
+
+				if(control._distributionResultsListOne !== undefined) {
+					if(control._whichCompare === 'distribution' && control._distributionDropdownOne._latin != '') {
+						control._distributionDropdownOne.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._distributionDropdownOne._common.replace(/_/g, ' ');
+						control._distributionDropdownOne.appendChild(dOneTriangle);
+					}
+					for(var i = 0; i < control._distributionResultsListOne.children.length; i++) {
+						var el = control._distributionResultsListOne.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
+					}
+				}
+
+				if(control._distributionResultsListTwo !== undefined) {
+					if(control._whichCompare === 'distribution' && control._distributionDropdownTwo._latin != '') {
+						control._distributionDropdownTwo.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._distributionDropdownTwo._common.replace(/_/g, ' ');
+						control._distributionDropdownTwo.appendChild(dTwoTriangle);
+					}
+					for(var i = 0; i < control._distributionResultsListTwo.children.length; i++) {
+						var el = control._distributionResultsListTwo.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
+					}
+				}
+
+				if(control._environmentResultsListOne !== undefined) {
+					if(control._whichCompare === 'environment' && control._environmentDropdownOne._latin != '') {
+						control._environmentDropdownOne.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._environmentDropdownOne._common.replace(/_/g, ' ');
+						control._environmentDropdownOne.appendChild(eOneTriangle);
+					}
+					for(var i = 0; i < control._environmentResultsListOne.children.length; i++) {
+						var el = control._environmentResultsListOne.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
+					}
+				}
+
+				if(control._environmentResultsListTwo !== undefined) {
+					if(control._whichCompare === 'environment' && control._environmentDropdownTwo._latin != '') {
+						control._environmentDropdownTwo.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._environmentDropdownTwo._common.replace(/_/g, ' ');
+						control._environmentDropdownTwo.appendChild(eTwoTriangle);
+					}
+					for(var i = 0; i < control._environmentResultsListTwo.children.length; i++) {
+						var el = control._environmentResultsListTwo.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._common.replace(/_/g, ' ');
+					}
+				}
+
 				control._whichName = 'common';
 				jQuery('.utk-name-switcher-button').animate({'left': '1240px'});
 
 				if(control._selectedSpeciesRef !== undefined) {
-					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef.common.replace(/_/g, ' ');
+					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef._common.replace(/_/g, ' ');
 				}
 			} else {
 				for(var i = 0; i < control._resultsList.children.length; i++) {
@@ -594,11 +509,59 @@ var control,
 					el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
 				}
 
+				if(control._breadcrumbSpecies !== undefined) {
+					control._breadcrumbSpecies.innerHTML = '> ' + control._breadcrumbSpecies._latin.replace(/_/g, ' ').toUpperCase();
+				}
+
+				if(control._distributionResultsListOne !== undefined) {
+					if(control._whichCompare === 'distribution' && control._distributionDropdownOne._common != '') {
+						control._distributionDropdownOne.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._distributionDropdownOne._latin.replace(/_/g, ' ');
+						control._distributionDropdownOne.appendChild(dOneTriangle);
+					}
+					for(var i = 0; i < control._distributionResultsListOne.children.length; i++) {
+						var el = control._distributionResultsListOne.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+					}
+				}
+
+				if(control._distributionResultsListTwo !== undefined) {
+					if(control._whichCompare === 'distribution' && control._distributionDropdownTwo._common != '') {
+						control._distributionDropdownTwo.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._distributionDropdownTwo._latin.replace(/_/g, ' ');
+						control._distributionDropdownTwo.appendChild(dTwoTriangle);
+					}
+					for(var i = 0; i < control._distributionResultsListTwo.children.length; i++) {
+						var el = control._distributionResultsListTwo.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+					}
+				}
+
+				if(control._environmentResultsListOne !== undefined) {
+					if(control._whichCompare === 'environment' && control._environmentDropdownOne._common != '') {
+						control._environmentDropdownOne.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._environmentDropdownOne._latin.replace(/_/g, ' ');
+						control._environmentDropdownOne.appendChild(eOneTriangle);
+					}
+					for(var i = 0; i < control._environmentResultsListOne.children.length; i++) {
+						var el = control._environmentResultsListOne.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+					}
+				}
+
+				if(control._environmentResultsListTwo !== undefined) {
+					if(control._whichCompare === 'environment' && control._environmentDropdownTwo._common != '') {
+						control._environmentDropdownTwo.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._environmentDropdownTwo._latin.replace(/_/g, ' ');
+						control._environmentDropdownTwo.appendChild(eTwoTriangle);
+					}
+					for(var i = 0; i < control._environmentResultsListTwo.children.length; i++) {
+						var el = control._environmentResultsListTwo.children[i];
+						el.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + el._latin.replace(/_/g, ' ');
+					}
+				}
+
 				control._whichName = 'latin';
 				jQuery('.utk-name-switcher-button').animate({'left': '1302px'});
 
 				if(control._selectedSpeciesRef !== undefined) {
-					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef.latin.replace(/_/g, ' ');
+					control._comparisonPaneSpecies.innerHTML = control._selectedSpeciesRef._latin.replace(/_/g, ' ');
 				}
 			}
 		}
@@ -613,14 +576,18 @@ var control,
 		var settingsButton = L.DomUtil.create('button', 'utk-tab-settings');
 		var searchButton = L.DomUtil.create('button', 'utk-tab-search');
 		settingsButton.id = 'settingsButton';
+		searchButton.id = 'searchButton';
+		settingsButton.disabled = true;
+		searchButton.disabled = true;
+		settingsButton.title = 'Loading...0%';
+		searchButton.title = 'Loading...0%';
 		settingsButton.onclick = function() {
 			control._expandSearch('settingsButton');
 		}
-		settingsButton.innerHTML = '<img src="images/settingsButton.png"></img>';
-		searchButton.id = 'searchButton';
 		searchButton.onclick = function() {
 			control._expandSearch('searchButton');
 		}
+		settingsButton.innerHTML = '<img src="images/settingsButton.png"></img>';
 		searchButton.innerHTML = '<img src="images/searchButton.png"></img>';
 
 		control._container.appendChild(settingsButton);
@@ -699,16 +666,24 @@ var control,
 			}
 		}
 	},
-	_fuseSearch: function(value) {
-		var results = control._fuser.search(value);
-
-		if(results.length > 0) {
-			control._resultsList.style.display = 'block';
+	_fuseSearch: function(value, ul, index) {
+		if(control._whichName === 'latin') {
+			var results = control._latinFuser.search(value);
 		} else {
-			control._resultsList.style.display = 'none';
+			var results = control._commonFuser.search(value);
 		}
 
-		control._resultsList.innerHTML = '';
+		if(results.length > 0) {
+			ul.style.display = 'block';
+			document.getElementById('searchButton').style.zIndex = -3;
+			document.getElementById('settingsButton').style.zIndex = -3;
+		} else {
+			ul.style.display = 'none';
+			document.getElementById('searchButton').style.zIndex = 1;
+			document.getElementById('settingsButton').style.zIndex = 1;
+		}
+
+		ul.innerHTML = '';
 		for(var i = 0; i < results.length && i < 15; i++) {
 			var li = L.DomUtil.create('li', 'search-result');
 			if(control._whichName === 'latin') {
@@ -728,59 +703,88 @@ var control,
 			li.style.lineHeight = '31px';
 			li.style.cursor = 'pointer';
 			li.onclick = function() {
-				control._selectedSpecies.push({
-					'id': this._id,
-					'latin': this._latin,
-					'common': this._common
+				var first = (control._selectedSpecies[0] === undefined);
+				if(control._selectedSpecies[index] !== undefined) {
+					NPMap.config.L.removeLayer(control._selectedSpecies[index]);
+
+					if(control._showObservations) {
+						NPMap.config.L.removeLayer(control._speciesSightings[index]);
+					}
+				}
+
+				if(index === 0) {
+					control._selectedSpecies[index] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_blue'
+					}).addTo(NPMap.config.L);
+				} else if(index === 1) {
+					control._selectedSpecies[index] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_pink'
+					}).addTo(NPMap.config.L);
+				}
+				control._selectedSpecies[index]._idNumber = this._id;
+				control._selectedSpecies[index]._latin = this._latin;
+				control._selectedSpecies[index]._common = this._common;
+
+				control._speciesSightings[index] = L.npmap.layer.geojson({
+					name: this._latin + '_observations',
+					url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+					type: 'geojson',
+					popup: {
+						title: this._latin.replace(/_/g, ' ') + ' sighting',
+						description: 'Coordinates: {{coordinates}}'
+					},
+					styles: {
+						point: {
+							'marker-color': '#2b80b6',
+							'marker-size': 'small'
+						}
+					},
+					cluster: {
+						clusterIcon: '#2b80b6'
+					},
+					showCoverageOnHover: true,
+					disableClusteringAtZoom: 15,
+					polygonOptions: {
+						color: '#2b80b6',
+						fillColor: '#2b80b6'
+					}
 				});
 
-				L.npmap.layer.mapbox({
-					name: this._latin,
-					opacity: 1,
-					id: 'nps.GRSM_' + this._id
-				}).addTo(NPMap.config.L);
-
-				control._speciesSightings.push(
-					L.npmap.layer.geojson({
-						name: this._latin + '_observations',
-						url: 'https://raw.githubusercontent.com/nationalparkservice/npmap-species/gh-pages/atbirecords/Geojsons/all/' + this._latin + '.geojson',
-						type: 'geojson',
-						popup: {
-							title: this._latin.replace(/_/g, ' ') + ' sighting',
-							description: 'Coordinates: {{coordinates}}'
-						},
-						styles: {
-							point: {
-								'marker-color': '#40b5c6',
-								'marker-size': 'small'
-							}
-						},
-						cluster: {
-							clusterIcon: '#40b5c6'
-						},
-						showCoverageOnHover: true,
-						disableClusteringAtZoom: 15,
-						polygonOptions: {
-							color: '#40b5c6',
-							fillColor: '#40b5c6'
-						}
-					})
-				);
-
 				if(control._showObservations) {
-					control._speciesSightings[control._speciesSightings.length-1].addTo(NPMap.config.L);
+					control._speciesSightings[index].addTo(NPMap.config.L);
 				}
 
-				control._resultsList.style.display = 'none';
-				control._resultsList.innerHTML = '';
+				ul.style.display = 'none';
+				ul.innerHTML = '';
 				control._initialSearchLexBox.value = '';
+				if(control._lexSearchBox !== undefined) control._lexSearchBox.value = '';
 
-				control._breadcrumb.innerHTML += ' > ' + this._latin.replace(/_/g, ' ').toUpperCase();
 				if(control._whichName === 'latin') {
+					var breadcrumbSpecies = L.DomUtil.create('div', '');
+					breadcrumbSpecies.style.display = 'inline-block';
+					breadcrumbSpecies.style.float = 'left';
+					breadcrumbSpecies.innerHTML = '> ' + this._latin.replace(/_/g, ' ').toUpperCase();
+					breadcrumbSpecies._latin = this._latin;
+					breadcrumbSpecies._common = this._common;
+					control._breadcrumb.appendChild(breadcrumbSpecies);
+					control._breadcrumbSpecies = breadcrumbSpecies;
+
 					control._comparisonPaneSpecies.innerHTML = this._latin.replace(/_/g, ' ');
 				} else {
-					control._comparisonPaneSpecies.innerHTML = this._common.replace(/_/g, ' ');
+					var breadcrumbSpecies = L.DomUtil.create('div', '');
+					breadcrumbSpecies.style.display = 'inline-block';
+					breadcrumbSpecies.style.float = 'left';
+					breadcrumbSpecies.innerHTML = ' > ' + this._common.replace(/_/g, ' ').toUpperCase();
+					breadcrumbSpecies._latin = this._latin;
+					breadcrumbSpecies._common = this._common;
+					control._breadcrumb.appendChild(breadcrumbSpecies);
+					control._breadcrumbSpecies = breadcrumbSpecies;
 				}
+
 				control._selectedSpeciesRef = control._selectedSpecies[0];
 				control._searchDiv.removeChild(control._initialSearchDiv);
 				control._searchDiv.appendChild(control._comparisonPane);
@@ -789,12 +793,480 @@ var control,
 				control._searchDiv.appendChild(control._nameSwitcherText);
 				control._searchDiv.appendChild(control._nameSwitcherButton);
 				control._lastSearchPage = control._comparisonPane;
+				if(control._firstLexicalSearch === undefined) {
+					control._firstLexicalSearch = false;
+				} else {
+					if(control._distributionResultsListOne !== undefined ) {
+						control._distributionResultsListOne.innerHTML = '';
+						var found = [ control._selectedSpecies[0]._latin ];
+						for(var i = 0; i < 15; i++) {
+							var max = -1;
+							var maxItem = '';
+							var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+
+							for(var key in spList) {
+								if(spList[key] > max && found.indexOf(key) === -1) {
+									maxItem = key;
+									max = spList[key];
+								}
+							}
+
+							found.push(maxItem);
+							var li = L.DomUtil.create('li', 'search-result');
+							if(control._whichName === 'latin') {
+								if(maxItem.length > 30) {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ').slice(0, 29) + '...';
+									li.title = maxItem.replace(/_/g, ' ');
+								} else {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+								}
+							} else {
+								if(maxItem.length > 30) {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+									li.title = control._nameMappings[maxItem].common.replace(/_/g, ' ');
+								} else {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
+								}
+							}
+							li._idx = i;
+							li._latin = maxItem;
+							li._common = control._nameMappings[maxItem].common;
+							li._id = control._nameMappings[maxItem].id;
+							li.style.margin = '0px';
+							li.style.listStylePosition = 'inside';
+							li.style.backgroundColor = '#292928';
+							li.style.border = '1px solid black';
+							li.style.color = '#f5faf2';
+							li.style.letterSpacing = '.025em';
+							li.style.fontSize = '14pt';
+							li.style.lineHeight = '31px';
+							li.style.width = '370px';
+							li.style.cursor = 'pointer';
+							li.onclick = function() {
+								if(control._hiddenSpeciesTwo !== undefined) {
+									control._distributionResultsListTwo.insertBefore(control._hiddenSpeciesTwo, control._distributionResultsListTwo.children[control._hiddenSpeciesTwo._idx]);
+								}
+								control._hiddenSpeciesTwo = this;
+								control._distributionResultsListTwo.removeChild(control._distributionResultsListTwo.children[this._idx]);
+
+								if(control._selectedSpecies[1] !== undefined) {
+									NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+
+									if(control._showObservations) {
+										NPMap.config.L.removeLayer(control._speciesSightings[1]);
+									}
+								}
+
+								control._selectedSpecies[1] = L.npmap.layer.mapbox({
+									name: this._latin,
+									opacity: .5,
+									id: 'nps.GRSM_' + this._id + '_pink'
+								}).addTo(NPMap.config.L);
+								control._selectedSpecies[1]._idNumber = this._id;
+								control._selectedSpecies[1]._latin = this._latin;
+								control._selectedSpecies[1]._common = this._common;
+
+								control._speciesSightings[1] = L.npmap.layer.geojson({
+									name: this._latin + '_observations',
+									url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+									type: 'geojson',
+									popup: {
+										title: this._latin.replace(/_/g, ' ') + ' sighting',
+										description: 'Coordinates: {{coordinates}}'
+									},
+									styles: {
+										point: {
+											'marker-color': '#ca1892',
+											'marker-size': 'small'
+										}
+									},
+									cluster: {
+										clusterIcon: '#ca1892'
+									},
+									showCoverageOnHover: true,
+									disableClusteringAtZoom: 15,
+									polygonOptions: {
+										color: '#ca1892',
+										fillColor: '#ca1892'
+									}
+								});
+
+								if(control._showObservations) {
+									control._speciesSightings[1].addTo(NPMap.config.L);
+								}
+
+								control._distributionDropdownOne._latin = this._latin;
+								control._distributionDropdownOne._common = this._common;
+								control._distributionDropdownOne.innerHTML = this.innerHTML;
+								control._distributionDropdownOne.style.backgroundColor = '#ca1892';
+								control._distributionDropdownOne.style.letterSpacing = '.025em';
+								control._distributionDropdownOne.style.fontSize = '14pt';
+								control._distributionDropdownOne.style.color = '#f5faf2';
+								control._distributionDropdownOne.appendChild(dOneTriangle);
+								control._distributionResultsListOne.style.display = 'none';
+							}
+
+							control._distributionResultsListOne.appendChild(li);
+						}
+					}
+					if(control._distributionResultsListTwo !== undefined ) {
+						control._distributionResultsListTwo.innerHTML = '';
+						var found = [ control._selectedSpecies[0]._latin ];
+						for(var i = 0; i < 15; i++) {
+							var max = -1;
+							var maxItem = '';
+							var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+
+							for(var key in spList) {
+								if(spList[key] > max && found.indexOf(key) === -1) {
+									maxItem = key;
+									max = spList[key];
+								}
+							}
+
+							found.push(maxItem);
+							var li = L.DomUtil.create('li', 'search-result');
+							if(control._whichName === 'latin') {
+								if(maxItem.length > 30) {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ').slice(0, 29) + '...';
+									li.title = maxItem.replace(/_/g, ' ');
+								} else {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+								}
+							} else {
+								if(maxItem.length > 30) {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+									li.title = control._nameMappings[maxItem].common.replace(/_/g, ' ');
+								} else {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
+								}
+							}
+							li._idx = i;
+							li._latin = maxItem;
+							li._common = control._nameMappings[maxItem].common;
+							li._id = control._nameMappings[maxItem].id;
+							li.style.margin = '0px';
+							li.style.listStylePosition = 'inside';
+							li.style.backgroundColor = '#292928';
+							li.style.border = '1px solid black';
+							li.style.color = '#f5faf2';
+							li.style.letterSpacing = '.025em';
+							li.style.fontSize = '14pt';
+							li.style.lineHeight = '31px';
+							li.style.width = '370px';
+							li.style.cursor = 'pointer';
+							li.onclick = function() {
+								if(control._hiddenSpeciesOne !== undefined) {
+									control._distributionResultsListOne.insertBefore(control._hiddenSpeciesOne, control._distributionResultsListOne.children[control._hiddenSpeciesOne._idx]);
+								}
+								control._hiddenSpeciesOne = this;
+								control._distributionResultsListOne.removeChild(control._distributionResultsListOne.children[this._idx]);
+
+								if(control._selectedSpecies[2] !== undefined) {
+									NPMap.config.L.removeLayer(control._selectedSpecies[2]);
+
+									if(control._showObservations) {
+										NPMap.config.L.removeLayer(control._speciesSightings[2]);
+									}
+								}
+
+								control._selectedSpecies[2] = L.npmap.layer.mapbox({
+									name: this._latin,
+									opacity: .5,
+									id: 'nps.GRSM_' + this._id + '_orange'
+								}).addTo(NPMap.config.L);
+								control._selectedSpecies[2]._idNumber = this._id;
+								control._selectedSpecies[2]._latin = this._latin;
+								control._selectedSpecies[2]._common = this._common;
+
+								control._speciesSightings[2] = L.npmap.layer.geojson({
+									name: this._latin + '_observations',
+									url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+									type: 'geojson',
+									popup: {
+										title: this._latin.replace(/_/g, ' ') + ' sighting',
+										description: 'Coordinates: {{coordinates}}'
+									},
+									styles: {
+										point: {
+											'marker-color': '#f28e43',
+											'marker-size': 'small'
+										}
+									},
+									cluster: {
+										clusterIcon: '#f28e43'
+									},
+									showCoverageOnHover: true,
+									disableClusteringAtZoom: 15,
+									polygonOptions: {
+										color: '#f28e43',
+										fillColor: '#f28e43'
+									}
+								});
+
+								if(control._showObservations) {
+									control._speciesSightings[2].addTo(NPMap.config.L);
+								}
+
+								control._distributionDropdownTwo._latin = this._latin;
+								control._distributionDropdownTwo._common = this._common;
+								control._distributionDropdownTwo.innerHTML = this.innerHTML;
+								control._distributionDropdownTwo.style.backgroundColor = '#f28e43';
+								control._distributionDropdownTwo.style.letterSpacing = '.025em';
+								control._distributionDropdownTwo.style.fontSize = '14pt';
+								control._distributionDropdownTwo.style.color = '#f5faf2';
+								control._distributionDropdownTwo.appendChild(dTwoTriangle);
+								control._distributionResultsListTwo.style.display = 'none';
+							}
+							control._distributionResultsListTwo.appendChild(li);
+						}
+					}
+					if(control._environmentResultsListOne !== undefined ) {
+						control._environmentResultsListOne.innerHTML = '';
+						var found = [ control._selectedSpecies[0]._latin ];
+						for(var i = 0; i < 15; i++) {
+							var min = 10000000000;
+							var minItem = '';
+							var spList = control._similarEnvironments[control._selectedSpecies[0]._latin];
+
+							for(var key in spList) {
+								if(spList[key] < min && found.indexOf(key) === -1) {
+									minItem = key;
+									min = spList[key];
+								}
+							}
+
+							found.push(minItem);
+							var li = L.DomUtil.create('li', 'search-result');
+							if(control._whichName === 'latin') {
+								if(minItem.length > 30) {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ').slice(0, 29) + '...';
+									li.title = minItem.replace(/_/g, ' ');
+								} else {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
+								}
+							} else {
+								if(minItem.length > 30) {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+									li.title = control._nameMappings[minItem].common.replace(/_/g, ' ');
+								} else {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
+								}
+							}
+							li._idx = i;
+							li._latin = minItem;
+							li._common = control._nameMappings[minItem].common;
+							li._id = control._nameMappings[minItem].id;
+							li.style.margin = '0px';
+							li.style.listStylePosition = 'inside';
+							li.style.backgroundColor = '#292928';
+							li.style.border = '1px solid black';
+							li.style.color = '#f5faf2';
+							li.style.letterSpacing = '.025em';
+							li.style.fontSize = '14pt';
+							li.style.lineHeight = '31px';
+							li.style.width = '370px';
+							li.style.cursor = 'pointer';
+							li.onclick = function() {
+								if(control._hiddenSpeciesTwo !== undefined) {
+									control._environmentResultsListTwo.insertBefore(control._hiddenSpeciesTwo, control._environmentResultsListTwo.children[control._hiddenSpeciesTwo._idx]);
+								}
+								control._hiddenSpeciesTwo = this;
+								control._environmentResultsListTwo.removeChild(control._environmentResultsListTwo.children[this._idx]);
+
+								if(control._selectedSpecies[1] !== undefined) {
+									NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+
+									if(control._showObservations) {
+										NPMap.config.L.removeLayer(control._speciesSightings[1]);
+									}
+								}
+
+								control._selectedSpecies[1] = L.npmap.layer.mapbox({
+									name: this._latin,
+									opacity: .5,
+									id: 'nps.GRSM_' + this._id + '_pink'
+								}).addTo(NPMap.config.L);
+								control._selectedSpecies[1]._idNumber = this._id;
+								control._selectedSpecies[1]._latin = this._latin;
+								control._selectedSpecies[1]._common = this._common;
+
+								control._speciesSightings[1] = L.npmap.layer.geojson({
+									name: this._latin + '_observations',
+									url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+									type: 'geojson',
+									popup: {
+										title: this._latin.replace(/_/g, ' ') + ' sighting',
+										description: 'Coordinates: {{coordinates}}'
+									},
+									styles: {
+										point: {
+											'marker-color': '#ca1892',
+											'marker-size': 'small'
+										}
+									},
+									cluster: {
+										clusterIcon: '#ca1892'
+									},
+									showCoverageOnHover: true,
+									disableClusteringAtZoom: 15,
+									polygonOptions: {
+										color: '#ca1892',
+										fillColor: '#ca1892'
+									}
+								});
+
+								if(control._showObservations) {
+									control._speciesSightings[1].addTo(NPMap.config.L);
+								}
+
+								control._environmentDropdownOne._latin = this._latin;
+								control._environmentDropdownOne._common = this._common;
+								control._environmentDropdownOne.innerHTML = this.innerHTML;
+								control._environmentDropdownOne.style.backgroundColor = '#ca1892';
+								control._environmentDropdownOne.style.letterSpacing = '.025em';
+								control._environmentDropdownOne.style.fontSize = '14pt';
+								control._environmentDropdownOne.style.color = '#f5faf2';
+								control._environmentDropdownOne.appendChild(eOneTriangle);
+								control._environmentResultsListOne.style.display = 'none';
+							}
+							control._environmentResultsListOne.appendChild(li);
+						}
+					}
+					if(control._environmentResultsListTwo !== undefined ) {
+						control._environmentResultsListTwo.innerHTML = '';
+						var found = [ control._selectedSpecies[0]._latin ];
+						for(var i = 0; i < 15; i++) {
+							var min = 10000000000;
+							var minItem = '';
+							var spList = control._similarEnvironments[control._selectedSpecies[0]._latin];
+
+							for(var key in spList) {
+								if(spList[key] < min && found.indexOf(key) === -1) {
+									minItem = key;
+									min = spList[key];
+								}
+							}
+
+							found.push(minItem);
+							var li = L.DomUtil.create('li', 'search-result');
+							if(control._whichName === 'latin') {
+								if(minItem.length > 30) {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ').slice(0, 29) + '...';
+									li.title = minItem.replace(/_/g, ' ');
+								} else {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
+								}
+							} else {
+								if(minItem.length > 30) {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+									li.title = control._nameMappings[minItem].common.replace(/_/g, ' ');
+								} else {
+									li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
+								}
+							}
+							li._idx = i;
+							li._latin = minItem;
+							li._common = control._nameMappings[minItem].common;
+							li._id = control._nameMappings[minItem].id;
+							li.style.margin = '0px';
+							li.style.listStylePosition = 'inside';
+							li.style.backgroundColor = '#292928';
+							li.style.border = '1px solid black';
+							li.style.color = '#f5faf2';
+							li.style.letterSpacing = '.025em';
+							li.style.fontSize = '14pt';
+							li.style.lineHeight = '31px';
+							li.style.width = '370px';
+							li.style.cursor = 'pointer';
+							li.onclick = function() {
+								if(control._hiddenSpeciesTwo !== undefined) {
+									control._environmentResultsListTwo.insertBefore(control._hiddenSpeciesTwo, control._environmentResultsListTwo.children[control._hiddenSpeciesTwo._idx]);
+								}
+								control._hiddenSpeciesTwo = this;
+								control._environmentResultsListTwo.removeChild(control._environmentResultsListTwo.children[this._idx]);
+
+								if(control._selectedSpecies[1] !== undefined) {
+									NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+
+									if(control._showObservations) {
+										NPMap.config.L.removeLayer(control._speciesSightings[1]);
+									}
+								}
+
+								control._selectedSpecies[1] = L.npmap.layer.mapbox({
+									name: this._latin,
+									opacity: .5,
+									id: 'nps.GRSM_' + this._id + '_pink'
+								}).addTo(NPMap.config.L);
+								control._selectedSpecies[1]._idNumber = this._id;
+								control._selectedSpecies[1]._latin = this._latin;
+								control._selectedSpecies[1]._common = this._common;
+
+								control._speciesSightings[1] = L.npmap.layer.geojson({
+									name: this._latin + '_observations',
+									url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+									type: 'geojson',
+									popup: {
+										title: this._latin.replace(/_/g, ' ') + ' sighting',
+										description: 'Coordinates: {{coordinates}}'
+									},
+									styles: {
+										point: {
+											'marker-color': '#ca1892',
+											'marker-size': 'small'
+										}
+									},
+									cluster: {
+										clusterIcon: '#ca1892'
+									},
+									showCoverageOnHover: true,
+									disableClusteringAtZoom: 15,
+									polygonOptions: {
+										color: '#ca1892',
+										fillColor: '#ca1892'
+									}
+								});
+
+								if(control._showObservations) {
+									control._speciesSightings[1].addTo(NPMap.config.L);
+								}
+
+								control._environmentDropdownOne._latin = this._latin;
+								control._environmentDropdownOne._common = this._common;
+								control._environmentDropdownOne.innerHTML = this.innerHTML;
+								control._environmentDropdownOne.style.backgroundColor = '#ca1892';
+								control._environmentDropdownOne.style.letterSpacing = '.025em';
+								control._environmentDropdownOne.style.fontSize = '14pt';
+								control._environmentDropdownOne.style.color = '#f5faf2';
+								control._environmentDropdownOne.appendChild(eOneTriangle);
+								control._environmentResultsListOne.style.display = 'none';
+							}
+							control._environmentResultsListOne.appendChild(li);
+						}
+					}
+				}
 			}
 
-			control._resultsList.appendChild(li);
+			ul.appendChild(li);
 		}
 	},
-	_changeCompare(whichCompare) {
+	_changeCompare: function(whichCompare) {
+		control._whichCompare = whichCompare;
+
+		if(control._selectedSpecies[1] !== undefined) {
+			NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+			if(control._showObservations) {
+				NPMap.config.L.removeLayer(control._speciesSightings[1]);
+			}
+		}
+		if(control._selectedSpecies[2] !== undefined) {
+			NPMap.config.L.removeLayer(control._selectedSpecies[2]);
+			if(control._showObservations) {
+				NPMap.config.L.removeLayer(control._speciesSightings[2]);
+			}
+		}
+
 		if(whichCompare === 'distribution') {
 			jQuery('.compare-distribution').animate({
 				width: '740px'
@@ -803,6 +1275,308 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#f5faf2';
 			control._distributionPaneLabelMain.style.fontSize = '16pt';
+			control._distributionPaneLabelMain.style.lineHeight = '25px';
+
+			/* distribution pane content */
+			control._hiddenSpeciesTwo = undefined;
+			var distributionDropdownOne = L.DomUtil.create('div', 'dropdown');
+			distributionDropdownOne._latin = '';
+			distributionDropdownOne._common = '';
+			distributionDropdownOne.innerHTML = 'SELECT SPECIES 2';
+			distributionDropdownOne.style.position = 'absolute';
+			distributionDropdownOne.style.lineHeight = '33px';
+			distributionDropdownOne.style.fontSize = '10pt';
+			distributionDropdownOne.style.letterSpacing = '.001em';
+			distributionDropdownOne.style.top = '0px';
+			distributionDropdownOne.style.left = '300px';
+			dOneTriangle = L.DomUtil.create('div', 'triangle');
+			dOneTriangle.style.position = 'absolute';
+			dOneTriangle.style.top = '15px';
+			dOneTriangle.style.left = '360px';
+			dOneTriangle.style.float = 'left';
+			distributionDropdownOne.appendChild(dOneTriangle);
+			control._dOneTriangle = dOneTriangle;
+			var distributionResultsListOne = L.DomUtil.create('ul', 'dist-results');
+			distributionResultsListOne.style.position = 'absolute';
+			distributionResultsListOne.style.top = '33px';
+			distributionResultsListOne.style.left = '300px';
+			distributionResultsListOne.style.display = 'none';
+			distributionResultsListOne.style.margin = '0px';
+			distributionResultsListOne.style.zIndex = 100;
+			var found = [ control._selectedSpecies[0]._latin ];
+			for(var i = 0; i < 15; i++) {
+				var max = -1;
+				var maxItem = '';
+				var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+
+				for(var key in spList) {
+					if(spList[key] > max && found.indexOf(key) === -1) {
+						maxItem = key;
+						max = spList[key];
+					}
+				}
+
+				found.push(maxItem);
+				var li = L.DomUtil.create('li', 'search-result');
+				if(control._whichName === 'latin') {
+					if(maxItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = maxItem.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+					}
+				} else {
+					if(maxItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					}
+				}
+				li._idx = i;
+				li._latin = maxItem;
+				li._common = control._nameMappings[maxItem].common;
+				li._id = control._nameMappings[maxItem].id;
+				li.style.margin = '0px';
+				li.style.listStylePosition = 'inside';
+				li.style.backgroundColor = '#292928';
+				li.style.border = '1px solid black';
+				li.style.color = '#f5faf2';
+				li.style.letterSpacing = '.025em';
+				li.style.fontSize = '14pt';
+				li.style.lineHeight = '31px';
+				li.style.width = '370px';
+				li.style.cursor = 'pointer';
+				li.onclick = function() {
+					if(control._hiddenSpeciesTwo !== undefined) {
+						control._distributionResultsListTwo.insertBefore(control._hiddenSpeciesTwo, control._distributionResultsListTwo.children[control._hiddenSpeciesTwo._idx]);
+					}
+					control._hiddenSpeciesTwo = this;
+					control._distributionResultsListTwo.removeChild(control._distributionResultsListTwo.children[this._idx]);
+
+					if(control._selectedSpecies[1] !== undefined) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+
+						if(control._showObservations) {
+							NPMap.config.L.removeLayer(control._speciesSightings[1]);
+						}
+					}
+
+					control._selectedSpecies[1] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_pink'
+					}).addTo(NPMap.config.L);
+					control._selectedSpecies[1]._idNumber = this._id;
+					control._selectedSpecies[1]._latin = this._latin;
+					control._selectedSpecies[1]._common = this._common;
+
+					control._speciesSightings[1] = L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#ca1892',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#ca1892'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#ca1892',
+							fillColor: '#ca1892'
+						}
+					});
+
+					if(control._showObservations) {
+						control._speciesSightings[1].addTo(NPMap.config.L);
+					}
+
+					distributionDropdownOne._latin = this._latin;
+					distributionDropdownOne._common = this._common;
+					distributionDropdownOne.innerHTML = this.innerHTML;
+					distributionDropdownOne.style.backgroundColor = '#ca1892';
+					distributionDropdownOne.style.letterSpacing = '.025em';
+					distributionDropdownOne.style.fontSize = '14pt';
+					distributionDropdownOne.style.color = '#f5faf2';
+					distributionDropdownOne.appendChild(dOneTriangle);
+					control._distributionResultsListOne.style.display = 'none';
+				}
+
+				distributionResultsListOne.appendChild(li);
+			}
+			control._distroOneSelected = false;
+			distributionDropdownOne.onclick = function() {
+				if(control._distroOneSelected) {
+					control._distroOneSelected = false;
+					distributionResultsListOne.style.display = 'none';
+				} else {
+					control._distroOneSelected = true;
+					distributionResultsListOne.style.display = 'block';
+				}
+			}
+			control._hiddenSpeciesOne = undefined;
+			var distributionDropdownTwo = L.DomUtil.create('div', 'dropdown');
+			distributionDropdownTwo._latin = '';
+			distributionDropdownTwo._common = '';
+			distributionDropdownTwo.innerHTML = 'SELECT SPECIES 3';
+			distributionDropdownTwo.style.position = 'absolute';
+			distributionDropdownTwo.style.lineHeight = '33px';
+			distributionDropdownTwo.style.fontSize = '10pt';
+			distributionDropdownTwo.style.letterSpacing = '.001em';
+			distributionDropdownTwo.style.top = '51px';
+			distributionDropdownTwo.style.left = '300px';
+			dTwoTriangle = L.DomUtil.create('div', 'triangle');
+			dTwoTriangle.style.position = 'absolute';
+			dTwoTriangle.style.top = '15px';
+			dTwoTriangle.style.left = '360px';
+			dTwoTriangle.style.float = 'left';
+			distributionDropdownTwo.appendChild(dTwoTriangle);
+			control._dTwoTriangle = dTwoTriangle;
+			var distributionResultsListTwo = L.DomUtil.create('ul', 'dist-results');
+			distributionResultsListTwo.style.position = 'absolute';
+			distributionResultsListTwo.style.top = '84px';
+			distributionResultsListTwo.style.left = '300px';
+			distributionResultsListTwo.style.display = 'none';
+			distributionResultsListTwo.style.margin = '0px';
+			distributionResultsListTwo.style.zIndex = 99;
+			var found = [ control._selectedSpecies[0]._latin ];
+			for(var i = 0; i < 15; i++) {
+				var max = -1;
+				var maxItem = '';
+				var spList = control._similarDistributions[control._selectedSpecies[0]._latin];
+
+				for(var key in spList) {
+					if(spList[key] > max && found.indexOf(key) === -1) {
+						maxItem = key;
+						max = spList[key];
+					}
+				}
+
+				found.push(maxItem);
+				var li = L.DomUtil.create('li', 'search-result');
+				if(control._whichName === 'latin') {
+					if(maxItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = maxItem.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + maxItem.replace(/_/g, ' ');
+					}
+				} else {
+					if(maxItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[maxItem].common.replace(/_/g, ' ');
+					}
+				}
+				li._idx = i;
+				li._latin = maxItem;
+				li._common = control._nameMappings[maxItem].common;
+				li._id = control._nameMappings[maxItem].id;
+				li.style.margin = '0px';
+				li.style.listStylePosition = 'inside';
+				li.style.backgroundColor = '#292928';
+				li.style.border = '1px solid black';
+				li.style.color = '#f5faf2';
+				li.style.letterSpacing = '.025em';
+				li.style.fontSize = '14pt';
+				li.style.lineHeight = '31px';
+				li.style.width = '370px';
+				li.style.cursor = 'pointer';
+				li.onclick = function() {
+					if(control._hiddenSpeciesOne !== undefined) {
+						control._distributionResultsListOne.insertBefore(control._hiddenSpeciesOne, control._distributionResultsListOne.children[control._hiddenSpeciesOne._idx]);
+					}
+					control._hiddenSpeciesOne = this;
+					control._distributionResultsListOne.removeChild(control._distributionResultsListOne.children[this._idx]);
+
+					if(control._selectedSpecies[2] !== undefined) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[2]);
+
+						if(control._showObservations) {
+							NPMap.config.L.removeLayer(control._speciesSightings[2]);
+						}
+					}
+
+					control._selectedSpecies[2] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_orange'
+					}).addTo(NPMap.config.L);
+					control._selectedSpecies[2]._idNumber = this._id;
+					control._selectedSpecies[2]._latin = this._latin;
+					control._selectedSpecies[2]._common = this._common;
+
+					control._speciesSightings[2] = L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#f28e43',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#f28e43'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#f28e43',
+							fillColor: '#f28e43'
+						}
+					});
+
+					if(control._showObservations) {
+						control._speciesSightings[2].addTo(NPMap.config.L);
+					}
+
+					distributionDropdownTwo._latin = this._latin;
+					distributionDropdownTwo._common = this._common;
+					distributionDropdownTwo.innerHTML = this.innerHTML;
+					distributionDropdownTwo.style.backgroundColor = '#f28e43';
+					distributionDropdownTwo.style.letterSpacing = '.025em';
+					distributionDropdownTwo.style.fontSize = '14pt';
+					distributionDropdownTwo.style.color = '#f5faf2';
+					distributionDropdownTwo.appendChild(dTwoTriangle);
+					control._distributionResultsListTwo.style.display = 'none';
+				}
+				distributionResultsListTwo.appendChild(li);
+			}
+			control._distroTwoSelected = false;
+			distributionDropdownTwo.onclick = function() {
+				if(control._distroTwoSelected) {
+					control._distroTwoSelected = false;
+					distributionResultsListTwo.style.display = 'none';
+				} else {
+					control._distroTwoSelected = true;
+					distributionResultsListTwo.style.display = 'block';
+				}
+			}
+			control._comparisonDistributionPane.appendChild(distributionDropdownOne);
+			control._comparisonDistributionPane.appendChild(distributionResultsListOne);
+			control._comparisonDistributionPane.appendChild(distributionDropdownTwo);
+			control._comparisonDistributionPane.appendChild(distributionResultsListTwo);
+			control._distributionDropdownOne = distributionDropdownOne;
+			control._distributionResultsListOne = distributionResultsListOne;
+			control._distributionDropdownTwo = distributionDropdownTwo;
+			control._distributionResultsListTwo = distributionResultsListTwo;
+
+			/* close other panes */
 			jQuery('.compare-environment').animate({
 				left: '977px',
 				width: '125px',
@@ -811,22 +1585,32 @@ var control,
 			control._environmentPaneLabelMain.innerHTML = 'COMPARE ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			control._environmentPaneLabelMain.style.lineHeight = '18px';
+			if(control._environmentDropdownOne !== undefined) {
+				control._environmentDropdownOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentDropdownTwo.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListTwo.remove();
+				control._environmentDropdownOne = undefined;
+			}
 			jQuery('.compare-lexical').animate({
 				left: '1121px',
 				width: '105px',
 			});
+			if(control._compareLexBox !== undefined) {
+				control._compareLexBox.remove();
+				control._compareLexBox = undefined;
+				control._lexResultsList.remove();
+				control._lexResultsList = undefined;
+			}
 			control._lexicalPaneLabelTop.innerHTML = '';
-			control._lexicalPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE<br>SPECIES';
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
-			jQuery('.compare-area').animate({
-				left: '1256px',
-				width: '105px'
-			});
-			control._areaPaneLabelTop.innerHTML = '';
-			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
-			control._areaPaneLabelMain.style.color = '#909090';
-			control._areaPaneLabelMain.style.fontSize = '10pt';
+			control._lexicalPaneLabelMain.style.lineHeight = '18px';
 		} else if(whichCompare === 'environment') {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -835,6 +1619,18 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			control._distributionPaneLabelMain.style.lineHeight = '18px';
+			if(control._distributionDropdownOne !== undefined) {
+				control._distributionDropdownOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionDropdownTwo.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListTwo.remove();
+				control._distributionDropdownOne = undefined;
+			}
+
 			jQuery('.compare-environment').animate({
 				left: '370px',
 				width: '740px',
@@ -843,22 +1639,321 @@ var control,
 			control._environmentPaneLabelMain.innerHTML = 'SPECIES WITH SIMILAR ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#f5faf2';
 			control._environmentPaneLabelMain.style.fontSize = '16pt';
+			control._environmentPaneLabelMain.style.lineHeight = '25px';
+
+			/* environment pane content */
+			control._hiddenSpeciesTwo = undefined;
+			var environmentDropdownOne = L.DomUtil.create('div', 'dropdown');
+			environmentDropdownOne._latin = '';
+			environmentDropdownOne._common = '';
+			environmentDropdownOne.innerHTML = 'SELECT SPECIES 2';
+			environmentDropdownOne.style.position = 'absolute';
+			environmentDropdownOne.style.lineHeight = '33px';
+			environmentDropdownOne.style.fontSize = '10pt';
+			environmentDropdownOne.style.letterSpacing = '.001em';
+			environmentDropdownOne.style.top = '0px';
+			environmentDropdownOne.style.left = '300px';
+			eOneTriangle = L.DomUtil.create('div', 'triangle');
+			eOneTriangle.style.position = 'absolute';
+			eOneTriangle.style.top = '15px';
+			eOneTriangle.style.left = '360px';
+			eOneTriangle.style.float = 'left';
+			environmentDropdownOne.appendChild(eOneTriangle);
+			control._eOneTriangle = eOneTriangle;
+			var environmentResultsListOne = L.DomUtil.create('ul', 'dist-results');
+			environmentResultsListOne.style.position = 'absolute';
+			environmentResultsListOne.style.top = '33px';
+			environmentResultsListOne.style.left = '300px';
+			environmentResultsListOne.style.display = 'none';
+			environmentResultsListOne.style.margin = '0px';
+			environmentResultsListOne.style.zIndex = 100;
+			var found = [ control._selectedSpecies[0]._latin ];
+			for(var i = 0; i < 15; i++) {
+				var min = 10000000000;
+				var minItem = '';
+				var spList = control._similarEnvironments[control._selectedSpecies[0]._latin];
+
+				for(var key in spList) {
+					if(spList[key] < min && found.indexOf(key) === -1) {
+						minItem = key;
+						min = spList[key];
+					}
+				}
+
+				found.push(minItem);
+				var li = L.DomUtil.create('li', 'search-result');
+				if(control._whichName === 'latin') {
+					if(minItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = minItem.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
+					}
+				} else {
+					if(minItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = control._nameMappings[minItem].common.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
+					}
+				}
+				li._idx = i;
+				li._latin = minItem;
+				li._common = control._nameMappings[minItem].common;
+				li._id = control._nameMappings[minItem].id;
+				li.style.margin = '0px';
+				li.style.listStylePosition = 'inside';
+				li.style.backgroundColor = '#292928';
+				li.style.border = '1px solid black';
+				li.style.color = '#f5faf2';
+				li.style.letterSpacing = '.025em';
+				li.style.fontSize = '14pt';
+				li.style.lineHeight = '31px';
+				li.style.width = '370px';
+				li.style.cursor = 'pointer';
+				li.onclick = function() {
+					if(control._hiddenSpeciesTwo !== undefined) {
+						control._environmentResultsListTwo.insertBefore(control._hiddenSpeciesTwo, control._environmentResultsListTwo.children[control._hiddenSpeciesTwo._idx]);
+					}
+					control._hiddenSpeciesTwo = this;
+					control._environmentResultsListTwo.removeChild(control._environmentResultsListTwo.children[this._idx]);
+
+					if(control._selectedSpecies[1] !== undefined) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[1]);
+
+						if(control._showObservations) {
+							NPMap.config.L.removeLayer(control._speciesSightings[1]);
+						}
+					}
+
+					control._selectedSpecies[1] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_pink'
+					}).addTo(NPMap.config.L);
+					control._selectedSpecies[1]._idNumber = this._id;
+					control._selectedSpecies[1]._latin = this._latin;
+					control._selectedSpecies[1]._common = this._common;
+
+					control._speciesSightings[1] = L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#ca1892',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#ca1892'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#ca1892',
+							fillColor: '#ca1892'
+						}
+					});
+
+					if(control._showObservations) {
+						control._speciesSightings[1].addTo(NPMap.config.L);
+					}
+
+					environmentDropdownOne._latin = this._latin;
+					environmentDropdownOne._common = this._common;
+					environmentDropdownOne.innerHTML = this.innerHTML;
+					environmentDropdownOne.style.backgroundColor = '#ca1892';
+					environmentDropdownOne.style.letterSpacing = '.025em';
+					environmentDropdownOne.style.fontSize = '14pt';
+					environmentDropdownOne.style.color = '#f5faf2';
+					environmentDropdownOne.appendChild(eOneTriangle);
+					control._environmentResultsListOne.style.display = 'none';
+				}
+				environmentResultsListOne.appendChild(li);
+			}
+			control._enviroOneSelected = false;
+			environmentDropdownOne.onclick = function() {
+				if(control._enviroOneSelected) {
+					control._enviroOneSelected = false;
+					environmentResultsListOne.style.display = 'none';
+				} else {
+					control._enviroOneSelected = true;
+					environmentResultsListOne.style.display = 'block';
+				}
+			}
+			control._hiddenSpeciesOne = undefined;
+			var environmentDropdownTwo = L.DomUtil.create('div', 'dropdown');
+			environmentDropdownTwo._latin = '';
+			environmentDropdownTwo._common = '';
+			environmentDropdownTwo.innerHTML = 'SELECT SPECIES 3';
+			environmentDropdownTwo.style.position = 'absolute';
+			environmentDropdownTwo.style.lineHeight = '33px';
+			environmentDropdownTwo.style.fontSize = '10pt';
+			environmentDropdownTwo.style.letterSpacing = '.001em';
+			environmentDropdownTwo.style.top = '51px';
+			environmentDropdownTwo.style.left = '300px';
+			eTwoTriangle = L.DomUtil.create('div', 'triangle');
+			eTwoTriangle.style.position = 'absolute';
+			eTwoTriangle.style.top = '15px';
+			eTwoTriangle.style.left = '360px';
+			eTwoTriangle.style.float = 'left';
+			environmentDropdownTwo.appendChild(eTwoTriangle);
+			control._eTwoTriangle = eTwoTriangle;
+			var environmentResultsListTwo = L.DomUtil.create('ul', 'dist-results');
+			environmentResultsListTwo.style.position = 'absolute';
+			environmentResultsListTwo.style.top = '84px';
+			environmentResultsListTwo.style.left = '300px';
+			environmentResultsListTwo.style.display = 'none';
+			environmentResultsListTwo.style.margin = '0px';
+			environmentResultsListTwo.style.zIndex = 99;
+			var found = [ control._selectedSpecies[0]._latin ];
+			for(var i = 0; i < 15; i++) {
+				var min = 1000000000;
+				var minItem = '';
+				var spList = control._similarEnvironments[control._selectedSpecies[0]._latin];
+
+				for(var key in spList) {
+					if(spList[key] < min && found.indexOf(key) === -1) {
+						minItem = key;
+						min = spList[key];
+					}
+				}
+
+				found.push(minItem);
+				var li = L.DomUtil.create('li', 'search-result');
+				if(control._whichName === 'latin') {
+					if(minItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = minItem.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + minItem.replace(/_/g, ' ');
+					}
+				} else {
+					if(minItem.length > 30) {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ').slice(0, 29) + '...';
+						li.title = control._nameMappings[minItem].common.replace(/_/g, ' ');
+					} else {
+						li.innerHTML = '<img width="43" height="21" src="images/abies_fraseri.jpg"></img> ' + control._nameMappings[minItem].common.replace(/_/g, ' ');
+					}
+				}
+				li._idx = i;
+				li._latin = minItem;
+				li._common = control._nameMappings[minItem].common;
+				li._id = control._nameMappings[minItem].id;
+				li.style.margin = '0px';
+				li.style.listStylePosition = 'inside';
+				li.style.backgroundColor = '#292928';
+				li.style.border = '1px solid black';
+				li.style.color = '#f5faf2';
+				li.style.letterSpacing = '.025em';
+				li.style.fontSize = '14pt';
+				li.style.lineHeight = '31px';
+				li.style.width = '370px';
+				li.style.cursor = 'pointer';
+				li.onclick = function() {
+					if(control._hiddenSpeciesOne !== undefined) {
+						control._environmentResultsListOne.insertBefore(control._hiddenSpeciesOne, control._environmentResultsListOne.children[control._hiddenSpeciesOne._idx]);
+					}
+					control._hiddenSpeciesOne = this;
+					control._environmentResultsListOne.removeChild(control._environmentResultsListOne.children[this._idx]);
+
+					if(control._selectedSpecies[2] !== undefined) {
+						NPMap.config.L.removeLayer(control._selectedSpecies[2]);
+
+						if(control._showObservations) {
+							NPMap.config.L.removeLayer(control._speciesSightings[2]);
+						}
+					}
+
+					control._selectedSpecies[2] = L.npmap.layer.mapbox({
+						name: this._latin,
+						opacity: .5,
+						id: 'nps.GRSM_' + this._id + '_orange'
+					}).addTo(NPMap.config.L);
+					control._selectedSpecies[2]._idNumber = this._id;
+					control._selectedSpecies[2]._latin = this._latin;
+					control._selectedSpecies[2]._common = this._common;
+
+					control._speciesSightings[2] = L.npmap.layer.geojson({
+						name: this._latin + '_observations',
+						url: 'npmap-species/atbirecords/Geojsons/all/' + this._latin + '.geojson',
+						type: 'geojson',
+						popup: {
+							title: this._latin.replace(/_/g, ' ') + ' sighting',
+							description: 'Coordinates: {{coordinates}}'
+						},
+						styles: {
+							point: {
+								'marker-color': '#f28e43',
+								'marker-size': 'small'
+							}
+						},
+						cluster: {
+							clusterIcon: '#f28e43'
+						},
+						showCoverageOnHover: true,
+						disableClusteringAtZoom: 15,
+						polygonOptions: {
+							color: '#f28e43',
+							fillColor: '#f28e43'
+						}
+					});
+
+					if(control._showObservations) {
+						control._speciesSightings[2].addTo(NPMap.config.L);
+					}
+
+					environmentDropdownTwo._latin = this._latin;
+					environmentDropdownTwo._common = this._common;
+					environmentDropdownTwo.innerHTML = this.innerHTML;
+					environmentDropdownTwo.style.backgroundColor = '#f28e43';
+					environmentDropdownTwo.style.letterSpacing = '.025em';
+					environmentDropdownTwo.style.fontSize = '14pt';
+					environmentDropdownTwo.style.color = '#f5faf2';
+					environmentDropdownTwo.appendChild(eTwoTriangle);
+					control._environmentResultsListTwo.style.display = 'none';
+				}
+				environmentResultsListTwo.appendChild(li);
+			}
+			control._enviroTwoSelected = false;
+			environmentDropdownTwo.onclick = function() {
+				if(control._enviroTwoSelected) {
+					control._enviroTwoSelected = false;
+					environmentResultsListTwo.style.display = 'none';
+				} else {
+					control._enviroTwoSelected = true;
+					environmentResultsListTwo.style.display = 'block';
+				}
+			}
+			control._comparisonEnvironmentPane.appendChild(environmentDropdownOne);
+			control._comparisonEnvironmentPane.appendChild(environmentResultsListOne);
+			control._comparisonEnvironmentPane.appendChild(environmentDropdownTwo);
+			control._comparisonEnvironmentPane.appendChild(environmentResultsListTwo);
+			control._environmentDropdownOne = environmentDropdownOne;
+			control._environmentResultsListOne = environmentResultsListOne;
+			control._environmentDropdownTwo = environmentDropdownTwo;
+			control._environmentResultsListTwo = environmentResultsListTwo;
+
 			jQuery('.compare-lexical').animate({
 				left: '1121px',
 				width: '105px',
 			});
+			if(control._compareLexBox !== undefined) {
+				control._compareLexBox.remove();
+				control._compareLexBox = undefined;
+				control._lexResultsList.remove();
+				control._lexResultsList = undefined;
+			}
 			control._lexicalPaneLabelTop.innerHTML = '';
-			control._lexicalPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE<br>SPECIES';
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
-			jQuery('.compare-area').animate({
-				left: '1256px',
-				width: '105px'
-			});
-			control._areaPaneLabelTop.innerHTML = '';
-			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
-			control._areaPaneLabelMain.style.color = '#909090';
-			control._areaPaneLabelMain.style.fontSize = '10pt';
+			control._lexicalPaneLabelMain.style.lineHeight = '18px';
 		} else if(whichCompare === 'lexical') {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -867,14 +1962,37 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			control._distributionPaneLabelMain.style.lineHeight = '18px';
+			if(control._distributionDropdownOne !== undefined) {
+				control._distributionDropdownOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionDropdownTwo.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListTwo.remove();
+				control._distributionDropdownOne = undefined;
+			}
 			jQuery('.compare-environment').animate({
 				left: '370px',
 				width: '125px',
 			});
 			control._environmentPaneLabelTop.innerHTML = '';
-			control._environmentPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._environmentPaneLabelMain.innerHTML = 'COMPARE ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			control._environmentPaneLabelMain.style.lineHeight = '18px';
+			if(control._environmentDropdownOne !== undefined) {
+				control._environmentDropdownOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentDropdownTwo.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListTwo.remove();
+				control._environmentDropdownOne = undefined;
+			}
+
 			jQuery('.compare-lexical').animate({
 				left: '515px',
 				width: '720px',
@@ -883,14 +2001,28 @@ var control,
 			control._lexicalPaneLabelMain.innerHTML = 'ANOTHER SPECIES IN THE PARK';
 			control._lexicalPaneLabelMain.style.color = '#f5faf2';
 			control._lexicalPaneLabelMain.style.fontSize = '16pt';
-			jQuery('.compare-area').animate({
-				left: '1256px',
-				width: '105px'
-			});
-			control._areaPaneLabelTop.innerHTML = '';
-			control._areaPaneLabelMain.innerHTML = 'COMPARE AREA';
-			control._areaPaneLabelMain.style.color = '#909090';
-			control._areaPaneLabelMain.style.fontSize = '10pt';
+			control._lexicalPaneLabelMain.style.lineHeight = '25px';
+
+			var compareLexBox = L.DomUtil.create('input', 'comp-lexical-box');
+			compareLexBox.style.position = 'absolute';
+			compareLexBox.style.top = '33px';
+			compareLexBox.style.left = '275px';
+			compareLexBox.placeholder = 'Type a species name';
+			compareLexBox.oninput = function() {
+				var evt = window.event;
+				control._fuseSearch(evt.srcElement.value, lexResultsList, 1);
+			}
+			var lexResultsList = L.DomUtil.create('ul', 'init-lexical-results');
+			lexResultsList.style.position = 'absolute';
+			lexResultsList.style.top = '53px';
+			lexResultsList.style.left = '275px';
+			lexResultsList.style.width = '375px';
+			lexResultsList.style.display = 'none';
+			lexResultsList.style.margin = '0px';
+			control._comparisonLexicalPane.appendChild(compareLexBox);
+			control._comparisonLexicalPane.appendChild(lexResultsList);
+			control._compareLexBox = compareLexBox;
+			control._lexResultsList = lexResultsList;
 		} else {
 			jQuery('.compare-distribution').animate({
 				width: '125px'
@@ -899,30 +2031,51 @@ var control,
 			control._distributionPaneLabelMain.innerHTML = 'COMPARE DISTRIBUTION';
 			control._distributionPaneLabelMain.style.color = '#909090';
 			control._distributionPaneLabelMain.style.fontSize = '10pt';
+			control._distributionPaneLabelMain.style.lineHeight = '18px';
+			if(control._distributionDropdownOne !== undefined) {
+				control._distributionDropdownOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListOne.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionDropdownTwo.remove();
+				control._distributionDropdownOne = undefined;
+				control._distributionResultsListTwo.remove();
+				control._distributionDropdownOne = undefined;
+			}
 			jQuery('.compare-environment').animate({
 				left: '370px',
 				width: '125px',
 			});
 			control._environmentPaneLabelTop.innerHTML = '';
-			control._environmentPaneLabelMain.innerHTML = 'COMPARE SPECIES';
+			control._environmentPaneLabelMain.innerHTML = 'COMPARE ENVIRONMENT';
 			control._environmentPaneLabelMain.style.color = '#909090';
 			control._environmentPaneLabelMain.style.fontSize = '10pt';
+			control._environmentPaneLabelMain.style.lineHeight = '18px';
+			if(control._environmentDropdownOne !== undefined) {
+				control._environmentDropdownOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListOne.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentDropdownTwo.remove();
+				control._environmentDropdownOne = undefined;
+				control._environmentResultsListTwo.remove();
+				control._environmentDropdownOne = undefined;
+			}
 			jQuery('.compare-lexical').animate({
 				left: '515px',
 				width: '105px',
 			});
+			if(control._compareLexBox !== undefined) {
+				control._compareLexBox.remove();
+				control._compareLexBox = undefined;
+				control._lexResultsList.remove();
+				control._lexResultsList = undefined;
+			}
 			control._lexicalPaneLabelTop.innerHTML = '';
-			control._lexicalPaneLabelMain.innerHTML = 'COMPARE AREA';
+			control._lexicalPaneLabelMain.innerHTML = 'COMPARE<br>SPECIES';
 			control._lexicalPaneLabelMain.style.color = '#909090';
 			control._lexicalPaneLabelMain.style.fontSize = '10pt';
-			jQuery('.compare-area').animate({
-				left: '640px',
-				width: '720px'
-			});
-			control._areaPaneLabelTop.innerHTML = 'COMPARE WITH ...';
-			control._areaPaneLabelMain.innerHTML = 'A SPECIFIC AREA WITHIN THE PARK';
-			control._areaPaneLabelMain.style.color = '#f5faf2';
-			control._areaPaneLabelMain.style.fontSize = '16pt';
+			control._lexicalPaneLabelMain.style.lineHeight = '18px';
 		}
 	}
 });

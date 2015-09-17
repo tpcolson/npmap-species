@@ -1,4 +1,49 @@
+function loadResource(url, callback) {
+	loadResourceWithTries(url, callback, 1);
+}
+
+function loadResourceWithTries(url, callback, tries) {
+	jQuery.ajax({
+		type: 'GET',
+		url: url,
+		dataType: 'json',
+		success: callback,
+		error: function() {
+			if(tries < 5) {
+				loadResourceWithTries(url, callback, tries+1);
+			}
+		}
+	});
+}
+
+function tryEnableSearch(idx) {
+	control._resourcesReady[idx] = true;
+
+	var ready = true;
+	var count = 0;
+	for(var i = 0; i < control._resourcesReady.length; i++) {
+		if(control._resourcesReady[i]) {
+			count++;
+		} else {
+			ready = false;
+		}
+	}
+
+	if(ready) {
+		document.getElementById('settingsButton').title = 'Map Options';
+		document.getElementById('searchButton').title = 'Search';
+		document.getElementById('settingsButton').disabled = false;
+		document.getElementById('searchButton').disabled = false;
+	} else {
+		document.getElementById('settingsButton').title = 'Loading...'
+			+ (100*count)/control._resourcesReady.length + '%';
+		document.getElementById('searchButton').title = 'Loading...'
+			+ (100*count)/control._resourcesReady.length + '%';
+	}
+}
+
 function enterfullscreen() {
+	document.getElementsByClassName('fullscreen')[0].title = 'Exit fullscreen';
 	headerZ = divHeader.style.zIndex;
 	subNavZ = divSubNav.style.zIndex;
 	divHeader.style.zIndex = 0;
@@ -6,6 +51,7 @@ function enterfullscreen() {
 }
 
 function exitfullscreen() {
+	document.getElementsByClassName('fullscreen')[0].title = 'Enter fullscreen';
 	if(headerZ !== undefined && subNavZ !== undefined) {
 		divHeader.style.zIndex = headerZ;
 		divSubNav.style.zIndex = subNavZ;
@@ -82,20 +128,38 @@ window.onload = function() {
 		var overlay = NPMap.config.overlays[i];
 
 		/* todo: remove this if statement once everything else is done */
-		if(overlay.name === 'Trails' || overlay.name === 'Roads' || overlay.name === 'Shelters') {
+		if(overlay.name === 'Trails' || overlay.name === 'Visitor Centers' || overlay.name === 'Roads' || overlay.name === 'Shelters' || overlay.name === 'Campsites') {
 			overlay.visible = false;
 			NPMap.config.L.removeLayer(overlay.L);
 		}
 	}
-
-	/* add in new print control */
-	var pc = new PrintControl();
-	NPMap.config.L.addControl(pc);
 
 	/* add in search tool */
 	var st = new SearchTool();
 	NPMap.config.L.addControl(st);
 
 	/* add in floating div */
-	//addFloatationDevice();
+	addColorLegend();
+
+	/* add tooltip to fullscreen button */
+	document.getElementsByClassName('fullscreen')[0].title = 'Enter fullscreen';
+
+	/* restyle and move edit utils to our tool */
+	var editControls = document.getElementsByClassName('leaflet-control-edit')[0];
+	editControls.style.width = '140px';
+	editControls.style.height = '28px';
+	editControls.children[0].style.borderTop = '0px';
+	editControls.children[0].style.borderRadius = '4px 0px 0px 4px';
+	editControls.children[4].style.borderRadius = '0px 4px 4px 0px';
+	for(var i = 0; i < editControls.children.length; i++) {
+		editControls.children[i].style.height = '26px';
+		editControls.children[i].style.float = 'left';
+	}
+	control._annotationDiv.appendChild(editControls);
+
+	/* fix issue with top-right toolbar buttons being too tall */
+	var toolbar = document.getElementsByClassName('npmap-toolbar')[0].children[1];
+	for(var i = 0; i < toolbar.children.length; i++) {
+		toolbar.children[i].style.margin = '0px';
+	}
 }

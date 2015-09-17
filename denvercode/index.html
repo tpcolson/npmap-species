@@ -34,25 +34,25 @@
 	var jsShowRejectForApprover = 1;
 
 // -->
-</script><script type="text/javascript" src="commonspot/javascript/browser-all.js"></script> 
+</script><script type="text/javascript" src="commonspot/javascript/browser-all.js"></script>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <META HTTP-EQUIV="imagetoolbar" CONTENT="no" />
-	
+
     <link rel="shortcut icon" href="/species_mapper/templates/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/global.css" />
 	<link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/generic.css" />
-	<link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/toplevel.css" />	
+	<link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/toplevel.css" />
     <!--[if lte IE 6]>
         <link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/ie6.css" />
     <![endif]-->
     <!--[if IE 7]>
         <link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/ie7.css" />
     <![endif]-->
-	
+
 	<link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/colorbox.css"></link>
-		
-	
-				
+
+
+
 				<script type="text/javascript">
 					if(typeof scriptsLoaded === 'undefined'){
 						var scriptsLoaded= new Array();
@@ -61,11 +61,11 @@
 					if(!("jQuery" in scriptsLoaded)){
 						document.write('<script type="text\/javascript" src="\/species_mapper\/ADF\/thirdParty\/jquery\/jquery-1.9.js"><\/script><script type="text\/javascript">jQuery.noConflict();<\/script>'+'<script type="text/javascript"><\/script>');
 						scriptsLoaded["jQuery"] = true;
-						
+
 						}
 				</script>
-			
-				
+
+
 				<script type="text/javascript">
 					if(typeof scriptsLoaded === 'undefined'){
 						var scriptsLoaded= new Array();
@@ -74,13 +74,13 @@
 					if(!("jQueryMigrate" in scriptsLoaded)){
 						document.write('<script src="\/species_mapper\/ADF\/thirdParty\/jquery\/migrate\/jquery-migrate-1.2.js"><\/script>'+'<script type="text/javascript"><\/script>');
 						scriptsLoaded["jQueryMigrate"] = true;
-						
+
 						}
 				</script>
 <script src='http://www.nps.gov/npmap/npmap.js/2.0.0/npmap.min.js'></script>
 <script src='scrollUtil.js'></script>
+<script src='colorLegend.js'></script>
 <script src='fuse.min.js'></script>
-<script src='fuseSearch.js'></script>
 <link rel='stylesheet' href='style.css'></link>
 <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
 <script src='leaflet-image.js'></script>
@@ -92,25 +92,24 @@
 <script src='jspdf/FileSaver.min.js'></script>
 <script src='print.js'></script>
 <script src='searchTool.js'></script>
-<script src='floatingDiv.js'></script>
 <script src='utils.js'></script>
 <script src='mapping.js'></script>
-				
-	
+
+
 	<script type="text/javascript" src="/species_mapper/common/commonspot/templates/js/libs/jquery.cycle.min.js"></script>
 	<script type="text/javascript" src="/species_mapper/common/commonspot/templates/js/libs/jquery.colorbox-min.js"></script>
 	<script type="text/javascript" src="/species_mapper/common/commonspot/templates/js/global.js"></script>
-	
+
 	<script type="text/javascript" src="/species_mapper/common/commonspot/templates/js/libs/jquery.validationEngine-en.js"></script>
 	<script type="text/javascript" src="/species_mapper/common/commonspot/templates/js/libs/jquery.validationEngine.js"></script>
 	<link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/validation-engine.css" />
-	
+
 	<script type="text/javascript" src="/species_mapper/common/commonspot/templates/js/intercept-include.js"></script>
 	<!--[if lt IE 7 ]>
 	<script type="text/javascript" src="/species_mapper/common/commonspot/templates/js/libs/dd_belatedpng.js"></script>
 	<script>DD_belatedPNG.fix('img, .png_bg'); // Fix any <img> or .png_bg bg-images. Also, please read goo.gl/mZiyb </script>
 	<![endif]-->
-<link rel="stylesheet" href="/species_mapper/commonspot/commonspot.css" type="text/css" id="cs_maincss" /> <link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/global.css" /></head><body lang="en" bgcolor="#FFFFFF" style="margin-top:0px;margin-left:0px;margin-right:0px;margin-bottom:0px;"><a name="__topdoc__"></a><script src="/species_mapper/commonspot/pagemode/always-include-common.js" type="text/javascript"></script><script src="/species_mapper/commonspot/pagemode/always-include-ns.js" type="text/javascript"></script> 
+<link rel="stylesheet" href="/species_mapper/commonspot/commonspot.css" type="text/css" id="cs_maincss" /> <link rel="stylesheet" type="text/css" href="/species_mapper/common/commonspot/templates/css/global.css" /></head><body lang="en" bgcolor="#FFFFFF" style="margin-top:0px;margin-left:0px;margin-right:0px;margin-bottom:0px;"><a name="__topdoc__"></a><script src="/species_mapper/commonspot/pagemode/always-include-common.js" type="text/javascript"></script><script src="/species_mapper/commonspot/pagemode/always-include-ns.js" type="text/javascript"></script>
 <div id="header-container">
     <div id="header" class="chrome-center">
         <div id="logo">
@@ -120,9 +119,9 @@
             <form method="get" action="/search/index.htm" id="global-search" autocomplete="off">
                 <label class="visuallyhidden" for="header-query">Search</label>
                 <input type="text" name="query" id="header-query" />
-				
+
 					<input type="hidden" name="siteLimit" value="nps.gov/communities" />
-				
+
             <input type="hidden" name="as_sfid" value="AAAAAAXHeZKx8FTVq_OaAOuTtqPZeFIa2eKp-YvivJGULMspnx-upCLyKM_GsLfgCY3oKRKjjeqsGrwK-0F1pddZQnhRc5cOnnQ9GwywM8qTjqzHJQ==" /><input type="hidden" name="as_fid" value="86vaI6OKf7zfpgYDJNha" /></form>
             <div id="search-results-container">
                 <div class="top"></div>
@@ -139,7 +138,7 @@
                 <div class="bottom"></div>
             </div>
         </div>
-        
+
         <ul class="clearfix" id="nav">
             <li id="nav_find_park"><a href="/species_mapper/findapark/index.htm"><span></span>Find a Park</a></li>
             <li id="nav_discover"><a href="/species_mapper/history/"><span></span>Discover History</a>
@@ -172,7 +171,7 @@
                     <li><a href="http://www.nature.nps.gov/scienceresearch.cfm">Science &amp; Research</a></li>
                     <li><a href="http://www.nature.nps.gov/socialscience/">Social Science</a></li>
                     <li><a href="http://www.nature.nps.gov/water/">Water Resources</a></li>
-                </ul>	
+                </ul>
 			</li>
             <li id="nav_involved"><a href="/species_mapper/getinvolved/index.htm"><span></span>Get Involved</a>
                 <ul>
@@ -180,7 +179,7 @@
                     <li><a href="/species_mapper/getinvolved/donate.htm">Donate</a></li>
                     <li><a href="/species_mapper/getinvolved/partner.htm">Partner</a></li>
                     <li><a href="/species_mapper/getinvolved/doyourpart.htm">Do Your Part</a></li>
-                </ul>			
+                </ul>
 			</li>
             <li id="nav_working" class="active"><a href="/species_mapper/communities/"><span></span>Working with Communities</a>
                 <ul>
@@ -189,17 +188,17 @@
                     <li><a href="/species_mapper/history/grants.htm">Preservation</a></li>
                     <li><a href="/species_mapper/lwcf">Outdoor Recreation</a></li>
                     <li><a href="/species_mapper/nts">National Historic Trails</a></li>
-                </ul>			
+                </ul>
 			</li>
             <li id="nav_teachers"><a href="/species_mapper/teachers/"><span></span>Teachers</a>
                 <ul>
                     <li><a href="/species_mapper/teachers/classrooms.htm">Parks as Classrooms</a></li>
                     <li><a href="/species_mapper/teachers/development.htm">Professional Development</a></li>
                     <li><a href="/species_mapper/teachers/distancelearning.htm">Distance Learning</a></li>
-                </ul>				
+                </ul>
 			</li>
             <li id="nav_kids"><a href="/species_mapper/kids/"><span></span>Kids</a>
-				
+
 			</li>
             <li id="nav_about"><a href="/species_mapper/aboutus/"><span></span>About Us</a>
                 <ul>
@@ -212,36 +211,36 @@
                 </ul>
             </li>
         </ul>
-        
+
     </div><!--! end of #header -->
 </div><!--! end of #header-wrapper -->
 
 
-	
+
     <div id="wrapper">
         <div id="page" class="clearfix">
 
-            
 
-            
+
+
             <div id="main-content" class="clearfix">
 
 		<div id="sub-nav">
-					
-					 <div id="cs_control_481717" class="cs_control"> <!-- _CSDPFID=275154|275154=_CSDPFID --> 	
 
-	<!--googleoff: index-->	
-	<div id="npsNav">	
-	
+					 <div id="cs_control_481717" class="cs_control"> <!-- _CSDPFID=275154|275154=_CSDPFID -->
+
+	<!--googleoff: index-->
+	<div id="npsNav">
+
 			<h2>Species Mapper</h2>
-			
+
 	</div>
-	<!--googleon: index-->		
-	
-	</div> <div id="cs_control_389188" class=""> <div  class="CS_Element_Schedule389188"  title="" id="CS_Sched_275154_389188"  style=";border:0px solid;padding:0px"> 
-<div id="cs_control_389189" class="cs_control"> <div id="CS_CCF_275154_389189"> 
+	<!--googleon: index-->
+
+	</div> <div id="cs_control_389188" class=""> <div  class="CS_Element_Schedule389188"  title="" id="CS_Sched_275154_389188"  style=";border:0px solid;padding:0px">
+<div id="cs_control_389189" class="cs_control"> <div id="CS_CCF_275154_389189">
 <style>
-#sub-nav .find-us {	
+#sub-nav .find-us {
 	background-color: #fff;
 	border: 1px solid #e4e3df;
 	-webkit-border-radius:5px;
@@ -261,8 +260,8 @@
     padding: 2px 0 0 6px;
 }
 
-#sub-nav .find-us ul {	
-	/*padding: 1px 20px 1px;*/	
+#sub-nav .find-us ul {
+	/*padding: 1px 20px 1px;*/
 	padding: 16px 20px 10px;
 }
 
@@ -280,7 +279,7 @@
 	/*border-bottom: none;*/
 	padding: 4px 0 3px;
 	list-style: none;
-	border:none;	
+	border:none;
 }
 
 #sub-nav .social-connect li a {
@@ -331,9 +330,9 @@
       <li class='active'><a href=''>About</a></li>
   </ul>
 </div>
-</div> </div> 
-</div> </div> 	
-		
+</div> </div>
+</div> </div>
+
                 </div>
 
                 <div class="main">
@@ -341,52 +340,52 @@
                     <div class="intro clearfix"><h1>Species Mapper</h1></div>
                     <div id="cs_control_271155" class=""><div  class="CS_Element_Schedule271155"  title="" id="CS_Element_maincontent"  style=";border:0px solid;padding:1px">
 <a name="custom275157" id="custom275157"></a><a name="CP_JUMP_275157" id="CP_JUMP_275157"></a><div id="cs_control_275157" class="cs_control"><!--LARGE IMAGE module-->
-			
-		
+
+
 		<style>
-		
+
 			.textWrappedAroundImage {
 				margin-bottom:15px;
 
-			}		
-			
-			.content ul {				
+			}
+
+			.content ul {
 				list-style-position:outside;
 				list-style-type: disc;
 
 			}
-			
+
 			.floatingImage {
 				width:150px;
 				float:right;
 				text-align:left;
 				margin-left:15px;
-				margin-bottom:8px;				
+				margin-bottom:8px;
 			}
-            
+
 			.floatingImage p {
 				padding: 0;
-				margin: 0; 
+				margin: 0;
 			}
-				
-			.floatingImage p.credit { 
+
+			.floatingImage p.credit {
 				color: #727163; /* Changed from #777 for 508 - Dan */
 				font-size: 11px;
-				 
-				
+
+
 			}
-			.floatingImage p.caption  {           
+			.floatingImage p.caption  {
 				color: #5A712D; /* Changed from #668033 for 508 - Dan */
 				font-size: 11px;
 				margin-bottom:4px;
 			}
-					
-		
-		
-					
+
+
+
+
 		</style>
-		
-		<div class="textWrappedAroundImage clearfix"> 
+
+		<div class="textWrappedAroundImage clearfix">
 		<div id='species-info'>
 		<h3>Use the map below to determine the location of a single or group of species.</h3><br>
 		<div id='main-map' style='height:400px'></div><br>
@@ -395,9 +394,9 @@
 </div></div>
 					</div>
                 </div>
-                
+
             </div>
-			
+
         </div>
         <div id="main-bottom" class="chrome-center"></div>
     </div>
@@ -407,13 +406,13 @@
 	<!--googleoff: index-->
     <div id="breadcrumb-container">
         <div id="breadcrumbs" class="chrome-center">
-           
+
             <div id="sm-control">
                 <a class="expanded" href="javascript:void(0);" id="site-map">Site Map</a>
             </div><!--! end of #sm-control -->
         </div><!--! end of #breadcrumb -->
     </div><!--! end of #breadcrumb-container -->
-    
+
 <div id="site-map-container">
     <div id="footer-gradient"></div>
     <div id="footer-search-container" class="chrome-center clearfix">
@@ -427,54 +426,54 @@
             <form method="get" action="/findapark">
                 <label for="park-query">Find a Park</label>
                 <select id="park-query">
-                    <option value="">Select a State</option>						 
-                    <option value="/state/al/index.htm?program=parks">Alabama</option>						 
-                    <option value="/state/ak/index.htm?program=parks">Alaska</option>						 
-                    <option value="/state/as/index.htm?program=parks">American Samoa</option>						 
-                    <option value="/state/az/index.htm?program=parks">Arizona</option>						 
-                    <option value="/state/ar/index.htm?program=parks">Arkansas</option>						 
-                    <option value="/state/ca/index.htm?program=parks">California</option>					 
-                    <option value="/state/co/index.htm?program=parks">Colorado</option>						 
-                    <option value="/state/ct/index.htm?program=parks">Connecticut</option>						 
-                    <option value="/state/de/index.htm?program=parks">Delaware</option>						 
-                    <option value="/state/dc/index.htm?program=parks">District of Columbia</option>						 
-                    <option value="/state/fl/index.htm?program=parks">Florida</option>						 
-                    <option value="/state/ga/index.htm?program=parks">Georgia</option>						 
-                    <option value="/state/gu/index.htm?program=parks">Guam</option>						 
-                    <option value="/state/hi/index.htm?program=parks">Hawaii</option>						 
-                    <option value="/state/id/index.htm?program=parks">Idaho</option>						 
-                    <option value="/state/il/index.htm?program=parks">Illinois</option>						 
-                    <option value="/state/in/index.htm?program=parks">Indiana</option>						 
-                    <option value="/state/ia/index.htm?program=parks">Iowa</option>						 
-                    <option value="/state/ks/index.htm?program=parks">Kansas</option>						 
-                    <option value="/state/ky/index.htm?program=parks">Kentucky</option>						 
-                    <option value="/state/la/index.htm?program=parks">Louisiana</option>						 
-                    <option value="/state/me/index.htm?program=parks">Maine</option>						 
-                    <option value="/state/md/index.htm?program=parks">Maryland</option>						 
-                    <option value="/state/ma/index.htm?program=parks">Massachusetts</option>						 
-                    <option value="/state/mi/index.htm?program=parks">Michigan</option>						 
-                    <option value="/state/mn/index.htm?program=parks">Minnesota</option>					 
-                    <option value="/state/ms/index.htm?program=parks">Mississippi</option>						 
-                    <option value="/state/mo/index.htm?program=parks">Missouri</option>						 
-                    <option value="/state/mt/index.htm?program=parks">Montana</option>						 
-                    <option value="/state/ne/index.htm?program=parks">Nebraska</option>						 
-                    <option value="/state/nv/index.htm?program=parks">Nevada</option>						 
-                    <option value="/state/nh/index.htm?program=parks">New Hampshire</option>						 
-                    <option value="/state/nj/index.htm?program=parks">New Jersey</option>						 
-                    <option value="/state/nm/index.htm?program=parks">New Mexico</option>						 
-                    <option value="/state/ny/index.htm?program=parks">New York</option>						 
-                    <option value="/state/nc/index.htm?program=parks">North Carolina</option>						 
-                    <option value="/state/nd/index.htm?program=parks">North Dakota</option>						 
-                    <option value="/state/mp/index.htm?program=parks">Northern Mariana Islands</option>						 
-                    <option value="/state/oh/index.htm?program=parks">Ohio</option>						 
-                    <option value="/state/ok/index.htm?program=parks">Oklahoma</option>						 
-                    <option value="/state/or/index.htm?program=parks">Oregon</option>						 
-                    <option value="/state/pa/index.htm?program=parks">Pennsylvania</option>						 
-                    <option value="/state/pr/index.htm?program=parks">Puerto Rico</option>						 
-                    <option value="/state/ri/index.htm?program=parks">Rhode Island</option>						 
-                    <option value="/state/sc/index.htm?program=parks">South Carolina</option>						 
-                    <option value="/state/sd/index.htm?program=parks">South Dakota</option>						 
-                    <option value="/state/tn/index.htm?program=parks">Tennessee</option>					 
+                    <option value="">Select a State</option>
+                    <option value="/state/al/index.htm?program=parks">Alabama</option>
+                    <option value="/state/ak/index.htm?program=parks">Alaska</option>
+                    <option value="/state/as/index.htm?program=parks">American Samoa</option>
+                    <option value="/state/az/index.htm?program=parks">Arizona</option>
+                    <option value="/state/ar/index.htm?program=parks">Arkansas</option>
+                    <option value="/state/ca/index.htm?program=parks">California</option>
+                    <option value="/state/co/index.htm?program=parks">Colorado</option>
+                    <option value="/state/ct/index.htm?program=parks">Connecticut</option>
+                    <option value="/state/de/index.htm?program=parks">Delaware</option>
+                    <option value="/state/dc/index.htm?program=parks">District of Columbia</option>
+                    <option value="/state/fl/index.htm?program=parks">Florida</option>
+                    <option value="/state/ga/index.htm?program=parks">Georgia</option>
+                    <option value="/state/gu/index.htm?program=parks">Guam</option>
+                    <option value="/state/hi/index.htm?program=parks">Hawaii</option>
+                    <option value="/state/id/index.htm?program=parks">Idaho</option>
+                    <option value="/state/il/index.htm?program=parks">Illinois</option>
+                    <option value="/state/in/index.htm?program=parks">Indiana</option>
+                    <option value="/state/ia/index.htm?program=parks">Iowa</option>
+                    <option value="/state/ks/index.htm?program=parks">Kansas</option>
+                    <option value="/state/ky/index.htm?program=parks">Kentucky</option>
+                    <option value="/state/la/index.htm?program=parks">Louisiana</option>
+                    <option value="/state/me/index.htm?program=parks">Maine</option>
+                    <option value="/state/md/index.htm?program=parks">Maryland</option>
+                    <option value="/state/ma/index.htm?program=parks">Massachusetts</option>
+                    <option value="/state/mi/index.htm?program=parks">Michigan</option>
+                    <option value="/state/mn/index.htm?program=parks">Minnesota</option>
+                    <option value="/state/ms/index.htm?program=parks">Mississippi</option>
+                    <option value="/state/mo/index.htm?program=parks">Missouri</option>
+                    <option value="/state/mt/index.htm?program=parks">Montana</option>
+                    <option value="/state/ne/index.htm?program=parks">Nebraska</option>
+                    <option value="/state/nv/index.htm?program=parks">Nevada</option>
+                    <option value="/state/nh/index.htm?program=parks">New Hampshire</option>
+                    <option value="/state/nj/index.htm?program=parks">New Jersey</option>
+                    <option value="/state/nm/index.htm?program=parks">New Mexico</option>
+                    <option value="/state/ny/index.htm?program=parks">New York</option>
+                    <option value="/state/nc/index.htm?program=parks">North Carolina</option>
+                    <option value="/state/nd/index.htm?program=parks">North Dakota</option>
+                    <option value="/state/mp/index.htm?program=parks">Northern Mariana Islands</option>
+                    <option value="/state/oh/index.htm?program=parks">Ohio</option>
+                    <option value="/state/ok/index.htm?program=parks">Oklahoma</option>
+                    <option value="/state/or/index.htm?program=parks">Oregon</option>
+                    <option value="/state/pa/index.htm?program=parks">Pennsylvania</option>
+                    <option value="/state/pr/index.htm?program=parks">Puerto Rico</option>
+                    <option value="/state/ri/index.htm?program=parks">Rhode Island</option>
+                    <option value="/state/sc/index.htm?program=parks">South Carolina</option>
+                    <option value="/state/sd/index.htm?program=parks">South Dakota</option>
+                    <option value="/state/tn/index.htm?program=parks">Tennessee</option>
                     <option value="/state/tx/index.htm?program=parks">Texas</option>
                     <option value="/state/ut/index.htm?program=parks">Utah</option>
                     <option value="/state/vt/index.htm?program=parks">Vermont</option>
@@ -544,7 +543,7 @@
                     <li><a href="/species_mapper/teachers/classrooms.htm">Parks as Classrooms</a></li>
                     <li><a href="/species_mapper/teachers/development.htm">Professional Development</a></li>
                     <li><a href="/species_mapper/teachers/distancelearning.htm">Distance Learning</a></li>
-                </ul>				
+                </ul>
 			</li>
 		</ul>
         <ul>
@@ -567,7 +566,7 @@
                     <li><a href="/species_mapper/nts">National Historic Trails</a></li>
                 </ul>
             </li>
-        </ul>		
+        </ul>
         <ul>
             <li><h3><a href="/species_mapper/aboutus/">About Us</a></h3></li>
             <li>
@@ -609,11 +608,11 @@
     </div><!--! end of #footer-->
 </div><!--! end of #footer-container -->
 
-				
+
 				<script type="text/javascript" src="/species_mapper/common/commonspot/templates/js/foresee/foresee-trigger.js"></script>
-				
+
 							<script type="text/javascript">FSR.CPPS.set('npsParkCode','communities')</script>
-						
+
     <script type="text/javascript">
         //<![CDATA[
             if (window.location.href.indexOf("www") > -1) {
@@ -643,16 +642,16 @@
 		<!--
 			var jsPageContributeMode = 'read';
 			var jsPageSessionContributeMode = 'read';
-			
+
 			var jsPageAuthorMode = 0;
 			var jsPageEditMode = 0;
 
-			
+
 			if(!commonspot)
 				var commonspot = {};
 			commonspot.csPage = {};
 			commonspot.csPage.url = '/communities/index.htm';
-			
+
 			commonspot.csPage.id = 275154;
 			commonspot.csPage.title = 'Working With Communities';
 
@@ -681,10 +680,10 @@
 			commonspot.csPage.userRights.serverAdmin = 0;
 
 			commonspot.csPage.enabledMenuClasses = '';
-			
+
 			commonspot.csPage.visibleMenuClasses = '';
 
-			
+
 			commonspot.csPage.subsiteContext = {};
 			commonspot.csPage.subsiteContext.sitetype = 1;
 			commonspot.csPage.subsiteContext.siteid = 1;
@@ -705,9 +704,9 @@
 						parent.commonspot.lightbox &&
 						parent.commonspot.lightbox.stack.length == 0)
 			{
-			
+
 				commonspot.csPage.showPageSubmit = false;
-			
+
 				onPageArrival = function()
 				{
 					parent.commonspot.lview.currentPage.onPageArrival( commonspot.csPage );
@@ -719,7 +718,7 @@
 				parent.Spry.Utils.addEventListener(window, 'load', onPageArrival, false);
 				parent.Spry.Utils.addEventListener(window, 'unload', onPageUnload, false);
 			}
-		
+
 
 		// -->
 		</script>
@@ -729,14 +728,14 @@
 		loadNonDashboardFiles();
 	else if (parent.commonspot && typeof newWindow == 'undefined')
 	{
-		var arrFiles = 
+		var arrFiles =
 				[
 					{fileName: '/commonspot/javascript/lightbox/overrides.js', fileType: 'script', fileID: 'cs_overrides'},
 					{fileName: '/commonspot/javascript/lightbox/window_ref.js', fileType: 'script', fileID: 'cs_windowref'}
 				];
-		
+
 		loadDashboardFiles(arrFiles);
-	}	
+	}
 //-->
 </script>
 

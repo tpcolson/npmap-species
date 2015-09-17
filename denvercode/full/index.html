@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no'>
+    <link rel='stylesheet' href='reset.css'></link>
+    <link rel='stylesheet' href='style.css'></link>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <script src='mapping.js'></script>
+    <script src='fuse.min.js'></script>
+    <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+    <title>National Park Service Species Mapper</title>
+  </head>
+  <body>
+    <div id='map'></div>
+    <div id='search-tool'>
+      <div id='search-tool-contents'>
+        <div id='search-banner'>
+          <div id='search-banner-logo'>
+            <img src='images/npsLogo.svg'></img>
+          </div>
+          <div id='search-banner-title'>
+            <center>National Park Service Species Mapper</center>
+          </div>
+          <div id='search-banner-buffer'></div>
+          <div id='search-banner-help-tooltips' class='bordered'>
+            <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
+          </div>
+          <div id='search-banner-help-link' class='bordered'>
+            <center><a href='http://seelab.eecs.utk.edu/help' target='_blank'>?</a></center>
+          </div>
+          <div id='search-banner-help-minimizer'>
+            <center><button onclick='toggleMinimized();'>&#8212;</button></center>
+          </div>
+        </div>
+        <div id='search-initial'>
+          <div id='search-initial-lexical' onclick='toggleLexicalSearch();'>
+            <img src='images/searchButton.png'></img>
+          </div>
+          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();'>
+            <div class='dropdown-text'>Select a species</div>
+            <div class='triangle'></div>
+          </div>
+          <div id='search-initial-image' class='vignette'>
+            <img src='images/no_image.png'></img>
+          </div>
+          <div id='search-initial-switch'>
+            <div><center><div onclick='toggleName();'>COMMON</div></center></div>
+            <div><center><div onclick='toggleName();'>LATIN</div></center></div>
+            <div id='search-initial-switch-button'><div onclick='toggleName();'><span>...</span></div></div>
+          </div>
+          <ul id='search-initial-dropdown-common'></ul>
+          <ul id='search-initial-dropdown-latin'></ul>
+          <div id='search-initial-box'>
+            <input id='search-initial-box-input' type='text' name='initial-search' placeholder='Find a species...' oninput='fuseSearch(0, this.value);'></input>
+            <ul></ul>
+          </div>
+        </div>
+        <div id='search-compare' class='bordered'>
+          <div id='search-compare-placeholder'><img src='images/center_graphic.png'></img></div>
+          <div id='search-compare-contents'>
+            <div id='search-compare-lexical'>
+              <input type='radio' name='comparator' value='lexical' onclick='lexFocus();'></input>
+              <div class='subhead'>COMPARE WITH</div>
+              <div class='subhead2'>ANOTHER SPECIES IN THE PARK</div>
+              <div id='search-compare-one-box'>
+                <input id='search-compare-one-box-input' type='text' name='compare-one-search' placeholder='Find a second species...' oninput='fuseSearch(1, this.value);'></input>
+                <ul></ul>
+                <div id='search-compare-one-box-name'></div>
+                <div id='search-compare-one-box-clear' onclick='clearCompareOne();'>Clear</div>
+              </div>
+              <div id='search-compare-two-box'>
+                <input id='search-compare-two-box-input' type='text' name='compare-two-search' placeholder='Find a third species...' oninput='fuseSearch(2, this.value);'></input>
+                <ul></ul>
+                <div id='search-compare-two-box-name'></div>
+                <div id='search-compare-two-box-clear' onclick='clearCompareTwo();'>Clear</div>
+              </div>
+            </div>
+            <div id='search-compare-distribution'>
+              <input type='radio' name='comparator' value='distribution' onclick='distFocus();'></input>
+              <div class='subhead'>COMPARE WITH</div>
+              <div class='subhead2'>SPECIES WITH SIMILAR DISTRIBUTION</div>
+              <div id='compare-dist-one' onclick='toggleCompareDistOne();'>
+                <div id='compare-dist-one-name'>Select a second species</div>
+                <div class='triangle'></div>
+                <ul></ul>
+              </div>
+              <div id='compare-dist-two' onclick='toggleCompareDistTwo();'>
+                <div id='compare-dist-two-name'>Select a third species</div>
+                <div class='triangle'></div>
+                <ul></ul>
+              </div>
+            </div>
+            <div id='search-compare-environment'>
+              <input type='radio' name='comparator' value='environment' onclick='envFocus();'></input>
+              <div class='subhead'>COMPARE WITH</div>
+              <div class='subhead2'>SPECIES WITH SIMILAR ENVIRONMENT</div>
+            </div>
+          </div>
+        </div>
+        <div id='search-options' class='bordered'>
+          <div id='options-label'>MAP CONTROLS</div>
+          <div id='options-background'>
+            <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();'>
+              <option>Select Map Background</option>
+              <option>&#10004; Black &#38; White</option>
+              <option>Terrain Map - Dark</option>
+              <option>Terrain Map - Light</option>
+              <option>Satellite Image</option>
+            </select>
+          </div>
+          <div id='options-overlays'>
+            <select id='options-overlays-dropdown' class='search-dropdown' onchange='toggleOverlay();' onmousedown='prepareOverlay();'>
+              <option>Select Map Overlays</option>
+              <option>Trails</option>
+              <option>Visitor Centers</option>
+              <option>Shelters</option>
+              <option>Roads</option>
+              <option>Campsites</option>
+            </select>
+          </div>
+          <div id='options-predicted' class='search-checkbox'>
+            <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked></input>
+            <label for='options-predicted-checkbox'>View Predicted Species</label>
+          </div>
+          <div id='options-observed' class='search-checkbox'>
+            <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();'></input>
+            <label for='options-observed-checkbox'>View Observed Species</label>
+          </div>
+          <div id='options-annotations'>
+            <center>Draw on Map</center>
+            <center><div id='options-annotations-buttons' class='npmap'></div></center>
+            <center><button>Show/Hide</button></center>
+            <center><button>Clear All</button></center>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src='http://www.nps.gov/lib/npmap.js/2.0.0/npmap-bootstrap.min.js'></script>
+    <script src='searchUtils.js'></script>
+    <script src='utils.js'></script>
+  </body>
+</html>

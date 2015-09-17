@@ -1,5 +1,5 @@
 #!/bin/sh
-#PBS -l ncpus=256,walltime=24:00:00
+#PBS -l feature=uv10,ncpus=32,walltime=24:00:00
 #PBS -j oe
 #PBS -N ssi
 #PBS -q computation
