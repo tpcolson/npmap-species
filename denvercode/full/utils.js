@@ -236,6 +236,24 @@ function toggleName() {
 		el.title = tmp;
 	}
 
+	swapNeeded = $('#compare-env-one-name').css('backgroundColor') === 'rgb(202, 24, 146)';
+	if(swapNeeded) {
+		var el = document.getElementById('compare-env-one-name'),
+			tmp = el.innerHTML;
+
+		el.innerHTML = el.title;
+		el.title = tmp;
+	}
+
+	swapNeeded = $('#compare-env-two-name').css('backgroundColor') === 'rgb(242, 142, 67)';
+	if(swapNeeded) {
+		var el = document.getElementById('compare-env-two-name'),
+			tmp = el.innerHTML;
+
+		el.innerHTML = el.title;
+		el.title = tmp;
+	}
+
 	/* switch compare names */
 	$('ul', '#search-compare-one-box').children().each(function() {
 		var tmp = this.innerHTML;
@@ -255,6 +273,20 @@ function toggleName() {
 		}
 	});
 	$('ul', '#compare-dist-two').children().each(function(i) {
+		if(i > 0) {
+			var tmp = this.innerHTML;
+			this.innerHTML = this.title;
+			this.title = tmp;
+		}
+	});
+	$('ul', '#compare-env-one').children().each(function(i) {
+		if(i > 0) {
+			var tmp = this.innerHTML;
+			this.innerHTML = this.title;
+			this.title = tmp;
+		}
+	});
+	$('ul', '#compare-env-two').children().each(function(i) {
 		if(i > 0) {
 			var tmp = this.innerHTML;
 			this.innerHTML = this.title;

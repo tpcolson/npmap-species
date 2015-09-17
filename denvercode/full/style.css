@@ -645,6 +645,104 @@ body, html {
   width: 240px;
   height: 128px;
   float: left;
+  position: relative;
+}
+
+#compare-env-one {
+  display: none;
+  position: absolute;
+  top: 25px;
+  left: 225px;
+  width: 245px;
+  height: 20px;
+  background-color: #40403d;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#compare-env-one > ul {
+  display: none;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  top: -4px;
+}
+
+#compare-env-one > ul > li {
+  border-top: 1px dotted #f5faf2;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 5px;
+  color: #f5faf2;
+  font-size: 8pt;
+  font-style: italic;
+  overflow-x: hidden;
+  cursor: pointer;
+}
+
+#compare-env-one > .triangle {
+  left: 225px;
+}
+
+#compare-env-one-name {
+  width: 240px;
+  height: 20px;
+  padding: 0px 0px 0px 5px;
+  background-color: #40403d;
+  border-radius: 4px;
+  color: #f5faf2;
+  font-style: italic;
+  font-size: 10pt;
+  line-height: 20px;
+}
+
+#compare-env-two {
+  display: none;
+  position: absolute;
+  top: 75px;
+  left: 225px;
+  width: 245px;
+  height: 20px;
+  background-color: #40403d;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#compare-env-two > ul {
+  display: none;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  top: -4px;
+}
+
+#compare-env-two > ul > li {
+  border-top: 1px dotted #f5faf2;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 5px;
+  color: #f5faf2;
+  font-size: 8pt;
+  font-style: italic;
+  overflow-x: hidden;
+  cursor: pointer;
+}
+
+#compare-env-two-name {
+  width: 240px;
+  height: 20px;
+  padding: 0px 0px 0px 5px;
+  background-color: #40403d;
+  border-radius: 4px;
+  color: #f5faf2;
+  font-style: italic;
+  font-size: 10pt;
+  line-height: 20px;
+}
+
+#compare-env-two > .triangle {
+  left: 225px;
 }
 
 #search-compare-contents input[type='radio'] {
