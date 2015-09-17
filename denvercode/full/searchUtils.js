@@ -271,68 +271,68 @@ function populateDistributionLists() {
       $('#compare-dist-two-name').prop('title')
     ];
 
-    var li = document.createElement('li');
-    li.innerHTML = 'Clear selection';
-    li.onclick = function() {
-      clearCompareOne();
-    }
-    document.getElementById('compare-dist-one').children[2].appendChild(li);
-    li = document.createElement('li');
-    li.innerHTML = 'Clear selection';
-    li.onclick = function() {
-      clearCompareTwo();
-    }
-    document.getElementById('compare-dist-two').children[2].appendChild(li);
+  var li = document.createElement('li');
+  li.innerHTML = 'Clear selection';
+  li.onclick = function() {
+    clearCompareOne();
+  }
+  document.getElementById('compare-dist-one').children[2].appendChild(li);
+  li = document.createElement('li');
+  li.innerHTML = 'Clear selection';
+  li.onclick = function() {
+    clearCompareTwo();
+  }
+  document.getElementById('compare-dist-two').children[2].appendChild(li);
 
-    for(var i = 0; i < 15; i++) {
-      var max = -1,
-        maxItem = '';
-      for(var key in results) {
-        if(found.indexOf(key.replace(/_/g, ' ')) === -1) {
-          if(results[key] > max) {
-            max = results[key];
-            maxItem = key;
-          }
+  for(var i = 0; i < 15; i++) {
+    var max = -1,
+      maxItem = '';
+    for(var key in results) {
+      if(found.indexOf(key.replace(/_/g, ' ')) === -1) {
+        if(results[key] > max) {
+          max = results[key];
+          maxItem = key;
         }
       }
-      found.push(maxItem.replace(/_/g, ' '));
-
-      var latin = maxItem,
-        common = control._nameMappings[latin].common,
-        id = control._nameMappings[latin].id;
-
-      li = document.createElement('li');
-      li._latin = latin;
-      li._common = common;
-      li._id = id;
-      if(whichName === 'common') {
-        li.innerHTML = li._common;
-        li.title = li._latin.replace(/_/g, ' ');
-      } else {
-        li.innerHTML = li._latin;
-        li.title = li._common.replace(/_/g, ' ');
-      }
-      li.onclick = function() {
-        selectSecondSpecies(this);
-      }
-      document.getElementById('compare-dist-one').children[2].appendChild(li);
-
-      li = document.createElement('li');
-      li._latin = latin;
-      li._common = common;
-      li._id = id;
-      if(whichName === 'common') {
-        li.innerHTML = li._common;
-        li.title = li._latin.replace(/_/g, ' ');
-      } else {
-        li.innerHTML = li._latin.replace(/_/g, ' ');
-        li.title = li._common;
-      }
-      li.onclick = function() {
-        selectThirdSpecies(this);
-      }
-      document.getElementById('compare-dist-two').children[2].appendChild(li);
     }
+    found.push(maxItem.replace(/_/g, ' '));
+
+    var latin = maxItem,
+      common = control._nameMappings[latin].common,
+      id = control._nameMappings[latin].id;
+
+    li = document.createElement('li');
+    li._latin = latin;
+    li._common = common;
+    li._id = id;
+    if(whichName === 'common') {
+      li.innerHTML = li._common;
+      li.title = li._latin.replace(/_/g, ' ');
+    } else {
+      li.innerHTML = li._latin.replace(/_/g, ' ');
+      li.title = li._common;
+    }
+    li.onclick = function() {
+      selectSecondSpecies(this);
+    }
+    document.getElementById('compare-dist-one').children[2].appendChild(li);
+
+    li = document.createElement('li');
+    li._latin = latin;
+    li._common = common;
+    li._id = id;
+    if(whichName === 'common') {
+      li.innerHTML = li._common;
+      li.title = li._latin.replace(/_/g, ' ');
+    } else {
+      li.innerHTML = li._latin.replace(/_/g, ' ');
+      li.title = li._common;
+    }
+    li.onclick = function() {
+      selectThirdSpecies(this);
+    }
+    document.getElementById('compare-dist-two').children[2].appendChild(li);
+  }
 }
 
 function populateEnvironmentLists() {
@@ -391,8 +391,8 @@ function populateEnvironmentLists() {
         li.innerHTML = li._common;
         li.title = li._latin.replace(/_/g, ' ');
       } else {
-        li.innerHTML = li._latin;
-        li.title = li._common.replace(/_/g, ' ');
+        li.innerHTML = li._latin.replace(/_/g, ' ');
+        li.title = li._common;
       }
       li.onclick = function() {
         selectSecondSpecies(this);
@@ -519,6 +519,7 @@ function selectSecondSpecies(li) {
     control._selectedSpecies[1].observed.addTo(NPMap.config.L);
   }
 
+  populateDistributionLists();
   populateEnvironmentLists();
 }
 
@@ -627,6 +628,7 @@ function selectThirdSpecies(li) {
     control._selectedSpecies[2].observed.addTo(NPMap.config.L);
   }
 
+  populateDistributionLists();
   populateEnvironmentLists();
 }
 
