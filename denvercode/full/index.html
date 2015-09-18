@@ -140,13 +140,14 @@
           <div id='options-annotations'>
             <center>Draw on Map</center>
             <center><div id='options-annotations-buttons' class='npmap'></div></center>
-            <center><button>Show/Hide</button></center>
-            <center><button>Clear All</button></center>
+            <center><button onclick='toggleLayerVisibility();'>Show/Hide</button></center>
+            <center><button onclick='clearLayers();'>Clear All</button></center>
           </div>
         </div>
       </div>
     </div>
     <script src='http://www.nps.gov/lib/npmap.js/2.0.0/npmap-bootstrap.min.js'></script>
+    <script src='drawUtils.js'></script>
     <script src='searchUtils.js'></script>
     <script src='utils.js'></script>
   </body>
