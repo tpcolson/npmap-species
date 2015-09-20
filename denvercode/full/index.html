@@ -146,7 +146,25 @@
         </div>
       </div>
     </div>
+    <div id='color-legend'>
+      <div id='legend-banner'>
+        <div id='legend-banner-left'>COLOR LEGEND</div>
+        <div id='legend-banner-right'>DATA QUALITY</div>
+      </div>
+      <div id='legend-species-blue'></div>
+      <div id='legend-species-pink'></div>
+      <div id='legend-species-orange'></div>
+      <div id='legend-blend'>
+        <div id='legend-blend-text'>COLOR BLEND:</div>
+        <div id='legend-blend-switch'>
+          <div><center><div onclick='toggleBlending();'>ON</div></center></div>
+          <div><center><div onclick='toggleBlending();'>OFF</div></center></div>
+          <div id='legend-blend-switch-button'><div onclick='toggleBlending();'><span>...</span></div></div>
+        </div>
+      </div>
+    </div>
     <script src='http://www.nps.gov/lib/npmap.js/2.0.0/npmap-bootstrap.min.js'></script>
+    <script src='colorLegend.js'></script>
     <script src='drawUtils.js'></script>
     <script src='searchUtils.js'></script>
     <script src='utils.js'></script>
