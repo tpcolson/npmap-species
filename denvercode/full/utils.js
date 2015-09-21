@@ -97,11 +97,24 @@ function toggleTooltips() {
 	tooltipsEnabled = !tooltipsEnabled;
 }
 
+function showHelp() {
+	if(minimized) {
+		toggleMinimized();
+
+		setTimeout(function() {
+			$('body').chardinJs('start');
+		}, 200);
+	} else {
+		$('body').chardinJs('start');
+	}
+}
+
 var minimized = false,
 	currentBaseLayer = undefined;
 function toggleMinimized() {
 	var minButton = document.getElementById('search-banner-help-minimizer').children[0].children[0];
 	if(!minimized) {
+		$('body').chardinJs('stop');
 		minButton.innerHTML = '+';
 		$('#search-tool').css({overflow: 'hidden'});
 		$('#search-tool').stop();

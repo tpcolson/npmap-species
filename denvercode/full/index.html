@@ -5,10 +5,15 @@
     <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no'>
     <link rel='stylesheet' href='reset.css'></link>
     <link rel='stylesheet' href='style.css'></link>
+    <link rel='stylesheet' href='chardinjs.css'></link>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <script src='mapping.js'></script>
     <script src='fuse.min.js'></script>
     <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+    <script src='chardinjs.min.js'></script>
+    <script src='colorLegend.js'></script>
+    <script src='drawUtils.js'></script>
+    <script src='searchUtils.js'></script>
     <title>National Park Service Species Mapper</title>
   </head>
   <body>
@@ -27,24 +32,24 @@
             <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
           </div>
           <div id='search-banner-help-link' class='bordered'>
-            <center><a href='http://seelab.eecs.utk.edu/help' target='_blank'>?</a></center>
+            <center><button onclick='showHelp();'>?</button></center>
           </div>
-          <div id='search-banner-help-minimizer'>
+          <div id='search-banner-help-minimizer' data-intro='Minimize this toolbar' data-position='right'>
             <center><button onclick='toggleMinimized();'>&#8212;</button></center>
           </div>
         </div>
         <div id='search-initial'>
-          <div id='search-initial-lexical' onclick='toggleLexicalSearch();'>
+          <div id='search-initial-lexical' onclick='toggleLexicalSearch();' data-intro='Search for a species in the database' data-position='bottom'>
             <img src='images/searchButton.png'></img>
           </div>
-          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();'>
+          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();' data-intro='Select a species from the full list' data-position='right'>
             <div class='dropdown-text'>Select a species</div>
             <div class='triangle'></div>
           </div>
           <div id='search-initial-image' class='vignette'>
             <img src='images/no_image.png'></img>
           </div>
-          <div id='search-initial-switch'>
+          <div id='search-initial-switch' data-intro='Choose to show common or latin names' data-position='bottom'>
             <div><center><div onclick='toggleName();'>COMMON</div></center></div>
             <div><center><div onclick='toggleName();'>LATIN</div></center></div>
             <div id='search-initial-switch-button'><div onclick='toggleName();'><span>...</span></div></div>
@@ -137,7 +142,7 @@
             <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();'></input>
             <label for='options-observed-checkbox'>View Observed Species</label>
           </div>
-          <div id='options-annotations'>
+          <div id='options-annotations' data-intro='Draw markers, lines, or circles on the map' data-position='right'>
             <center>Draw on Map</center>
             <center><div id='options-annotations-buttons' class='npmap'></div></center>
             <center><button onclick='toggleLayerVisibility();'>Hide Layers</button></center>
@@ -164,9 +169,6 @@
       </div>
     </div>
     <script src='http://www.nps.gov/lib/npmap.js/2.0.0/npmap-bootstrap.min.js'></script>
-    <script src='colorLegend.js'></script>
-    <script src='drawUtils.js'></script>
-    <script src='searchUtils.js'></script>
     <script src='utils.js'></script>
   </body>
 </html>

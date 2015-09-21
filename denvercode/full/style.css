@@ -12,6 +12,7 @@ body, html {
   height: 100%;
   padding: 0px;
   margin: 0px;
+  z-index: -1;
 }
 
 #search-tool {
@@ -23,7 +24,6 @@ body, html {
   margin: 0px;
   background-color: black;
   opacity: 1.0;
-  z-index: 100;
 }
 
 #search-tool-contents {
@@ -78,17 +78,20 @@ body, html {
   border-right: 1px solid #40403d;
 }
 
-#search-banner-help-link > center > a {
-  color: #f5faf2;
-  font-size: 10pt;
-  font-weight: bold;
-  letter-spacing: .001em;
-  text-decoration: none;
-  line-height: 30px;
-}
-
-#search-banner-help-link > center > a:hover {
+#search-banner-help-link > center > button {
+  background:none;
+  border:none;
+  margin: 0;
+  padding: 0;
+  outline: none;
   cursor: pointer;
+  color: #f5faf2;
+  font-weight: bold;
+  font-size: 10pt;
+  letter-spacing: .001em;
+  line-height: 30px;
+  width: 100%;
+  height: 100%;
 }
 
 #search-banner-help-tooltips {
@@ -110,6 +113,8 @@ body, html {
   font-size: 10pt;
   letter-spacing: .001em;
   line-height: 30px;
+  width: 100%;
+  height: 100%;
 }
 
 #search-banner-help-minimizer {
@@ -130,6 +135,8 @@ body, html {
   font-size: 10pt;
   letter-spacing: .001em;
   line-height: 30px;
+  width: 100%;
+  height: 100%;
 }
 
 #search-initial {
@@ -313,7 +320,7 @@ body, html {
   margin: 0;
   border: 0;
   padding: 0px 0px 0px 5px;
-  font-family: 'Source Sans Pro', serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #f5faf2;
   letter-spacing: .001em;
   font-size: 10pt;
@@ -393,7 +400,7 @@ body, html {
   margin: 0;
   border: 0;
   padding: 0px 0px 0px 5px;
-  font-family: 'Source Sans Pro', serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #f5faf2;
   letter-spacing: .001em;
   font-size: 10pt;
@@ -413,7 +420,7 @@ body, html {
   margin: 0;
   border: 0;
   padding: 0px 0px 0px 5px;
-  font-family: 'Source Sans Pro', serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #f5faf2;
   letter-spacing: .001em;
   font-size: 10pt;
@@ -429,7 +436,7 @@ body, html {
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  font-family: 'Source Sans Pro', serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #f5faf2;
   letter-spacing: .001em;
   font-size: 8pt;
@@ -476,7 +483,7 @@ body, html {
   margin: 0;
   border: 0;
   padding: 0px 0px 0px 5px;
-  font-family: 'Source Sans Pro', serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #f5faf2;
   letter-spacing: .001em;
   font-size: 10pt;
@@ -493,7 +500,7 @@ body, html {
   background-color: #f28e43;
   border-radius: 4px;
   padding: 0px 0px 0px 5px;
-  font-family: 'Source Sans Pro', serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #f5faf2;
   letter-spacing: .001em;
   font-size: 10pt;
@@ -509,7 +516,7 @@ body, html {
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  font-family: 'Source Sans Pro', serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #f5faf2;
   letter-spacing: .001em;
   font-size: 8pt;
@@ -998,7 +1005,7 @@ body, html {
 }
 
 button {
-  font-family: 'Source Sans Pro', serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .bordered {
