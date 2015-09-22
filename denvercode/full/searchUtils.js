@@ -196,10 +196,6 @@ function selectInitialSpecies(li) {
   document.getElementById('legend-blue-contents-name').title = li.title;
 
   if(control._selectedSpecies[0] !== undefined) {
-    if(showPredicted) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
-    }
-
     if(showObserved) {
       NPMap.config.L.removeLayer(control._selectedSpecies[0].observed);
     }
@@ -209,11 +205,6 @@ function selectInitialSpecies(li) {
   control._selectedSpecies[0]._id = li._id;
   control._selectedSpecies[0]._latin = li._latin;
   control._selectedSpecies[0]._common = li._common;
-  control._selectedSpecies[0].predicted = L.npmap.layer.mapbox({
-    name: li._latin,
-    opacity: blendingActive ? .5 : 1,
-    id: 'nps.GRSM_' + li._id + '_blue'
-  });
 
   control._selectedSpecies[0].observed = L.npmap.layer.geojson({
     name: li._latin + '_observations',
@@ -240,13 +231,11 @@ function selectInitialSpecies(li) {
     }*/
   });
 
-  if(showPredicted) {
-    control._selectedSpecies[0].predicted.addTo(NPMap.config.L);
-  }
-
   if(showObserved) {
     control._selectedSpecies[0].observed.addTo(NPMap.config.L);
   }
+
+  drawData();
 
   document.getElementById('search-compare-placeholder').style.display = 'none';
   document.getElementById('search-compare-contents').style.display = 'block';
@@ -505,10 +494,6 @@ function selectSecondSpecies(li) {
   $('#compare-env-one-name').css({backgroundColor:'#ca1892'});
 
   if(control._selectedSpecies[1] !== undefined) {
-    if(showPredicted) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
-    }
-
     if(showObserved) {
       NPMap.config.L.removeLayer(control._selectedSpecies[1].observed);
     }
@@ -518,11 +503,6 @@ function selectSecondSpecies(li) {
   control._selectedSpecies[1]._id = li._id;
   control._selectedSpecies[1]._latin = li._latin;
   control._selectedSpecies[1]._common = li._common;
-  control._selectedSpecies[1].predicted = L.npmap.layer.mapbox({
-    name: li._latin,
-    opacity: blendingActive ? .5 : 1,
-    id: 'nps.GRSM_' + li._id + '_pink'
-  });
 
   control._selectedSpecies[1].observed = L.npmap.layer.geojson({
     name: li._latin + '_observations',
@@ -549,13 +529,11 @@ function selectSecondSpecies(li) {
     }*/
   });
 
-  if(showPredicted) {
-    control._selectedSpecies[1].predicted.addTo(NPMap.config.L);
-  }
-
   if(showObserved) {
     control._selectedSpecies[1].observed.addTo(NPMap.config.L);
   }
+
+  drawData();
 
   populateDistributionLists();
   populateEnvironmentLists();
@@ -640,10 +618,6 @@ function selectThirdSpecies(li) {
   $('#compare-env-two-name').css({backgroundColor:'#f28e43'});
 
   if(control._selectedSpecies[2] !== undefined) {
-    if(showPredicted) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[2].predicted);
-    }
-
     if(showObserved) {
       NPMap.config.L.removeLayer(control._selectedSpecies[2].observed);
     }
@@ -653,11 +627,6 @@ function selectThirdSpecies(li) {
   control._selectedSpecies[2]._id = li._id;
   control._selectedSpecies[2]._latin = li._latin;
   control._selectedSpecies[2]._common = li._common;
-  control._selectedSpecies[2].predicted = L.npmap.layer.mapbox({
-    name: li._latin,
-    opacity: blendingActive ? .5 : 1,
-    id: 'nps.GRSM_' + li._id + '_orange'
-  });
 
   control._selectedSpecies[2].observed = L.npmap.layer.geojson({
     name: li._latin + '_observations',
@@ -687,13 +656,11 @@ function selectThirdSpecies(li) {
     }*/
   });
 
-  if(showPredicted) {
-    control._selectedSpecies[2].predicted.addTo(NPMap.config.L);
-  }
-
   if(showObserved) {
     control._selectedSpecies[2].observed.addTo(NPMap.config.L);
   }
+
+  drawData();
 
   populateDistributionLists();
   populateEnvironmentLists();

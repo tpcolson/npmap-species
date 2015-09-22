@@ -188,10 +188,10 @@ var showPredicted = true;
 function togglePredicted() {
 	showPredicted = !showPredicted;
 
-	for(var i = 0; i < control._selectedSpecies.length; i++) {
-		if(showPredicted) {
-			control._selectedSpecies[i].predicted.addTo(NPMap.config.L);
-		} else {
+	if(showPredicted) {
+		drawData();
+	} else {
+		for(var i = 0; i < control._selectedSpecies.length; i++) {
 			NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
 		}
 	}

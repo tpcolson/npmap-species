@@ -5,72 +5,51 @@ function toggleBlending() {
   $('div', '#legend-blend-switch-button').stop();
   if(blendingActive) {
     $('div', '#legend-blend-switch-button').animate({left: '25px'});
-
-    for(var i = 0; i < control._selectedSpecies.length; i++) {
-      var color;
-      switch(i) {
-        case 0:
-          color = '_blue';
-          break;
-        case 1:
-          color = '_pink';
-          break;
-        case 2:
-          color = '_orange';
-          break;
-        default:
-          return;
-      }
-
-      if(control._selectedSpecies[i] !== undefined) {
-        if(showPredicted) {
-          NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
-        }
-
-        control._selectedSpecies[i].predicted = L.npmap.layer.mapbox({
-          name: control._selectedSpecies[i]._latin,
-          opacity: .5,
-          id: 'nps.GRSM_' + control._selectedSpecies[i]._id + color
-        });
-
-        if(showPredicted) {
-          control._selectedSpecies[i].predicted.addTo(NPMap.config.L);
-        }
-      }
-    }
   } else {
     $('div', '#legend-blend-switch-button').animate({left: '0px'});
+  }
 
-    for(var i = 0; i < control._selectedSpecies.length; i++) {
-      var color;
-      switch(i) {
-        case 0:
-          color = '_blue';
-          break;
-        case 1:
-          color = '_pink';
-          break;
-        case 2:
-          color = '_orange';
-          break;
-        default:
-          return;
+  drawData();
+}
+
+var order = [
+  2,
+  1,
+  0
+];
+function drawData() {
+  for(var i = 0; i < order.length; i++) {
+    var idx = order[i],
+      color;
+    switch(idx) {
+      case 0:
+        color = '_blue';
+        break;
+      case 1:
+        color = '_pink';
+        break;
+      case 2:
+        color = '_orange';
+        break;
+      default:
+        return;
+    }
+
+    if(control._selectedSpecies[idx] !== undefined) {
+      if(showPredicted) {
+        try {
+          NPMap.config.L.removeLayer(control._selectedSpecies[idx].predicted);
+        } catch(e) {}
       }
 
-      if(control._selectedSpecies[i] !== undefined) {
-        if(showPredicted) {
-          NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
-        }
+      control._selectedSpecies[idx].predicted = L.npmap.layer.mapbox({
+        name: control._selectedSpecies[idx]._latin,
+        opacity: blendingActive ? .5 : 1,
+        id: 'nps.GRSM_' + control._selectedSpecies[idx]._id + color
+      });
 
-        control._selectedSpecies[i].predicted = L.npmap.layer.mapbox({
-          name: control._selectedSpecies[i]._latin,
-          opacity: 1,
-          id: 'nps.GRSM_' + control._selectedSpecies[i]._id + color
-        });
-
-        if(showPredicted) {
-          control._selectedSpecies[i].predicted.addTo(NPMap.config.L);
-        }
+      if(showPredicted) {
+        control._selectedSpecies[idx].predicted.addTo(NPMap.config.L);
       }
     }
   }
