@@ -182,7 +182,8 @@ function clearSearch() {
   document.getElementById('search-compare-placeholder').style.display = 'block';
   document.getElementById('search-compare-contents').style.display = 'none';
   document.getElementById('search-initial-image').style.opacity = '0';
-  document.getElementById('color-legend').style.display = 'none';
+
+  $('#color-legend').animate({height: '0px'});
 }
 
 function selectInitialSpecies(li) {
@@ -248,7 +249,8 @@ function selectInitialSpecies(li) {
   document.getElementById('search-compare-placeholder').style.display = 'none';
   document.getElementById('search-compare-contents').style.display = 'block';
   document.getElementById('search-initial-image').style.opacity = '1';
-  document.getElementById('color-legend').style.display = 'block';
+
+  $('#color-legend').animate({height: '100px'});
 
   populateLists();
 }
@@ -423,6 +425,19 @@ function populateEnvironmentLists() {
 }
 
 function clearCompareOne() {
+  $('#legend-species-pink').stop();
+  $('#legend-species-pink').animate({
+    height: '0px',
+    marginBottom: '0px'
+  });
+
+  if(control._selectedSpecies[1] !== undefined) {
+    $('#color-legend').stop();
+    $('#color-legend').animate({
+      height: $('#color-legend').height()-50
+    });
+  }
+
   $('#search-compare-one-box-input').val('');
   $('#search-compare-one-box-input').trigger('input');
   $('#search-compare-one-box-name').css({display:'none'});
@@ -448,6 +463,19 @@ function clearCompareOne() {
 }
 
 function selectSecondSpecies(li) {
+  $('#legend-species-pink').stop();
+  $('#legend-species-pink').animate({
+    height: '49px',
+    marginBottom: '1px'
+  });
+
+  if(control._selectedSpecies[1] === undefined) {
+    $('#color-legend').stop();
+    $('#color-legend').animate({
+      height: $('#color-legend').height()+50
+    });
+  }
+
   $('#search-compare-one-box-input').val('');
   $('#search-compare-one-box-input').trigger('input');
 
@@ -529,6 +557,19 @@ function selectSecondSpecies(li) {
 }
 
 function clearCompareTwo() {
+  $('#legend-species-orange').stop();
+  $('#legend-species-orange').animate({
+    height: '0px',
+    marginBottom: '0px'
+  });
+
+  if(control._selectedSpecies[2] !== undefined) {
+    $('#color-legend').stop();
+    $('#color-legend').animate({
+      height: $('#color-legend').height()-50
+    });
+  }
+
   $('#search-compare-two-box-input').val('');
   $('#search-compare-two-box-input').trigger('input');
   $('#search-compare-two-box-name').css({display:'none'});
@@ -554,6 +595,19 @@ function clearCompareTwo() {
 }
 
 function selectThirdSpecies(li) {
+  $('#legend-species-orange').stop();
+  $('#legend-species-orange').animate({
+    height: '49px',
+    marginBottom: '1px'
+  });
+
+  if(control._selectedSpecies[2] === undefined) {
+    $('#color-legend').stop();
+    $('#color-legend').animate({
+      height: $('#color-legend').height()+50
+    });
+  }
+
   $('#search-compare-two-box-input').val('');
   $('#search-compare-two-box-input').trigger('input');
 
@@ -766,6 +820,8 @@ function fuseSearch(idx, value) {
 function clearComparisons() {
   clearCompareOne();
   clearCompareTwo();
+  $('#color-legend').stop();
+  $('#color-legend').animate({height:'100px'});
   populateDistributionLists();
   populateEnvironmentLists();
 }

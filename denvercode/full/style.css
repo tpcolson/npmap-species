@@ -865,16 +865,16 @@ body, html {
 }
 
 #color-legend {
-  height: 200px;
+  height: 0px;
   width: 300px;
   background-color: #000000;
-  display: none;
   position: absolute;
   z-index: 1000;
   border-radius: 10px;
   font-family: 'Source Sans Pro', sans-serif;
   bottom: 30px;
   right: 5px;
+  overflow: hidden;
 }
 
 #legend-banner {
@@ -916,18 +916,18 @@ body, html {
 
 #legend-species-pink {
   width: 100%;
-  height: 49px;
+  height: 0px;
   background-color: #40403d;
   border-radius: 4px;
-  margin-bottom: 1px;
+  margin-bottom: 0px;
 }
 
 #legend-species-orange {
   width: 100%;
-  height: 49px;
+  height: 0px;
   background-color: #40403d;
   border-radius: 4px;
-  margin-bottom: 1px;
+  margin-bottom: 0px;
 }
 
 #legend-blend {
