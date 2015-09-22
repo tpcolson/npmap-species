@@ -166,11 +166,14 @@ function clearSearch() {
   document.getElementById('search-initial-dropdown').style.backgroundColor = '#40403d';
 
   for(var i = 0; i < control._selectedSpecies.length; i++) {
-    if(showPredicted) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
-    }
-    if(showObserved) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[i].observed);
+    if(control._selectedSpecies[i] !== undefined) {
+      if(showPredicted) {
+        NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
+      }
+
+      if(showObserved) {
+        NPMap.config.L.removeLayer(control._selectedSpecies[i].observed);
+      }
     }
   }
 
@@ -179,6 +182,7 @@ function clearSearch() {
   document.getElementById('search-compare-placeholder').style.display = 'block';
   document.getElementById('search-compare-contents').style.display = 'none';
   document.getElementById('search-initial-image').style.opacity = '0';
+  document.getElementById('color-legend').style.display = 'none';
 }
 
 function selectInitialSpecies(li) {
@@ -244,6 +248,7 @@ function selectInitialSpecies(li) {
   document.getElementById('search-compare-placeholder').style.display = 'none';
   document.getElementById('search-compare-contents').style.display = 'block';
   document.getElementById('search-initial-image').style.opacity = '1';
+  document.getElementById('color-legend').style.display = 'block';
 
   populateLists();
 }
