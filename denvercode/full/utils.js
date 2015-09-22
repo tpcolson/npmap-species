@@ -222,6 +222,21 @@ function toggleName() {
 		whichName = 'common';
 	}
 
+	var el = document.getElementById('legend-blue-contents-name'),
+		tmp = el.innerHTML;
+	el.innerHTML = el.title;
+	el.title = tmp;
+
+	var el = document.getElementById('legend-pink-contents-name'),
+		tmp = el.innerHTML;
+	el.innerHTML = el.title;
+	el.title = tmp;
+
+	var el = document.getElementById('legend-orange-contents-name'),
+		tmp = el.innerHTML;
+	el.innerHTML = el.title;
+	el.title = tmp;
+
 	var swapNeeded = $('#search-initial-dropdown').css('backgroundColor') === 'rgb(64, 181, 198)';
 	if(swapNeeded) {
 		var el = $('#search-initial-dropdown').children()[0],

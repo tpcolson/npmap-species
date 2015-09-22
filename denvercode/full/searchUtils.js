@@ -192,6 +192,8 @@ function selectInitialSpecies(li) {
   document.getElementById('search-initial-dropdown').children[0].innerHTML = li.innerHTML;
   document.getElementById('search-initial-dropdown').children[0].title = li.title;
   document.getElementById('search-initial-dropdown').style.backgroundColor = '#40b5c6';
+  document.getElementById('legend-blue-contents-name').innerHTML = li.innerHTML;
+  document.getElementById('legend-blue-contents-name').title = li.title;
 
   if(control._selectedSpecies[0] !== undefined) {
     if(showPredicted) {
@@ -476,6 +478,9 @@ function selectSecondSpecies(li) {
     });
   }
 
+  document.getElementById('legend-pink-contents-name').innerHTML = li.innerHTML;
+  document.getElementById('legend-pink-contents-name').title = li.title;
+
   $('#search-compare-one-box-input').val('');
   $('#search-compare-one-box-input').trigger('input');
 
@@ -607,6 +612,9 @@ function selectThirdSpecies(li) {
       height: $('#color-legend').height()+50
     });
   }
+
+  document.getElementById('legend-orange-contents-name').innerHTML = li.innerHTML;
+  document.getElementById('legend-orange-contents-name').title = li.title;
 
   $('#search-compare-two-box-input').val('');
   $('#search-compare-two-box-input').trigger('input');
