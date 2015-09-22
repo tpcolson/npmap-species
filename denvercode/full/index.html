@@ -39,10 +39,10 @@
           </div>
         </div>
         <div id='search-initial'>
-          <div id='search-initial-lexical' onclick='toggleLexicalSearch();' data-intro='Search for a species in the database' data-position='bottom'>
+          <div id='search-initial-lexical' onclick='toggleLexicalSearch();' data-intro='Pull up species search prompt' data-position='bottom'>
             <img src='images/searchButton.png'></img>
           </div>
-          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();' data-intro='Select a species from the full list' data-position='right'>
+          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();' data-intro='Select a species' data-position='right'>
             <div class='dropdown-text'>Select a species</div>
             <div class='triangle'></div>
           </div>
@@ -116,7 +116,7 @@
         <div id='search-options' class='bordered'>
           <div id='options-label'>MAP CONTROLS</div>
           <div id='options-background'>
-            <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();'>
+            <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();' data-intro="Change map background" data-position='left'>
               <option>Select Map Background</option>
               <option>&#10004; Black &#38; White</option>
               <option>Terrain Map - Dark</option>
@@ -125,7 +125,7 @@
             </select>
           </div>
           <div id='options-overlays'>
-            <select id='options-overlays-dropdown' class='search-dropdown' onchange='toggleOverlay();' onmousedown='prepareOverlay();'>
+            <select id='options-overlays-dropdown' class='search-dropdown' onchange='toggleOverlay();' onmousedown='prepareOverlay();' data-intro='Show extra map features' data-position='left'>
               <option>Select Map Overlays</option>
               <option>Trails</option>
               <option>Visitor Centers</option>
@@ -134,13 +134,15 @@
               <option>Campsites</option>
             </select>
           </div>
-          <div id='options-predicted' class='search-checkbox'>
-            <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked></input>
-            <label for='options-predicted-checkbox'>View Predicted Species</label>
-          </div>
-          <div id='options-observed' class='search-checkbox'>
-            <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();'></input>
-            <label for='options-observed-checkbox'>View Observed Species</label>
+          <div id='checkbox-container' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
+            <div id='options-predicted' class='search-checkbox'>
+              <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked></input>
+              <label for='options-predicted-checkbox'>View Predicted Species</label>
+            </div>
+            <div id='options-observed' class='search-checkbox'>
+              <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();'></input>
+              <label for='options-observed-checkbox'>View Observed Species</label>
+            </div>
           </div>
           <div id='options-annotations' data-intro='Draw markers, lines, or circles on the map' data-position='right'>
             <center>Draw on Map</center>

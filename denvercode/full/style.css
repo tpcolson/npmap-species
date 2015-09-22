@@ -815,6 +815,11 @@ body, html {
   line-height: 13px;
 }
 
+#checkbox-container {
+  width: 150px;
+  height: 35px;
+}
+
 #options-predicted {
   padding-bottom: 5px;
 }
