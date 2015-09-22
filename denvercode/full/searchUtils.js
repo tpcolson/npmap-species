@@ -211,7 +211,7 @@ function selectInitialSpecies(li) {
   control._selectedSpecies[0]._common = li._common;
   control._selectedSpecies[0].predicted = L.npmap.layer.mapbox({
     name: li._latin,
-    opacity: .5,
+    opacity: blendingActive ? .5 : 1,
     id: 'nps.GRSM_' + li._id + '_blue'
   });
 
@@ -520,7 +520,7 @@ function selectSecondSpecies(li) {
   control._selectedSpecies[1]._common = li._common;
   control._selectedSpecies[1].predicted = L.npmap.layer.mapbox({
     name: li._latin,
-    opacity: .5,
+    opacity: blendingActive ? .5 : 1,
     id: 'nps.GRSM_' + li._id + '_pink'
   });
 
@@ -655,7 +655,7 @@ function selectThirdSpecies(li) {
   control._selectedSpecies[2]._common = li._common;
   control._selectedSpecies[2].predicted = L.npmap.layer.mapbox({
     name: li._latin,
-    opacity: .5,
+    opacity: blendingActive ? .5 : 1,
     id: 'nps.GRSM_' + li._id + '_orange'
   });
 
