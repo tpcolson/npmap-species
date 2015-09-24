@@ -196,6 +196,10 @@ function selectInitialSpecies(li) {
   document.getElementById('legend-blue-contents-name').title = li.title;
 
   if(control._selectedSpecies[0] !== undefined) {
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
+    }
+
     if(showObserved) {
       NPMap.config.L.removeLayer(control._selectedSpecies[0].observed);
     }
@@ -211,8 +215,8 @@ function selectInitialSpecies(li) {
     url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
     type: 'geojson',
     popup: {
-      title: li._latin.replace(/_/g, ' ') + ' sighting',
-      description: 'Coordinates: {{coordinates}}'
+      title: 'Species sighting',
+      description: 'Latin name: ' + li._latin.replace(/_/g, " ") + '<br>Common name: ' + li._common + '<br>Coordinates: {{coordinates}}'
     },
     styles: {
       point: {
@@ -494,6 +498,10 @@ function selectSecondSpecies(li) {
   $('#compare-env-one-name').css({backgroundColor:'#ca1892'});
 
   if(control._selectedSpecies[1] !== undefined) {
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
+    }
+
     if(showObserved) {
       NPMap.config.L.removeLayer(control._selectedSpecies[1].observed);
     }
@@ -509,8 +517,8 @@ function selectSecondSpecies(li) {
     url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
     type: 'geojson',
     popup: {
-      title: li._latin.replace(/_/g, ' ') + ' sighting',
-      description: 'Coordinates: {{coordinates}}'
+      title: 'Species sighting',
+      description: 'Latin name: ' + li._latin.replace(/_/g, " ") + '<br>Common name: ' + li._common + '<br>Coordinates: {{coordinates}}'
     },
     styles: {
       point: {
@@ -618,6 +626,10 @@ function selectThirdSpecies(li) {
   $('#compare-env-two-name').css({backgroundColor:'#f28e43'});
 
   if(control._selectedSpecies[2] !== undefined) {
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[2].predicted);
+    }
+
     if(showObserved) {
       NPMap.config.L.removeLayer(control._selectedSpecies[2].observed);
     }
@@ -633,8 +645,8 @@ function selectThirdSpecies(li) {
     url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
     type: 'geojson',
     popup: {
-      title: li._latin.replace(/_/g, ' ') + ' sighting',
-      description: 'Coordinates: {{coordinates}}'
+      title: 'Species sighting',
+      description: 'Latin name: ' + li._latin.replace(/_/g, " ") + '<br>Common name: ' + li._common + '<br>Coordinates: {{coordinates}}'
     },
     styles: {
       point: {
