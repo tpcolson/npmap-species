@@ -135,22 +135,22 @@ function populateResults() {
 }
 
 var listShown = false;
-function toggleSearchList() {
+function toggleSearchList(callback) {
   if(!listShown) {
     if(whichName === 'common') {
       $('#search-initial-dropdown-common').stop();
-      $('#search-initial-dropdown-common').animate({height: '400px'});
+      $('#search-initial-dropdown-common').animate({height: '400px'}, callback);
     } else {
       $('#search-initial-dropdown-latin').stop();
-      $('#search-initial-dropdown-latin').animate({height: '400px'});
+      $('#search-initial-dropdown-latin').animate({height: '400px'}, callback);
     }
   } else {
     if(whichName === 'common') {
       $('#search-initial-dropdown-common').stop();
-      $('#search-initial-dropdown-common').animate({height: '0px'});
+      $('#search-initial-dropdown-common').animate({height: '0px'}, callback);
     } else {
       $('#search-initial-dropdown-latin').stop();
-      $('#search-initial-dropdown-latin').animate({height: '0px'});
+      $('#search-initial-dropdown-latin').animate({height: '0px'}, callback);
     }
   }
 
@@ -683,8 +683,15 @@ function toggleLexicalSearch() {
   searchActive = !searchActive;
 
   if(searchActive) {
-    document.getElementById('search-initial-box').style.display = 'block';
-    document.getElementById('search-initial-box-input').focus();
+    if(listShown) {
+      toggleSearchList(function() {
+        document.getElementById('search-initial-box').style.display = 'block';
+        document.getElementById('search-initial-box-input').focus();
+      });
+    } else {
+      document.getElementById('search-initial-box').style.display = 'block';
+      document.getElementById('search-initial-box-input').focus();
+    }
   } else {
     document.getElementById('search-initial-box').style.display = 'none';
   }
