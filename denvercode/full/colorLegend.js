@@ -54,3 +54,13 @@ function drawData() {
     }
   }
 }
+
+function prepareLegendDrag() {
+  $('#legend-species').sortable({
+    onDrop: function($item, container, _super) {
+      _super($item, container);
+      $item.css('height', '49px');
+      $item.css('marginBottom', '1px');
+    }
+  });
+}

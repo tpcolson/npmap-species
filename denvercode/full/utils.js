@@ -73,6 +73,9 @@ window.onload = function() {
 
 	/* prepare search tool */
 	prepareSearchTool();
+
+	/* prepare color legend dragging */
+	prepareLegendDrag();
 }
 
 function attemptExecute(fn) {
