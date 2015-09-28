@@ -4,6 +4,7 @@ var control = {
   _nameMappings: undefined,
   _commonToLatin: undefined,
   _similarDistributions: undefined,
+  _aucValues: undefined,
   _selectedSpecies: []
 }
 
@@ -36,6 +37,10 @@ function prepareSearchTool() {
 
   loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_environment.json', function(data) {
     control._similarEnvironments = data;
+  });
+
+  loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/species_auc.json', function(data) {
+    control._aucValues = data;
   });
 }
 
@@ -244,6 +249,8 @@ function selectInitialSpecies(li) {
   document.getElementById('search-compare-placeholder').style.display = 'none';
   document.getElementById('search-compare-contents').style.display = 'block';
   document.getElementById('search-initial-image').style.opacity = '1';
+
+  findAUC(0, li._latin);
 
   $('#color-legend').animate({height: '100px'});
 
@@ -543,6 +550,8 @@ function selectSecondSpecies(li) {
 
   drawData();
 
+  findAUC(1, li._latin);
+
   populateDistributionLists();
   populateEnvironmentLists();
 }
@@ -673,6 +682,8 @@ function selectThirdSpecies(li) {
   }
 
   drawData();
+
+  findAUC(2, li._latin);
 
   populateDistributionLists();
   populateEnvironmentLists();
@@ -938,4 +949,37 @@ function envFocus() {
   $('.subhead2', '#search-compare-environment').html('SPECIES WITH SIMILAR ENVIRONMENT');
   $('#compare-env-one').css({display:'block'});
   $('#compare-env-two').css({display:'block'});
+}
+
+function findAUC(idx, name) {
+  var color;
+  switch(idx) {
+    case 0:
+      color = 'blue';
+      break;
+    case 1:
+      color = 'pink';
+      break;
+    case 2:
+      color = 'orange';
+      break;
+    default:
+      return;
+  }
+
+  var valueStr = control._aucValues[name];
+  if(valueStr !== undefined) {
+    var value = parseFloat(valueStr);
+    if(value < 0.7) {
+      $('#legend-' + color + '-quality').html('Poor');
+    } else if(value < 0.8) {
+      $('#legend-' + color + '-quality').html('Average');
+    } else if(value < 0.9) {
+      $('#legend-' + color + '-quality').html('Good');
+    } else {
+      $('#legend-' + color + '-quality').html('Excellent');
+    }
+  } else {
+    $('#legend-' + color + '-quality').html('Unknown');
+  }
 }
