@@ -464,6 +464,9 @@ function clearCompareOne() {
   }
 
   control._selectedSpecies[1] = undefined;
+
+  populateDistributionLists();
+  populateEnvironmentLists();
 }
 
 function selectSecondSpecies(li) {
@@ -597,6 +600,9 @@ function clearCompareTwo() {
   }
 
   control._selectedSpecies[2] = undefined;
+
+  populateDistributionLists();
+  populateEnvironmentLists();
 }
 
 function selectThirdSpecies(li) {
