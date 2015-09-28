@@ -200,7 +200,7 @@ function selectInitialSpecies(li) {
   document.getElementById('legend-blue-contents-name').innerHTML = li.innerHTML;
   document.getElementById('legend-blue-contents-name').title = li.title;
 
-  if(control._selectedSpecies[0] !== undefined) {
+  if(control._selectedSpecies[0] !== undefined && control._selectedSpecies[0].visible) {
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
     }
@@ -214,6 +214,7 @@ function selectInitialSpecies(li) {
   control._selectedSpecies[0]._id = li._id;
   control._selectedSpecies[0]._latin = li._latin;
   control._selectedSpecies[0]._common = li._common;
+  control._selectedSpecies[0].visible = true;
 
   control._selectedSpecies[0].observed = L.npmap.layer.geojson({
     name: li._latin + '_observations',
@@ -253,6 +254,7 @@ function selectInitialSpecies(li) {
   findAUC(0, li._latin);
 
   $('#color-legend').animate({height: '100px'});
+  $('input', '#legend-blue-controls').prop('checked', true);
 
   populateLists();
 }
@@ -504,7 +506,7 @@ function selectSecondSpecies(li) {
   $('#compare-dist-one-name').css({backgroundColor:'#ca1892'});
   $('#compare-env-one-name').css({backgroundColor:'#ca1892'});
 
-  if(control._selectedSpecies[1] !== undefined) {
+  if(control._selectedSpecies[1] !== undefined && control._selectedSpecies[1].visible) {
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
     }
@@ -518,6 +520,7 @@ function selectSecondSpecies(li) {
   control._selectedSpecies[1]._id = li._id;
   control._selectedSpecies[1]._latin = li._latin;
   control._selectedSpecies[1]._common = li._common;
+  control._selectedSpecies[1].visible = true;
 
   control._selectedSpecies[1].observed = L.npmap.layer.geojson({
     name: li._latin + '_observations',
@@ -551,6 +554,8 @@ function selectSecondSpecies(li) {
   drawData();
 
   findAUC(1, li._latin);
+
+  $('input', '#legend-pink-controls').prop('checked', true);
 
   populateDistributionLists();
   populateEnvironmentLists();
@@ -634,7 +639,7 @@ function selectThirdSpecies(li) {
   $('#compare-dist-two-name').css({backgroundColor:'#f28e43'});
   $('#compare-env-two-name').css({backgroundColor:'#f28e43'});
 
-  if(control._selectedSpecies[2] !== undefined) {
+  if(control._selectedSpecies[2] !== undefined && control._selectedSpecies[2].visible) {
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[2].predicted);
     }
@@ -648,6 +653,7 @@ function selectThirdSpecies(li) {
   control._selectedSpecies[2]._id = li._id;
   control._selectedSpecies[2]._latin = li._latin;
   control._selectedSpecies[2]._common = li._common;
+  control._selectedSpecies[2].visible = true;
 
   control._selectedSpecies[2].observed = L.npmap.layer.geojson({
     name: li._latin + '_observations',
@@ -684,6 +690,8 @@ function selectThirdSpecies(li) {
   drawData();
 
   findAUC(2, li._latin);
+
+  $('input', '#legend-orange-controls').prop('checked', true);
 
   populateDistributionLists();
   populateEnvironmentLists();
@@ -981,5 +989,27 @@ function findAUC(idx, name) {
     }
   } else {
     $('#legend-' + color + '-quality').html('Unknown');
+  }
+}
+
+function toggleSpecies(idx) {
+  control._selectedSpecies[idx].visible = !control._selectedSpecies[idx].visible;
+
+  if(control._selectedSpecies[idx].visible) {
+    if(showPredicted) {
+      control._selectedSpecies[idx].predicted.addTo(NPMap.config.L);
+    }
+
+    if(showObserved) {
+      control._selectedSpecies[idx].observed.addTo(NPMap.config.L);
+    }
+  } else {
+    if(showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[idx].predicted);
+    }
+
+    if(showObserved) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[idx].observed);
+    }
   }
 }

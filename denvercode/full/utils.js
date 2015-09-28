@@ -192,7 +192,7 @@ function togglePredicted() {
 		drawData();
 	} else {
 		for(var i = 0; i < control._selectedSpecies.length; i++) {
-			if(control._selectedSpecies[i] !== undefined) {
+			if(control._selectedSpecies[i] !== undefined && control._selectedSpecies[i].visible) {
 				NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
 			}
 		}
@@ -204,7 +204,7 @@ function toggleObserved() {
 	showObserved = !showObserved;
 
 	for(var i = 0; i < control._selectedSpecies.length; i++) {
-		if(control._selectedSpecies[i] !== undefined) {
+		if(control._selectedSpecies[i] !== undefined && control._selectedSpecies[i].visible) {
 			if(showObserved) {
 				control._selectedSpecies[i].observed.addTo(NPMap.config.L);
 			} else {

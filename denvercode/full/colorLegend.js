@@ -36,7 +36,7 @@ function drawData() {
     }
 
     if(control._selectedSpecies[idx] !== undefined) {
-      if(showPredicted) {
+      if(showPredicted && control._selectedSpecies[idx].visible) {
         try {
           NPMap.config.L.removeLayer(control._selectedSpecies[idx].predicted);
         } catch(e) {}
@@ -48,7 +48,7 @@ function drawData() {
         id: 'nps.GRSM_' + control._selectedSpecies[idx]._id + color
       });
 
-      if(showPredicted) {
+      if(showPredicted && control._selectedSpecies[idx].visible) {
         control._selectedSpecies[idx].predicted.addTo(NPMap.config.L);
       }
     }

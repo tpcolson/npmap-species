@@ -926,6 +926,14 @@ body, html {
   float: left;
 }
 
+#legend-blue-controls > input[type='checkbox'] {
+  position: relative;
+  top: 12.5px;
+  left: 19px;
+  margin: 0;
+  cursor: pointer;
+}
+
 #legend-blue-contents {
   position: relative;
   top: 4.5px;
@@ -1022,6 +1030,14 @@ body, html {
   float: left;
 }
 
+#legend-pink-controls > input[type='checkbox'] {
+  position: relative;
+  top: 12.5px;
+  left: 19px;
+  margin: 0;
+  cursor: pointer;
+}
+
 #legend-pink-contents {
   position: relative;
   top: 4.5px;
@@ -1116,6 +1132,14 @@ body, html {
   height: 100%;
   width: 50px;
   float: left;
+}
+
+#legend-orange-controls > input[type='checkbox'] {
+  position: relative;
+  top: 12.5px;
+  left: 19px;
+  margin: 0;
+  cursor: pointer;
 }
 
 #legend-orange-contents {
@@ -1354,6 +1378,30 @@ button {
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-top: 5px solid #f5faf2;
+}
+
+.legend-up-triangle {
+  position: relative;
+  top: 7.5px;
+  left: 20px;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #f5faf2;
+  cursor: pointer;
+}
+
+.legend-down-triangle {
+  position: relative;
+  top: 17px;
+  left: 20px;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #f5faf2;
+  cursor: pointer;
 }
 
 @media (min-width: 1364px) {
