@@ -26,32 +26,32 @@
           <div id='search-banner-logo'>
             <img src='images/npsLogo.svg'></img>
           </div>
-          <div id='search-banner-title' tooltip='test'>
+          <div id='search-banner-title'>
             <center>Great Smoky Mountains Species Mapper</center>
           </div>
           <div id='search-banner-buffer'></div>
-          <div id='search-banner-help-tooltips' class='bordered'>
+          <div id='search-banner-help-tooltips' class='bordered' tooltip='Turn tooltips on/off'>
             <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
           </div>
-          <div id='search-banner-help-link' class='bordered'>
+          <div id='search-banner-help-link' class='bordered' tooltip='Get help using the tool'>
             <center><button onclick='showHelp();'>?</button></center>
           </div>
-          <div id='search-banner-help-minimizer' data-intro='Minimize this toolbar' data-position='right'>
+          <div id='search-banner-help-minimizer' tooltip='Minimize or expand the toolbar' data-intro='Minimize this toolbar' data-position='right'>
             <center><button onclick='toggleMinimized();'>&#8212;</button></center>
           </div>
         </div>
         <div id='search-initial'>
-          <div id='search-initial-lexical' onclick='toggleLexicalSearch();' data-intro='Pull up species search prompt' data-position='bottom'>
+          <div id='search-initial-lexical' onclick='toggleLexicalSearch();' tooltip='Pull up a search prompt' data-intro='Pull up species search prompt' data-position='bottom'>
             <img src='images/searchButton.png'></img>
           </div>
-          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();' data-intro='Select a species' data-position='right'>
+          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
             <div class='dropdown-text'>Select a species</div>
             <div class='triangle'></div>
           </div>
           <div id='search-initial-image' class='vignette'>
             <img src='images/no_image.png'></img>
           </div>
-          <div id='search-initial-switch' data-intro='Choose to show common or latin names' data-position='bottom'>
+          <div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
             <div><center><div onclick='toggleName();'>COMMON</div></center></div>
             <div><center><div onclick='toggleName();'>LATIN</div></center></div>
             <div id='search-initial-switch-button'><div onclick='toggleName();'><span>...</span></div></div>
