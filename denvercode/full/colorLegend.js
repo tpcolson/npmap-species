@@ -79,6 +79,7 @@ function reorderLayers() {
 
 function prepareLegendDrag() {
   $('#legend-species').sortable({
+    handle: 'div.drag-handle',
     onDrop: function($item, container, _super) {
       _super($item, container);
       $item.css('height', '49px');
