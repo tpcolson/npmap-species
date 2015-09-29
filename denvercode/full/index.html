@@ -11,6 +11,7 @@
     <script src='fuse.min.js'></script>
     <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
     <script src='jquery-sortable.js'></script>
+    <script src='tooltips.js'></script>
     <script src='chardinjs.min.js'></script>
     <script src='colorLegend.js'></script>
     <script src='drawUtils.js'></script>
@@ -25,12 +26,12 @@
           <div id='search-banner-logo'>
             <img src='images/npsLogo.svg'></img>
           </div>
-          <div id='search-banner-title'>
+          <div id='search-banner-title' tooltip='test'>
             <center>Great Smoky Mountains Species Mapper</center>
           </div>
           <div id='search-banner-buffer'></div>
           <div id='search-banner-help-tooltips' class='bordered'>
-            <center><button onclick='toggleTooltips();' style='display: none'>TOOLTIPS ON</button></center>
+            <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
           </div>
           <div id='search-banner-help-link' class='bordered'>
             <center><button onclick='showHelp();'>?</button></center>

@@ -76,6 +76,9 @@ window.onload = function() {
 
 	/* prepare color legend dragging */
 	prepareLegendDrag();
+
+	/* prepare tooltips */
+	$tooltips._initialize(document.body);
 }
 
 function attemptExecute(fn) {
@@ -86,15 +89,15 @@ function attemptExecute(fn) {
 
 var tooltipsEnabled = true;
 function toggleTooltips() {
+	$tooltips._toggleTooltips();
+
 	var tooltipsButton = document.getElementById('search-banner-help-tooltips').children[0].children[0];
 	if(tooltipsEnabled) {
-		tooltipsButton.innerHTML = 'TOOLTIPS OFF'
+		tooltipsButton.innerHTML = 'TOOLTIPS OFF';
 		tooltipsButton.style.color = '#a5aaa2';
-		// disable all tooltips
 	} else {
-		tooltipsButton.innerHTML = 'TOOLTIPS ON'
+		tooltipsButton.innerHTML = 'TOOLTIPS ON';
 		tooltipsButton.style.color = '#f5faf2';
-		// enable all tooltips
 	}
 
 	tooltipsEnabled = !tooltipsEnabled;
