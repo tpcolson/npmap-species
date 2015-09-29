@@ -215,6 +215,67 @@
         </div>
       </div>
     </div>
+    <div class='color-legend-demo' data-intro='Reorder species, view predicted data colormaps, and view data quality metrics' data-position='left'>
+      <div id='legend-demo-banner'>
+        <div id='legend-demo-banner-left'>COLOR LEGEND</div>
+        <div id='legend-demo-banner-right'>DATA QUALITY</div>
+      </div>
+      <ol id='legend-demo-species'>
+        <li id='legend-demo-species-blue'>
+          <div id='legend-demo-blue-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' checked></input>
+          </div>
+          <div id='legend-demo-blue-contents'>
+            <div id='legend-demo-blue-contents-name'>Species 1</div>
+            <div id='legend-demo-blue-contents-colormap'>
+              <div id='legend-demo-blue-100'>100-75%</div>
+              <div id='legend-demo-blue-75'>75-50%</div>
+              <div id='legend-demo-blue-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-demo-blue-quality'>Poor</div>
+        </li>
+        <li id='legend-demo-species-pink'>
+          <div id='legend-demo-pink-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' checked></input>
+          </div>
+          <div id='legend-demo-pink-contents'>
+            <div id='legend-demo-pink-contents-name'>Species 2</div>
+            <div id='legend-demo-pink-contents-colormap'>
+              <div id='legend-demo-pink-100'>100-75%</div>
+              <div id='legend-demo-pink-75'>75-50%</div>
+              <div id='legend-demo-pink-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-demo-pink-quality'>Average</div>
+        </li>
+        <li id='legend-demo-species-orange'>
+          <div id='legend-demo-orange-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' checked></input>
+          </div>
+          <div id='legend-demo-orange-contents'>
+            <div id='legend-demo-orange-contents-name'>Species 3</div>
+            <div id='legend-demo-orange-contents-colormap'>
+              <div id='legend-demo-orange-100'>100-75%</div>
+              <div id='legend-demo-orange-75'>75-50%</div>
+              <div id='legend-demo-orange-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-demo-orange-quality'>Excellent</div>
+        </li>
+      </ol>
+      <div id='legend-demo-blend'>
+        <div id='legend-demo-blend-text'>COLOR BLEND:</div>
+        <div id='legend-demo-blend-switch'>
+          <div><center><div>ON</div></center></div>
+          <div><center><div>OFF</div></center></div>
+          <div id='legend-demo-blend-switch-button'><div><span>...</span></div></div>
+        </div>
+      </div>
+    </div>
     <script src='http://www.nps.gov/lib/npmap.js/2.0.0/npmap-bootstrap.min.js'></script>
     <script src='utils.js'></script>
   </body>
