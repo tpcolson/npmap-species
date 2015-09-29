@@ -1003,7 +1003,7 @@ function toggleSpecies(idx) {
 
   if(control._selectedSpecies[idx].visible) {
     if(showPredicted) {
-      control._selectedSpecies[idx].predicted.addTo(NPMap.config.L);
+      drawData();
     }
 
     if(showObserved) {

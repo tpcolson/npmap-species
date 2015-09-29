@@ -55,12 +55,37 @@ function drawData() {
   }
 }
 
+function reorderLayers() {
+  $('#legend-species').children().each(function(idx) {
+    var value;
+
+    switch(this.id) {
+      case 'legend-species-blue':
+        value = 0;
+        break;
+      case 'legend-species-pink':
+        value = 1;
+        break;
+      case 'legend-species-orange':
+        value = 2;
+        break;
+      default:
+        return;
+    }
+
+    order[$('#legend-species').children().length - idx - 1] = value;
+  });
+}
+
 function prepareLegendDrag() {
   $('#legend-species').sortable({
     onDrop: function($item, container, _super) {
       _super($item, container);
       $item.css('height', '49px');
       $item.css('marginBottom', '1px');
+
+      reorderLayers();
+      drawData();
     }
   });
 }
