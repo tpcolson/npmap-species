@@ -105,26 +105,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		events: [{
 			fn: function(evt) {
 				if(currentBaseLayer && evt.layer._leaflet_id === currentBaseLayer._leaflet_id) {
-					for(var i = 0; i < control._selectedSpecies.length; i++) {
-						if(control._selectedSpecies[i] !== undefined) {
-							NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
-
-							var color;
-							if(i === 0) {
-								color = 'blue';
-							} else if(i === 1) {
-								color = 'pink';
-							} else {
-								color = 'orange';
-							}
-
-							control._selectedSpecies[i].predicted = L.npmap.layer.mapbox({
-								name: control._selectedSpecies[i]._latin,
-								opacity: .5,
-								id: 'nps.GRSM_' + control._selectedSpecies[i]._id + '_' + color
-							}).addTo(NPMap.config.L);
-						}
-					}
+					drawData();
 				}
 			},
 			type: 'layeradd'
