@@ -8,6 +8,10 @@ var $tooltips = {
       el.title = title;
     }
   },
+  _removeTooltip: function(el) {
+    delete this._titles[el.id];
+    el.title = '';
+  },
   _toggleTooltips: function() {
     this._active = !this._active;
 
@@ -36,5 +40,12 @@ var $tooltips = {
         queue.push(child);
       }
     }
+  },
+  _destroy: function() {
+    for(var id in this._titles) {
+      document.getElementById(id).title = '';
+    }
+
+    this._titles = {};
   }
 }
