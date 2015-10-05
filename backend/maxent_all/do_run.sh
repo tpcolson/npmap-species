@@ -16,7 +16,7 @@ JOBID_FILE=current_eden_job.txt
 # Configuration settings--SET APPROPRIATE PATHS HERE FOR YOUR ENVIRONMENT
 TOOL_DIR=/lustre/medusa/lyu6/npmap-species/backend/maxent
 MAXENT_JAR=$TOOL_DIR/maxent.jar
-CONFIG_FILE=/lustre/medusa/lyu6/npmap-species/twincreekscode/maxent_config/config_small.txt
+CONFIG_FILE=/lustre/medusa/lyu6/npmap-species/twincreekscode/maxent_config/config_all.txt
 CV_NUM_FOLDS=$(head $CONFIG_FILE -n 1)
 CV=true
 COUNTS_FILE=/lustre/medusa/lyu6/npmap-species/atbirecords/ATBI_counts.txt
