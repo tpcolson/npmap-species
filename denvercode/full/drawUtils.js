@@ -5,6 +5,7 @@ function toggleLayerVisibility() {
   layersVisible = !layersVisible;
 
   if(layersVisible) {
+    recordAction('show drawn objects');
     $($('#options-annotations').children()[2]).children().html('Hide Layers');
     $('.leaflet-control-edit').children().prop('disabled', false);
     for(var i = 0; i < savedLayers.length; i++) {
@@ -12,6 +13,7 @@ function toggleLayerVisibility() {
     }
     savedLayers = [];
   } else {
+    recordAction('hide drawn objects');
     $($('#options-annotations').children()[2]).children().html('Show Layers');
     $('.leaflet-control-edit').children().prop('disabled', true);
     for(var key in NPMap.config.L.editControl._featureGroup._layers) {
@@ -23,6 +25,7 @@ function toggleLayerVisibility() {
 }
 
 function clearLayers() {
+  recordAction('removed all drawn objects');
   NPMap.config.L.editControl._featureGroup.clearLayers();
   savedLayers = [];
   if(!layersVisible) {
