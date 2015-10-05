@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash -l
 
 echo $(date) > start_time.txt
 echo $(date +%s) > start_secs.txt
-. /usr/share/modules/init/bash
+#. /usr/share/modules/init/bash
 module load eden
 ./do_run.sh && \
 ./preprocess.sh && \
