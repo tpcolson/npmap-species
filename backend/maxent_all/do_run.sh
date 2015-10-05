@@ -34,6 +34,7 @@ if test $CV_NUM_FOLDS -gt 20 || test $CV_NUM_FOLDS -lt 2; then
 fi
 
 # clean up previous run's output
+echo "Removing prevous eden run directories."
 rm -rf eden*
 
 # make pre-process script
