@@ -25,7 +25,7 @@ ENV_DIR=/lustre/medusa/lyu6/npmap-species/environmentallayers/mxe
 ENV_PICK=all
 GDAL_BIN=/nics/c/home/lyu6/gdal/bin
 GEOTIFF_DIR=$RUN_DIR/geotiffs
-ACCOUNT=UT-NTNL0229
+ACCOUNT=UT-TENN0241
 #------------------------------------------------------------------------
 
 if test $CV_NUM_FOLDS -gt 20 || test $CV_NUM_FOLDS -lt 2; then
@@ -34,6 +34,7 @@ if test $CV_NUM_FOLDS -gt 20 || test $CV_NUM_FOLDS -lt 2; then
 fi
 
 # clean up previous run's output
+echo "Removing prevous eden run directories."
 rm -rf eden*
 
 # make pre-process script

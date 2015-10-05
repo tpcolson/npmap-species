@@ -27,10 +27,9 @@ done < $CONFIG_FILE
 
 # Make PBS header file for eden run
 echo -n "#!/bin/sh
-#PBS -l feature=uv10,ncpus=32
+#PBS -l size=32
 #PBS -j oe
 #PBS -N eden_aggregate
-#PBS -q analysis
 #PBS -A $ACCOUNT
 #PBS -m e
 #PBS -M lyu6@vols.utk.edu
