@@ -49,7 +49,7 @@ outputdirectory=$output_dir/$species/fold$fold \
    done
 done < $CONFIG_FILE
 
- calculate appropriate ncpus; cap at 256
+# calculate appropriate ncpus; cap at 256
 if test $i -gt 256; then
    ncpus=256
 elif test $i -gt 32; then
