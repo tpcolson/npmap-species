@@ -5,11 +5,27 @@
     <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no'>
     <link rel='stylesheet' href='reset.css'></link>
     <link rel='stylesheet' href='style.css'></link>
+    <link rel='stylesheet' href='chardinjs.css'></link>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <script src='mapping.js'></script>
     <script src='fuse.min.js'></script>
     <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
-    <title>National Park Service Species Mapper</title>
+    <script src='jquery-sortable.js'></script>
+    <script src='tooltips.js'></script>
+    <script src='chardinjs.min.js'></script>
+    <script src='colorLegend.js'></script>
+    <script src='drawUtils.js'></script>
+    <script src='searchUtils.js'></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68345027-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <title>Great Smoky Mountains Species Mapper</title>
   </head>
   <body>
     <div id='map'></div>
@@ -20,31 +36,31 @@
             <img src='images/npsLogo.svg'></img>
           </div>
           <div id='search-banner-title'>
-            <center>National Park Service Species Mapper</center>
+            <center>Great Smoky Mountains Species Mapper</center>
           </div>
           <div id='search-banner-buffer'></div>
-          <div id='search-banner-help-tooltips' class='bordered'>
+          <div id='search-banner-help-tooltips' class='bordered' tooltip='Turn tooltips on/off'>
             <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
           </div>
-          <div id='search-banner-help-link' class='bordered'>
-            <center><a href='http://seelab.eecs.utk.edu/help' target='_blank'>?</a></center>
+          <div id='search-banner-help-link' class='bordered' tooltip='Get help using the tool'>
+            <center><button onclick='showHelp();'>?</button></center>
           </div>
-          <div id='search-banner-help-minimizer'>
+          <div id='search-banner-help-minimizer' tooltip='Minimize or expand the toolbar' data-intro='Minimize this toolbar' data-position='right'>
             <center><button onclick='toggleMinimized();'>&#8212;</button></center>
           </div>
         </div>
         <div id='search-initial'>
-          <div id='search-initial-lexical' onclick='toggleLexicalSearch();'>
+          <div id='search-initial-lexical' onclick='toggleLexicalSearch();' tooltip='Pull up a search prompt' data-intro='Pull up species search prompt' data-position='bottom'>
             <img src='images/searchButton.png'></img>
           </div>
-          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();'>
+          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
             <div class='dropdown-text'>Select a species</div>
             <div class='triangle'></div>
           </div>
           <div id='search-initial-image' class='vignette'>
             <img src='images/no_image.png'></img>
           </div>
-          <div id='search-initial-switch'>
+          <div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
             <div><center><div onclick='toggleName();'>COMMON</div></center></div>
             <div><center><div onclick='toggleName();'>LATIN</div></center></div>
             <div id='search-initial-switch-button'><div onclick='toggleName();'><span>...</span></div></div>
@@ -95,13 +111,23 @@
               <input type='radio' name='comparator' value='environment' onclick='envFocus();'></input>
               <div class='subhead'>COMPARE WITH</div>
               <div class='subhead2'>SPECIES WITH SIMILAR ENVIRONMENT</div>
+              <div id='compare-env-one' onclick='toggleCompareEnvOne();'>
+                <div id='compare-env-one-name'>Select a second species</div>
+                <div class='triangle'></div>
+                <ul></ul>
+              </div>
+              <div id='compare-env-two' onclick='toggleCompareEnvTwo();'>
+                <div id='compare-env-two-name'>Select a third species</div>
+                <div class='triangle'></div>
+                <ul></ul>
+              </div>
             </div>
           </div>
         </div>
         <div id='search-options' class='bordered'>
           <div id='options-label'>MAP CONTROLS</div>
           <div id='options-background'>
-            <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();'>
+            <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();' data-intro="Change map background" data-position='left'>
               <option>Select Map Background</option>
               <option>&#10004; Black &#38; White</option>
               <option>Terrain Map - Dark</option>
@@ -110,7 +136,7 @@
             </select>
           </div>
           <div id='options-overlays'>
-            <select id='options-overlays-dropdown' class='search-dropdown' onchange='toggleOverlay();' onmousedown='prepareOverlay();'>
+            <select id='options-overlays-dropdown' class='search-dropdown' onchange='toggleOverlay();' onmousedown='prepareOverlay();' data-intro='Show extra map features' data-position='left'>
               <option>Select Map Overlays</option>
               <option>Trails</option>
               <option>Visitor Centers</option>
@@ -119,25 +145,148 @@
               <option>Campsites</option>
             </select>
           </div>
-          <div id='options-predicted' class='search-checkbox'>
-            <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked></input>
-            <label for='options-predicted-checkbox'>View Predicted Species</label>
+          <div id='checkbox-container' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
+            <div id='options-predicted' class='search-checkbox'>
+              <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked></input>
+              <label for='options-predicted-checkbox'>View Predicted Species</label>
+            </div>
+            <div id='options-observed' class='search-checkbox'>
+              <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();'></input>
+              <label for='options-observed-checkbox'>View Observed Species</label>
+            </div>
           </div>
-          <div id='options-observed' class='search-checkbox'>
-            <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();'></input>
-            <label for='options-observed-checkbox'>View Observed Species</label>
-          </div>
-          <div id='options-annotations'>
+          <div id='options-annotations' data-intro='Draw markers, lines, or circles on the map' data-position='right'>
             <center>Draw on Map</center>
             <center><div id='options-annotations-buttons' class='npmap'></div></center>
-            <center><button>Show/Hide</button></center>
-            <center><button>Clear All</button></center>
+            <center><button onclick='toggleLayerVisibility();'>Hide Layers</button></center>
+            <center><button onclick='clearLayers();'>Clear All Layers</button></center>
           </div>
         </div>
       </div>
     </div>
+    <div id='color-legend'>
+      <div id='legend-banner'>
+        <div id='legend-banner-left'>COLOR LEGEND</div>
+        <div id='legend-banner-right'>DATA QUALITY</div>
+      </div>
+      <ol id='legend-species'>
+        <li id='legend-species-blue'>
+          <div id='legend-blue-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' onclick='toggleSpecies(0);' checked></input>
+          </div>
+          <div id='legend-blue-contents'>
+            <div id='legend-blue-contents-name'>Species 1</div>
+            <div id='legend-blue-contents-colormap'>
+              <div id='legend-blue-100'>100-75%</div>
+              <div id='legend-blue-75'>75-50%</div>
+              <div id='legend-blue-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-blue-quality'></div>
+        </li>
+        <li id='legend-species-pink'>
+          <div id='legend-pink-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' onclick='toggleSpecies(1);' checked></input>
+          </div>
+          <div id='legend-pink-contents'>
+            <div id='legend-pink-contents-name'>Species 1</div>
+            <div id='legend-pink-contents-colormap'>
+              <div id='legend-pink-100'>100-75%</div>
+              <div id='legend-pink-75'>75-50%</div>
+              <div id='legend-pink-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-pink-quality'></div>
+        </li>
+        <li id='legend-species-orange'>
+          <div id='legend-orange-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' onclick='toggleSpecies(2);' checked></input>
+          </div>
+          <div id='legend-orange-contents'>
+            <div id='legend-orange-contents-name'>Species 1</div>
+            <div id='legend-orange-contents-colormap'>
+              <div id='legend-orange-100'>100-75%</div>
+              <div id='legend-orange-75'>75-50%</div>
+              <div id='legend-orange-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-orange-quality'></div>
+        </li>
+      </ol>
+      <div id='legend-blend'>
+        <div id='legend-blend-text'>COLOR BLEND:</div>
+        <div id='legend-blend-switch'>
+          <div><center><div onclick='toggleBlending();'>ON</div></center></div>
+          <div><center><div onclick='toggleBlending();'>OFF</div></center></div>
+          <div id='legend-blend-switch-button'><div onclick='toggleBlending();'><span>...</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class='color-legend-demo' data-intro='Reorder species, view predicted data colormaps, and view data quality metrics' data-position='left'>
+      <div id='legend-demo-banner'>
+        <div id='legend-demo-banner-left'>COLOR LEGEND</div>
+        <div id='legend-demo-banner-right'>DATA QUALITY</div>
+      </div>
+      <ol id='legend-demo-species'>
+        <li id='legend-demo-species-blue'>
+          <div id='legend-demo-blue-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' checked></input>
+          </div>
+          <div id='legend-demo-blue-contents'>
+            <div id='legend-demo-blue-contents-name'>Species 1</div>
+            <div id='legend-demo-blue-contents-colormap'>
+              <div id='legend-demo-blue-100'>100-75%</div>
+              <div id='legend-demo-blue-75'>75-50%</div>
+              <div id='legend-demo-blue-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-demo-blue-quality'>Poor</div>
+        </li>
+        <li id='legend-demo-species-pink'>
+          <div id='legend-demo-pink-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' checked></input>
+          </div>
+          <div id='legend-demo-pink-contents'>
+            <div id='legend-demo-pink-contents-name'>Species 2</div>
+            <div id='legend-demo-pink-contents-colormap'>
+              <div id='legend-demo-pink-100'>100-75%</div>
+              <div id='legend-demo-pink-75'>75-50%</div>
+              <div id='legend-demo-pink-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-demo-pink-quality'>Average</div>
+        </li>
+        <li id='legend-demo-species-orange'>
+          <div id='legend-demo-orange-controls'>
+            <div class='drag-handle'>::</div>
+            <input type='checkbox' checked></input>
+          </div>
+          <div id='legend-demo-orange-contents'>
+            <div id='legend-demo-orange-contents-name'>Species 3</div>
+            <div id='legend-demo-orange-contents-colormap'>
+              <div id='legend-demo-orange-100'>100-75%</div>
+              <div id='legend-demo-orange-75'>75-50%</div>
+              <div id='legend-demo-orange-50'>50-25%</div>
+            </div>
+          </div>
+          <div id='legend-demo-orange-quality'>Excellent</div>
+        </li>
+      </ol>
+      <div id='legend-demo-blend'>
+        <div id='legend-demo-blend-text'>COLOR BLEND:</div>
+        <div id='legend-demo-blend-switch'>
+          <div><center><div>ON</div></center></div>
+          <div><center><div>OFF</div></center></div>
+          <div id='legend-demo-blend-switch-button'><div><span>...</span></div></div>
+        </div>
+      </div>
+    </div>
     <script src='http://www.nps.gov/lib/npmap.js/2.0.0/npmap-bootstrap.min.js'></script>
-    <script src='searchUtils.js'></script>
     <script src='utils.js'></script>
   </body>
 </html>
