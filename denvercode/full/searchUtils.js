@@ -173,7 +173,7 @@ function clearSearch() {
   for(var i = 0; i < control._selectedSpecies.length; i++) {
     if(control._selectedSpecies[i] !== undefined) {
       recordAction('removed species: ' + control._selectedSpecies[i]._latin.replace(/_/g, ' '));
-      
+
       if(showPredicted) {
         NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
       }
@@ -204,6 +204,8 @@ function selectInitialSpecies(li) {
   document.getElementById('legend-blue-contents-name').title = li.title;
 
   if(control._selectedSpecies[0] !== undefined && control._selectedSpecies[0].visible) {
+    recordAction('removed species: ' + control._selectedSpecies[0]._latin.replace(/_/g, ' '));
+
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
     }
@@ -516,6 +518,8 @@ function selectSecondSpecies(li) {
   $('#compare-env-one-name').css({backgroundColor:'#ca1892'});
 
   if(control._selectedSpecies[1] !== undefined && control._selectedSpecies[1].visible) {
+    recordAction('removed species: ' + control._selectedSpecies[1]._latin.replace(/_/g, ' '));
+
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
     }
@@ -597,6 +601,8 @@ function clearCompareTwo() {
   $('#compare-env-two-name').css({backgroundColor:'#40403d'});
 
   if(control._selectedSpecies[2] !== undefined) {
+    recordAction('removed species: ' + control._selectedSpecies[2]._latin.replace(/_/g, ' '));
+
     if(showObserved) {
       NPMap.config.L.removeLayer(control._selectedSpecies[2].observed);
     }
