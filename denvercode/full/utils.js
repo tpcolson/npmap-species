@@ -276,7 +276,7 @@ function toggleName() {
 	} else {
 		recordAction('switched to common names');
 		$('#search-initial-switch-button').children().stop();
-		$('#search-initial-switch-button').children().animate({left:'50px'});
+		$('#search-initial-switch-button').children().animate({left:'75px'});
 		whichName = 'common';
 	}
 
