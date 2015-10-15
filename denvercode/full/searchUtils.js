@@ -172,6 +172,8 @@ function clearSearch() {
 
   for(var i = 0; i < control._selectedSpecies.length; i++) {
     if(control._selectedSpecies[i] !== undefined) {
+      recordAction('removed species: ' + control._selectedSpecies[i]._latin.replace(/_/g, ' '));
+
       if(showPredicted) {
         NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
       }
@@ -192,6 +194,7 @@ function clearSearch() {
 }
 
 function selectInitialSpecies(li) {
+  recordAction('added species: ' + li._latin.replace(/_/g, ' '));
   clearComparisons();
 
   document.getElementById('search-initial-dropdown').children[0].innerHTML = li.innerHTML;
@@ -201,6 +204,8 @@ function selectInitialSpecies(li) {
   document.getElementById('legend-blue-contents-name').title = li.title;
 
   if(control._selectedSpecies[0] !== undefined && control._selectedSpecies[0].visible) {
+    recordAction('removed species: ' + control._selectedSpecies[0]._latin.replace(/_/g, ' '));
+
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
     }
@@ -436,6 +441,7 @@ function clearCompareOne() {
   });
 
   if(control._selectedSpecies[1] !== undefined) {
+    recordAction('removed species: ' + control._selectedSpecies[1]._latin.replace(/_/g, ' '));
     $('#color-legend').stop();
     $('#color-legend').animate({
       height: $('#color-legend').height()-50
@@ -470,6 +476,8 @@ function clearCompareOne() {
 }
 
 function selectSecondSpecies(li) {
+  recordAction('added species: ' + li._latin.replace(/_/g, ' '));
+
   $('#legend-species-pink').stop();
   $('#legend-species-pink').animate({
     height: '49px',
@@ -510,6 +518,8 @@ function selectSecondSpecies(li) {
   $('#compare-env-one-name').css({backgroundColor:'#ca1892'});
 
   if(control._selectedSpecies[1] !== undefined && control._selectedSpecies[1].visible) {
+    recordAction('removed species: ' + control._selectedSpecies[1]._latin.replace(/_/g, ' '));
+
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
     }
@@ -572,6 +582,7 @@ function clearCompareTwo() {
   });
 
   if(control._selectedSpecies[2] !== undefined) {
+    recordAction('removed species: ' + control._selectedSpecies[2]._latin.replace(/_/g, ' '));
     $('#color-legend').stop();
     $('#color-legend').animate({
       height: $('#color-legend').height()-50
@@ -590,6 +601,8 @@ function clearCompareTwo() {
   $('#compare-env-two-name').css({backgroundColor:'#40403d'});
 
   if(control._selectedSpecies[2] !== undefined) {
+    recordAction('removed species: ' + control._selectedSpecies[2]._latin.replace(/_/g, ' '));
+
     if(showObserved) {
       NPMap.config.L.removeLayer(control._selectedSpecies[2].observed);
     }
@@ -606,6 +619,8 @@ function clearCompareTwo() {
 }
 
 function selectThirdSpecies(li) {
+  recordAction('added species: ' + li._latin.replace(/_/g, ' '));
+
   $('#legend-species-orange').stop();
   $('#legend-species-orange').animate({
     height: '49px',

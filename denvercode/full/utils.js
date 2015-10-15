@@ -68,6 +68,23 @@ window.onload = function() {
 		}
 		document.getElementById('options-annotations-buttons').appendChild(editControls);
 
+		var me = NPMap.config.L.editControl;
+		L.DomEvent
+      .disableClickPropagation(editControls.children[0])
+      .on(editControls.children[0], 'click', function () {
+      	recordAction('drew marker');
+	    }, me._modes['marker'].handler);
+		L.DomEvent
+      .disableClickPropagation(editControls.children[0])
+      .on(editControls.children[1], 'click', function () {
+      	recordAction('drew polyline');
+	    }, me._modes['marker'].handler);
+		L.DomEvent
+      .disableClickPropagation(editControls.children[0])
+      .on(editControls.children[2], 'click', function () {
+      	recordAction('drew circle');
+	    }, me._modes['marker'].handler);
+
 		return true;
 	});
 
@@ -79,6 +96,19 @@ window.onload = function() {
 
 	/* prepare tooltips */
 	$tooltips._initialize(document.body);
+
+	/* prepare server connection */
+	if(Cookies.get('name') === undefined) {
+		function s4() {
+    	return Math.floor((1 + Math.random()) * 0x10000)
+      	.toString(16)
+      	.substring(1);
+  	}
+  	var val = s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    	s4() + '-' + s4() + s4() + s4();
+		Cookies.set('name', val, {path:''});
+	}
+	connectToLoggingServer();
 }
 
 function attemptExecute(fn) {
@@ -93,9 +123,11 @@ function toggleTooltips() {
 
 	var tooltipsButton = document.getElementById('search-banner-help-tooltips').children[0].children[0];
 	if(tooltipsEnabled) {
+		recordAction('tooltips turned off');
 		tooltipsButton.innerHTML = 'TOOLTIPS OFF';
 		tooltipsButton.style.color = '#a5aaa2';
 	} else {
+		recordAction('tooltips turned on');
 		tooltipsButton.innerHTML = 'TOOLTIPS ON';
 		tooltipsButton.style.color = '#f5faf2';
 	}
@@ -104,6 +136,7 @@ function toggleTooltips() {
 }
 
 function showHelp() {
+	recordAction('showed help overlay');
 	if(minimized) {
 		toggleMinimized();
 
@@ -120,6 +153,7 @@ var minimized = false,
 function toggleMinimized() {
 	var minButton = document.getElementById('search-banner-help-minimizer').children[0].children[0];
 	if(!minimized) {
+		recordAction('minimized toolbar');
 		$('body').chardinJs('stop');
 		minButton.innerHTML = '+';
 		$('#search-tool').css({overflow: 'hidden'});
@@ -128,6 +162,7 @@ function toggleMinimized() {
 		$('#search-tool').animate({height:'40px'});
 		$('.leaflet-top.leaflet-left').animate({top: '40px'});
 	} else {
+		recordAction('expanded toolbar');
 		minButton.innerHTML = '\u2014';
 		$('#search-tool').stop();
 		$('.leaflet-top.leaflet-left').stop();
@@ -150,6 +185,7 @@ function updateBaseLayer() {
 		NPMap.config.L.removeLayer(NPMap.config.baseLayers[lastBaseIndex].L);
 
 		/* add new layer (taken from NPMap.js switcher.js) */
+		recordAction('changed base layer: ' + selector.children[selector.selectedIndex].innerHTML);
 		selector.children[selector.selectedIndex].innerHTML = '\u2714 ' + selector.children[selector.selectedIndex].innerHTML;
 		var newLayer = NPMap.config.baseLayers[selector.selectedIndex-1];
 		if (newLayer.type === 'arcgisserver') {
@@ -178,10 +214,12 @@ function toggleOverlay() {
 	if(idx >= 0) {
 		var overlay = NPMap.config.overlays[idx];
 		if(text.charAt(0) !== '\u2714') {
+			recordAction('turned on overlay: ' + text);
 			selector.options[idx+1].text = '\u2714 ' + text;
 			overlay.visible = true;
 			NPMap.config.L.addLayer(overlay.L);
 		} else {
+			recordAction('turned off overlay: ' + text.substring(2, text.length));
 			selector.options[idx+1].text = text.substring(2, text.length);
 			overlay.visible = false;
 			NPMap.config.L.removeLayer(overlay.L);
@@ -195,8 +233,10 @@ function togglePredicted() {
 	showPredicted = !showPredicted;
 
 	if(showPredicted) {
+		recordAction('turned on predicted data');
 		drawData();
 	} else {
+		recordAction('turned off predicted data');
 		for(var i = 0; i < control._selectedSpecies.length; i++) {
 			if(control._selectedSpecies[i] !== undefined && control._selectedSpecies[i].visible) {
 				NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
@@ -208,6 +248,12 @@ function togglePredicted() {
 var showObserved = false;
 function toggleObserved() {
 	showObserved = !showObserved;
+
+	if(showObserved) {
+		recordAction('turned on observed data');
+	} else {
+		recordAction('turned off observed data');
+	}
 
 	for(var i = 0; i < control._selectedSpecies.length; i++) {
 		if(control._selectedSpecies[i] !== undefined && control._selectedSpecies[i].visible) {
@@ -223,12 +269,14 @@ function toggleObserved() {
 var whichName = 'common';
 function toggleName() {
 	if(whichName === 'common') {
+		recordAction('switched to latin names');
 		$('#search-initial-switch-button').children().stop();
 		$('#search-initial-switch-button').children().animate({left:'0px'});
 		whichName = 'latin';
 	} else {
+		recordAction('switched to common names');
 		$('#search-initial-switch-button').children().stop();
-		$('#search-initial-switch-button').children().animate({left:'50px'});
+		$('#search-initial-switch-button').children().animate({left:'75px'});
 		whichName = 'common';
 	}
 
@@ -341,4 +389,29 @@ function toggleName() {
 			this.title = tmp;
 		}
 	});
+}
+
+var conn,
+	connReady = false,
+	epoch = new Date().getTime();
+function connectToLoggingServer() {
+	if('WebSocket' in window) {
+		conn = new WebSocket('ws://seelab.eecs.utk.edu:7777/ws');
+		conn.onopen = function() {
+			connReady = true;
+		}
+		conn.onclose = function() {
+			connReady = false;
+		}
+		conn.onerror = function() {
+			connReady = false;
+		}
+	}
+}
+
+function recordAction(str) {
+	if(connReady) {
+		var userID = Cookies.get('name');
+		conn.send(userID + ',' + new Date().getTime() + ',' + (new Date().getTime() - epoch) + ',' + str);
+	}
 }
