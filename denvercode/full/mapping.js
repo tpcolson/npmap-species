@@ -100,6 +100,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
 		],
 		homeControl: false,
 		editControl: true,
+		printControl: true,
 		measureControl: true,
 		scaleControl: { metric: true },
 		events: [{

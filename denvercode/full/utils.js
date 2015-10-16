@@ -94,6 +94,9 @@ window.onload = function() {
 	/* prepare color legend dragging */
 	prepareLegendDrag();
 
+	/* prepare print control */
+	preparePrintControl();
+
 	/* prepare tooltips */
 	$tooltips._initialize(document.body);
 
