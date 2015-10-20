@@ -20,19 +20,27 @@ function preparePrintControl() {
 }
 
 function printMap() {
-  var attrEl = document.getElementsByClassName('leaflet-control-attribution')[0];
+  var attrEl = document.getElementsByClassName('leaflet-control-attribution')[0],
+    scaleEl = document.getElementsByClassName('leaflet-control-scale')[0];
 
 	leafletImage(NPMap.config.L, function(err, canvas) {
     html2canvas(attrEl, {
       onrendered: function(attrCanvas) {
-    		var mapData = canvas.toDataURL('image/png'),
-      		attrData = attrCanvas.toDataURL('image/png'),
-          doc = new jsPDF('landscape', 'px', [$('#map').height(), $('#map').width()]);
+        html2canvas(scaleEl, {
+          onrendered: function(scaleCanvas) {
+        		var mapData = canvas.toDataURL('image/png'),
+          		attrData = attrCanvas.toDataURL('image/png'),
+              scaleData = scaleCanvas.toDataURL('image/png'),
+              doc = new jsPDF('landscape', 'px', [$('#map').height(), $('#map').width()]);
 
-    		doc.addImage(mapData, 'PNG', 0, 0, $('#map').width(), $('#map').height());
-        doc.addImage(attrData, 'PNG', $('#map').height() - $(attrEl).height(),
-          $('#map').width() - $(attrEl).width(), $(attrEl).width(), $(attrEl).height());
-    		doc.save('species_mapper_snapshot.pdf');
+        		doc.addImage(mapData, 'PNG', 0, 0, $('#map').width(), $('#map').height());
+            doc.addImage(attrData, 'PNG', $('#map').width() - $(attrEl).width(),
+              $('#map').height() - $(attrEl).height(), $(attrEl).width(), $(attrEl).height());
+            doc.addImage(scaleData, 'PNG', 5, $('#map').height() - $(scaleEl).height() - 5,
+              $(scaleEl).width(), $(scaleEl).height());
+        		doc.save('species_mapper_snapshot.pdf');
+          }
+        });
       }
     });
 	});
