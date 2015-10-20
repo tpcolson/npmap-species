@@ -799,6 +799,19 @@ function fuseSearch(idx, value) {
       ? control._commonFuser.search(value).slice(0, 15)
       : control._latinFuser.search(value).slice(0, 15);
 
+  /* for species comparison searches, remove species already selected from search results */
+  if(idx === 1 || idx === 2) {
+    for(var i = 0; i < results.length; i++) {
+      for(var j = 0; j < control._selectedSpecies.length; j++) {
+        if(control._selectedSpecies[j] !== undefined) {
+          if(results[i].latin_name === control._selectedSpecies[j]._latin) {
+            results.splice(i--, 1);
+          }
+        }
+      }
+    }
+  }
+
   switch(idx) {
     case 0:
       elString = '#search-initial-box';
