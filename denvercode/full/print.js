@@ -20,10 +20,20 @@ function preparePrintControl() {
 }
 
 function printMap() {
+  var attrEl = document.getElementsByClassName('leaflet-control-attribution')[0];
+
 	leafletImage(NPMap.config.L, function(err, canvas) {
-		var imgData = canvas.toDataURL('image/png');
-		var doc = new jsPDF('landscape');
-		doc.addImage(imgData, 'PNG', 10, 10);
-		doc.save('printed_map.pdf');
+    html2canvas(attrEl, {
+      onrendered: function(attrCanvas) {
+    		var mapData = canvas.toDataURL('image/png'),
+      		attrData = attrCanvas.toDataURL('image/png'),
+          doc = new jsPDF('landscape', 'px', [$('#map').height(), $('#map').width()]);
+
+    		doc.addImage(mapData, 'PNG', 0, 0, $('#map').width(), $('#map').height());
+        doc.addImage(attrData, 'PNG', $('#map').height() - $(attrEl).height(),
+          $('#map').width() - $(attrEl).width(), $(attrEl).width(), $(attrEl).height());
+    		doc.save('species_mapper_snapshot.pdf');
+      }
+    });
 	});
 }
