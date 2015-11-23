@@ -88,14 +88,34 @@ window.onload = function() {
     return true;
   });
 
+  /* prepare print tool */
+  attemptExecute(function() {
+    if (!(NPMap && NPMap.config && NPMap.config.L && NPMap.config.L.printControl && NPMap.config.L.printControl.print)) {
+      return false;
+    }
+
+    var printContainer = L.DomUtil.create('div', 'leaflet-bar leaflet-control npmap-control-print'),
+      bg = $('.npmap-toolbar .right li button').css('background-image');
+
+    $('.leaflet-top.leaflet-left').append($(printContainer));
+    $(printContainer).append($('.npmap-toolbar .right li button'));
+    $('.npmap-map-wrapper').css({'top': '0px'});
+    $('.npmap-control-print button').css({
+      'background-image': bg,
+      'background-repeat': 'no-repeat',
+      'background-position': 'center',
+      'border-top': '1px solid #1a2423',
+      'height': '26px'
+    });
+
+    return true;
+  });
+
   /* prepare search tool */
   prepareSearchTool();
 
   /* prepare color legend dragging */
   prepareLegendDrag();
-
-  /* prepare print control */
-  preparePrintControl();
 
   /* prepare tooltips */
   $tooltips._initialize(document.body);
