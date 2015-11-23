@@ -5,7 +5,9 @@ var control = {
   _commonToLatin: undefined,
   _similarDistributions: undefined,
   _aucValues: undefined,
-  _selectedSpecies: []
+  _selectedSpecies: [],
+  _lastPredictionState: true,
+  _lastObservationState: false
 }
 
 function prepareSearchTool() {
@@ -178,13 +180,20 @@ function clearSearch() {
         NPMap.config.L.removeLayer(control._selectedSpecies[i].predicted);
       }
 
-      if(showObserved) {
+      if(showObserved && i == 0) {
         NPMap.config.L.removeLayer(control._selectedSpecies[i].observed);
       }
     }
   }
 
   control._selectedSpecies = [];
+
+  if(control._lastPredictionState === false) {
+    document.getElementById('options-predicted-checkbox').disabled = false;
+    $('#options-predicted-checkbox').trigger('click');
+  }
+  document.getElementById('options-predicted-checkbox').disabled = true;
+  document.getElementById('options-observed-checkbox').disabled = true;
 
   document.getElementById('search-compare-placeholder').style.display = 'block';
   document.getElementById('search-compare-contents').style.display = 'none';
@@ -234,23 +243,25 @@ function selectInitialSpecies(li) {
         'marker-color': '#2b80b6',
         'marker-size': 'small'
       }
-    }/*,
+    },
     cluster: {
-      clusterIcon: '#000000'
+      clusterIcon: '#2b80b6'
     },
     showCoverageOnHover: true,
     disableClusteringAtZoom: 15,
     polygonOptions: {
       color: '#2b80b6',
       fillColor: '#2b80b6'
-    }*/
+    }
   });
 
+  document.getElementById('options-predicted-checkbox').disabled = false;
+  document.getElementById('options-observed-checkbox').disabled = false;
+
+  drawData();
   if(showObserved) {
     control._selectedSpecies[0].observed.addTo(NPMap.config.L);
   }
-
-  drawData();
 
   document.getElementById('search-compare-placeholder').style.display = 'none';
   document.getElementById('search-compare-contents').style.display = 'block';
@@ -460,16 +471,27 @@ function clearCompareOne() {
   $('#compare-env-one-name').css({backgroundColor:'#40403d'});
 
   if(control._selectedSpecies[1] !== undefined) {
-    if(showObserved) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[1].observed);
-    }
-
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
     }
   }
 
   control._selectedSpecies[1] = undefined;
+
+  if(control._selectedSpecies[2] === undefined) {
+    document.getElementById('options-predicted-checkbox').disabled = false;
+    document.getElementById('options-observed-checkbox').disabled = false;
+
+    if(control._lastPredictionState === false) {
+      control._lastPredictionState = true;
+      $('#options-predicted-checkbox').trigger('click');
+    }
+
+    if(control._lastObservationState === true) {
+      control._lastObservationState = false;
+      $('#options-observed-checkbox').trigger('click');
+    }
+  }
 
   populateDistributionLists();
   populateEnvironmentLists();
@@ -523,10 +545,6 @@ function selectSecondSpecies(li) {
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[1].predicted);
     }
-
-    if(showObserved) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[1].observed);
-    }
   }
 
   control._selectedSpecies[1] = {};
@@ -535,34 +553,16 @@ function selectSecondSpecies(li) {
   control._selectedSpecies[1]._common = li._common;
   control._selectedSpecies[1].visible = true;
 
-  control._selectedSpecies[1].observed = L.npmap.layer.geojson({
-    name: li._latin + '_observations',
-    url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
-    type: 'geojson',
-    popup: {
-      title: 'Species sighting',
-      description: 'Latin name: ' + li._latin.replace(/_/g, " ") + '<br>Common name: ' + li._common + '<br>Coordinates: {{coordinates}}'
-    },
-    styles: {
-      point: {
-        'marker-color': '#ca1892',
-        'marker-size': 'small'
-      }
-    }/**,
-    cluster: {
-      clusterIcon: '#000000'
-    },
-    showCoverageOnHover: true,
-    disableClusteringAtZoom: 15,
-    polygonOptions: {
-      color: '#ca1892',
-      fillColor: '#ca1892'
-    }*/
-  });
-
-  if(showObserved) {
-    control._selectedSpecies[1].observed.addTo(NPMap.config.L);
+  if(!showPredicted) {
+    control._lastPredictionState = false;
+    $('#options-predicted-checkbox').trigger('click');
   }
+  if(showObserved) {
+    control._lastObservationState = true;
+    $('#options-observed-checkbox').trigger('click');
+  }
+  document.getElementById('options-predicted-checkbox').disabled = true;
+  document.getElementById('options-observed-checkbox').disabled = true;
 
   drawData();
 
@@ -603,16 +603,27 @@ function clearCompareTwo() {
   if(control._selectedSpecies[2] !== undefined) {
     recordAction('removed species: ' + control._selectedSpecies[2]._latin.replace(/_/g, ' '));
 
-    if(showObserved) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[2].observed);
-    }
-
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[2].predicted);
     }
   }
 
   control._selectedSpecies[2] = undefined;
+
+  if(control._selectedSpecies[1] === undefined) {
+    document.getElementById('options-predicted-checkbox').disabled = false;
+    document.getElementById('options-observed-checkbox').disabled = false;
+
+    if(control._lastPredictionState === false) {
+      control._lastPredictionState = true;
+      $('#options-predicted-checkbox').trigger('click');
+    }
+
+    if(control._lastObservationState === true) {
+      control._lastObservationState = false;
+      $('#options-observed-checkbox').trigger('click');
+    }
+  }
 
   populateDistributionLists();
   populateEnvironmentLists();
@@ -664,10 +675,6 @@ function selectThirdSpecies(li) {
     if(showPredicted) {
       NPMap.config.L.removeLayer(control._selectedSpecies[2].predicted);
     }
-
-    if(showObserved) {
-      NPMap.config.L.removeLayer(control._selectedSpecies[2].observed);
-    }
   }
 
   control._selectedSpecies[2] = {};
@@ -676,37 +683,16 @@ function selectThirdSpecies(li) {
   control._selectedSpecies[2]._common = li._common;
   control._selectedSpecies[2].visible = true;
 
-  control._selectedSpecies[2].observed = L.npmap.layer.geojson({
-    name: li._latin + '_observations',
-    url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
-    type: 'geojson',
-    popup: {
-      title: 'Species sighting',
-      description: 'Latin name: ' + li._latin.replace(/_/g, " ") + '<br>Common name: ' + li._common + '<br>Coordinates: {{coordinates}}'
-    },
-    styles: {
-      point: {
-        'marker-color': '#f28e43',
-        'marker-size': 'small'
-      }
-    }/**,
-    cluster: {
-      clusterIcon: '#000000'
-    },
-    iconCreateFunction: function() {
-      console.log('hello');
-    },
-    showCoverageOnHover: true,
-    disableClusteringAtZoom: 15,
-    polygonOptions: {
-      color: '#f28e43',
-      fillColor: '#f28e43'
-    }*/
-  });
-
-  if(showObserved) {
-    control._selectedSpecies[2].observed.addTo(NPMap.config.L);
+  if(!showPredicted) {
+    control._lastPredictionState = false;
+    $('#options-predicted-checkbox').trigger('click');
   }
+  if(showObserved) {
+    control._lastObservationState = true;
+    $('#options-observed-checkbox').trigger('click');
+  }
+  document.getElementById('options-predicted-checkbox').disabled = true;
+  document.getElementById('options-observed-checkbox').disabled = true;
 
   drawData();
 

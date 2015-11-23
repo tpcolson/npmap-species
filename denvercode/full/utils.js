@@ -282,7 +282,7 @@ function toggleObserved() {
     if(control._selectedSpecies[i] !== undefined && control._selectedSpecies[i].visible) {
       if(showObserved) {
         control._selectedSpecies[i].observed.addTo(NPMap.config.L);
-      } else {
+      } else if(i == 0) {
         NPMap.config.L.removeLayer(control._selectedSpecies[i].observed);
       }
     }
