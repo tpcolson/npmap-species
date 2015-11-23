@@ -1,3 +1,8 @@
+$(document).ready(function() {
+  document.getElementById('options-predicted-checkbox').checked = true;
+  document.getElementById('options-observed-checkbox').checked = false;
+});
+
 window.onload = function() {
   /* Move zoom and measure controls directly below search tool */
   attemptExecute(function() {
