@@ -1082,7 +1082,7 @@ body.dragging, body.dragging * {
 
   overflow: hidden;
 
-  width: 400px;
+  width: 450px;
   height: 0px;
 
   border-radius: 10px;
@@ -1115,7 +1115,7 @@ body.dragging, body.dragging * {
 #legend-banner-right {
   float: left;
 
-  width: 100px;
+  width: 150px;
   height: 100%;
 
   text-align: center;
@@ -1246,7 +1246,7 @@ body.dragging, body.dragging * {
 #legend-blue-quality {
   float: left;
 
-  width: 100px;
+  width: 150px;
   height: 100%;
 
   text-align: center;
@@ -1254,7 +1254,7 @@ body.dragging, body.dragging * {
 
   color: #f5faf2;
 
-  font-size: 10pt;
+  font-size: 12pt;
   font-style: italic;
   line-height: 49px;
 }
@@ -1377,7 +1377,7 @@ body.dragging, body.dragging * {
 #legend-pink-quality {
   float: left;
 
-  width: 100px;
+  width: 150px;
   height: 100%;
 
   text-align: center;
@@ -1385,7 +1385,7 @@ body.dragging, body.dragging * {
 
   color: #f5faf2;
 
-  font-size: 10pt;
+  font-size: 12pt;
   font-style: italic;
   line-height: 49px;
 }
@@ -1508,7 +1508,7 @@ body.dragging, body.dragging * {
 #legend-orange-quality {
   float: left;
 
-  width: 100px;
+  width: 150px;
   height: 100%;
 
   text-align: center;
@@ -1516,7 +1516,7 @@ body.dragging, body.dragging * {
 
   color: #f5faf2;
 
-  font-size: 10pt;
+  font-size: 12pt;
   font-style: italic;
   line-height: 49px;
 }
@@ -1529,7 +1529,7 @@ body.dragging, body.dragging * {
 #legend-blend-text {
   float: left;
 
-  width: 330px;
+  width: 380px;
   height: 25px;
   padding-right: 10px;
 
@@ -1620,7 +1620,7 @@ body.dragging, body.dragging * {
 
   overflow: hidden;
 
-  width: 400px;
+  width: 450px;
   height: 200px;
 
   border-radius: 10px;
@@ -1653,7 +1653,7 @@ body.dragging, body.dragging * {
 #legend-demo-banner-right {
   float: left;
 
-  width: 100px;
+  width: 150px;
   height: 100%;
 
   text-align: center;
@@ -1784,7 +1784,7 @@ body.dragging, body.dragging * {
 #legend-demo-blue-quality {
   float: left;
 
-  width: 100px;
+  width: 150px;
   height: 100%;
 
   text-align: center;
@@ -1792,7 +1792,7 @@ body.dragging, body.dragging * {
 
   color: #f5faf2;
 
-  font-size: 10pt;
+  font-size: 12pt;
   font-style: italic;
   line-height: 49px;
 }
@@ -1915,7 +1915,7 @@ body.dragging, body.dragging * {
 #legend-demo-pink-quality {
   float: left;
 
-  width: 100px;
+  width: 150px;
   height: 100%;
 
   text-align: center;
@@ -1923,7 +1923,7 @@ body.dragging, body.dragging * {
 
   color: #f5faf2;
 
-  font-size: 10pt;
+  font-size: 12pt;
   font-style: italic;
   line-height: 49px;
 }
@@ -2046,7 +2046,7 @@ body.dragging, body.dragging * {
 #legend-demo-orange-quality {
   float: left;
 
-  width: 100px;
+  width: 150px;
   height: 100%;
 
   text-align: center;
@@ -2054,7 +2054,7 @@ body.dragging, body.dragging * {
 
   color: #f5faf2;
 
-  font-size: 10pt;
+  font-size: 12pt;
   font-style: italic;
   line-height: 49px;
 }
@@ -2067,7 +2067,7 @@ body.dragging, body.dragging * {
 #legend-demo-blend-text {
   float: left;
 
-  width: 330px;
+  width: 380px;
   height: 25px;
   padding-right: 10px;
 
