@@ -47,21 +47,21 @@ function prepareSearchTool() {
 }
 
 function loadResource(url, callback) {
-	loadResourceWithTries(url, callback, 1);
+  loadResourceWithTries(url, callback, 1);
 }
 
 function loadResourceWithTries(url, callback, tries) {
-	jQuery.ajax({
-		type: 'GET',
-		url: url,
-		dataType: 'json',
-		success: callback,
-		error: function() {
-			if(tries < 5) {
-				loadResourceWithTries(url, callback, tries+1);
-			}
-		}
-	});
+  jQuery.ajax({
+    type: 'GET',
+    url: url,
+    dataType: 'json',
+    success: callback,
+    error: function() {
+      if(tries < 5) {
+        loadResourceWithTries(url, callback, tries+1);
+      }
+    }
+  });
 }
 
 function populateResults() {
@@ -232,16 +232,26 @@ function selectInitialSpecies(li) {
 
   control._selectedSpecies[0].observed = L.npmap.layer.geojson({
     name: li._latin + '_observations',
-    url: 'http://nationalparkservice.github.io/npmap-species/atbirecords/Geojsons/all/' + li._latin + '.geojson',
+    url: 'https://nps-grsm.cartodb.com/api/v2/sql?filename=' + li._latin + '&format=geojson&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27' + li._latin + '%27)',
     type: 'geojson',
     popup: {
-      title: 'Species sighting',
-      description: 'Latin name: ' + li._latin.replace(/_/g, " ") + '<br>Common name: ' + li._common + '<br>Coordinates: {{coordinates}}'
+      title: 'Common: ' + li._common.replace(/_/g, ' ') + "<br>"
+        + 'Latin: ' + li._latin.replace(/_/g, ' '),
+      description: 'This observation was recorded on '
+        + '{{dateretrieved}}, at {{lon}}&#176;, {{lat}}&#176;, {{elevation}} feet '
+        + 'in {{parkdistrict}}. It is best accessed by {{road}} and {{trail}}.<br><br>'
+        + 'Download observations: '
+        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=Acer_rubrum_v_rubrum&format=csv&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27Acer_rubrum_v_rubrum%27)">CSV</a> | '
+        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=Acer_rubrum_v_rubrum&format=kml&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27Acer_rubrum_v_rubrum%27)">KML</a> | '
+        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=Acer_rubrum_v_rubrum&format=geojson&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27Acer_rubrum_v_rubrum%27)">GeoJSON</a> | '
+        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=Acer_rubrum_v_rubrum&format=shp&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27Acer_rubrum_v_rubrum%27)">SHP</a>'
+        + '<br><br><a target="_blank" href="http://www.nps.gov/grsm/learn/nature/research.htm">Contribute to this dataset</a>'
     },
+    tooltip: li._common.replace(/_/g, ' '),
     styles: {
       point: {
         'marker-color': '#2b80b6',
-        'marker-size': 'small'
+        'marker-size': 'medium'
       }
     },
     cluster: {

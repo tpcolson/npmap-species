@@ -14,6 +14,16 @@ body.dragging, body.dragging * {
   opacity: 0.5;
 }
 
+.leaflet-popup {
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: .001em;
+}
+
+.leaflet-tooltip {
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: .001em;
+}
+
 #map {
   position: absolute;
   z-index: -1;
@@ -987,11 +997,11 @@ body.dragging, body.dragging * {
   height: 20px;
   padding-bottom: 5px;
 
-	letter-spacing: .001em;
+  letter-spacing: .001em;
 
-	color: #f5faf2;
+  color: #f5faf2;
 
-	font-size: 12pt;
+  font-size: 12pt;
   font-weight: semi-bold;
 }
 
@@ -2208,7 +2218,7 @@ button {
 .search-dropdown {
   width: 160px;
 
-	letter-spacing: .001em;
+  letter-spacing: .001em;
 
   border-radius: 4px;
 
@@ -2217,7 +2227,7 @@ button {
 }
 
 .search-dropdown > option {
-	letter-spacing: .001em;
+  letter-spacing: .001em;
 
   font-family: 'Source Sans Pro', sans-serif;
   font-style: italic;
@@ -2244,12 +2254,12 @@ button {
   top: -12px;
   left: 220px;
 
-	width: 0;
-	height: 0;
+  width: 0;
+  height: 0;
 
-	border-top: 5px solid #f5faf2;
-	border-right: 5px solid transparent;
-	border-left: 5px solid transparent;
+  border-top: 5px solid #f5faf2;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
 }
 
 .drag-handle {

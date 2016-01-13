@@ -12,7 +12,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
       type: 'geojson',
       popup: {
-        title: '<center>{{TRAILNAME}}</center>'
+        description: '<center>{{TRAILNAME}}</center>'
       },
       styles: {
         line: {
@@ -25,7 +25,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_VISITOR_CENTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        title: '<center>{{LOC_NAME}}</center>'
+        description: '<center>{{LOC_NAME}}</center>'
       },
       styles: {
         point: {
@@ -40,7 +40,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        title: '<center>{{TEXT_NAME}}</center>'
+        description: '<center>{{TEXT_NAME}}</center>'
       },
       styles: {
         point: {
@@ -55,7 +55,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_ROAD_CENTERLINES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        title: '<center>{{FULLNAME}}</center>'
+        description: '<center>{{RDNAME}}</center>'
       },
       styles: {
         line: {
@@ -68,7 +68,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_CAMPSITES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        title: '<center>{{LABEL}}</center>'
+        description: '<center>{{LABEL}}</center>'
       },
       styles: {
         point: {
@@ -83,7 +83,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/Great_Smoky_Mountains_National_Park_Boundary/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        title: '<center>Great Smoky Mountains National Park</center>'
+        description: '<center>Great Smoky Mountains National Park</center>'
       },
       styles: {
         line: {
