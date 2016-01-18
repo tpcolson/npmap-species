@@ -326,7 +326,7 @@ function populateDistributionLists() {
       maxItem = '';
     for(var key in results) {
       if(found.indexOf(key.replace(/_/g, ' ')) === -1) {
-        if(results[key] > max) {
+        if(results[key] > max && (whichName === 'latin' || control._nameMappings[key].common !== 'Unspecified')) {
           max = results[key];
           maxItem = key;
         }
@@ -408,7 +408,7 @@ function populateEnvironmentLists() {
         maxItem = '';
       for(var key in results) {
         if(found.indexOf(key.replace(/_/g, ' ')) === -1) {
-          if(results[key] > max) {
+          if(results[key] > max && (whichName === 'latin' || control._nameMappings[key].common !== 'Unspecified')) {
             max = results[key];
             maxItem = key;
           }
@@ -791,9 +791,25 @@ function toggleCompareEnvTwo() {
 
 function fuseSearch(idx, value) {
   var value = value,
+    commonResults = control._commonFuser.search(value),
+    latinResults = control._latinFuser.search(value),
     results = (whichName === 'common')
-      ? control._commonFuser.search(value).slice(0, 15)
-      : control._latinFuser.search(value).slice(0, 15);
+      ? commonResults.slice(0, 15)
+      : latinResults.slice(0, 15);
+
+  /* replace unspecified names */
+  if(whichName === 'common') {
+    var j = 15;
+    for(var i = 0; i < results.length; i++) {
+      if(results[i].common_name === 'Unspecified') {
+        while(commonResults[j].common_name === 'Unspecified') {
+          j++;
+        }
+        results[i] = commonResults[j];
+        j++;
+      }
+    }
+  }
 
   /* for species comparison searches, remove species already selected from search results */
   if(idx === 1 || idx === 2) {

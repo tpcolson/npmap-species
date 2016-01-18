@@ -335,6 +335,11 @@ function toggleName() {
 
   var swapNeeded = $('#search-initial-dropdown').css('backgroundColor') === 'rgb(64, 181, 198)';
   if(swapNeeded) {
+    populateDistributionLists();
+    populateEnvironmentLists();
+    fuseSearch(1, $('#search-compare-one-box-input').val());
+    fuseSearch(2, $('#search-compare-two-box-input').val());
+
     var el = $('#search-initial-dropdown').children()[0],
       tmp = el.innerHTML;
 
@@ -377,46 +382,6 @@ function toggleName() {
     el.innerHTML = el.title;
     el.title = tmp;
   }
-
-  /* switch compare names */
-  $('ul', '#search-compare-one-box').children().each(function() {
-    var tmp = this.innerHTML;
-    this.innerHTML = this.title;
-    this.title = tmp;
-  });
-  $('ul', '#search-compare-two-box').children().each(function() {
-    var tmp = this.innerHTML;
-    this.innerHTML = this.title;
-    this.title = tmp;
-  });
-  $('ul', '#compare-dist-one').children().each(function(i) {
-    if(i > 0) {
-      var tmp = this.innerHTML;
-      this.innerHTML = this.title;
-      this.title = tmp;
-    }
-  });
-  $('ul', '#compare-dist-two').children().each(function(i) {
-    if(i > 0) {
-      var tmp = this.innerHTML;
-      this.innerHTML = this.title;
-      this.title = tmp;
-    }
-  });
-  $('ul', '#compare-env-one').children().each(function(i) {
-    if(i > 0) {
-      var tmp = this.innerHTML;
-      this.innerHTML = this.title;
-      this.title = tmp;
-    }
-  });
-  $('ul', '#compare-env-two').children().each(function(i) {
-    if(i > 0) {
-      var tmp = this.innerHTML;
-      this.innerHTML = this.title;
-      this.title = tmp;
-    }
-  });
 }
 
 var conn,
