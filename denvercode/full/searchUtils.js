@@ -4,6 +4,8 @@ var control = {
   _nameMappings: undefined,
   _commonToLatin: undefined,
   _similarDistributions: undefined,
+  _simThreshold: 200,
+  _simDistLength: undefined,
   _aucValues: undefined,
   _selectedSpecies: [],
   _lastPredictionState: true,
@@ -326,49 +328,64 @@ function populateDistributionLists() {
       maxItem = '';
     for(var key in results) {
       if(found.indexOf(key.replace(/_/g, ' ')) === -1) {
-        if(results[key] > max && (whichName === 'latin' || control._nameMappings[key].common !== 'Unspecified')) {
+        if(results[key] > max && results[key] > control._simThreshold && (whichName === 'latin' || control._nameMappings[key].common !== 'Unspecified')) {
           max = results[key];
           maxItem = key;
         }
       }
     }
-    found.push(maxItem.replace(/_/g, ' '));
 
-    var latin = maxItem,
-      common = control._nameMappings[latin].common,
-      id = control._nameMappings[latin].id;
+    if(results[maxItem] > control._simThreshold) {
+      found.push(maxItem.replace(/_/g, ' '));
 
-    li = document.createElement('li');
-    li._latin = latin;
-    li._common = common;
-    li._id = id;
-    if(whichName === 'common') {
-      li.innerHTML = li._common;
-      li.title = li._latin.replace(/_/g, ' ');
-    } else {
-      li.innerHTML = li._latin.replace(/_/g, ' ');
-      li.title = li._common;
-    }
-    li.onclick = function() {
-      selectSecondSpecies(this);
-    }
-    document.getElementById('compare-dist-one').children[2].appendChild(li);
+      var latin = maxItem,
+        common = control._nameMappings[latin].common,
+        id = control._nameMappings[latin].id;
 
-    li = document.createElement('li');
-    li._latin = latin;
-    li._common = common;
-    li._id = id;
-    if(whichName === 'common') {
-      li.innerHTML = li._common;
-      li.title = li._latin.replace(/_/g, ' ');
-    } else {
-      li.innerHTML = li._latin.replace(/_/g, ' ');
-      li.title = li._common;
+      li = document.createElement('li');
+      li._latin = latin;
+      li._common = common;
+      li._id = id;
+      if(whichName === 'common') {
+        li.innerHTML = li._common;
+        li.title = li._latin.replace(/_/g, ' ');
+      } else {
+        li.innerHTML = li._latin.replace(/_/g, ' ');
+        li.title = li._common;
+      }
+      li.onclick = function() {
+        selectSecondSpecies(this);
+      }
+      document.getElementById('compare-dist-one').children[2].appendChild(li);
+
+      li = document.createElement('li');
+      li._latin = latin;
+      li._common = common;
+      li._id = id;
+      if(whichName === 'common') {
+        li.innerHTML = li._common;
+        li.title = li._latin.replace(/_/g, ' ');
+      } else {
+        li.innerHTML = li._latin.replace(/_/g, ' ');
+        li.title = li._common;
+      }
+      li.onclick = function() {
+        selectThirdSpecies(this);
+      }
+      document.getElementById('compare-dist-two').children[2].appendChild(li);
     }
-    li.onclick = function() {
-      selectThirdSpecies(this);
-    }
-    document.getElementById('compare-dist-two').children[2].appendChild(li);
+  }
+
+  control._simDistLength = found.length;
+  $('#compare-dist-one').stop();
+  if(compareDistOneActive) {
+    $('#compare-dist-one').animate({height:((control._simDistLength-5)*21+41) + 'px'});
+    $('ul', '#compare-dist-one').css({display:'block'});
+  }
+  $('#compare-dist-two').stop();
+  if(compareDistTwoActive) {
+    $('#compare-dist-two').animate({height:((control._simDistLength-5)*21+41) + 'px'});
+    $('ul', '#compare-dist-two').css({display:'block'});
   }
 }
 
@@ -739,7 +756,7 @@ function toggleCompareDistOne() {
 
   $('#compare-dist-one').stop();
   if(compareDistOneActive) {
-    $('#compare-dist-one').animate({height:'356px'});
+    $('#compare-dist-one').animate({height:((control._simDistLength-5)*21+41) + 'px'});
     $('ul', '#compare-dist-one').css({display:'block'});
   } else {
     $('#compare-dist-one').animate({height:'20px'});
@@ -753,7 +770,7 @@ function toggleCompareDistTwo() {
 
   $('#compare-dist-two').stop();
   if(compareDistTwoActive) {
-    $('#compare-dist-two').animate({height:'356px'});
+    $('#compare-dist-two').animate({height:((control._simDistLength-5)*21+41) + 'px'});
     $('ul', '#compare-dist-two').css({display:'block'});
   } else {
     $('#compare-dist-two').animate({height:'20px'});
