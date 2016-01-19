@@ -243,10 +243,10 @@ function selectInitialSpecies(li) {
         + '{{dateretrieved}}, at {{lon}}&#176;, {{lat}}&#176;, {{elevation}} feet '
         + 'in {{parkdistrict}}. It is best accessed by {{road}} and {{trail}}.<br><br>'
         + 'Download observations: '
-        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=Acer_rubrum_v_rubrum&format=csv&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27Acer_rubrum_v_rubrum%27)">CSV</a> | '
-        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=Acer_rubrum_v_rubrum&format=kml&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27Acer_rubrum_v_rubrum%27)">KML</a> | '
-        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=Acer_rubrum_v_rubrum&format=geojson&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27Acer_rubrum_v_rubrum%27)">GeoJSON</a> | '
-        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=Acer_rubrum_v_rubrum&format=shp&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27Acer_rubrum_v_rubrum%27)">SHP</a>'
+        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=' + li._latin + '&format=csv&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27' + li._latin + '%27)">CSV</a> | '
+        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=' + li._latin + '&format=kml&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27' + li._latin + '%27)">KML</a> | '
+        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=' + li._latin + '&format=geojson&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27' + li._latin + '%27)">GeoJSON</a> | '
+        + '<a href="https://nps-grsm.cartodb.com/api/v2/sql?filename=' + li._latin + '&format=shp&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27' + li._latin + '%27)">SHP</a>'
         + '<br><br><a target="_blank" href="http://www.nps.gov/grsm/learn/nature/research.htm">Contribute to this dataset</a>'
     },
     tooltip: li._common.replace(/_/g, ' '),
