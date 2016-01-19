@@ -259,7 +259,6 @@ function selectInitialSpecies(li) {
     cluster: {
       clusterIcon: '#2b80b6'
     },
-    showCoverageOnHover: true,
     disableClusteringAtZoom: 15,
     polygonOptions: {
       color: '#2b80b6',
