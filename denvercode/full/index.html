@@ -179,10 +179,10 @@
       <ol id='legend-species'>
         <li id='legend-species-pink'>
           <div id='legend-pink-controls'>
-            <div class='drag-handle'>::</div>
-            <input type='checkbox' onclick='toggleSpecies(1);' checked></input>
+            <div class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
+            <input type='checkbox' onclick='toggleSpecies(0);' checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
-          <div id='legend-pink-contents'>
+          <div id='legend-pink-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-pink-contents-name'>Species 1</div>
             <div id='legend-pink-contents-colormap'>
               <div id='legend-pink-100'>100-75%</div>
@@ -190,14 +190,14 @@
               <div id='legend-pink-50'>50-25%</div>
             </div>
           </div>
-          <div id='legend-pink-quality'></div>
+          <div id='legend-pink-quality' tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
         </li>
         <li id='legend-species-orange'>
           <div id='legend-orange-controls'>
-            <div class='drag-handle'>::</div>
-            <input type='checkbox' onclick='toggleSpecies(2);' checked></input>
+            <div class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
+            <input type='checkbox' onclick='toggleSpecies(1);' checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
-          <div id='legend-orange-contents'>
+          <div id='legend-orange-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-orange-contents-name'>Species 1</div>
             <div id='legend-orange-contents-colormap'>
               <div id='legend-orange-100'>100-75%</div>
@@ -205,14 +205,14 @@
               <div id='legend-orange-50'>50-25%</div>
             </div>
           </div>
-          <div id='legend-orange-quality'></div>
+          <div id='legend-orange-quality' tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
         </li>
         <li id='legend-species-blue'>
           <div id='legend-blue-controls'>
-            <div class='drag-handle'>::</div>
-            <input type='checkbox' onclick='toggleSpecies(0);' checked></input>
+            <div class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
+            <input type='checkbox' onclick='toggleSpecies(2);' checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
-          <div id='legend-blue-contents'>
+          <div id='legend-blue-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-blue-contents-name'>Species 1</div>
             <div id='legend-blue-contents-colormap'>
               <div id='legend-blue-100'>100-75%</div>
@@ -220,10 +220,10 @@
               <div id='legend-blue-50'>50-25%</div>
             </div>
           </div>
-          <div id='legend-blue-quality'></div>
+          <div id='legend-blue-quality' tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
         </li>
       </ol>
-      <div id='legend-blend'>
+      <div id='legend-blend' tooltip='When on, predicted data layers are shown at 50% opacity to show areas of overlap. When off, predicted layers are shown at 100% opacity'>
         <div id='legend-blend-text'>COLOR BLEND:</div>
         <div id='legend-blend-switch'>
           <div><center><div onclick='toggleBlending();'>ON</div></center></div>
