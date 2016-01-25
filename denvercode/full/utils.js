@@ -333,7 +333,7 @@ function toggleName() {
   el.innerHTML = el.title;
   el.title = tmp;
 
-  var swapNeeded = $('#search-initial-dropdown').css('backgroundColor') === 'rgb(64, 181, 198)';
+  var swapNeeded = $('#search-initial-dropdown').css('backgroundColor') === 'rgb(202, 24, 146)';
   if(swapNeeded) {
     populateDistributionLists();
     populateEnvironmentLists();
@@ -347,7 +347,7 @@ function toggleName() {
     el.title = tmp;
   }
 
-  swapNeeded = $('#compare-dist-one-name').css('backgroundColor') === 'rgb(202, 24, 146)';
+  swapNeeded = $('#compare-dist-one-name').css('backgroundColor') === 'rgb(242, 142, 67)';
   if(swapNeeded) {
     var el = document.getElementById('compare-dist-one-name'),
       tmp = el.innerHTML;
@@ -356,7 +356,7 @@ function toggleName() {
     el.title = tmp;
   }
 
-  swapNeeded = $('#compare-dist-two-name').css('backgroundColor') === 'rgb(242, 142, 67)';
+  swapNeeded = $('#compare-dist-two-name').css('backgroundColor') === 'rgb(29, 144, 156)';
   if(swapNeeded) {
     var el = document.getElementById('compare-dist-two-name'),
       tmp = el.innerHTML;
@@ -365,7 +365,7 @@ function toggleName() {
     el.title = tmp;
   }
 
-  swapNeeded = $('#compare-env-one-name').css('backgroundColor') === 'rgb(202, 24, 146)';
+  swapNeeded = $('#compare-env-one-name').css('backgroundColor') === 'rgb(242, 142, 67)';
   if(swapNeeded) {
     var el = document.getElementById('compare-env-one-name'),
       tmp = el.innerHTML;
@@ -374,7 +374,7 @@ function toggleName() {
     el.title = tmp;
   }
 
-  swapNeeded = $('#compare-env-two-name').css('backgroundColor') === 'rgb(242, 142, 67)';
+  swapNeeded = $('#compare-env-two-name').css('backgroundColor') === 'rgb(29, 144, 156)';
   if(swapNeeded) {
     var el = document.getElementById('compare-env-two-name'),
       tmp = el.innerHTML;

@@ -529,7 +529,7 @@ body.dragging, body.dragging * {
   border: 0;
   border-radius: 4px;
   outline: 0;
-  background-color: #ca1892;
+  background-color: rgb(242, 142, 67);
 
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 10pt;
@@ -630,7 +630,7 @@ body.dragging, body.dragging * {
 
   color: #f5faf2;
   border-radius: 4px;
-  background-color: #f28e43;
+  background-color: rgb(29, 144, 156);
 
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 10pt;
@@ -1142,8 +1142,8 @@ body.dragging, body.dragging * {
   overflow: hidden;
 
   width: 100%;
-  height: 49px;
-  margin-bottom: 1px;
+  height: 0px;
+  margin-bottom: 0px;
 
   border-radius: 4px;
   background-color: #40403d;
@@ -1210,7 +1210,7 @@ body.dragging, body.dragging * {
   color: #f5faf2;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  background-color: #283a95;
+  background-color: #056c58;
 
   font-size: 10pt;
   font-weight: semi-bold;
@@ -1227,7 +1227,7 @@ body.dragging, body.dragging * {
   letter-spacing: .001em;
 
   color: #f5faf2;
-  background-color: #2c7ebd;
+  background-color: #1d909b;
 
   font-size: 10pt;
   font-weight: semi-bold;
@@ -1246,7 +1246,7 @@ body.dragging, body.dragging * {
   color: #f5faf2;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  background-color: #40b5c6;
+  background-color: #60c8d1;
 
   font-size: 10pt;
   font-weight: semi-bold;
@@ -1273,8 +1273,8 @@ body.dragging, body.dragging * {
   overflow: hidden;
 
   width: 100%;
-  height: 0px;
-  margin-bottom: 0px;
+  height: 49px;
+  margin-bottom: 1px;
 
   border-radius: 4px;
   background-color: #40403d;

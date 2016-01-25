@@ -210,9 +210,9 @@ function selectInitialSpecies(li) {
 
   document.getElementById('search-initial-dropdown').children[0].innerHTML = li.innerHTML;
   document.getElementById('search-initial-dropdown').children[0].title = li.title;
-  document.getElementById('search-initial-dropdown').style.backgroundColor = '#40b5c6';
-  document.getElementById('legend-blue-contents-name').innerHTML = li.innerHTML;
-  document.getElementById('legend-blue-contents-name').title = li.title;
+  document.getElementById('search-initial-dropdown').style.backgroundColor = 'rgb(202, 24, 146)';
+  document.getElementById('legend-pink-contents-name').innerHTML = li.innerHTML;
+  document.getElementById('legend-pink-contents-name').title = li.title;
 
   if(control._selectedSpecies[0] !== undefined && control._selectedSpecies[0].visible) {
     recordAction('removed species: ' + control._selectedSpecies[0]._latin.replace(/_/g, ' '));
@@ -252,17 +252,17 @@ function selectInitialSpecies(li) {
     tooltip: li._common.replace(/_/g, ' '),
     styles: {
       point: {
-        'marker-color': '#2b80b6',
+        'marker-color': 'rgb(202, 24, 146)',
         'marker-size': 'medium'
       }
     },
     cluster: {
-      clusterIcon: '#2b80b6'
+      clusterIcon: 'rgb(202, 24, 146)'
     },
     disableClusteringAtZoom: 15,
     polygonOptions: {
-      color: '#2b80b6',
-      fillColor: '#2b80b6'
+      color: 'rgb(202, 24, 146)',
+      fillColor: 'rgb(202, 24, 146)'
     }
   });
 
@@ -281,7 +281,7 @@ function selectInitialSpecies(li) {
   findAUC(0, li._latin);
 
   $('#color-legend').animate({height: '100px'});
-  $('input', '#legend-blue-controls').prop('checked', true);
+  $('input', '#legend-pink-controls').prop('checked', true);
 
   populateLists();
 }
@@ -471,8 +471,8 @@ function populateEnvironmentLists() {
 }
 
 function clearCompareOne() {
-  $('#legend-species-pink').stop();
-  $('#legend-species-pink').animate({
+  $('#legend-species-orange').stop();
+  $('#legend-species-orange').animate({
     height: '0px',
     marginBottom: '0px'
   });
@@ -526,8 +526,8 @@ function clearCompareOne() {
 function selectSecondSpecies(li) {
   recordAction('added species: ' + li._latin.replace(/_/g, ' '));
 
-  $('#legend-species-pink').stop();
-  $('#legend-species-pink').animate({
+  $('#legend-species-orange').stop();
+  $('#legend-species-orange').animate({
     height: '49px',
     marginBottom: '1px'
   });
@@ -539,8 +539,8 @@ function selectSecondSpecies(li) {
     });
   }
 
-  document.getElementById('legend-pink-contents-name').innerHTML = li.innerHTML;
-  document.getElementById('legend-pink-contents-name').title = li.title;
+  document.getElementById('legend-orange-contents-name').innerHTML = li.innerHTML;
+  document.getElementById('legend-orange-contents-name').title = li.title;
 
   $('#search-compare-one-box-input').val('');
   $('#search-compare-one-box-input').trigger('input');
@@ -562,8 +562,8 @@ function selectSecondSpecies(li) {
   }
   $('#search-compare-one-box-name').css({display:'block'});
   $('#search-compare-one-box-clear').css({display:'block'});
-  $('#compare-dist-one-name').css({backgroundColor:'#ca1892'});
-  $('#compare-env-one-name').css({backgroundColor:'#ca1892'});
+  $('#compare-dist-one-name').css({backgroundColor:'rgb(242, 142, 67)'});
+  $('#compare-env-one-name').css({backgroundColor:'rgb(242, 142, 67)'});
 
   if(control._selectedSpecies[1] !== undefined && control._selectedSpecies[1].visible) {
     recordAction('removed species: ' + control._selectedSpecies[1]._latin.replace(/_/g, ' '));
@@ -594,15 +594,15 @@ function selectSecondSpecies(li) {
 
   findAUC(1, li._latin);
 
-  $('input', '#legend-pink-controls').prop('checked', true);
+  $('input', '#legend-orange-controls').prop('checked', true);
 
   populateDistributionLists();
   populateEnvironmentLists();
 }
 
 function clearCompareTwo() {
-  $('#legend-species-orange').stop();
-  $('#legend-species-orange').animate({
+  $('#legend-species-blue').stop();
+  $('#legend-species-blue').animate({
     height: '0px',
     marginBottom: '0px'
   });
@@ -658,8 +658,8 @@ function clearCompareTwo() {
 function selectThirdSpecies(li) {
   recordAction('added species: ' + li._latin.replace(/_/g, ' '));
 
-  $('#legend-species-orange').stop();
-  $('#legend-species-orange').animate({
+  $('#legend-species-blue').stop();
+  $('#legend-species-blue').animate({
     height: '49px',
     marginBottom: '1px'
   });
@@ -671,8 +671,8 @@ function selectThirdSpecies(li) {
     });
   }
 
-  document.getElementById('legend-orange-contents-name').innerHTML = li.innerHTML;
-  document.getElementById('legend-orange-contents-name').title = li.title;
+  document.getElementById('legend-blue-contents-name').innerHTML = li.innerHTML;
+  document.getElementById('legend-blue-contents-name').title = li.title;
 
   $('#search-compare-two-box-input').val('');
   $('#search-compare-two-box-input').trigger('input');
@@ -694,8 +694,8 @@ function selectThirdSpecies(li) {
   }
   $('#search-compare-two-box-name').css({display:'block'});
   $('#search-compare-two-box-clear').css({display:'block'});
-  $('#compare-dist-two-name').css({backgroundColor:'#f28e43'});
-  $('#compare-env-two-name').css({backgroundColor:'#f28e43'});
+  $('#compare-dist-two-name').css({backgroundColor:'rgb(29, 144, 156)'});
+  $('#compare-env-two-name').css({backgroundColor:'rgb(29, 144, 156)'});
 
   if(control._selectedSpecies[2] !== undefined && control._selectedSpecies[2].visible) {
     if(showPredicted) {
@@ -724,7 +724,7 @@ function selectThirdSpecies(li) {
 
   findAUC(2, li._latin);
 
-  $('input', '#legend-orange-controls').prop('checked', true);
+  $('input', '#legend-blue-controls').prop('checked', true);
 
   populateDistributionLists();
   populateEnvironmentLists();
@@ -1025,13 +1025,13 @@ function findAUC(idx, name) {
   var color;
   switch(idx) {
     case 0:
-      color = 'blue';
-      break;
-    case 1:
       color = 'pink';
       break;
-    case 2:
+    case 1:
       color = 'orange';
+      break;
+    case 2:
+      color = 'blue';
       break;
     default:
       return;

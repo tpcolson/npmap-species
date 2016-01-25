@@ -23,13 +23,13 @@ function drawData() {
       color;
     switch(idx) {
       case 0:
-        color = '_blue';
-        break;
-      case 1:
         color = '_pink';
         break;
-      case 2:
+      case 1:
         color = '_orange';
+        break;
+      case 2:
+        color = '_blue';
         break;
       default:
         return;
@@ -60,13 +60,13 @@ function reorderLayers() {
     var value;
 
     switch(this.id) {
-      case 'legend-species-blue':
+      case 'legend-species-pink':
         value = 0;
         break;
-      case 'legend-species-pink':
+      case 'legend-species-orange':
         value = 1;
         break;
-      case 'legend-species-orange':
+      case 'legend-species-blue':
         value = 2;
         break;
       default:
