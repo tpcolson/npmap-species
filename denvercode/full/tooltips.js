@@ -1,27 +1,32 @@
 var $tooltips = {
   _active: true,
-  _titles: {},
+  _titles: [],
   _registerTooltip: function(el, title) {
-    this._titles[el.id] = title;
+    this._titles.push([el, title]);
 
     if(this._active) {
       el.title = title;
     }
   },
   _removeTooltip: function(el) {
-    delete this._titles[el.id];
-    el.title = '';
+    for(var i = 0; i < this._titles.length; i++) {
+      if(this._titles[i][0] === el) {
+        delete this._titles[i];
+        el.title = '';
+        break;
+      }
+    }
   },
   _toggleTooltips: function() {
     this._active = !this._active;
 
     if(this._active) {
-      for(var id in this._titles) {
-        document.getElementById(id).title = this._titles[id];
+      for(var i = 0; i < this._titles.length; i++) {
+        $(this._titles[i][0]).prop('title', this._titles[i][1]);
       }
     } else {
-      for(var id in this._titles) {
-        document.getElementById(id).title = '';
+      for(var i = 0; i < this._titles.length; i++) {
+        $(this._titles[i][0]).prop('title', '');
       }
     }
   },
@@ -42,8 +47,8 @@ var $tooltips = {
     }
   },
   _destroy: function() {
-    for(var id in this._titles) {
-      document.getElementById(id).title = '';
+    for(var i = 0; i < this._titles.length; i++) {
+      this._titles[i][0].prop('title', '');
     }
 
     this._titles = {};
