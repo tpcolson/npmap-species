@@ -252,17 +252,17 @@ function selectInitialSpecies(li) {
     tooltip: li._common.replace(/_/g, ' '),
     styles: {
       point: {
-        'marker-color': 'rgb(202, 24, 146)',
+        'marker-color': '#c91892',
         'marker-size': 'medium'
       }
     },
     cluster: {
-      clusterIcon: 'rgb(202, 24, 146)'
+      clusterIcon: '#c91892'
     },
     disableClusteringAtZoom: 15,
     polygonOptions: {
-      color: 'rgb(202, 24, 146)',
-      fillColor: 'rgb(202, 24, 146)'
+      color: '#c91892',
+      fillColor: '#c91892'
     }
   });
 
