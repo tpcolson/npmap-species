@@ -62,9 +62,9 @@ body.dragging, body.dragging * {
 }
 
 #search-banner {
-  width: 1354px;
+  width: 1359px;
   height: 30px;
-  margin: 0 auto;
+  margin: 0px;
   padding: 5px 0px 5px 5px;
 
   border-bottom: 1px solid #40403d;
@@ -100,7 +100,7 @@ body.dragging, body.dragging * {
 #search-banner-buffer {
   float: left;
 
-  width: 812px;
+  width: 849px;
   height: 30px;
 }
 
@@ -985,12 +985,17 @@ body.dragging, body.dragging * {
 #search-options {
   float: left;
 
-  width: 325px;
+  width: 342px;
   height: 128px;
   margin: 10px 0px 10px 0px;
   padding: 0px 5px 0px 10px;
 
   border-left: 1px solid #40403d;
+}
+
+#search-options-left {
+  width: 180px;
+  float: left;
 }
 
 #options-label {
@@ -1036,13 +1041,27 @@ body.dragging, body.dragging * {
   line-height: 13px;
 }
 
-#options-annotations {
-  position: relative;
-  top: -103px;
-  left: 190px;
+#search-options-right {
+  width: 136px;
+  padding-left: 10px;
+  float: left;
+}
 
+#annotations-label {
+  height: 20px;
+  padding-bottom: 5px;
+
+  letter-spacing: .001em;
+
+  color: #f5faf2;
+
+  font-size: 12pt;
+  font-weight: semi-bold;
+}
+
+#options-annotations {
   width: 90px;
-  height: 80px;
+  height: 75px;
   padding: 5px;
 
   letter-spacing: .001em;
@@ -1059,6 +1078,7 @@ body.dragging, body.dragging * {
   left: 3px;
 
   padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 #options-annotations > center > div {
@@ -1066,22 +1086,28 @@ body.dragging, body.dragging * {
 }
 
 #options-annotations > center > button {
-  height: 18px;
+  height: 27px;
+  width: 50px;
   margin:0;
   padding:0;
   padding-bottom: 5px;
+  border-radius: 4px;
 
   cursor: pointer;
   letter-spacing: .001em;
 
-  color: #a5aaa2;
+  color: #f5faf2;
   border:none;
   outline: none;
-  background:none;
+
+  background-color: #74746a;
 
   font-size: 10pt;
-  font-style: italic;
-  line-height: 13px;
+  line-height: 27px;
+}
+
+#options-annotations > center > button:hover {
+  background-color: #626159;
 }
 
 #color-legend {

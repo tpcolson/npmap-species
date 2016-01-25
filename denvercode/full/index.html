@@ -129,41 +129,44 @@
           </div>
         </div>
         <div id='search-options' class='bordered'>
-          <div id='options-label'>MAP CONTROLS</div>
-          <div id='options-background'>
-            <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();' data-intro="Change map background" data-position='left'>
-              <option>Select Map Background</option>
-              <option>&#10004; Park Tiles</option>
-              <option>Mapbox Terrain</option>
-              <option>Esri Topo</option>
-              <option>Esri Imagery</option>
-            </select>
-          </div>
-          <div id='options-overlays'>
-            <select id='options-overlays-dropdown' class='search-dropdown' onchange='toggleOverlay();' onmousedown='prepareOverlay();' data-intro='Show extra map features' data-position='left'>
-              <option>Select Map Overlays</option>
-              <option>Trails</option>
-              <option>Visitor Centers</option>
-              <option>Shelters</option>
-              <option>Roads</option>
-              <option>Campsites</option>
-            </select>
-          </div>
-          <div id='checkbox-container' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
-            <div id='options-predicted' class='search-checkbox'>
-              <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked disabled></input>
-              <label for='options-predicted-checkbox'>View Predicted Species</label>
+          <div id='search-options-left'>
+            <div id='options-label'>MAP CONTROLS</div>
+            <div id='options-background'>
+              <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();' data-intro="Change map background" data-position='left'>
+                <option>Select Map Background</option>
+                <option>&#10004; Park Tiles</option>
+                <option>Mapbox Terrain</option>
+                <option>Esri Topo</option>
+                <option>Esri Imagery</option>
+              </select>
             </div>
-            <div id='options-observed' class='search-checkbox'>
-              <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();' disabled></input>
-              <label for='options-observed-checkbox'>View Observed Species</label>
+            <div id='options-overlays'>
+              <select id='options-overlays-dropdown' class='search-dropdown' onchange='toggleOverlay();' onmousedown='prepareOverlay();' data-intro='Show extra map features' data-position='left'>
+                <option>Select Map Overlays</option>
+                <option>Trails</option>
+                <option>Visitor Centers</option>
+                <option>Shelters</option>
+                <option>Roads</option>
+                <option>Campsites</option>
+              </select>
+            </div>
+            <div id='checkbox-container' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
+              <div id='options-predicted' class='search-checkbox'>
+                <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked disabled></input>
+                <label for='options-predicted-checkbox'>View Predicted Species</label>
+              </div>
+              <div id='options-observed' class='search-checkbox'>
+                <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();' disabled></input>
+                <label for='options-observed-checkbox'>View Observed Species</label>
+              </div>
             </div>
           </div>
-          <div id='options-annotations' data-intro='Draw markers, lines, or circles on the map' data-position='right'>
-            <center>Draw on Map</center>
-            <center><div id='options-annotations-buttons' class='npmap'></div></center>
-            <center><button onclick='toggleLayerVisibility();'>Hide Layers</button></center>
-            <center><button onclick='clearLayers();'>Clear All Layers</button></center>
+          <div id='search-options-right'>
+            <div id='annotations-label'>DRAW ON MAP</div>
+            <div id='options-annotations' data-intro='Draw markers, lines, or circles on the map' data-position='right'>
+              <center><div id='options-annotations-buttons' class='npmap'></div></center>
+              <center><button onclick='clearLayers();' tooltip='Press here to remove all drawings from map'><center>CLEAR</center></button></center>
+            </div>
           </div>
         </div>
       </div>
