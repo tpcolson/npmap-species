@@ -116,6 +116,19 @@ window.onload = function() {
     return true;
   });
 
+  /* set up drawing tooltips */
+  attemptExecute(function() {
+    if ($('button.marker').get(0) === undefined || $('button.polyline').get(0) === undefined || $('button.circle').get(0) === undefined) {
+      return false;
+    }
+
+    $('button.marker').get(0).setAttribute('tooltip', 'Place a marker on the map');
+    $('button.polyline').get(0).setAttribute('tooltip', 'Draw a line on the map');
+    $('button.circle').get(0).setAttribute('tooltip', 'Click and drag to place a circle on the map');
+
+    return true;
+  });
+
   /* prepare search tool */
   prepareSearchTool();
 
