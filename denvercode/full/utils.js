@@ -122,9 +122,9 @@ window.onload = function() {
       return false;
     }
 
-    $('button.marker').get(0).setAttribute('tooltip', 'Place a marker on the map');
-    $('button.polyline').get(0).setAttribute('tooltip', 'Draw a line on the map');
-    $('button.circle').get(0).setAttribute('tooltip', 'Click and drag to place a circle on the map');
+    $('button.marker').get(0).setAttribute('tooltip', 'Press here, then click on the map to place a marker');
+    $('button.polyline').get(0).setAttribute('tooltip', 'Press here, then click on the map to draw a path');
+    $('button.circle').get(0).setAttribute('tooltip', 'Press here, then click and drag on the map to draw a circle');
 
     return true;
   });
