@@ -150,12 +150,41 @@ window.onload = function() {
     Cookies.set('name', val, {path:''});
   }
   connectToLoggingServer();
+
+  /* prepare date conversion utility */
+  setInterval(function() {
+    var item = $('.layer > .content > .description').get(0);
+    if(item !== undefined) {
+      if(!processed) {
+        if(endsWith(item.innerHTML, '<a target="_blank" href="http://www.nps.gov/grsm/learn/nature/research.htm">Contribute to this dataset</a>')) {
+          var tokens = item.innerHTML.split(' ');
+          if(tokens[5] !== undefined) {
+            var newDate = new Date(parseInt(tokens[5]));
+          }
+          $(item).html(item.innerHTML.replace(tokens[5], newDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }) + ','));
+          processed = true;
+        }
+      }
+    } else {
+      processed = false;
+    }
+  }, 100);
 }
+
+var processed = false;
 
 function attemptExecute(fn) {
   if(!fn()) {
     setTimeout(fn, 50);
   }
+}
+
+function endsWith(str, suffix) {
+  return str.indexOf(suffix, str.length-suffix.length) !== -1;
 }
 
 var tooltipsEnabled = true;
