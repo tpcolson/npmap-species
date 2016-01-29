@@ -1,6 +1,7 @@
 This directory holds scripts for grabbing and managing species records from CartoDB.
 
 separate.py will produce two products:
+
 1. ATBI_counts.txt: contains species names and observation counts
 2. ATBI_files: directory containing a CSV for each species in ATBI_counts.txt
 
