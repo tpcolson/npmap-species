@@ -102,10 +102,9 @@
           </div>
         </div>
         <div id='search-compare' class='bordered'>
-          <div id='search-compare-placeholder'><img src='images/center_graphic.png'></img></div>
           <div id='search-compare-contents'>
             <div id='search-compare-lexical'>
-              <input type='radio' name='comparator' value='lexical' onclick='lexFocus();'></input>
+              <input type='radio' name='comparator' value='lexical' onclick='lexFocus();' disabled></input>
               <div class='subhead'>COMPARE WITH</div>
               <div class='subhead2'>ANOTHER SPECIES IN THE PARK</div>
               <div id='search-compare-one-box'>
@@ -122,7 +121,7 @@
               </div>
             </div>
             <div id='search-compare-distribution'>
-              <input type='radio' name='comparator' value='distribution' onclick='distFocus();'></input>
+              <input type='radio' name='comparator' value='distribution' onclick='distFocus();' disabled></input>
               <div class='subhead'>COMPARE WITH</div>
               <div class='subhead2'>SPECIES WITH SIMILAR DISTRIBUTION</div>
               <div id='compare-dist-one' onclick='toggleCompareDistOne();'>
@@ -132,21 +131,6 @@
               </div>
               <div id='compare-dist-two' onclick='toggleCompareDistTwo();'>
                 <div id='compare-dist-two-name'>Select a third species</div>
-                <div class='triangle'></div>
-                <ul></ul>
-              </div>
-            </div>
-            <div id='search-compare-environment'>
-              <input type='radio' name='comparator' value='environment' onclick='envFocus();'></input>
-              <div class='subhead'>COMPARE WITH</div>
-              <div class='subhead2'>SPECIES WITH SIMILAR ENVIRONMENT</div>
-              <div id='compare-env-one' onclick='toggleCompareEnvOne();'>
-                <div id='compare-env-one-name'>Select a second species</div>
-                <div class='triangle'></div>
-                <ul></ul>
-              </div>
-              <div id='compare-env-two' onclick='toggleCompareEnvTwo();'>
-                <div id='compare-env-two-name'>Select a third species</div>
                 <div class='triangle'></div>
                 <ul></ul>
               </div>

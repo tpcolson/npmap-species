@@ -228,7 +228,7 @@ body.dragging, body.dragging * {
 #search-initial {
   float: left;
 
-  width: 280px;
+  width: 400px;
   height: 128px;
   margin: 10px;
   padding: inherit;
@@ -476,7 +476,7 @@ body.dragging, body.dragging * {
 #search-compare {
   float: left;
 
-  width: 722px;
+  width: 602px;
   height: 128px;
   margin: 10px 0px 10px 0px;
   padding: inherit;
@@ -496,8 +496,6 @@ body.dragging, body.dragging * {
 }
 
 #search-compare-contents {
-  display: none;
-
   width: 100%;
   height: 128px;
 }
@@ -728,8 +726,6 @@ body.dragging, body.dragging * {
   box-sizing: border-box;
   width: 240px;
   height: 128px;
-
-  border-right: 1px dotted #40403d;
 }
 
 #compare-dist-one {
@@ -997,7 +993,7 @@ body.dragging, body.dragging * {
 
   letter-spacing: .001em;
 
-  color: #f5faf2;
+  color: rgb(144, 144, 144);
 
   font-size: 12pt;
   font-weight: semi-bold;
@@ -1014,7 +1010,7 @@ body.dragging, body.dragging * {
 
   letter-spacing: .001em;
 
-  color: #f5faf2;
+  color: rgb(144, 144, 144);
 
   font-size: 14pt;
   font-weight: bold;
