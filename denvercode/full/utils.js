@@ -194,12 +194,12 @@ function toggleTooltips() {
   var tooltipsButton = document.getElementById('search-banner-help-tooltips').children[0].children[0];
   if(tooltipsEnabled) {
     recordAction('tooltips turned off');
-    tooltipsButton.innerHTML = 'TOOLTIPS OFF';
-    tooltipsButton.style.color = '#a5aaa2';
+    $('#search-banner-tooltips-button').children().stop();
+    $('#search-banner-tooltips-button').children().animate({left:'-18.75px'});
   } else {
     recordAction('tooltips turned on');
-    tooltipsButton.innerHTML = 'TOOLTIPS ON';
-    tooltipsButton.style.color = '#f5faf2';
+    $('#search-banner-tooltips-button').children().stop();
+    $('#search-banner-tooltips-button').children().animate({left:'18.75px'});
   }
 
   tooltipsEnabled = !tooltipsEnabled;

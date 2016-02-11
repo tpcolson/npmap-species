@@ -60,7 +60,16 @@
         <div id='search-banner'>
           <div id='search-banner-buffer'></div>
           <div id='search-banner-help-tooltips' class='bordered' tooltip='Turn tooltips on/off'>
-            <center><button onclick='toggleTooltips();'>TOOLTIPS ON</button></center>
+            <center>
+              <p id='search-banner-tooltips-label'>
+                TOOLTIPS:
+              </p>
+              <div id='search-banner-tooltips'>
+                <div><center><div onclick='toggleTooltips();'>ON</div></center></div>
+                <div><center><div onclick='toggleTooltips();'>OFF</div></center></div>
+                <div id='search-banner-tooltips-button'><div onclick='toggleTooltips();'><span>...</span></div></div>
+              </div>
+            </center>
           </div>
           <div id='search-banner-help-link' class='bordered' tooltip='Get help using the tool'>
             <center><button onclick='showHelp();'>?</button></center>
