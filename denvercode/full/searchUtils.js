@@ -102,17 +102,49 @@ function populateResults() {
   }
 }
 
-var listShown = false;
-function toggleSearchList(callback) {
-  if(!listShown) {
-    $('#search-initial-dropdown-select').stop();
-    $('#search-initial-dropdown-select').animate({height: '400px'}, callback);
-  } else {
-    $('#search-initial-dropdown-select').stop();
-    $('#search-initial-dropdown-select').animate({height: '0px'}, callback);
-  }
+var list0Shown = false,
+  list1Shown = false,
+  list2Shown = false;
+function toggleSearchList(idx, callback) {
+  switch(idx) {
+    case 0:
+      if(!list0Shown) {
+        $('#search-initial-dropdown-select').stop();
+        $('#search-initial-dropdown-select').animate({height: '400px'}, callback);
+      } else {
+        $('#search-initial-dropdown-select').stop();
+        $('#search-initial-dropdown-select').animate({height: '0px'}, callback);
+      }
 
-  listShown = !listShown;
+      list0Shown = !list0Shown;
+      break;
+
+    case 1:
+      if(!list1Shown) {
+        $('#search-compare-one-dropdown-select').stop();
+        $('#search-compare-one-dropdown-select').animate({height: '400px'}, callback);
+      } else {
+        $('#search-compare-one-dropdown-select').stop();
+        $('#search-compare-one-dropdown-select').animate({height: '0px'}, callback);
+      }
+
+      list1Shown = !list1Shown;
+      break;
+
+    case 2:
+      if(!list2Shown) {
+        $('#search-compare-two-dropdown-select').stop();
+        $('#search-compare-two-dropdown-select').animate({height: '400px'}, callback);
+      } else {
+        $('#search-compare-two-dropdown-select').stop();
+        $('#search-compare-two-dropdown-select').animate({height: '0px'}, callback);
+      }
+
+      list2Shown = !list2Shown;
+
+    default:
+      break;
+  }
 }
 
 function clearSearch() {
@@ -458,20 +490,18 @@ function selectSecondSpecies(li) {
   document.getElementById('legend-orange-contents-name').innerHTML = li.innerHTML;
   document.getElementById('legend-orange-contents-name').title = li.title;
 
-  $('#search-compare-one-box-input').val('');
-  $('#search-compare-one-box-input').trigger('input');
-
   if(whichName === 'common') {
-    $('#search-compare-one-box-name').html(li._common);
-    $('#search-compare-one-box-name').prop('title', li._latin.replace(/_/g, ' '));
-    $('#compare-dist-one-name').html(li._common);
-    $('#compare-dist-one-name').prop('title', li._latin.replace(/_/g, ' '));
+    $('.dropdown-input', '#search-compare-one-dropdown').val(li._common.replace(/_/g, ' '));
+    $('.dropdown-input', '#search-compare-one-dropdown').prop('title', li._latin.replace(/_/g, ' '));
   } else {
-    $('#search-compare-one-box-name').html(li._latin.replace(/_/g, ' '));
-    $('#search-compare-one-box-name').prop('title', li._common);
-    $('#compare-dist-one-name').html(li._latin.replace(/_/g, ' '));
-    $('#compare-dist-one-name').prop('title', li._common);
+    $('.dropdown-input', '#search-compare-one-dropdown').val(li._latin.replace(/_/g, ' '));
+    $('.dropdown-input', '#search-compare-one-dropdown').prop('title', li._common.replace(/_/g, ' '));
   }
+
+  $('#search-compare-one-dropdown').css({backgroundColor:'rgb(242, 142, 67)'});
+  $('.dropdown-input', '#search-compare-one-dropdown').css({backgroundColor:'rgb(242, 142, 67)'});
+  fuseSearch(1, '');
+
   $('#search-compare-one-box-name').css({display:'block'});
   $('#search-compare-one-box-clear').css({display:'block'});
   $('#compare-dist-one-name').css({backgroundColor:'rgb(242, 142, 67)'});
@@ -621,6 +651,18 @@ function selectThirdSpecies(li) {
   document.getElementById('options-predicted-checkbox').disabled = true;
   document.getElementById('options-observed-checkbox').disabled = true;
 
+  if(whichName === 'common') {
+    $('.dropdown-input', '#search-compare-two-dropdown').val(li._common.replace(/_/g, ' '));
+    $('.dropdown-input', '#search-compare-two-dropdown').prop('title', li._latin.replace(/_/g, ' '));
+  } else {
+    $('.dropdown-input', '#search-compare-two-dropdown').val(li._latin.replace(/_/g, ' '));
+    $('.dropdown-input', '#search-compare-two-dropdown').prop('title', li._common.replace(/_/g, ' '));
+  }
+
+  $('#search-compare-two-dropdown').css({backgroundColor:'rgb(29, 144, 156)'});
+  $('.dropdown-input', '#search-compare-two-dropdown').css({backgroundColor:'rgb(29, 144, 156)'});
+  fuseSearch(2, '');
+
   drawData();
 
   findAUC(2, li._latin);
@@ -717,10 +759,10 @@ function fuseSearch(idx, value, expand) {
       elString = '#search-initial-dropdown-lex';
       break;
     case 1:
-      elString = '#search-compare-one-box';
+      elString = '#search-compare-one-dropdown-lex';
       break;
     case 2:
-      elString = '#search-compare-two-box';
+      elString = '#search-compare-two-dropdown-lex';
       break;
     default:
       return;
@@ -744,11 +786,7 @@ function fuseSearch(idx, value, expand) {
     return;
   }
 
-  if(idx !== 0) {
-    document.getElementById(elString.substring(1)).children[1].innerHTML = '';
-  } else {
-    document.getElementById(elString.substring(1)).innerHTML = '';
-  }
+  document.getElementById(elString.substring(1)).innerHTML = '';
   for(var i = 0; i < results.length; i++) {
     var li = document.createElement('li');
     li._latin = results[i].latin_name;
@@ -778,11 +816,7 @@ function fuseSearch(idx, value, expand) {
           break;
       }
     }
-    if(idx !== 0) {
-      document.getElementById(elString.substring(1)).children[1].appendChild(li);
-    } else {
-      document.getElementById(elString.substring(1)).appendChild(li);
-    }
+    document.getElementById(elString.substring(1)).appendChild(li);
   }
 }
 
@@ -820,6 +854,9 @@ function lexFocus() {
   $('.subhead2', '#search-compare-distribution').html('COMPARE DISTRIBUTION');
   $('#compare-dist-one').css({display:'none'});
   $('#compare-dist-two').css({display:'none'});
+  $('#search-compare-one-dropdown').css({'display':'block'});
+  $('#search-compare-two-dropdown').css({'display':'block'});
+  $('.dropdown-input', '#search-compare-one-dropdown').focus();
 }
 
 function distFocus() {
@@ -848,6 +885,8 @@ function distFocus() {
   $('.subhead2', '#search-compare-distribution').html('SPECIES WITH SIMILAR DISTRIBUTION');
   $('#compare-dist-one').css({display:'block'});
   $('#compare-dist-two').css({display:'block'});
+  $('#search-compare-one-dropdown').css({'display':'none'});
+  $('#search-compare-two-dropdown').css({'display':'none'});
 }
 
 function findAUC(idx, name) {

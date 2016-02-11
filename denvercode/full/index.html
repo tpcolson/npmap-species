@@ -86,7 +86,7 @@
             SELECT A SPECIES
             <div id='search-initial-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
               <input class='dropdown-input' oninput='fuseSearch(0, this.value);'></input>
-              <div class='dropdown-button' onclick='toggleSearchList();'>
+              <div class='dropdown-button' onclick='toggleSearchList(0);'>
                 <div class='triangle'></div>
               </div>
               <ul id='search-initial-dropdown-select'></ul>
@@ -106,17 +106,21 @@
               <input type='radio' name='comparator' value='lexical' onclick='lexFocus();' disabled></input>
               <div class='subhead'>COMPARE WITH</div>
               <div class='subhead2'>ANOTHER SPECIES IN THE PARK</div>
-              <div id='search-compare-one-box'>
-                <input id='search-compare-one-box-input' type='text' name='compare-one-search' placeholder='Find a second species...' oninput='fuseSearch(1, this.value);'></input>
-                <ul></ul>
-                <div id='search-compare-one-box-name'></div>
-                <div id='search-compare-one-box-clear' onclick='clearCompareOne();'>Clear</div>
+              <div id='search-compare-one-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+                <input class='dropdown-input' oninput='fuseSearch(1, this.value);'></input>
+                <div class='dropdown-button' onclick='toggleSearchList(1);'>
+                  <div class='triangle'></div>
+                </div>
+                <ul id='search-compare-one-dropdown-select'></ul>
+                <ul id='search-compare-one-dropdown-lex'></ul>
               </div>
-              <div id='search-compare-two-box'>
-                <input id='search-compare-two-box-input' type='text' name='compare-two-search' placeholder='Find a third species...' oninput='fuseSearch(2, this.value);'></input>
-                <ul></ul>
-                <div id='search-compare-two-box-name'></div>
-                <div id='search-compare-two-box-clear' onclick='clearCompareTwo();'>Clear</div>
+              <div id='search-compare-two-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+                <input class='dropdown-input' oninput='fuseSearch(2, this.value);'></input>
+                <div class='dropdown-button' onclick='toggleSearchList(2);'>
+                  <div class='triangle'></div>
+                </div>
+                <ul id='search-compare-two-dropdown-select'></ul>
+                <ul id='search-compare-two-dropdown-lex'></ul>
               </div>
             </div>
             <div id='search-compare-distribution'>
