@@ -166,7 +166,7 @@ function clearSearch() {
   toggleSearchList();
 
   // remove all selected species
-  document.getElementById('search-initial-dropdown').children[0].innerHTML = 'Select a species';
+  document.getElementById('search-initial-dropdown').children[0].innerHTML = '';
   document.getElementById('search-initial-dropdown').children[0].title = '';
   document.getElementById('search-initial-dropdown').style.backgroundColor = '#40403d';
 
@@ -192,6 +192,8 @@ function clearSearch() {
   }
   document.getElementById('options-predicted-checkbox').disabled = true;
   document.getElementById('options-observed-checkbox').disabled = true;
+
+  $('#search-initial-altname').html('');
 
   $('#search-compare-lexical').stop();
   $('#search-compare-lexical').animate({'width': '240px'});
@@ -227,6 +229,9 @@ function clearSearch() {
 
   $('input:radio[name=comparator]').prop('checked', false);
   $('input:radio[name=comparator]').prop('disabled', true);
+
+  $('#search-initial-image').css({'opacity':0.0});
+  $('.triangle').css({'top':'8px'});
 
   $('#color-legend').animate({height: '0px'});
 }
@@ -296,6 +301,12 @@ function selectInitialSpecies(li) {
   document.getElementById('options-predicted-checkbox').disabled = false;
   document.getElementById('options-observed-checkbox').disabled = false;
 
+  if(whichName === 'latin') {
+    $('#search-initial-altname').html(control._selectedSpecies[0]._common.replace(/_/g, ' '));
+  } else {
+    $('#search-initial-altname').html(control._selectedSpecies[0]._latin.replace(/_/g, ' '));
+  }
+
   drawData();
   if(showObserved) {
     control._selectedSpecies[0].observed.addTo(NPMap.config.L);
@@ -312,7 +323,10 @@ function selectInitialSpecies(li) {
   $('.subhead2').css({
     color:'#f5faf2',
   });
+
   $('input:radio[name=comparator]').prop('disabled', false);
+  $('#search-initial-image').css({'opacity':1.0});
+  $('.triangle').css({'top':'-12px'});
 
   populateLists();
 }

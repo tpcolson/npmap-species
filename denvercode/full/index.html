@@ -79,26 +79,27 @@
           </div>
         </div>
         <div id='search-initial'>
-          <div id='search-initial-lexical' onclick='toggleLexicalSearch();' tooltip='Pull up a search prompt' data-intro='Pull up species search prompt' data-position='bottom'>
-            <img src='images/searchButton.png'></img>
-          </div>
-          <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
-            <div class='dropdown-text'>Select a species</div>
-            <div class='triangle'></div>
-          </div>
           <div id='search-initial-image' class='vignette'>
             <img src='images/no_image.png'></img>
           </div>
-          <div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
-            <div><center><div onclick='toggleName();'>COMMON</div></center></div>
-            <div><center><div onclick='toggleName();'>LATIN</div></center></div>
-            <div id='search-initial-switch-button'><div onclick='toggleName();'><span>...</span></div></div>
-          </div>
-          <ul id='search-initial-dropdown-common'></ul>
-          <ul id='search-initial-dropdown-latin'></ul>
-          <div id='search-initial-box'>
-            <input id='search-initial-box-input' type='text' name='initial-search' placeholder='Find a species...' oninput='fuseSearch(0, this.value);'></input>
-            <ul></ul>
+          <div id='search-initial-controls'>
+            SELECT A SPECIES
+            <div id='search-initial-dropdown' class='species-dropdown' onclick='toggleSearchList();' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+              <div class='dropdown-text'></div>
+              <div class='triangle'></div>
+            </div>
+            <div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
+              <div><center><div onclick='toggleName();'>COMMON</div></center></div>
+              <div><center><div onclick='toggleName();'>LATIN</div></center></div>
+              <div id='search-initial-switch-button'><div onclick='toggleName();'><span>...</span></div></div>
+            </div>
+            <div id='search-initial-altname'></div>
+            <ul id='search-initial-dropdown-common'></ul>
+            <ul id='search-initial-dropdown-latin'></ul>
+            <div id='search-initial-box'>
+              <input id='search-initial-box-input' type='text' name='initial-search' placeholder='Find a species...' oninput='fuseSearch(0, this.value);'></input>
+              <ul></ul>
+            </div>
           </div>
         </div>
         <div id='search-compare' class='bordered'>

@@ -375,10 +375,13 @@ function toggleName() {
   el.innerHTML = el.title;
   el.title = tmp;
 
+  tmp = $('#search-initial-altname').html();
+  $('#search-initial-altname').html($('.dropdown-text', '#search-initial-dropdown').html());
+  $('#search-initial-dropdown').html(tmp);
+
   var swapNeeded = $('#search-initial-dropdown').css('backgroundColor') === 'rgb(202, 24, 146)';
   if(swapNeeded) {
     populateDistributionLists();
-    populateEnvironmentLists();
     fuseSearch(1, $('#search-compare-one-box-input').val());
     fuseSearch(2, $('#search-compare-two-box-input').val());
 
@@ -401,24 +404,6 @@ function toggleName() {
   swapNeeded = $('#compare-dist-two-name').css('backgroundColor') === 'rgb(29, 144, 156)';
   if(swapNeeded) {
     var el = document.getElementById('compare-dist-two-name'),
-      tmp = el.innerHTML;
-
-    el.innerHTML = el.title;
-    el.title = tmp;
-  }
-
-  swapNeeded = $('#compare-env-one-name').css('backgroundColor') === 'rgb(242, 142, 67)';
-  if(swapNeeded) {
-    var el = document.getElementById('compare-env-one-name'),
-      tmp = el.innerHTML;
-
-    el.innerHTML = el.title;
-    el.title = tmp;
-  }
-
-  swapNeeded = $('#compare-env-two-name').css('backgroundColor') === 'rgb(29, 144, 156)';
-  if(swapNeeded) {
-    var el = document.getElementById('compare-env-two-name'),
       tmp = el.innerHTML;
 
     el.innerHTML = el.title;
