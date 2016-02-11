@@ -375,9 +375,9 @@ function toggleName() {
   el.innerHTML = el.title;
   el.title = tmp;
 
-  tmp = $('#search-initial-altname').html();
-  $('#search-initial-altname').html($('.dropdown-text', '#search-initial-dropdown').html());
-  $('.dropdown-text', '#search-initial-dropdown').html(tmp);
+  tmp = $('.dropdown-input', '#search-initial-dropdown').val();
+  $('.dropdown-input', '#search-initial-dropdown').val($('#search-initial-altname').html());
+  $('#search-initial-altname').html(tmp);
 
   var swapNeeded = $('#search-initial-dropdown').css('backgroundColor') === 'rgb(202, 24, 146)';
   if(swapNeeded) {

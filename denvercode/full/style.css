@@ -273,68 +273,91 @@ body.dragging, body.dragging * {
 #search-initial-dropdown {
   width: 255px;
   position: relative;
-  z-index: 50;
   top: 5px;
 }
 
-#search-initial-dropdown-common {
+.dropdown-input {
+  height: 100%;
+  width: 225px;
+  float: left;
+  border: none;
+  padding: 0;
+
+  font-style: italic;
+  color: #f5faf2;
+  background-color: #40403d;
+  outline: none;
+}
+
+.dropdown-button {
+  width: 30px;
+  float: left;
+  height: 100%;
+}
+
+#search-initial-dropdown-select {
   position: relative;
-  top: -35px;
+  left: -5px;
+  top: -3px;
   z-index: 60;
 
   overflow-x: hidden;
   overflow-y: scroll;
 
-  width: 255px;
+  width: 250px;
   height: 0px;
   margin: 0px;
   padding-left: 5px;
+  padding-right: 5px;
 
-  border-radius: 4px;
+  border-radius: 0px 0px 4px 4px;
   background-color: #40403d;
 }
 
-#search-initial-dropdown-common > li {
-  width: 255px;
+#search-initial-dropdown-select > li {
+  width: 250px;
   height: 20px;
   margin: 0px;
 
   cursor: pointer;
 
   color: #f5faf2;
-  border-bottom: 1px dotted #f5faf2;
+  border-top: 1px dotted #f5faf2;
 
   font-size: 10pt;
   font-style: italic;
   line-height: 20px;
 }
 
-#search-initial-dropdown-latin {
+#search-initial-dropdown-lex {
   position: relative;
-  top: -35px;
+  left: -5px;
+  top: -3px;
   z-index: 60;
 
   overflow-x: hidden;
-  overflow-y: scroll;
 
-  width: 255px;
+  width: 250px;
+
   height: 0px;
   margin: 0px;
   padding-left: 5px;
+  padding-right: 5px;
 
-  border-radius: 4px;
+  border-radius: 0px 0px 4px 4px;
   background-color: #40403d;
 }
 
-#search-initial-dropdown-latin > li {
-  width: 255px;
+#search-initial-dropdown-lex > li {
+  width: 250px;
+
   height: 20px;
   margin: 0px;
 
   cursor: pointer;
 
   color: #f5faf2;
-  border-bottom: 1px dotted #f5faf2;
+  border-top: 1px dotted #f5faf2;
 
   font-size: 10pt;
   font-style: italic;
@@ -361,7 +384,6 @@ body.dragging, body.dragging * {
 
 #search-initial-switch {
   position: relative;
-  z-index: 50;
   top: 72px;
 
   width: 150px;
@@ -2325,7 +2347,7 @@ button {
 .triangle {
   position: relative;
   top: 8px;
-  left: 240px;
+  left: 10px;
 
   width: 0;
   height: 0;
