@@ -242,8 +242,14 @@ function selectInitialSpecies(li) {
   document.getElementById('search-initial-dropdown').children[0].innerHTML = li.innerHTML;
   document.getElementById('search-initial-dropdown').children[0].title = li.title;
   document.getElementById('search-initial-dropdown').style.backgroundColor = 'rgb(202, 24, 146)';
-  document.getElementById('legend-pink-contents-name').innerHTML = li.innerHTML;
-  document.getElementById('legend-pink-contents-name').title = li.title;
+
+  if(whichName === 'latin') {
+    document.getElementById('legend-pink-contents-name').innerHTML = li._latin.replace(/_/g, ' ');
+    document.getElementById('legend-pink-contents-name').title = li._common.replace(/_/g, ' ');
+  } else {
+    document.getElementById('legend-pink-contents-name').innerHTML = li._common.replace(/_/g, ' ');
+    document.getElementById('legend-pink-contents-name').title = li._latin.replace(/_/g, ' ');
+  }
 
   if(control._selectedSpecies[0] !== undefined && control._selectedSpecies[0].visible) {
     recordAction('removed species: ' + control._selectedSpecies[0]._latin.replace(/_/g, ' '));
