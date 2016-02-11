@@ -173,6 +173,8 @@ window.onload = function() {
       processed = false;
     }
   }, 100);
+
+  $('.dropdown-input', '#search-initial-dropdown').focus();
 }
 
 var processed = false;

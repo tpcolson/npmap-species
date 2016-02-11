@@ -298,7 +298,6 @@ body.dragging, body.dragging * {
 #search-initial-dropdown-select {
   position: relative;
   left: -5px;
-  top: -3px;
   z-index: 60;
 
   overflow-x: hidden;
@@ -332,7 +331,6 @@ body.dragging, body.dragging * {
 #search-initial-dropdown-lex {
   position: relative;
   left: -5px;
-  top: -3px;
   z-index: 60;
 
   overflow-x: hidden;

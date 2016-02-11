@@ -69,7 +69,7 @@ function populateResults() {
   }
   keys.sort();
 
-  document.getElementById('search-initial-dropdown-select').innerHTML = '<li style="height:3px; border:none;"></li>';
+  document.getElementById('search-initial-dropdown-select').innerHTML = '';
   var li = document.createElement('li');
   li.innerHTML = 'Clear selection';
   li.onclick = function() {
@@ -729,22 +729,25 @@ function fuseSearch(idx, value, expand) {
   $(elString).stop();
   if(expand === undefined || expand) {
     $(elString).animate({
-      height: (3 + results.length*21) + 'px'
+      height: (results.length*21) + 'px'
     });
+    $(elString).parent().css({'border-radius': '4px 4px 0px 0px'});
   } else {
     $(elString).animate({
       height: '0px'
     });
+    $(elString).parent().css({'border-radius': '4px 4px 4px 4px'});
   }
 
   if(results.length === 0) {
+    $(elString).parent().css({'border-radius': '4px 4px 4px 4px'});
     return;
   }
 
   if(idx !== 0) {
-    document.getElementById(elString.substring(1)).children[1].innerHTML = '<li style="height:3px; border:none;"></li>';
+    document.getElementById(elString.substring(1)).children[1].innerHTML = '';
   } else {
-    document.getElementById(elString.substring(1)).innerHTML = '<li style="height:3px; border:none;"></li>';
+    document.getElementById(elString.substring(1)).innerHTML = '';
   }
   for(var i = 0; i < results.length; i++) {
     var li = document.createElement('li');
