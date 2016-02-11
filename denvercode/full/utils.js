@@ -377,19 +377,13 @@ function toggleName() {
 
   tmp = $('#search-initial-altname').html();
   $('#search-initial-altname').html($('.dropdown-text', '#search-initial-dropdown').html());
-  $('#search-initial-dropdown').html(tmp);
+  $('.dropdown-text', '#search-initial-dropdown').html(tmp);
 
   var swapNeeded = $('#search-initial-dropdown').css('backgroundColor') === 'rgb(202, 24, 146)';
   if(swapNeeded) {
     populateDistributionLists();
     fuseSearch(1, $('#search-compare-one-box-input').val());
     fuseSearch(2, $('#search-compare-two-box-input').val());
-
-    var el = $('#search-initial-dropdown').children()[0],
-      tmp = el.innerHTML;
-
-    el.innerHTML = el.title;
-    el.title = tmp;
   }
 
   swapNeeded = $('#compare-dist-one-name').css('backgroundColor') === 'rgb(242, 142, 67)';

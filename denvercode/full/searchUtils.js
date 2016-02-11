@@ -129,7 +129,6 @@ function populateResults() {
       li._id = commonNames[key][j]._id;
       li._common = key;
       li.innerHTML = li._common.replace(/_/g, ' ');
-      li.title = li._latin.replace(/_/g, ' ');
       li.onclick = function() {
         toggleSearchList();
         selectInitialSpecies(this);
