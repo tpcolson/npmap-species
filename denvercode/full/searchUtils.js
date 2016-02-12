@@ -210,11 +210,13 @@ function toggleSearchList(idx, callback) {
   switch(idx) {
     case 0:
       if(!list0Shown) {
+        $('#search-initial-dropdown').css({'border-radius':'4px 4px 0px 0px'});
         $('#search-initial-dropdown-lex').stop();
         $('#search-initial-dropdown-lex').animate({height: '0px'});
         $('#search-initial-dropdown-select').stop();
         $('#search-initial-dropdown-select').animate({height: '400px'}, callback);
       } else {
+        $('#search-initial-dropdown').css({'border-radius':'4px'});
         $('#search-initial-dropdown-select').stop();
         $('#search-initial-dropdown-select').animate({height: '0px'}, callback);
       }
@@ -224,11 +226,13 @@ function toggleSearchList(idx, callback) {
 
     case 1:
       if(!list1Shown) {
+        $('#search-compare-one-dropdown').css({'border-radius':'4px 4px 0px 0px'});
         $('#search-compare-one-dropdown-lex').stop();
         $('#search-compare-one-dropdown-lex').animate({height: '0px'});
         $('#search-compare-one-dropdown-select').stop();
         $('#search-compare-one-dropdown-select').animate({height: '400px'}, callback);
       } else {
+        $('#search-compare-one-dropdown').css({'border-radius':'4px'});
         $('#search-compare-one-dropdown-select').stop();
         $('#search-compare-one-dropdown-select').animate({height: '0px'}, callback);
       }
@@ -238,11 +242,13 @@ function toggleSearchList(idx, callback) {
 
     case 2:
       if(!list2Shown) {
+        $('#search-compare-two-dropdown').css({'border-radius':'4px 4px 0px 0px'});
         $('#search-compare-two-dropdown-lex').stop();
         $('#search-compare-two-dropdown-lex').animate({height: '0px'});
         $('#search-compare-two-dropdown-select').stop();
         $('#search-compare-two-dropdown-select').animate({height: '400px'}, callback);
       } else {
+        $('#search-compare-two-dropdown').css({'border-radius':'4px'});
         $('#search-compare-two-dropdown-select').stop();
         $('#search-compare-two-dropdown-select').animate({height: '0px'}, callback);
       }
