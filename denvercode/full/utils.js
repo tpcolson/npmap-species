@@ -248,18 +248,17 @@ function toggleMinimized() {
 }
 
 var lastBaseIndex = 0;
-function updateBaseLayer() {
-  var selector = document.getElementById('options-background-dropdown');
-  if(selector.selectedIndex > 0) {
+function updateBaseLayer(idx) {
+  if(idx !== lastBaseIndex) {
     /* remove last layer (taken from NPMap.js switcher.js) */
-    selector.children[lastBaseIndex+1].innerHTML = selector.children[lastBaseIndex+1].innerHTML.substring(2, selector.children[lastBaseIndex+1].innerHTML.length);
+    $('#options-background-dropdown-ul').get(0).children[lastBaseIndex].innerHTML = $('#options-background-dropdown-ul').get(0).children[lastBaseIndex].innerHTML.substring(2, $('#options-background-dropdown-ul').get(0).children[lastBaseIndex].innerHTML.length);
     NPMap.config.baseLayers[lastBaseIndex].visible = false;
     NPMap.config.L.removeLayer(NPMap.config.baseLayers[lastBaseIndex].L);
 
     /* add new layer (taken from NPMap.js switcher.js) */
-    recordAction('changed base layer: ' + selector.children[selector.selectedIndex].innerHTML);
-    selector.children[selector.selectedIndex].innerHTML = '\u2714 ' + selector.children[selector.selectedIndex].innerHTML;
-    var newLayer = NPMap.config.baseLayers[selector.selectedIndex-1];
+    recordAction('changed base layer: ' + $('#options-background-dropdown-ul').get(0).children[idx].innerHTML);
+    $('#options-background-dropdown-ul').get(0).children[idx].innerHTML = '\u2714 ' + $('#options-background-dropdown-ul').get(0).children[idx].innerHTML;
+    var newLayer = NPMap.config.baseLayers[idx];
     if (newLayer.type === 'arcgisserver') {
       newLayer.L = L.npmap.layer[newLayer.type][newLayer.tiled === true ? 'tiled' : 'dynamic'](newLayer);
     } else {
@@ -269,35 +268,24 @@ function updateBaseLayer() {
     currentBaseLayer = newLayer.L;
     NPMap.config.L.addLayer(newLayer.L);
 
-    lastBaseIndex = selector.selectedIndex-1;
+    lastBaseIndex = idx;
   }
-  selector.selectedIndex = 0;
 }
 
-function prepareOverlay() {
-  var selector = document.getElementById('options-overlays-dropdown');
-  selector.selectedIndex = 0;
-}
-
-function toggleOverlay() {
-  var selector = document.getElementById('options-overlays-dropdown'),
-    idx = selector.selectedIndex - 1,
-    text = selector.options[idx+1].text;
-  if(idx >= 0) {
-    var overlay = NPMap.config.overlays[idx];
-    if(text.charAt(0) !== '\u2714') {
-      recordAction('turned on overlay: ' + text);
-      selector.options[idx+1].text = '\u2714 ' + text;
-      overlay.visible = true;
-      NPMap.config.L.addLayer(overlay.L);
-    } else {
-      recordAction('turned off overlay: ' + text.substring(2, text.length));
-      selector.options[idx+1].text = text.substring(2, text.length);
-      overlay.visible = false;
-      NPMap.config.L.removeLayer(overlay.L);
-    }
+function toggleOverlay(idx) {
+  var overlay = NPMap.config.overlays[idx],
+    text = $('#options-overlays-dropdown-ul').get(0).children[idx].innerHTML;
+  if(text.charAt(0) !== '\u2714') {
+    recordAction('turned on overlay: ' + text);
+    $('#options-overlays-dropdown-ul').get(0).children[idx].innerHTML = '\u2714 ' + text;
+    overlay.visible = true;
+    NPMap.config.L.addLayer(overlay.L);
+  } else {
+    recordAction('turned off overlay: ' + text.substring(2, text.length));
+    $('#options-overlays-dropdown-ul').get(0).children[idx].innerHTML = text.substring(2, text.length);
+    overlay.visible = false;
+    NPMap.config.L.removeLayer(overlay.L);
   }
-  selector.selectedIndex = 0;
 }
 
 var showPredicted = true;
@@ -335,6 +323,36 @@ function toggleObserved() {
         NPMap.config.L.removeLayer(control._selectedSpecies[i].observed);
       }
     }
+  }
+}
+
+var showBackground = false;
+function toggleBackgroundList() {
+  showBackground = !showBackground;
+
+  if(showBackground) {
+    $('#options-background-dropdown').stop();
+    $('#options-background-dropdown').animate({'height': '105px'});
+    $('#options-background-dropdown-ul').css({'display':'block'});
+  } else {
+    $('#options-background-dropdown').stop();
+    $('#options-background-dropdown').animate({'height': '20px'});
+    $('#options-background-dropdown-ul').css({'display':'none'});
+  }
+}
+
+var showOverlayList = false;
+function toggleOverlayList() {
+  showOverlayList = !showOverlayList;
+
+  if(showOverlayList) {
+    $('#options-overlays-dropdown').stop();
+    $('#options-overlays-dropdown').animate({'height': '126px'});
+    $('#options-overlays-dropdown-ul').css({'display':'block'});
+  } else {
+    $('#options-overlays-dropdown').stop();
+    $('#options-overlays-dropdown').animate({'height': '20px'});
+    $('#options-overlays-dropdown-ul').css({'display':'none'});
   }
 }
 

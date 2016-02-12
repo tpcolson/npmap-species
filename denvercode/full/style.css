@@ -1273,18 +1273,68 @@ body.dragging, body.dragging * {
 
 #options-background {
   height: 22px;
+  width: 175px;
   padding-bottom: 10px;
+}
+
+#options-background-dropdown {
+  position: relative;
+  z-index: 50;
+  width: 100%;
+  font-style: italic;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+#options-background-dropdown > .triangle {
+  top: -12px;
+  left: 160px;
+}
+
+#options-background-dropdown-ul {
+  position: relative;
+  top: -5px;
+  width: calc(100% - 5px);
+  padding-right: 5px;
+}
+
+#options-background-dropdown-ul > li {
+  width: 100%;
+  height: 20px;
+  border-top: 1px dotted #f5faf2;
 }
 
 #options-overlays {
   height: 22px;
+  width: 175px;
   padding-bottom: 10px;
 }
 
-#options-overlays > label {
-  height: 13px;
+#options-overlays-dropdown {
+  position: relative;
+  z-index: 49;
+  width: 100%;
+  font-style: italic;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
 
-  line-height: 13px;
+#options-overlays-dropdown > .triangle {
+  top: -12px;
+  left: 160px;
+}
+
+#options-overlays-dropdown-ul {
+  position: relative;
+  top: -5px;
+  width: calc(100% - 5px);
+  padding-right: 5px;
+}
+
+#options-overlays-dropdown-ul > li {
+  width: 100%;
+  height: 20px;
+  border-top: 1px dotted #f5faf2;
 }
 
 #checkbox-container {

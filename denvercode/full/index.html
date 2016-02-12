@@ -144,23 +144,29 @@
           <div id='search-options-left'>
             <div id='options-label'>MAP CONTROLS</div>
             <div id='options-background'>
-              <select id='options-background-dropdown' class='search-dropdown' onchange='updateBaseLayer();' data-intro="Change map background" data-position='left'>
-                <option>Select Map Background</option>
-                <option>&#10004; Park Tiles</option>
-                <option>Mapbox Terrain</option>
-                <option>Esri Topo</option>
-                <option>Esri Imagery</option>
-              </select>
+              <div id='options-background-dropdown' class='species-dropdown' onclick='toggleBackgroundList();' data-intro="Change map background" data-position='left'>
+                Select Map Background
+                <div class='triangle'></div>
+                <ul id='options-background-dropdown-ul'>
+                  <li onclick='updateBaseLayer(0);'>&#10004; Park Tiles</li>
+                  <li onclick='updateBaseLayer(1);'>Mapbox Terrain</li>
+                  <li onclick='updateBaseLayer(2);'>Esri Topo</li>
+                  <li onclick='updateBaseLayer(3);'>Esri Imagery</li>
+                </ul>
+              </div>
             </div>
             <div id='options-overlays'>
-              <select id='options-overlays-dropdown' class='search-dropdown' onchange='toggleOverlay();' onmousedown='prepareOverlay();' data-intro='Show extra map features' data-position='left'>
-                <option>Select Map Overlays</option>
-                <option>Trails</option>
-                <option>Visitor Centers</option>
-                <option>Shelters</option>
-                <option>Roads</option>
-                <option>Campsites</option>
-              </select>
+              <div id='options-overlays-dropdown' class='species-dropdown' data-intro='Show extra map features' data-position='left'>
+                <div onclick='toggleOverlayList();'>Select Map Overlays</div>
+                <div onclick='toggleOverlayList();' class='triangle'></div>
+                <ul id='options-overlays-dropdown-ul'>
+                  <li onclick='toggleOverlay(0);'>Trails</li>
+                  <li onclick='toggleOverlay(1);'>Visitor Centers</li>
+                  <li onclick='toggleOverlay(2);'>Shelters</li>
+                  <li onclick='toggleOverlay(3);'>Roads</li>
+                  <li onclick='toggleOverlay(4);'>Campsites</li>
+                </ul>
+              </div>
             </div>
             <div id='checkbox-container' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
               <div id='options-predicted' class='search-checkbox'>
