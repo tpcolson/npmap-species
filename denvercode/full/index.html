@@ -143,7 +143,7 @@
         <div id='search-options' class='bordered'>
           <div id='search-options-left'>
             <div id='options-label'>MAP CONTROLS</div>
-            <div id='options-background'>
+            <div id='options-background' tooltip='Change the background map'>
               <div id='options-background-dropdown' class='species-dropdown' onclick='toggleBackgroundList();' data-intro="Change map background" data-position='left'>
                 Select Map Background
                 <div class='triangle'></div>
@@ -155,7 +155,7 @@
                 </ul>
               </div>
             </div>
-            <div id='options-overlays'>
+            <div id='options-overlays' tooltip='Turn or off extra map features'>
               <div id='options-overlays-dropdown' class='species-dropdown' data-intro='Show extra map features' data-position='left'>
                 <div onclick='toggleOverlayList();'>Select Map Overlays</div>
                 <div onclick='toggleOverlayList();' class='triangle'></div>
@@ -168,12 +168,12 @@
                 </ul>
               </div>
             </div>
-            <div id='checkbox-container' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
+            <div id='checkbox-container' tooltip='Toggle the visibility of the predicted habitat' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
               <div id='options-predicted' class='search-checkbox'>
                 <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked disabled></input>
                 <label for='options-predicted-checkbox'>View Predicted Species</label>
               </div>
-              <div id='options-observed' class='search-checkbox'>
+              <div id='options-observed' tooltip="Toggle the visibility of the species' observations" class='search-checkbox'>
                 <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();' disabled></input>
                 <label for='options-observed-checkbox'>View Observed Species</label>
               </div>
