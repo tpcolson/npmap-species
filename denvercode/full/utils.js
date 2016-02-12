@@ -352,15 +352,7 @@ function toggleName() {
     whichName = 'common';
   }
 
-  var el = document.getElementById('search-compare-one-box-name'),
-    tmp = el.innerHTML;
-  el.innerHTML = el.title;
-  el.title = tmp;
-
-  var el = document.getElementById('search-compare-two-box-name'),
-    tmp = el.innerHTML;
-  el.innerHTML = el.title;
-  el.title = tmp;
+  populateResults();
 
   var el = document.getElementById('legend-blue-contents-name'),
     tmp = el.innerHTML;
