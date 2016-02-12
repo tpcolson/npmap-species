@@ -997,6 +997,7 @@ body.dragging, body.dragging * {
 
 #compare-dist-one > .triangle {
   left: 225px;
+  top: -12px;
 }
 
 #compare-dist-one-name {
@@ -1071,6 +1072,7 @@ body.dragging, body.dragging * {
 
 #compare-dist-two > .triangle {
   left: 225px;
+  top: -12px;
 }
 
 #search-compare-environment {
