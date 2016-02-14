@@ -5,7 +5,7 @@
 # date: September 2, 2015
 
 # set up (you'll want to change this)
-PUB_FILES=("index.html")
+PUB_FILES=("index.html" "mapping.js" "style.css" "utils.js")
 USER="jduggan1"
 TAR_HOST="seelab.eecs.utk.edu"
 TAR_DIR="/export/home/seelab/huangj/seelabwww/species_mapper"

@@ -5922,9 +5922,44 @@ NPS.newContent.placeAlerts( '/grsm/nps-alerts-grsm.json?tmsp=' + jQuery.now(),is
 </div>
 <div class="row"> <!-- content row -->
 <div class="col-xs-12 col-sm-12 col-md-12">
-  <p>Search the map below to view the observed species accross the Great Smoky Mountains National Park.
-  <b>For a more detailed search, <a target='_blank' href='http://seelab.eecs.utk.edu/species_mapper/full'>enable the full screen version</a>.</p>
+  <link rel='stylesheet' href='style.css'></link>
+  <script src='mapping.js'></script>
+  
+  <h3>Overview</h3>
+  <p>
+    Search the map below to view the observed species accross the Great Smoky
+    Mountains National Park.
+    <b>For a more detailed search containing predicted species data,
+    <a target='_blank' href='http://seelab.eecs.utk.edu/species_mapper/full'>
+    enable the full screen version</a></b>.
+  </p>
+
+  <h3>Terminology</h3>
+  <p>
+    Observed species: These are recorded instances of species sightings within the park.
+    <br>
+    Predicted species: Derived from the observed species information, the
+    predicted species map presents a mathematically driven
+    prediction of where the species is likely to be found.
+  </p>
+
+  <h3>Species Mapper</h3>
+  <div id='spmap'></div>
+
+  <h3>About the Project</h3>
+  <p>
+    The Great Smoky Mountains National Park (GRSM) and the non-profit Discover
+    Life in America, Inc. (DLIA) have accumulated a biodiversity database for
+    the park of some 10,000 sites and over 500,000 records - and growing. These
+    data contains thousands of records of different species' observed locations.
+    A product of many scientists’ field work, the use of the data has been
+    limited due to lack of ability to utilize the data in management decision
+    support applications. The Species Mapper is a web-based system for the
+    display, analysis, and modelling of biodiversity data in a geospatial
+    environment.
+  </p>
 </div>
+<script src='http://www.nps.gov/lib/npmap.js/3.0.10/npmap-bootstrap.min.js'></script>
 </div> <!-- end content row -->
 <!-- END CUSTOM CONTENT -->
 
