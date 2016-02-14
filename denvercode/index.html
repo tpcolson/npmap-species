@@ -5923,12 +5923,13 @@ NPS.newContent.placeAlerts( '/grsm/nps-alerts-grsm.json?tmsp=' + jQuery.now(),is
 <div class="row"> <!-- content row -->
 <div class="col-xs-12 col-sm-12 col-md-12">
   <link rel='stylesheet' href='style.css'></link>
+  <script src='fuse.min.js'></script>
   <script src='mapping.js'></script>
-  
+
   <h3>Overview</h3>
   <p>
-    Search the map below to view the observed species accross the Great Smoky
-    Mountains National Park.
+    Use the map below to search for and view observations made of species
+    accross the Great Smoky Mountains National Park.
     <b>For a more detailed search containing predicted species data,
     <a target='_blank' href='http://seelab.eecs.utk.edu/species_mapper/full'>
     enable the full screen version</a></b>.
@@ -5944,7 +5945,19 @@ NPS.newContent.placeAlerts( '/grsm/nps-alerts-grsm.json?tmsp=' + jQuery.now(),is
   </p>
 
   <h3>Species Mapper</h3>
-  <div id='spmap'></div>
+  <div id='spmap'>
+    <div id='sp-search-bar'>
+      <div id='sp-search-list'>
+        <input id='sp-search-input' type='text' placeholder='Type here to search...' oninput='fuseSearch(this.value);'>
+        </input>
+        <ul id='sp-search-results'>
+        </ul>
+      </div>
+      <div id='sp-search-button' onclick='window.open("http://seelab.eecs.utk.edu/species_mapper/full");'>
+        <center>FULL VERSION</center>
+      </div>
+    </div>
+  </div>
 
   <h3>About the Project</h3>
   <p>
@@ -5960,6 +5973,7 @@ NPS.newContent.placeAlerts( '/grsm/nps-alerts-grsm.json?tmsp=' + jQuery.now(),is
   </p>
 </div>
 <script src='http://www.nps.gov/lib/npmap.js/3.0.10/npmap-bootstrap.min.js'></script>
+<script src='utils.js'></script>
 </div> <!-- end content row -->
 <!-- END CUSTOM CONTENT -->
 
