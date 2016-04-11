@@ -244,6 +244,11 @@ body.dragging, body.dragging * {
   border-radius: 4px;
 }
 
+/* just until we have images */
+#search-initial-image > img {
+    display: none;
+}
+
 #search-initial-controls {
   float: left;
 
