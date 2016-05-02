@@ -405,8 +405,4 @@ function toggleName() {
 }
 
 function recordAction(str) {
-  if(connReady) {
-    var userID = Cookies.get('name');
-    conn.send(userID + ',' + new Date().getTime() + ',' + (new Date().getTime() - epoch) + ',' + str);
-  }
 }
