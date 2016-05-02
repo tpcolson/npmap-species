@@ -138,19 +138,6 @@ window.onload = function() {
   /* prepare tooltips */
   $tooltips._initialize(document.body);
 
-  /* prepare server connection */
-  if(Cookies.get('name') === undefined) {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-    var val = s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-      s4() + '-' + s4() + s4() + s4();
-    Cookies.set('name', val, {path:''});
-  }
-  connectToLoggingServer();
-
   /* prepare date conversion utility */
   setInterval(function() {
     var item = $('.layer > .content > .description').get(0);
@@ -414,24 +401,6 @@ function toggleName() {
 
     el.innerHTML = el.title;
     el.title = tmp;
-  }
-}
-
-var conn,
-  connReady = false,
-  epoch = new Date().getTime();
-function connectToLoggingServer() {
-  if('WebSocket' in window) {
-    conn = new WebSocket('ws://seelab.eecs.utk.edu:7777/ws');
-    conn.onopen = function() {
-      connReady = true;
-    }
-    conn.onclose = function() {
-      connReady = false;
-    }
-    conn.onerror = function() {
-      connReady = false;
-    }
   }
 }
 
