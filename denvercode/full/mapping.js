@@ -12,7 +12,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
       type: 'geojson',
       popup: {
-        description: '<center>{{TRAILNAME}}</center>'
+        description: '<div style="text-align: center">{{TRAILNAME}}</div>'
       },
       styles: {
         line: {
@@ -25,7 +25,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_VISITOR_CENTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        description: '<center>{{LOC_NAME}}</center>'
+        description: '<div style="text-align: center">{{LOC_NAME}}</div>'
       },
       styles: {
         point: {
@@ -40,7 +40,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        description: '<center>{{TEXT_NAME}}</center>'
+        description: '<div style="text-align: center">{{TEXT_NAME}}</div>'
       },
       styles: {
         point: {
@@ -68,7 +68,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_CAMPSITES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        description: '<center>{{LABEL}}</center>'
+        description: '<div style="text-align: center">{{LABEL}}</div>'
       },
       styles: {
         point: {
@@ -83,7 +83,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/Great_Smoky_Mountains_National_Park_Boundary/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
-        description: '<center>Great Smoky Mountains National Park</center>'
+        description: '<div style="text-align: center">Great Smoky Mountains National Park</div>'
       },
       styles: {
         line: {

@@ -81,17 +81,17 @@ function populateResults() {
   var li1 = document.createElement('li');
   var li2 = document.createElement('li');
   li.innerHTML = 'Clear selection';
-  li.onclick = function() {
+  li.onclick = li.onkeypress = function() {
     toggleSearchList(0);
     clearSearch();
   }
   li1.innerHTML = 'Clear selection';
-  li1.onclick = function() {
+  li1.onclick = li1.onkeypress = function() {
     toggleSearchList(1);
     clearCompareOne();
   }
   li2.innerHTML = 'Clear selection';
-  li2.onclick = function() {
+  li2.onclick = li1.onkeypress = function() {
     toggleSearchList(2);
     clearCompareTwo();
   }
@@ -133,15 +133,15 @@ function populateResults() {
         li2.title = li2._latin.replace(/_/g, ' ');
       }
 
-      li.onclick = function() {
+      li.onclick = li.onkeypress = function() {
         toggleSearchList(0);
         selectInitialSpecies(this);
       }
-      li1.onclick = function() {
+      li1.onclick = li1.onkeypress = function() {
         toggleSearchList(1);
         selectSecondSpecies(this);
       }
-      li2.onclick = function() {
+      li2.onclick = li2.onkeypress = function() {
         toggleSearchList(2);
         selectThirdSpecies(this);
       }
@@ -184,15 +184,15 @@ function populateResults() {
         li2.title = li2._latin.replace(/_/g, ' ');
       }
 
-      li.onclick = function() {
+      li.onclick = li.onkeypress = function() {
         toggleSearchList(0);
         selectInitialSpecies(this);
       }
-      li1.onclick = function() {
+      li1.onclick = li1.onkeypress = function() {
         toggleSearchList(1);
         selectSecondSpecies(this);
       }
-      li2.onclick = function() {
+      li2.onclick = li2.onkeypress = function() {
         toggleSearchList(2);
         selectThirdSpecies(this);
       }
@@ -428,13 +428,13 @@ function populateDistributionLists() {
 
   var li = document.createElement('li');
   li.innerHTML = 'Clear selection';
-  li.onclick = function() {
+  li.onclick = li.onkeypress = function() {
     clearCompareOne();
   }
   document.getElementById('compare-dist-one').children[2].appendChild(li);
   li = document.createElement('li');
   li.innerHTML = 'Clear selection';
-  li.onclick = function() {
+  li.onclick = li.onkeypress = function() {
     clearCompareTwo();
   }
   document.getElementById('compare-dist-two').children[2].appendChild(li);
@@ -469,7 +469,7 @@ function populateDistributionLists() {
         li.innerHTML = li._latin.replace(/_/g, ' ');
         li.title = li._common;
       }
-      li.onclick = function() {
+      li.onclick = li.onkeypress = function() {
         selectSecondSpecies(this);
       }
       document.getElementById('compare-dist-one').children[2].appendChild(li);
@@ -485,7 +485,7 @@ function populateDistributionLists() {
         li.innerHTML = li._latin.replace(/_/g, ' ');
         li.title = li._common;
       }
-      li.onclick = function() {
+      li.onclick = li.onkeypress = function() {
         selectThirdSpecies(this);
       }
       document.getElementById('compare-dist-two').children[2].appendChild(li);
@@ -901,7 +901,7 @@ function fuseSearch(idx, value, expand) {
       li.innerHTML = li._latin.replace(/_/g, ' ');
       li.title = li._common.replace(/_/g, ' ');
     }
-    li.onclick = function() {
+    li.onclick = li.onkeypress = function() {
       switch(this._idx) {
         case 0:
           fuseSearch(0, '', false);

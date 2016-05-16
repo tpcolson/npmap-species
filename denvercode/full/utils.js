@@ -73,23 +73,6 @@ window.onload = function() {
     }
     document.getElementById('options-annotations-buttons').appendChild(editControls);
 
-    var me = NPMap.config.L.editControl;
-    L.DomEvent
-      .disableClickPropagation(editControls.children[0])
-      .on(editControls.children[0], 'click', function () {
-        recordAction('drew marker');
-      }, me._modes['marker'].handler);
-    L.DomEvent
-      .disableClickPropagation(editControls.children[0])
-      .on(editControls.children[1], 'click', function () {
-        recordAction('drew polyline');
-      }, me._modes['marker'].handler);
-    L.DomEvent
-      .disableClickPropagation(editControls.children[0])
-      .on(editControls.children[2], 'click', function () {
-        recordAction('drew circle');
-      }, me._modes['marker'].handler);
-
     return true;
   });
 
@@ -184,11 +167,11 @@ function toggleTooltips() {
   if(tooltipsEnabled) {
     recordAction('tooltips turned off');
     $('#search-banner-tooltips-button').children().stop();
-    $('#search-banner-tooltips-button').children().animate({left:'-18.75px'});
+    $('#search-banner-tooltips-button').children().animate({left:'0px'});
   } else {
     recordAction('tooltips turned on');
     $('#search-banner-tooltips-button').children().stop();
-    $('#search-banner-tooltips-button').children().animate({left:'18.75px'});
+    $('#search-banner-tooltips-button').children().animate({left:'37.5px'});
   }
 
   tooltipsEnabled = !tooltipsEnabled;
@@ -210,7 +193,7 @@ function showHelp() {
 var minimized = false,
   currentBaseLayer = undefined;
 function toggleMinimized() {
-  var minButton = document.getElementById('search-banner-help-minimizer').children[0].children[0];
+  var minButton = document.getElementById('search-banner-help-minimizer-button');
   if(!minimized) {
     recordAction('minimized toolbar');
     $('body').chardinJs('stop');

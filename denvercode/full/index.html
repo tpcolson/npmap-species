@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -60,121 +60,126 @@
         <div id='search-banner'>
           <div id='search-banner-buffer'></div>
           <div id='search-banner-help-tooltips' class='bordered' tooltip='Turn tooltips on/off'>
-            <center>
+            <div style="text-align: center">
               <p id='search-banner-tooltips-label'>
                 TOOLTIPS:
               </p>
               <div id='search-banner-tooltips'>
-                <div><center><div onclick='toggleTooltips();'>ON</div></center></div>
-                <div><center><div onclick='toggleTooltips();'>OFF</div></center></div>
-                <div id='search-banner-tooltips-button'><div onclick='toggleTooltips();'><span>...</span></div></div>
+                <div><div class='search-banner-tooltips-button-sides' onkeypress='toggleTooltips();' onclick='toggleTooltips();'>ON</div></div>
+                <div><div class='search-banner-tooltips-button-sides' onkeypress='toggleTooltips();' onclick='toggleTooltips();'>OFF</div></div>
+                <div id='search-banner-tooltips-button'><div onkeypress='toggleTooltips();' onclick='toggleTooltips();'><span>...</span></div></div>
               </div>
-            </center>
+            </div>
           </div>
           <div id='search-banner-help-link' class='bordered' tooltip='Get help using the tool'>
-            <center><button onclick='showHelp();'>?</button></center>
+            <button id='search-banner-help-link-button' onkeypress='showHelp();' onclick='showHelp();'>?</button>
           </div>
           <div id='search-banner-help-minimizer' tooltip='Minimize or expand the toolbar' data-intro='Minimize this toolbar' data-position='right'>
-            <center><button onclick='toggleMinimized();'>&#8212;</button></center>
+            <button id='search-banner-help-minimizer-button' onkeypress='toggleMinimized();' onclick='toggleMinimized();'>&#8212;</button>
           </div>
         </div>
         <div id='search-initial'>
-          <div id='search-initial-image' class='vignette'>
-            <img src='images/no_image.png'></img>
-          </div>
           <div id='search-initial-controls'>
             SELECT A SPECIES
             <div id='search-initial-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
-              <input class='dropdown-input' oninput='fuseSearch(0, this.value);'></input>
-              <div class='dropdown-button' onclick='toggleSearchList(0);'>
+                <label for='dropdown-initial-input' class='hidden-label'>Species Name</label>
+              <input id='dropdown-initial-input' class='dropdown-input' oninput='fuseSearch(0, this.value);'></input>
+              <div class='dropdown-button' onkeypress='toggleSearchList(0);' onclick='toggleSearchList(0);'>
                 <div class='triangle'></div>
               </div>
               <ul id='search-initial-dropdown-select'></ul>
               <ul id='search-initial-dropdown-lex'></ul>
             </div>
             <div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
-              <div><center><div onclick='toggleName();'>COMMON</div></center></div>
-              <div><center><div onclick='toggleName();'>LATIN</div></center></div>
-              <div id='search-initial-switch-button'><div onclick='toggleName();'><span>...</span></div></div>
+              <div><div class='search-initial-switch-sides' onclick='toggleName();'>COMMON</div></div>
+              <div><div class='search-initial-switch-sides' onkeypress='toggleName();' onclick='toggleName();'>LATIN</div></div>
+              <div id='search-initial-switch-button'><div onkeypress='toggleName();' onclick='toggleName();'><span>...</span></div></div>
             </div>
             <div id='search-initial-altname'></div>
           </div>
         </div>
         <div id='search-compare' class='bordered'>
           <div id='search-compare-contents'>
-            <div id='search-compare-lexical' tooltip='Select another species that is known to exist in the park'>
-              <input type='radio' name='comparator' value='lexical' onclick='lexFocus();' disabled></input>
-              <div class='subhead'>COMPARE WITH</div>
-              <div class='subhead2'>ANOTHER SPECIES IN THE PARK</div>
-              <div id='search-compare-one-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
-                <input class='dropdown-input' oninput='fuseSearch(1, this.value);'></input>
-                <div class='dropdown-button' onclick='toggleSearchList(1);'>
-                  <div class='triangle'></div>
+              <fieldset>
+                  <legend style="display:none">Select Species to Compare</legend>
+                <div id='search-compare-lexical' tooltip='Select another species that is known to exist in the park'>
+                    <label for='lexical-radio' class='hidden-label'>Select Species by Name</label>
+                  <input id='lexical-radio' type='radio' name='comparator' value='lexical' onkeypress='lexFocus();' onclick='lexFocus();' disabled></input>
+                  <div class='subhead'>COMPARE WITH</div>
+                  <div class='subhead2'>ANOTHER SPECIES IN THE PARK</div>
+                  <div id='search-compare-one-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+                      <label for='dropdown-one-input' class='hidden-label'>Species Name</label>
+                    <input id='dropdown-one-input' class='dropdown-input' oninput='fuseSearch(1, this.value);'></input>
+                    <div class='dropdown-button' onkeypress='toggleSearchList(1);' onclick='toggleSearchList(1);'>
+                      <div class='triangle'></div>
+                    </div>
+                    <ul id='search-compare-one-dropdown-select'></ul>
+                    <ul id='search-compare-one-dropdown-lex'></ul>
+                  </div>
+                  <div id='search-compare-two-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+                      <label for='dropdown-two-input' class='hidden-label'>Species Name</label>
+                    <input id='dropdown-two-input' class='dropdown-input' oninput='fuseSearch(2, this.value);'></input>
+                    <div class='dropdown-button' onkeypress='toggleSearchList(2);' onclick='toggleSearchList(2);'>
+                      <div class='triangle'></div>
+                    </div>
+                    <ul id='search-compare-two-dropdown-select'></ul>
+                    <ul id='search-compare-two-dropdown-lex'></ul>
+                  </div>
                 </div>
-                <ul id='search-compare-one-dropdown-select'></ul>
-                <ul id='search-compare-one-dropdown-lex'></ul>
-              </div>
-              <div id='search-compare-two-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
-                <input class='dropdown-input' oninput='fuseSearch(2, this.value);'></input>
-                <div class='dropdown-button' onclick='toggleSearchList(2);'>
-                  <div class='triangle'></div>
+                <div id='search-compare-distribution' tooltip='Select another species with similar habitat requirements across the park'>
+                    <label for='dist-radio' class='hidden-label'>Select Species with Similar Distribution</label>
+                  <input id='dist-radio' type='radio' name='comparator' value='distribution' onkeypress='distFocus();' onclick='distFocus();' disabled></input>
+                  <div class='subhead'>COMPARE WITH</div>
+                  <div class='subhead2'>SPECIES WITH SIMILAR DISTRIBUTION</div>
+                  <div id='compare-dist-one' onkeypress='toggleCompareDistOne();' onclick='toggleCompareDistOne();'>
+                    <div id='compare-dist-one-name'></div>
+                    <div class='triangle'></div>
+                    <ul></ul>
+                  </div>
+                  <div id='compare-dist-two' onkeypress='toggleCompareDistTwo();' onclick='toggleCompareDistTwo();'>
+                    <div id='compare-dist-two-name'></div>
+                    <div class='triangle'></div>
+                    <ul></ul>
+                  </div>
                 </div>
-                <ul id='search-compare-two-dropdown-select'></ul>
-                <ul id='search-compare-two-dropdown-lex'></ul>
-              </div>
-            </div>
-            <div id='search-compare-distribution' tooltip='Select another species with similar habitat requirements across the park'>
-              <input type='radio' name='comparator' value='distribution' onclick='distFocus();' disabled></input>
-              <div class='subhead'>COMPARE WITH</div>
-              <div class='subhead2'>SPECIES WITH SIMILAR DISTRIBUTION</div>
-              <div id='compare-dist-one' onclick='toggleCompareDistOne();'>
-                <div id='compare-dist-one-name'></div>
-                <div class='triangle'></div>
-                <ul></ul>
-              </div>
-              <div id='compare-dist-two' onclick='toggleCompareDistTwo();'>
-                <div id='compare-dist-two-name'></div>
-                <div class='triangle'></div>
-                <ul></ul>
-              </div>
-            </div>
+            </fieldset>
           </div>
         </div>
         <div id='search-options' class='bordered'>
           <div id='search-options-left'>
             <div id='options-label'>MAP CONTROLS</div>
             <div id='options-background' tooltip='Change the background map'>
-              <div id='options-background-dropdown' class='species-dropdown' onclick='toggleBackgroundList();' data-intro="Change map background" data-position='left'>
+              <div id='options-background-dropdown' class='species-dropdown' onkeypress='toggleBackgroundList();' onclick='toggleBackgroundList();' data-intro="Change map background" data-position='left'>
                 Select Map Background
                 <div class='triangle'></div>
                 <ul id='options-background-dropdown-ul'>
-                  <li onclick='updateBaseLayer(0);'>&#10004; Park Tiles</li>
-                  <li onclick='updateBaseLayer(1);'>Mapbox Terrain</li>
-                  <li onclick='updateBaseLayer(2);'>Esri Topo</li>
-                  <li onclick='updateBaseLayer(3);'>Esri Imagery</li>
+                  <li onkeypress='updateBaseLayer(0);' onclick='updateBaseLayer(0);'>&#10004; Park Tiles</li>
+                  <li onkeypress='updateBaseLayer(1);' onclick='updateBaseLayer(1);'>Mapbox Terrain</li>
+                  <li onkeypress='updateBaseLayer(2);' onclick='updateBaseLayer(2);'>Esri Topo</li>
+                  <li onkeypress='updateBaseLayer(3);' onclick='updateBaseLayer(3);'>Esri Imagery</li>
                 </ul>
               </div>
             </div>
             <div id='options-overlays' tooltip='Turn or off extra map features'>
               <div id='options-overlays-dropdown' class='species-dropdown' data-intro='Show extra map features' data-position='left'>
-                <div onclick='toggleOverlayList();'>Select Map Overlays</div>
-                <div onclick='toggleOverlayList();' class='triangle'></div>
+                <div onkeypress='toggleOverlayList();' onclick='toggleOverlayList();'>Select Map Overlays</div>
+                <div onkeypress='toggleOverlayList();' onclick='toggleOverlayList();' class='triangle'></div>
                 <ul id='options-overlays-dropdown-ul'>
-                  <li onclick='toggleOverlay(0);'>Trails</li>
-                  <li onclick='toggleOverlay(1);'>Visitor Centers</li>
-                  <li onclick='toggleOverlay(2);'>Shelters</li>
-                  <li onclick='toggleOverlay(3);'>Roads</li>
-                  <li onclick='toggleOverlay(4);'>Campsites</li>
+                  <li onkeypress='toggleOverlay(0);' onclick='toggleOverlay(0);'>Trails</li>
+                  <li onkeypress='toggleOverlay(1);' onclick='toggleOverlay(1);'>Visitor Centers</li>
+                  <li onkeypress='toggleOverlay(2);' onclick='toggleOverlay(2);'>Shelters</li>
+                  <li onkeypress='toggleOverlay(3);' onclick='toggleOverlay(3);'>Roads</li>
+                  <li onkeypress='toggleOverlay(4);' onclick='toggleOverlay(4);'>Campsites</li>
                 </ul>
               </div>
             </div>
             <div id='checkbox-container' tooltip='Toggle the visibility of the predicted habitat' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
               <div id='options-predicted' class='search-checkbox'>
-                <input type='checkbox' id='options-predicted-checkbox' onclick='togglePredicted();' checked disabled></input>
+                <input type='checkbox' id='options-predicted-checkbox' onkeypress='togglePredicted();' onclick='togglePredicted();' checked disabled></input>
                 <label for='options-predicted-checkbox'>View Predicted Species</label>
               </div>
               <div id='options-observed' tooltip="Toggle the visibility of the species' observations" class='search-checkbox'>
-                <input type='checkbox' id='options-observed-checkbox' onclick='toggleObserved();' disabled></input>
+                <input type='checkbox' id='options-observed-checkbox' onkeypress='toggleObserved();' onclick='toggleObserved();' disabled></input>
                 <label for='options-observed-checkbox'>View Observed Species</label>
               </div>
             </div>
@@ -182,8 +187,8 @@
           <div id='search-options-right'>
             <div id='annotations-label'>DRAW ON MAP</div>
             <div id='options-annotations' data-intro='Draw markers, lines, or circles on the map' data-position='right'>
-              <center><div id='options-annotations-buttons' class='npmap'></div></center>
-              <center><button onclick='clearLayers();' tooltip='Press here to remove all drawings from map'><center>CLEAR</center></button></center>
+              <div id='options-annotations-buttons' class='npmap'></div>
+              <button onkeypress='clearLayers();' onclick='clearLayers();' tooltip='Press here to remove all drawings from map'>CLEAR</button>
             </div>
           </div>
         </div>
@@ -198,7 +203,8 @@
         <li id='legend-species-pink'>
           <div id='legend-pink-controls'>
             <div class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
-            <input type='checkbox' onclick='toggleSpecies(0);' checked tooltip='Use this to toggle the visibility of this species'></input>
+            <label for='toggle-species-one' class='hidden-label'>Toggle Species Visibility</label>
+            <input id='toggle-species-one' type='checkbox' onkeypress='toggleSpecies(0);' onclick='toggleSpecies(0);' checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
           <div id='legend-pink-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-pink-contents-name'>Species 1</div>
@@ -213,7 +219,8 @@
         <li id='legend-species-orange'>
           <div id='legend-orange-controls'>
             <div class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
-            <input type='checkbox' onclick='toggleSpecies(1);' checked tooltip='Use this to toggle the visibility of this species'></input>
+            <label for='toggle-species-two' class='hidden-label'>Toggle Species Visibility</label>
+            <input id='toggle-species-two' type='checkbox' onkeypress='toggleSpecies(1);' onclick='toggleSpecies(1);' checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
           <div id='legend-orange-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-orange-contents-name'>Species 1</div>
@@ -228,7 +235,8 @@
         <li id='legend-species-blue'>
           <div id='legend-blue-controls'>
             <div class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
-            <input type='checkbox' onclick='toggleSpecies(2);' checked tooltip='Use this to toggle the visibility of this species'></input>
+            <label for='toggle-species-three' class='hidden-label'>Toggle Species Visibility</label>
+            <input id='toggle-species-three' type='checkbox' onkeypress='toggleSpecies(2);' onclick='toggleSpecies(2);' checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
           <div id='legend-blue-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-blue-contents-name'>Species 1</div>
@@ -244,9 +252,9 @@
       <div id='legend-blend' tooltip='When on, predicted data layers are shown at 50% opacity to show areas of overlap. When off, predicted layers are shown at 100% opacity'>
         <div id='legend-blend-text'>COLOR BLEND:</div>
         <div id='legend-blend-switch'>
-          <div><center><div onclick='toggleBlending();'>ON</div></center></div>
-          <div><center><div onclick='toggleBlending();'>OFF</div></center></div>
-          <div id='legend-blend-switch-button'><div onclick='toggleBlending();'><span>...</span></div></div>
+          <div class='legend-blend-switch-sides'><div onkeypress='toggleBlending();' onclick='toggleBlending();'>ON</div></div>
+          <div class='legend-blend-switch-sides'><div onkeypress='toggleBlending();' onclick='toggleBlending();'>OFF</div></div>
+          <div id='legend-blend-switch-button'><div onkeypress='toggleBlending();' onclick='toggleBlending();'><span>...</span></div></div>
         </div>
       </div>
     </div>
@@ -259,7 +267,8 @@
         <li id='legend-demo-species-pink'>
           <div id='legend-demo-pink-controls'>
             <div class='drag-handle'>::</div>
-            <input type='checkbox' checked></input>
+            <label for='demo-checkbox-one' class='hidden-label'>Toggle Species Visibility</label>
+            <input id='demo-checkbox-one' type='checkbox' checked></input>
           </div>
           <div id='legend-demo-pink-contents'>
             <div id='legend-demo-pink-contents-name'>Species 2</div>
@@ -274,7 +283,8 @@
         <li id='legend-demo-species-orange'>
           <div id='legend-demo-orange-controls'>
             <div class='drag-handle'>::</div>
-            <input type='checkbox' checked></input>
+            <label for='demo-checkbox-two' class='hidden-label'>Toggle Species Visibility</label>
+            <input id='demo-checkbox-two' type='checkbox' checked></input>
           </div>
           <div id='legend-demo-orange-contents'>
             <div id='legend-demo-orange-contents-name'>Species 3</div>
@@ -289,7 +299,8 @@
         <li id='legend-demo-species-blue'>
           <div id='legend-demo-blue-controls'>
             <div class='drag-handle'>::</div>
-            <input type='checkbox' checked></input>
+            <label for='demo-checkbox-three' class='hidden-label'>Toggle Species Visibility</label>
+            <input id='demo-checkbox-three' type='checkbox' checked></input>
           </div>
           <div id='legend-demo-blue-contents'>
             <div id='legend-demo-blue-contents-name'>Species 1</div>
@@ -305,8 +316,8 @@
       <div id='legend-demo-blend'>
         <div id='legend-demo-blend-text'>COLOR BLEND:</div>
         <div id='legend-demo-blend-switch'>
-          <div><center><div>ON</div></center></div>
-          <div><center><div>OFF</div></center></div>
+          <div><div style="text-align: center"><div>ON</div></div></div>
+          <div><div style="text-align: center"><div>OFF</div></div></div>
           <div id='legend-demo-blend-switch-button'><div><span>...</span></div></div>
         </div>
       </div>
