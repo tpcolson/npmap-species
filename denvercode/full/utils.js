@@ -145,6 +145,7 @@ window.onload = function() {
   }, 100);
 
   $('.dropdown-input', '#search-initial-dropdown').focus();
+  $('.leaflet-control-attribution').get(0).innerHTML = '<a href="https://github.com/nationalparkservice/npmap-species/issues?q=is%3Aissue+is%3Aopen" target="_blank">Report an Issue</a> | ' + $('.leaflet-control-attribution').get(0).innerHTML;
 }
 
 var processed = false;
@@ -241,6 +242,8 @@ function updateBaseLayer(idx) {
     NPMap.config.L.addLayer(newLayer.L);
 
     lastBaseIndex = idx;
+
+    $('.leaflet-control-attribution').get(0).innerHTML = '<a href="https://github.com/nationalparkservice/npmap-species/issues?q=is%3Aissue+is%3Aopen" target="_blank">Report an Issue</a> | ' + $('.leaflet-control-attribution').get(0).innerHTML;
   }
 }
 
