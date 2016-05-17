@@ -9,7 +9,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
     ],
     overlays: [{
       name: 'Trails',
-      url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
+      url: 'https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
       type: 'geojson',
       popup: {
         description: '<div style="text-align: center">{{TRAILNAME}}</div>'
@@ -22,7 +22,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       }
     }, {
       name: 'Visitor Centers',
-      url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_VISITOR_CENTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
+      url: 'https://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_VISITOR_CENTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
         description: '<div style="text-align: center">{{LOC_NAME}}</div>'
@@ -37,7 +37,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       }
     }, {
       name: 'Shelters',
-      url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
+      url: 'https://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_SHELTERS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
         description: '<div style="text-align: center">{{TEXT_NAME}}</div>'
@@ -52,7 +52,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       }
     }, {
       name: 'Roads',
-      url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_ROAD_CENTERLINES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
+      url: 'https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_ROAD_CENTERLINES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
         description: '<center>{{RDNAME}}</center>'
@@ -65,7 +65,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       }
     }, {
       name: 'Campsites',
-      url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_CAMPSITES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
+      url: 'https://services1.arcgis.com/fBc8EJBxQRMcHlei/ArcGIS/rest/services/GRSM_BACKCOUNTRY_CAMPSITES/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
         description: '<div style="text-align: center">{{LABEL}}</div>'
@@ -80,7 +80,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
       }
     }, {
       name: 'Park Boundary',
-      url: 'http://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/Great_Smoky_Mountains_National_Park_Boundary/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
+      url: 'https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/Great_Smoky_Mountains_National_Park_Boundary/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=*',
       type: 'geojson',
       popup: {
         description: '<div style="text-align: center">Great Smoky Mountains National Park</div>'

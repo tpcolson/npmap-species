@@ -126,7 +126,7 @@ window.onload = function() {
     var item = $('.layer > .content > .description').get(0);
     if(item !== undefined) {
       if(!processed) {
-        if(endsWith(item.innerHTML, '<a target="_blank" href="http://www.nps.gov/grsm/learn/nature/research.htm">Contribute to this dataset</a>')) {
+        if(endsWith(item.innerHTML, '<a target="_blank" href="https://www.nps.gov/grsm/learn/nature/research.htm">Contribute to this dataset</a>')) {
           var tokens = item.innerHTML.split(' ');
           if(tokens[5] !== undefined) {
             var newDate = new Date(parseInt(tokens[5]));
@@ -303,7 +303,7 @@ function toggleBackgroundList() {
     if(showOverlayList) {
         toggleOverlayList();
     }
-    
+
   showBackground = !showBackground;
 
   if(showBackground) {

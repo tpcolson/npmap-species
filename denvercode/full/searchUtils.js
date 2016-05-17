@@ -13,7 +13,7 @@ var control = {
 }
 
 function prepareSearchTool() {
-  loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/lexical_index.json', function(data) {
+  loadResource('https://nationalparkservice.github.io/npmap-species/atbirecords/lexical_index.json', function(data) {
     var index = data.items,
       latinOptions = {
         keys: ['latin_name_ref'],
@@ -28,18 +28,18 @@ function prepareSearchTool() {
     control._commonFuser = new Fuse(index, commonOptions);
   });
 
-  loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/irma_mapping.json', function(data) {
+  loadResource('https://nationalparkservice.github.io/npmap-species/atbirecords/irma_mapping.json', function(data) {
     control._nameMappings = data;
     delete control._nameMappings[''];
 
     populateResults();
   });
 
-  loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_distribution.json', function(data) {
+  loadResource('https://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_distribution.json', function(data) {
     control._similarDistributions = data;
   });
 
-  loadResource('http://nationalparkservice.github.io/npmap-species/atbirecords/species_auc.json', function(data) {
+  loadResource('https://nationalparkservice.github.io/npmap-species/atbirecords/species_auc.json', function(data) {
     control._aucValues = data;
   });
 }
