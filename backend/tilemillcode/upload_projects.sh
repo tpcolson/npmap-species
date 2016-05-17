@@ -25,7 +25,7 @@ while read line; do
       sp=${sp%.tif}
       color=${sp##*_}
       species_name=${sp%_*}
-      id=$(grep -iw $species_name $ids_file | cut -d' ' -f2)
+	  id=$(printf "%07i" $(grep -iw $species_name $ids_file | cut -d' ' -f2))
       $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $export_dir/$sp\.$file_ext
    done
 done <<< $(ls $geotiff_dir)
