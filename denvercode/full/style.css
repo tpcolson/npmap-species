@@ -8,6 +8,10 @@ h1 {
   font-size: 36px;
 }
 
+header, footer {
+    min-width: 1246px;
+}
+
 body.dragging, body.dragging * {
   cursor: move !important;
 }
@@ -40,7 +44,7 @@ body.dragging, body.dragging * {
   left: 0px;
 
   width: 100%;
-  min-width: 1366px;
+  min-width: 1246px;
   height: calc(100% - 134px);
   margin: 0px;
   padding: 0px;
@@ -51,7 +55,7 @@ body.dragging, body.dragging * {
   position: relative;
 
   width: 100%;
-  min-width: 1366px;
+  min-width: 1246px;
   height: 189px;
   margin: 0px;
   padding: 0px;
