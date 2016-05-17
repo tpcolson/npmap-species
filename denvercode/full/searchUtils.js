@@ -225,6 +225,12 @@ function toggleSearchList(idx, callback) {
       break;
 
     case 1:
+        $('#search-compare-two-dropdown').css({'border-radius':'4px 4px 4px 4px'});
+        $('#search-compare-two-dropdown-lex').stop();
+        $('#search-compare-two-dropdown-lex').animate({height: '0px'});
+        $('#search-compare-two-dropdown-select').stop();
+        $('#search-compare-two-dropdown-select').animate({height: '0px'});
+
       if(!list1Shown) {
         $('#search-compare-one-dropdown').css({'border-radius':'4px 4px 0px 0px'});
         $('#search-compare-one-dropdown-lex').stop();
@@ -788,6 +794,10 @@ function toggleLexicalSearch() {
 
 var compareDistOneActive = false;
 function toggleCompareDistOne() {
+    if(compareDistTwoActive) {
+        toggleCompareDistTwo();
+    }
+
   compareDistOneActive = !compareDistOneActive;
 
   $('#compare-dist-one').stop();
@@ -1043,4 +1053,42 @@ function toggleSpecies(idx) {
       NPMap.config.L.removeLayer(control._selectedSpecies[idx].observed);
     }
   }
+}
+
+function closeDropdowns() {
+    $('#search-initial-dropdown').css({'border-radius':'4px 4px 4px 4px'});
+    $('#search-initial-dropdown-lex').stop();
+    $('#search-initial-dropdown-lex').animate({height: '0px'});
+    $('#search-initial-dropdown-select').stop();
+    $('#search-initial-dropdown-select').animate({height: '0px'});
+
+    $('#search-compare-one-dropdown').css({'border-radius':'4px 4px 4px 4px'});
+    $('#search-compare-one-dropdown-lex').stop();
+    $('#search-compare-one-dropdown-lex').animate({height: '0px'});
+    $('#search-compare-one-dropdown-select').stop();
+    $('#search-compare-one-dropdown-select').animate({height: '0px'});
+
+    $('#search-compare-two-dropdown').css({'border-radius':'4px 4px 4px 4px'});
+    $('#search-compare-two-dropdown-lex').stop();
+    $('#search-compare-two-dropdown-lex').animate({height: '0px'});
+    $('#search-compare-two-dropdown-select').stop();
+    $('#search-compare-two-dropdown-select').animate({height: '0px'});
+
+    $('#compare-dist-one').stop();
+    $('#compare-dist-one').animate({height: '20px'});
+    $('ul', '#compare-dist-one').css({display: 'none'});
+
+    $('#compare-dist-two').stop();
+    $('#compare-dist-two').animate({height: '20px'});
+    $('ul', '#compare-dist-two').css({display: 'none'});
+
+    if(showBackground) {
+        toggleBackgroundList();
+    }
+
+    if(showOverlayList) {
+        toggleOverlayList();
+    }
+
+    list0Shown = list1Shown = list2Shown = compareDistOneActive = compareDistTwoActive = false;
 }

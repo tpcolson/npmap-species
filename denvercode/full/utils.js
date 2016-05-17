@@ -178,6 +178,8 @@ function toggleTooltips() {
 }
 
 function showHelp() {
+    closeDropdowns();
+
   recordAction('showed help overlay');
   if(minimized) {
     toggleMinimized();
@@ -298,6 +300,10 @@ function toggleObserved() {
 
 var showBackground = false;
 function toggleBackgroundList() {
+    if(showOverlayList) {
+        toggleOverlayList();
+    }
+    
   showBackground = !showBackground;
 
   if(showBackground) {
