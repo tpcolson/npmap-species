@@ -145,7 +145,15 @@ window.onload = function() {
   }, 100);
 
   $('.dropdown-input', '#search-initial-dropdown').focus();
-  $('.leaflet-control-attribution').get(0).innerHTML = '<a href="https://github.com/nationalparkservice/npmap-species/issues?q=is%3Aissue+is%3Aopen+-label%3A508+-label%3Adeployment+-label%3Aduplicate+-label%3Awontfix" target="_blank">Report an Issue</a> | ' + $('.leaflet-control-attribution').get(0).innerHTML;
+    attemptExecute(function() {
+        if($('.leaflet-control-attribution').get(0) === undefined) {
+            return false;
+        }
+
+        $('.leaflet-control-attribution').get(0).innerHTML = '<a href="https://github.com/nationalparkservice/npmap-species/issues?q=is%3Aissue+is%3Aopen+-label%3A508+-label%3Adeployment+-label%3Aduplicate+-label%3Awontfix" target="_blank">Report an Issue</a> | ' + $('.leaflet-control-attribution').get(0).innerHTML;
+
+        return true;
+    });
 }
 
 var processed = false;

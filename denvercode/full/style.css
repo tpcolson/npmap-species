@@ -1452,7 +1452,7 @@ body.dragging, body.dragging * {
   position: absolute;
   z-index: 1000;
   right: 5px;
-  bottom: 40px;
+  bottom: 60px;
 
   overflow: hidden;
 
@@ -1992,7 +1992,7 @@ body.dragging, body.dragging * {
   position: absolute;
   z-index: -2;
   right: 5px;
-  bottom: 40px;
+  bottom: 60px;
 
   overflow: hidden;
 
