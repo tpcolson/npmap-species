@@ -2,7 +2,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
   NPMap = {
     div: 'map',
     baseLayers: [
-      'nps-parkTiles',
+      'nps-parkTiles3',
       'mapbox-terrain',
       'esri-topographic',
       'esri-imagery'
