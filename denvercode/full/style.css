@@ -19,7 +19,6 @@ body.dragging, body.dragging * {
 .dragged {
   position: absolute;
   z-index: 2000;
-
   opacity: 0.5;
 }
 
