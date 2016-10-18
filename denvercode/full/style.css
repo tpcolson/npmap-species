@@ -2631,7 +2631,6 @@ button {
 .drag-handle {
   width: 100%;
   height: 50%;
-
   cursor: move;
   text-align: center;
   letter-spacing: .1em;
