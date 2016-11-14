@@ -404,6 +404,6 @@ function toggleName() {
   }
 }
 
-function recordAction(str) {
+function recordAction(event, label) {
   ga('send', 'event', 'Interaction', event, label);
 }
