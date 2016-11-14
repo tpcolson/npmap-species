@@ -405,5 +405,6 @@ function toggleName() {
 }
 
 function recordAction(event, label) {
+  console.log('sending:', event, '-', label);
   ga('send', 'event', 'Interaction', event, label);
 }
