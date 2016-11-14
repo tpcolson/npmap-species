@@ -237,7 +237,7 @@ function updateBaseLayer(idx) {
     NPMap.config.L.removeLayer(NPMap.config.baseLayers[lastBaseIndex].L);
 
     /* add new layer (taken from NPMap.js switcher.js) */
-    recordAction('changed base layer: ' + $('#options-background-dropdown-ul').get(0).children[idx].innerHTML);
+    recordAction('changed base layer', $('#options-background-dropdown-ul').get(0).children[idx].innerHTML);
     $('#options-background-dropdown-ul').get(0).children[idx].innerHTML = '\u2714 ' + $('#options-background-dropdown-ul').get(0).children[idx].innerHTML;
     var newLayer = NPMap.config.baseLayers[idx];
     if (newLayer.type === 'arcgisserver') {
@@ -259,12 +259,12 @@ function toggleOverlay(idx) {
   var overlay = NPMap.config.overlays[idx],
     text = $('#options-overlays-dropdown-ul').get(0).children[idx].innerHTML;
   if(text.charAt(0) !== '\u2714') {
-    recordAction('turned on overlay: ' + text);
+    recordAction('turned on overlay', text);
     $('#options-overlays-dropdown-ul').get(0).children[idx].innerHTML = '\u2714 ' + text;
     overlay.visible = true;
     NPMap.config.L.addLayer(overlay.L);
   } else {
-    recordAction('turned off overlay: ' + text.substring(2, text.length));
+    recordAction('turned off overlay', text.substring(2, text.length));
     $('#options-overlays-dropdown-ul').get(0).children[idx].innerHTML = text.substring(2, text.length);
     overlay.visible = false;
     NPMap.config.L.removeLayer(overlay.L);
@@ -405,4 +405,5 @@ function toggleName() {
 }
 
 function recordAction(str) {
+  ga('send', 'event', 'Interaction', event, label);
 }
