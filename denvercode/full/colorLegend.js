@@ -76,7 +76,7 @@ function reorderLayers() {
     order[$('#legend-species').children().length - idx - 1] = value;
   });
 
-  recordAction('reordered layers: ' + order[2] + ' ' + order[1] + ' ' + order[0]);
+  recordAction('reordered layers', order[2] + ' ' + order[1] + ' ' + order[0]);
 }
 
 function prepareLegendDrag() {
