@@ -2,3 +2,4 @@ assets/js/vendor/
 node_modules/
 runserver.sh
 static/
+doc/
