@@ -1,0 +1,22 @@
+{
+	// Enforcing
+	"curly": false,        // true: Require {} for every new block or scope
+	"forin": false,        // true: Require filtering for..in loops with obj.hasOwnProperty()
+	"immed": true,         // true: Require immediate invocations to be wrapped in parens e.g. `(function () { } ());`
+	"newcap": true,        // true: Require capitalization of all constructor functions e.g. `new F()`
+	"noempty": false,      // true: Prohibit use of empty blocks
+	"strict": false,       // true: Requires all functions run in ES5 Strict Mode
+
+	// Relaxing
+	"eqnull": true,        // true: Tolerate use of `== null`
+	"esversion": 5,        // {int} Specify the ECMAScript version to which the code must adhere.
+	"evil": true,          // true: Tolerate use of `eval` and `new Function()`
+
+	// Environments
+	"mocha": false,        // We don't use mocha
+
+	"globals": {
+		"define": false,   // We use requirejs
+		"require": false
+	}
+}

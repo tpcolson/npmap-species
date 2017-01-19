@@ -1,0 +1,9 @@
+{
+	"dependencies": {
+		"almond": "0.3.2",
+		"jquery": "2.2.4",
+		"leaflet": "1.0.0-rc.2"
+	},
+	"description": "A Django-based web application for visualizing species distributions.",
+	"name": "npmap"
+}
