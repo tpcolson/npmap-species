@@ -65,7 +65,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.core.context_processors.static',
+                'django.template.context_processors.static',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -104,9 +104,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = from_base_dir('static')
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     from_base_dir('assets')
-)
+]
 
 try:
     from local_settings import *
