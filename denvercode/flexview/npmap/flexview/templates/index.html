@@ -1,6 +1,17 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="utf-8" />
+<title>Flexview</title>
+{% if DEBUG %}
+<script async type="text/javascript"
+	data-main="{% static 'js/main.js' %}"
+	src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.js"> </script>
+{% else %}
+<script type="text/javascript" src="{% static 'js/main.min.js' %}"></script>
+{% endif %}
+</head>
 <body>
 Hello World
 </body>

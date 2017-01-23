@@ -1,11 +1,5 @@
 require.config({
 	baseUrl: '/static/js',
-	packages: [{
-		name: 'moment',
-		location: 'vendor/moment',
-		main: 'moment'
-	}],
-
 	paths: {
 		jquery: 'vendor/jquery/dist/jquery',
 		leaflet: 'vendor/leaflet/dist/leaflet',

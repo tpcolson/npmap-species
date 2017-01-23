@@ -1,5 +1,5 @@
 {
-  "description": "A Django-based web application for processing and visualizing streaming power system data.",
+  "description": "A Django-based web application for visualizing species distributions.",
   "dependencies": {
     "bower": "1.7.9",
     "grunt": "1.0.1",
@@ -10,7 +10,7 @@
   "devDependencies": {
     "jshint": "2.9.2"
   },
-  "name": "npmap-species",
+  "name": "flexview",
   "repository": {
     "type": "git",
     "url": "https://github.com/nationalparkservice/npmap-species"
