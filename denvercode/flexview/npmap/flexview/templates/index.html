@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8" />
 <title>Flexview</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
 {% if DEBUG %}
 <script async type="text/javascript"
 	data-main="{% static 'js/main.js' %}"
@@ -11,8 +13,30 @@
 {% else %}
 <script type="text/javascript" src="{% static 'js/main.min.js' %}"></script>
 {% endif %}
+
 </head>
-<body>
-Hello World
+<body style="background: black">
+<div id='search-initial'>
+	<div id='search-initial-controls'>
+		SELECT A SPECIES
+		<div id='search-initial-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+			<label for='dropdown-initial-input' class='hidden-label'>Species Name</label>
+			<input id='dropdown-initial-input' class='dropdown-input'></input>
+			<div class='dropdown-button'>
+				<div class='triangle'></div>
+			</div>
+			<ul id='search-initial-dropdown-select'></ul>
+			<ul id='search-initial-dropdown-lex'></ul>
+		</div>
+		<div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
+			<div><div class='search-initial-switch-sides'>COMMON</div></div>
+			<div><div class='search-initial-switch-sides'>LATIN</div></div>
+			<div id='search-initial-switch-button'>
+			<div ><span>...</span></div></div>
+		</div>
+		<div id='search-initial-altname'></div>
+	</div>
+</div>
+<div id='map'></div>
 </body>
 </html>

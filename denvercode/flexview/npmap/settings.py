@@ -105,7 +105,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = from_base_dir('static')
 STATICFILES_DIRS = [
-    from_base_dir('assets')
+    from_base_dir('assets'),
 ]
 
 try:

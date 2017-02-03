@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"almond": "0.3.2",
+		"fuse": "2.6.1",
 		"jquery": "2.2.4",
 		"leaflet": "1.0.0-rc.2"
 	},
