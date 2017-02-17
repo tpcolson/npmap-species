@@ -10,8 +10,16 @@ return {
 			document.getElementsByClassName("mds")[0]
 		);
 
+		var url = window.location.href + 'mds/';
+		var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
+
+		var ajaxTime = new Date().getTime();
 		$.ajax({
-			url: "/static/data/sim_matrix.json",
+			url: url,
+			method: 'POST',
+			headers: {
+				'X-CSRFToken': csrftoken,
+			},
 			success: function(data) {
 				var sp_count = Object.keys(data).length;
 				var distances = new Array(sp_count);
