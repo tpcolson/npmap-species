@@ -59,7 +59,7 @@ return {
 	establishEventListeners: function(control) {
 		var self = this;
 
-		$('#dropdown-initial-input').on('input', function() {
+		$('#dropdown-initial-input').on('input', function(event, species) {
 			self.fuseSearch(0, this.value, control);
 		});
 
@@ -75,6 +75,11 @@ return {
 			self.toggleName(control);
 		});
 
+		$('#link-gen-button').on('click', function() {
+			var url = control.createURL();
+			window.prompt('Copy to clipboard: Ctrl+C, Enter', url);
+			$('#url_config').val(url);
+		});
 	},
 
 	toggleSearchList: function(control, idx, callback) {
@@ -163,14 +168,13 @@ return {
 				self.fuseSearch(0, '', control, false);
 				self.selectInitialSpecies(control, this);
 			};
+
+			document.getElementById(elString.substring(1)).appendChild(li);
 		}
 
-		document.getElementById(elString.substring(1)).appendChild(li);
 	},
 
 	selectInitialSpecies: function(control, li) {
-		//clearComparisons();
-
 		document.getElementById('search-initial-dropdown').style
 			.backgroundColor = 'rgb(202, 24, 146)';
 
@@ -178,12 +182,12 @@ return {
 			&& control.searchControl._selectedSpecies[0].visible) {
 
 			if(control.showPredicted) {
-			//	NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
+				NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
 				console.debug("removign layer");
 			}
 
 			if(control.showObserved) {
-			//	NPMap.config.L.removeLayer(control._selectedSpecies[0].observed);
+				NPMap.config.L.removeLayer(control._selectedSpecies[0].observed);
 				console.debug("removign layer");
 			}
 		}
