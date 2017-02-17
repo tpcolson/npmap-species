@@ -178,17 +178,17 @@ return {
 		document.getElementById('search-initial-dropdown').style
 			.backgroundColor = 'rgb(202, 24, 146)';
 
-		if(control.searchControl._selectedSpecies[0] !== undefined
-			&& control.searchControl._selectedSpecies[0].visible) {
+		if(control.searchControl._selectedSpecies[0] !== undefined &&
+			control.searchControl._selectedSpecies[0].visible) {
 
 			if(control.showPredicted) {
-				NPMap.config.L.removeLayer(control._selectedSpecies[0].predicted);
-				console.debug("removign layer");
+				NPMap.config.L.removeLayer(control.searchControl
+					._selectedSpecies[0].predicted);
 			}
 
 			if(control.showObserved) {
-				NPMap.config.L.removeLayer(control._selectedSpecies[0].observed);
-				console.debug("removign layer");
+				NPMap.config.L.removeLayer(control.searchControl
+					._selectedSpecies[0].observed);
 			}
 		}
 
