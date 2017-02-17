@@ -59,7 +59,7 @@ return {
 	establishEventListeners: function(control) {
 		var self = this;
 
-		$('#dropdown-initial-input').on('input', function(event, species) {
+		$('#dropdown-initial-input').on('input', function() {
 			self.fuseSearch(0, this.value, control);
 		});
 

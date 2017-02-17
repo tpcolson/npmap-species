@@ -10,7 +10,7 @@ return {
 			document.getElementsByClassName("mds")[0]
 		);
 
-		var url = window.location.href + 'mds/';
+		var url = window.location.href.split('?')[0] + 'mds/';
 		var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
 
 		var ajaxTime = new Date().getTime();

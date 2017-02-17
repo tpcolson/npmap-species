@@ -95,10 +95,8 @@ $(document).ready(function() {
 		}],
 	};
 
-	window.control = control;
 	Util.establishEventListeners(control);
 	Util.prepareSearchTool(control);
-//	control.initialize();
 
 	/* One of the only ways this worked */
 	var s = document.createElement('script');

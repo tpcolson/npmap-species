@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.gzip import gzip_page
 
+import os
+
 
 @require_GET
 def index(request):
@@ -18,9 +20,9 @@ def index(request):
 @gzip_page
 def mds(request):
 	try:
-		pathname = settings.STATICFILES_DIRS[0] + '/data/sim_matrix.json'
-		test_file = open(pathname, 'rb')
-		response = HttpResponse(content=test_file)
+		pathname = os.path.join(settings.STATICFILES_DIRS[0], 'data/sim_matrix.json')
+		sim_matrix_file = open(pathname, 'rb')
+		response = HttpResponse(content=sim_matrix_file)
 		response['Content-Type'] = 'application/json'
 		return response
 	except IOError:
