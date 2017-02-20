@@ -1,10 +1,18 @@
 require.config({
 	baseUrl: '/static/js',
 	paths: {
+		d3: 'vendor/d3/d3',
 		fuse: 'vendor/fuse/src/fuse',
 		jquery: 'vendor/jquery/dist/jquery',
+		jquery_ui: 'vendor/jquery-ui/jquery-ui',
 		leaflet: 'vendor/leaflet/dist/leaflet',
+		numeric: 'vendor/numeric/lib/numeric-1.2.6',
+		query: 'query',
+		spin: 'vendor/spin.js/spin',
+		mds: 'vendor/mds/mds',
+
 		control: 'control',
+		mds_util: 'mds_util',
 		utils: 'utils'
 	},
 
@@ -16,18 +24,27 @@ require.config({
 			},
 		},
 
+		mds: {
+			exports: 'mds',
+			deps: ['numeric'],
+		},
+
+		numeric: {
+			exports: 'numeric'
+		},
+
 		fuse: {
 			exports: 'Fuse',
 		},
 	}
 });
 
-require(['jquery', 'utils', 'control', 'leaflet'],
-function ($, Util, Control) {
+require(['jquery', 'utils', 'control', 'mds_util', 'leaflet', 'jquery_ui'],
+function ($, Util, Control, MDS) {
 
 $(document).ready(function() {
-
 	var control = new Control();
+
 	window.NPMap = {
 		div: 'map',
 		baseLayers: [
@@ -49,18 +66,24 @@ $(document).ready(function() {
 			}
 		}],
 		zoom: 10,
-		center: { lat: 35.6, lng: -83.52 },
-		minZoom: 10,
-		maxZoom: 16,
+		center: { lat: 35.6, lng: -83.25 },
 		maxBounds: [
-			{ lat: 35, lng: -84.5 },
-			{ lat: 36.25, lng: -82.5 }
+			{lat: 35, lng: -84.5},
+			{lat: 36.25, lng: -82.5}
 		],
+		minZoom: 9,
+		maxZoom: 16,
 		homeControl: false,
 		editControl: true,
 		printControl: true,
 		measureControl: true,
 		scaleControl: { metric: true },
+		hooks: {
+			init: function(callback) {
+				control.initialize();
+				callback();
+			}
+		},
 		events: [{
 			fn: function(evt) {
 				if(control.currentBaseLayer &&
@@ -69,9 +92,8 @@ $(document).ready(function() {
 				}
 			},
 			type: 'layeradd'
-		}]
+		}],
 	};
-
 
 	Util.establishEventListeners(control);
 	Util.prepareSearchTool(control);
@@ -80,6 +102,6 @@ $(document).ready(function() {
 	var s = document.createElement('script');
 	s.src = 'https://www.nps.gov/lib/npmap.js/3.0.18/npmap-bootstrap.js';
 	document.body.appendChild(s);
-
+	$("#mds-border").draggable();
 });
 });

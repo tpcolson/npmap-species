@@ -5,7 +5,8 @@
 <meta charset="utf-8" />
 <title>Flexview</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 {% if DEBUG %}
 <script async type="text/javascript"
 	data-main="{% static 'js/main.js' %}"
@@ -16,27 +17,44 @@
 
 </head>
 <body style="background: black">
-<div id='search-initial'>
-	<div id='search-initial-controls'>
-		SELECT A SPECIES
-		<div id='search-initial-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
-			<label for='dropdown-initial-input' class='hidden-label'>Species Name</label>
-			<input id='dropdown-initial-input' class='dropdown-input'></input>
-			<div class='dropdown-button'>
-				<div class='triangle'></div>
+<div id='controls'>
+	<div id='search-initial'>
+		<div id='search-initial-controls'>
+			SELECT A SPECIES
+			<div id='search-initial-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+				<label for='dropdown-initial-input' class='hidden-label'>Species Name</label>
+				<input id='dropdown-initial-input' class='dropdown-input'></input>
+				<div class='dropdown-button'>
+					<div class='triangle'></div>
+				</div>
+				<ul id='search-initial-dropdown-select'></ul>
+				<ul id='search-initial-dropdown-lex'></ul>
 			</div>
-			<ul id='search-initial-dropdown-select'></ul>
-			<ul id='search-initial-dropdown-lex'></ul>
+			<div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
+				<div><div class='search-initial-switch-sides'>COMMON</div></div>
+				<div><div class='search-initial-switch-sides'>LATIN</div></div>
+				<div id='search-initial-switch-button'>
+				<div ><span>...</span></div></div>
+			</div>
+			<div id='search-initial-altname'></div>
 		</div>
-		<div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
-			<div><div class='search-initial-switch-sides'>COMMON</div></div>
-			<div><div class='search-initial-switch-sides'>LATIN</div></div>
-			<div id='search-initial-switch-button'>
-			<div ><span>...</span></div></div>
+	</div>
+	<div id="divider"></div>
+	<div id='link-gen' class='link-gen'>
+		<div class='link-gen-text link-gen-text'>
+			CONFIGURATION LINK <br/>
+			<div id="link-gen-link">
+				<button id="link-gen-button" class="fa fa-link"></button>
+				<div style="overflow: hidden; padding-left: .5em;">
+					<input id="url_config" aria-describedby="url_addon" type="text"/>
+				</div>
+			</div>
 		</div>
-		<div id='search-initial-altname'></div>
 	</div>
 </div>
 <div id='map'></div>
+<div id ='mds-border' class="ui-widge-content mds">
+</div>
+<form>{% csrf_token %}</form>
 </body>
 </html>
