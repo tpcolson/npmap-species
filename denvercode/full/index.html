@@ -19,6 +19,7 @@
     <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-57x57-precomposed.png" rel="apple-touch-icon-precomposed">
     <title>Great Smoky Mountains National Park</title>
     <link rel="stylesheet" href="reset.css"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://www.nps.gov/maps/assets/css/full.min.css"></link>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chardin.js/0.1.3/chardinjs.css"></link>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css">
@@ -47,7 +48,7 @@
     <div id='search-tool'>
       <div id='search-tool-contents'>
         <div id='search-banner'>
-          <div id='search-banner-buffer'></div>
+          <div id='search-banner-buffer'><span class="messages fades hide"></span></div>
           <div id='search-banner-help-tooltips' class='bordered' tooltip='Turn tooltips on/off'>
             <div style="text-align: center">
               <p id='search-banner-tooltips-label'>
@@ -59,6 +60,12 @@
                 <div id='search-banner-tooltips-button'><div onkeypress='toggleTooltips();' onclick='toggleTooltips();'><span>...</span></div></div>
               </div>
             </div>
+          </div>
+          <div id='search-banner-help-share' class='bordered' tooltip='Get a shareable link'>
+            <button id='search-banner-help-share-button' alt='Get a shareable link.'>
+              <i class="fa fa-share-alt fades show"></i>
+              <i class="fa fa-check-circle fades hide"></i>
+            </button>
           </div>
           <div id='search-banner-help-link' class='bordered' tooltip='Get help using the tool'>
             <button id='search-banner-help-link-button' onkeypress='showHelp();' onclick='showHelp();' alt='Show the help overlay.'>?</button>
@@ -327,6 +334,7 @@
     <script src="searchUtils.js"></script>
     <script src="tooltips.js"></script>
     <script src="utils.js"></script>
+    <script src="share.js"></script>
     <script src="mapping.js"></script>
     <script src="https://www.nps.gov/lib/npmap.js/3.0.17/npmap-bootstrap.min.js"></script>
   </body>
