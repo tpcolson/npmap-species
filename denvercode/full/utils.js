@@ -1,6 +1,7 @@
 $(document).ready(function() {
   document.getElementById('options-predicted-checkbox').checked = true;
   document.getElementById('options-observed-checkbox').checked = false;
+  $('#search-tool').one('loaded', function () { loadSettings(); });
 });
 
 window.onload = function() {
@@ -113,13 +114,14 @@ window.onload = function() {
   });
 
   /* prepare search tool */
-  prepareSearchTool();
+  prepareSearchTool().done(function () {
 
-  /* prepare color legend dragging */
-  prepareLegendDrag();
+    /* prepare color legend dragging */
+    prepareLegendDrag();
 
-  /* prepare tooltips */
-  $tooltips._initialize(document.body);
+    /* prepare tooltips */
+    $tooltips._initialize(document.body);
+  });
 
   /* prepare date conversion utility */
   setInterval(function() {
@@ -145,15 +147,13 @@ window.onload = function() {
   }, 100);
 
   $('.dropdown-input', '#search-initial-dropdown').focus();
-    attemptExecute(function() {
-        if($('.leaflet-control-attribution').get(0) === undefined) {
-            return false;
-        }
+  attemptExecute(function() {
+    if($('.leaflet-control-attribution').get(0) === undefined)
+      return false;
 
-        $('.leaflet-control-attribution').get(0).innerHTML = '<a href="https://github.com/nationalparkservice/npmap-species/issues?q=is%3Aissue+is%3Aopen+-label%3A508+-label%3Adeployment+-label%3Aduplicate+-label%3Awontfix" target="_blank">Report an Issue</a> | ' + $('.leaflet-control-attribution').get(0).innerHTML;
-
-        return true;
-    });
+    $('.leaflet-control-attribution').get(0).innerHTML = '<a href="https://github.com/nationalparkservice/npmap-species/issues?q=is%3Aissue+is%3Aopen+-label%3A508+-label%3Adeployment+-label%3Aduplicate+-label%3Awontfix" target="_blank">Report an Issue</a> | ' + $('.leaflet-control-attribution').get(0).innerHTML;
+    return true;
+  });
 }
 
 var processed = false;

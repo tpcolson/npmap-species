@@ -12,8 +12,29 @@ var control = {
   _lastObservationState: false
 }
 
+function loadResource(url, callback) {
+  return new Request({
+    retryCount: 5,
+    retryTimeout: 50,
+    dataType: 'json',
+    url: url
+  }).done(callback);
+}
+
+var can_populate = false;
 function prepareSearchTool() {
-  loadResource('https://nationalparkservice.github.io/npmap-species/atbirecords/lexical_index.json', function(data) {
+  var atbi = 'https://nationalparkservice.github.io/npmap-species/atbirecords/';
+
+  var auc = loadResource(atbi + 'species_auc.json', function(data) {
+    control._aucValues = data;
+  });
+
+  var similar = loadResource(atbi + 'most_similar_distribution.json', function(data) {
+    control._similarDistributions = data;
+  });
+
+  var names = $.Deferred();
+  loadResource(atbi + 'lexical_index.json', function(data) {
     var index = data.items,
       latinOptions = {
         keys: ['latin_name_ref'],
@@ -26,43 +47,30 @@ function prepareSearchTool() {
 
     control._latinFuser = new Fuse(index, latinOptions);
     control._commonFuser = new Fuse(index, commonOptions);
+    names.resolve();
   });
 
-  loadResource('https://nationalparkservice.github.io/npmap-species/atbirecords/irma_mapping.json', function(data) {
-    control._nameMappings = data;
-    delete control._nameMappings[''];
-
-    populateResults();
+  // populateResults must have data from the previous requests. we wait for those to finish.
+  var isLoaded = $.Deferred();
+  $.when(auc, similar, names).done(function() {
+    loadResource(atbi + 'irma_mapping.json', function(data) {
+      control._nameMappings = data;
+      if (control._nameMappings[''])
+        delete control._nameMappings[''];
+      can_populate = true;
+      populateResults();
+      isLoaded.resolve();
+    });
   });
 
-  loadResource('https://nationalparkservice.github.io/npmap-species/atbirecords/most_similar_distribution.json', function(data) {
-    control._similarDistributions = data;
-  });
-
-  loadResource('https://nationalparkservice.github.io/npmap-species/atbirecords/species_auc.json', function(data) {
-    control._aucValues = data;
-  });
+  return isLoaded;
 }
 
-function loadResource(url, callback) {
-  loadResourceWithTries(url, callback, 1);
-}
-
-function loadResourceWithTries(url, callback, tries) {
-  jQuery.ajax({
-    type: 'GET',
-    url: url,
-    dataType: 'json',
-    success: callback,
-    error: function() {
-      if(tries < 5) {
-        loadResourceWithTries(url, callback, tries+1);
-      }
-    }
-  });
-}
-
+var populated = false;
 function populateResults() {
+  if (!can_populate)
+    return;
+
   var keys = [];
   var commonKeys = [];
   for(key in control._nameMappings) {
@@ -193,6 +201,7 @@ function populateResults() {
         selectSecondSpecies(this);
       }
       li2.onclick = li2.onkeypress = function() {
+    $('body').trigger('tooltip-loaded');
         toggleSearchList(2);
         selectThirdSpecies(this);
       }
@@ -201,6 +210,9 @@ function populateResults() {
       document.getElementById('search-compare-two-dropdown-select').appendChild(li2);
     }
   }
+
+  populated = true;
+  $('#search-tool').trigger('loaded');
 }
 
 var list0Shown = false,
@@ -418,7 +430,7 @@ function populateDistributionLists() {
   document.getElementById('compare-dist-one').children[2].innerHTML = '';
   document.getElementById('compare-dist-two').children[2].innerHTML = '';
 
-  if(control._selectedSpecies[0] === undefined) {
+  if(control._selectedSpecies[0] === undefined || !control._similarDistributions) {
     return;
   }
 
@@ -621,6 +633,7 @@ function selectSecondSpecies(li) {
     control._lastPredictionState = false;
     $('#options-predicted-checkbox').trigger('click');
   }
+
   if(showObserved) {
     control._lastObservationState = true;
     $('#options-observed-checkbox').trigger('click');
@@ -939,6 +952,8 @@ function clearComparisons() {
   populateDistributionLists();
 }
 
+var lexFocussed = false;
+var distFocussed = false;
 function lexFocus() {
   clearComparisons();
 
@@ -968,6 +983,10 @@ function lexFocus() {
   $('#search-compare-one-dropdown').css({'display':'block'});
   $('#search-compare-two-dropdown').css({'display':'block'});
   $('.dropdown-input', '#search-compare-one-dropdown').focus();
+  lexFocussed = true;
+  distFocussed = false;
+
+  $('#lexical-radio').prop('checked', true);
 }
 
 function distFocus() {
@@ -998,9 +1017,16 @@ function distFocus() {
   $('#compare-dist-two').css({display:'block'});
   $('#search-compare-one-dropdown').css({'display':'none'});
   $('#search-compare-two-dropdown').css({'display':'none'});
+  lexFocussed = false;
+  distFocussed = true;
+
+  $('#dist-radio').prop('checked', true);
 }
 
 function findAUC(idx, name) {
+  if (!control._aucValues)
+    return;
+
   var color;
   switch(idx) {
     case 0:
