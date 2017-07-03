@@ -18,38 +18,25 @@
     <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-72x72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
     <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-57x57-precomposed.png" rel="apple-touch-icon-precomposed">
     <title>Great Smoky Mountains National Park</title>
+    <link rel="stylesheet" href="reset.css"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://www.nps.gov/maps/assets/css/full.min.css"></link>
-    <link rel='stylesheet' href='reset.css'></link>
-    <link rel='stylesheet' href='style.css'></link>
-    <link rel='stylesheet' href='chardinjs.css'></link>
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
-    <script src='mapping.js'></script>
-    <script src='fuse.min.js'></script>
-    <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
-    <script src='jquery-sortable.js'></script>
-    <script src='tooltips.js'></script>
-    <script src='chardinjs.min.js'></script>
-    <script src='colorLegend.js'></script>
-    <script src='drawUtils.js'></script>
-    <script src='popups.js'></script>
-    <script src='searchUtils.js'></script>
-	<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-40939451-4', 'auto');
-	ga('send', 'pageview');
-
-	</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chardin.js/0.1.3/chardinjs.css"></link>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="style.css"></link>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.0.4/fuse.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sortable/0.9.13/jquery-sortable-min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chardin.js/0.1.3/chardinjs.min.js"></script>
+    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-40939451-4', 'auto');ga('send', 'pageview');</script>
   </head>
   <body>
     <header>
       <div class="left">
         <a id="title" href = "https://www.nps.gov/grsm/learn/nature/index.htm" style="text-decoration: none" target="_blank"> 
-		<h1> Great Smoky Mountains National Park</h1>
-		</a>
+        <h1> Great Smoky Mountains National Park</h1>
+        </a>
         <div id="description">Species Mapper</div>
       </div>
       <div class="right">
@@ -61,7 +48,7 @@
     <div id='search-tool'>
       <div id='search-tool-contents'>
         <div id='search-banner'>
-          <div id='search-banner-buffer'></div>
+          <div id='search-banner-buffer'><span class="messages fades hide"></span></div>
           <div id='search-banner-help-tooltips' class='bordered' tooltip='Turn tooltips on/off'>
             <div style="text-align: center">
               <p id='search-banner-tooltips-label'>
@@ -73,6 +60,12 @@
                 <div id='search-banner-tooltips-button'><div onkeypress='toggleTooltips();' onclick='toggleTooltips();'><span>...</span></div></div>
               </div>
             </div>
+          </div>
+          <div id='search-banner-help-share' class='bordered' tooltip='Get a shareable link'>
+            <button id='search-banner-help-share-button' alt='Get a shareable link.'>
+              <i class="fa fa-share-alt fades show"></i>
+              <i class="fa fa-check-circle fades hide"></i>
+            </button>
           </div>
           <div id='search-banner-help-link' class='bordered' tooltip='Get help using the tool'>
             <button id='search-banner-help-link-button' onkeypress='showHelp();' onclick='showHelp();' alt='Show the help overlay.'>?</button>
@@ -334,7 +327,15 @@
       </ul>
       <span class="tag-line ir">Experience Your America</span>
     </footer>
-    <script src='https://www.nps.gov/lib/npmap.js/3.0.17/npmap-bootstrap.min.js'></script>
-    <script src='utils.js'></script>
+    <script src="request.js"></script>
+    <script src="colorLegend.js"></script>
+    <script src="drawUtils.js"></script>
+    <script src="popups.js"></script>
+    <script src="searchUtils.js"></script>
+    <script src="tooltips.js"></script>
+    <script src="utils.js"></script>
+    <script src="share.js"></script>
+    <script src="mapping.js"></script>
+    <script src="https://www.nps.gov/lib/npmap.js/3.0.17/npmap-bootstrap.min.js"></script>
   </body>
 </html>
