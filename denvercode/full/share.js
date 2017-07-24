@@ -60,6 +60,8 @@ function exportSettings() {
   if (!lexFocussed && distFocussed)
     settings.distFocussed = true;
 
+  settings.bounds = NPMap.config.L.getBounds();
+
   return settings;
 
 }
@@ -109,6 +111,9 @@ function loadSettings() {
 
   if (settings.blendingActive === false)
     toggleBlending();
+
+  if (settings.bounds)
+    NPMap.config.L.fitBounds([settings.bounds._southWest, settings.bounds._northEast]);
 
   if (settings.minimized)
     $('search-banner-help-minimizer-button').trigger('click');
