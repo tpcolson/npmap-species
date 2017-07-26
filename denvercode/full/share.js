@@ -124,10 +124,9 @@ function showShareModal() {
   var settings = exportSettings();
 
   // Update window's anchor/hash
-  location.hash = encodeURI(JSON.stringify(settings));
-
+  var hash = "#" + encodeURI(JSON.stringify(settings));
   // Open share modal
-  $('#share-modal .share-link').val(location.href);
+  $('#share-modal .share-link').val(location.href.split("#")[0] + hash);
   showModal('#share-modal');
 }
 
@@ -137,8 +136,8 @@ var shareButton = document.getElementById('search-banner-help-share-button');
     var settings = exportSettings();
 
     // Update window's anchor/hash
-    location.hash = encodeURI(JSON.stringify(settings));
-    return location.href;
+    var hash = "#" + encodeURI(JSON.stringify(settings));
+    return location.href.split("#")[0] + hash;
   }
 })).on('success', function () {
   // Show success tooltip or icon change. These icons have 300ms transitions
