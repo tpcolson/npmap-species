@@ -113,5 +113,9 @@ var subNavZ, headerZ, divHeader, divSubNav,
         }
       },
       type: 'layeradd'
+    }, 
+    {
+      fn: initialToolbarToggle,
+      type: 'zoomend'
     }]
   };
