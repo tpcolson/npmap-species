@@ -4,8 +4,6 @@ $(document).ready(function() {
   $('#search-tool').one('loaded', function () { loadSettings(); });
 });
 
-var first_time_clicking_on_map = true;
-
 window.onload = function() {
   /* Move zoom and measure controls directly below search tool */
   attemptExecute(function() {
@@ -156,8 +154,6 @@ window.onload = function() {
     $('.leaflet-control-attribution').get(0).innerHTML = '<a href="https://github.com/nationalparkservice/npmap-species/issues?q=is%3Aissue+is%3Aopen+-label%3A508+-label%3Adeployment+-label%3Aduplicate+-label%3Awontfix" target="_blank">Report an Issue</a> | ' + $('.leaflet-control-attribution').get(0).innerHTML;
     return true;
   });
-
-  $(".leaflet-map-pane").on("click", initialToolbarToggle);
 }
 
 var processed = false;
@@ -230,16 +226,6 @@ function toggleMinimized() {
   }
 
   minimized = !minimized;
-}
-
-// Gets the toobar out of the way on first interaction with the map
-function initialToolbarToggle()
-{
-    if (first_time_clicking_on_map == true && control._selectedSpecies[0] !== undefined)
-    {
-      toggleMinimized();
-      first_time_clicking_on_map = false;
-    }
 }
 
 var lastBaseIndex = 0;
