@@ -182,7 +182,7 @@ function setImageHovers()
         $(this).attr('src', 'images/no_image.jpg');
     });
 
-    $('ul').on('mouseover', 'li', function(e){
+    $('ul.species-list').on('mouseover', 'li', function(e){
         $("#species-hover-thumbnail").css({display: 'block'});
         var latin_name = whichName == 'latin' ? this.innerHTML : 'What';
         $('#species-hover-thumbnail').attr('src', 
@@ -193,7 +193,7 @@ function setImageHovers()
         }, 50);
     });
 
-    $('ul').on('mouseout', function(){
+    $('ul.species-list').on('mouseout', function(){
         $("#species-hover-thumbnail").css({display: 'none'});
     });
 
