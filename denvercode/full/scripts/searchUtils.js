@@ -153,6 +153,7 @@ function populateResults() {
         toggleSearchList(2);
         selectThirdSpecies(this);
       }
+
       document.getElementById('search-initial-dropdown-select').appendChild(li);
       document.getElementById('search-compare-one-dropdown-select').appendChild(li1);
       document.getElementById('search-compare-two-dropdown-select').appendChild(li2);
@@ -205,6 +206,7 @@ function populateResults() {
         toggleSearchList(2);
         selectThirdSpecies(this);
       }
+
       document.getElementById('search-initial-dropdown-select').appendChild(li);
       document.getElementById('search-compare-one-dropdown-select').appendChild(li1);
       document.getElementById('search-compare-two-dropdown-select').appendChild(li2);
@@ -323,11 +325,11 @@ function clearSearch() {
   });
   $('.subhead2', '#search-compare-lexical').css({
     top:'5px',
-    fontSize:'14pt',
+    fontSize:'14px',
     color:'rgb(144, 144, 144)',
     width:'200px'
   });
-  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES IN THE PARK');
+  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES');
 
   $('#search-compare-distribution').stop();
   $('#search-compare-distribution').animate({'width': '240px'});
@@ -339,7 +341,7 @@ function clearSearch() {
   });
   $('.subhead2', '#search-compare-distribution').css({
     top:'5px',
-    fontSize:'14pt',
+    fontSize:'14px',
     color:'rgb(144, 144, 144)',
     width:'200px'
   });
@@ -920,19 +922,17 @@ function lexFocus() {
   $('.subhead', '#search-compare-lexical').css({display:'block'});
   $('.subhead2', '#search-compare-lexical').css({
     top:'5px',
-    fontSize:'14pt',
+    fontSize:'14px',
     color:'#f5faf2',
     width:'200px'
   });
-  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES IN THE PARK');
+  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES');
   $('#search-compare-one-box').css({display:'block'});
   $('#search-compare-two-box').css({display:'block'});
 
   $('#search-compare-distribution').animate({width:'120px'});
   $('.subhead', '#search-compare-distribution').css({display:'none'});
   $('.subhead2', '#search-compare-distribution').css({
-    top:'25px',
-    fontSize:'9pt',
     color:'#909090',
     width:'80px'
   });
@@ -954,8 +954,6 @@ function distFocus() {
   $('#search-compare-lexical').animate({width:'121px'});
   $('.subhead', '#search-compare-lexical').css({display:'none'});
   $('.subhead2', '#search-compare-lexical').css({
-    top:'25px',
-    fontSize:'9pt',
     color:'#909090',
     width:'80px'
   });
@@ -967,7 +965,7 @@ function distFocus() {
   $('.subhead', '#search-compare-distribution').css({display:'block'});
   $('.subhead2', '#search-compare-distribution').css({
     top:'5px',
-    fontSize:'14pt',
+    fontSize:'14px',
     color:'#f5faf2',
     width:'200px'
   });
