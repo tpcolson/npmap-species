@@ -918,7 +918,7 @@ var distFocussed = false;
 function lexFocus() {
   clearComparisons();
 
-  $('#search-compare-lexical').animate({width:'481px'});
+  $('#search-compare-lexical').animate({width:'440px'});
   $('.subhead', '#search-compare-lexical').css({display:'block'});
   $('.subhead2', '#search-compare-lexical').css({
     top:'5px',
@@ -961,7 +961,7 @@ function distFocus() {
   $('#search-compare-one-box').css({display:'none'});
   $('#search-compare-two-box').css({display:'none'});
 
-  $('#search-compare-distribution').animate({width:'480px'});
+  $('#search-compare-distribution').animate({width:'440px'});
   $('.subhead', '#search-compare-distribution').css({display:'block'});
   $('.subhead2', '#search-compare-distribution').css({
     top:'5px',

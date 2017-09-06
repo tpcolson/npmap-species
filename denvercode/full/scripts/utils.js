@@ -70,29 +70,6 @@ window.onload = function() {
     return true;
   });
 
-  //prepare the share tool
-  attemptExecute(function(){
-    if (!(NPMap && NPMap.config && NPMap.config.L && NPMap.config.L.printControl && NPMap.config.L.printControl.print)) {
-      return false;
-    }
-
-    var shareContainer = L.DomUtil.create('div', 'leaflet-bar leaflet-control npmap-control-share'),
-      bg = $('.npmap-toolbar .right li button.share').css('background-image');
-
-    $('.leaflet-top.leaflet-left').append($(shareContainer));
-    $(shareContainer).append($('.npmap-toolbar .right li button'));
-    $('.npmap-map-wrapper').css({'top': '0px'});
-    $('.npmap-control-share button').css({
-      'background-image': bg,
-      'background-repeat': 'no-repeat',
-      'background-position': 'center',
-      'border-top': '1px solid #1a2423',
-      'height': '26px'
-    });
-    
-    return true;
-  });
-
   /* set up drawing tooltips */
   attemptExecute(function() {
     if ($('button.marker').get(0) === undefined || $('button.polyline').get(0) === undefined || $('button.circle').get(0) === undefined) {

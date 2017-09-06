@@ -94,14 +94,20 @@ body.dragging, body.dragging * {
   font-weight: 700;
 }
 
+#search-tool-extra-controls
+{
+    float: left;
+
+    border-left: 1px solid #40403d;
+    margin: 10px;
+    padding-top: 22px;
+    height: 60px;
+}
+
 #search-banner-help-share,
 #search-banner-help-link {
-  float: left;
-
   width: 30px;
   height: 30px;
-
-  border-right: 1px solid #40403d;
 }
 
 #search-banner-help-share-button,
@@ -397,7 +403,7 @@ body.dragging, body.dragging * {
   width: 255px;
   position: relative;
   top: -37px;
-  left: 210px;
+  left: 170px;
   display: none;
 }
 
@@ -493,7 +499,7 @@ body.dragging, body.dragging * {
   width: 255px;
   position: relative;
   top: -27px;
-  left: 210px;
+  left: 170px;
   display: none;
 }
 
@@ -725,7 +731,7 @@ body.dragging, body.dragging * {
 #search-compare {
   float: left;
 
-  width: 602px;
+  width: 570px;
   height: 80px;
   margin: 10px 0px 10px 0px;
   padding: inherit;
@@ -981,7 +987,7 @@ body.dragging, body.dragging * {
   position: absolute;
   z-index: 1000;
   top: 25px;
-  left: 225px;
+  left: 190px;
 
   display: none;
 
@@ -1042,7 +1048,7 @@ body.dragging, body.dragging * {
 #compare-dist-two {
   position: absolute;
   top: 57px;
-  left: 225px;
+  left: 190px;
 
   display: none;
 
@@ -1273,7 +1279,7 @@ body.dragging, body.dragging * {
 #search-image-box {
   float: left;
 
-  width: 120px;
+  width: 110px;
   height: 110px;
   margin: 0px 0px 10px 0px;
 
@@ -1285,7 +1291,7 @@ body.dragging, body.dragging * {
 #search-options {
   float: left;
 
-  width: 200px;
+  width: 150px;
   height: 80px;
   margin: 10px 0px 10px 0px;
   padding: 0px 5px 0px 10px;
@@ -1294,7 +1300,7 @@ body.dragging, body.dragging * {
 }
 
 #search-options-left {
-  width: 180px;
+  width: 140px;
   float: left;
 }
 
@@ -2172,6 +2178,12 @@ button {
 .npmap-retina .npmap-toolbar button.share
 {
     background-image: url('images/font-awesome/share@2x.png');
+}
+
+/* for the editControls */
+button.polygon, button.rectangle
+{
+    display: none !important;
 }
 
 #species-hover-thumbnail
