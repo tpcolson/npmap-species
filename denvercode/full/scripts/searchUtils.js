@@ -352,7 +352,7 @@ function clearSearch() {
 
   $('#search-initial-image').css({'opacity':0.0});
 
-  //$('#color-legend').animate({height: '0px'});
+  $('#color-legend').hide();
 }
 
 function selectInitialSpecies(li) {
@@ -410,7 +410,7 @@ function selectInitialSpecies(li) {
 
   findAUC(0, li._latin);
 
-  //$('#color-legend').animate({height: '100px'});
+  $('#color-legend').show();
   $('input', '#legend-pink-controls').prop('checked', true);
 
   $('.subhead').css({
@@ -908,8 +908,8 @@ function fuseSearch(idx, value, expand) {
 function clearComparisons() {
   clearCompareOne();
   clearCompareTwo();
-  //$('#color-legend').stop();
-  //$('#color-legend').animate({height:'100px'});
+  $('#color-legend').stop();
+  $('#color-legend').show(); 
   populateDistributionLists();
 }
 

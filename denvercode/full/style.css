@@ -1474,6 +1474,7 @@ body.dragging, body.dragging * {
 }
 
 #color-legend {
+  display: none; /* it should be hidden initially */
   position: absolute;
   z-index: 1000;
   right: 5px;
