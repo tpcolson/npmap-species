@@ -209,6 +209,9 @@ function setImageHovers()
     $('ul.species-list').on('mouseout', function(){
         $("#species-hover-thumbnail").css({display: 'none'});
     });
+    $('ul.species-list').on('click', function(){
+        $("#species-hover-thumbnail").css({display: 'none'});
+    });
 
 }
 
