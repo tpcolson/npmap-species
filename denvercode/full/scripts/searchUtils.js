@@ -353,11 +353,41 @@ function clearSearch() {
   $('#search-initial-image').css({'opacity':0.0});
 
   $('#color-legend').hide();
+
+  $("#search-image-box").css({
+      "background-image": "none"
+  });
+  $(".search-image-box-magnifier").hide();
+
+  $("#search-tool-contents").animate({
+      "width": "1330px"
+  });
 }
 
 function selectInitialSpecies(li) {
   recordAction('added species', li._latin.replace(/_/g, ' '));
   clearComparisons();
+
+  // change the main thumbnail
+  var url = getThumbnailURL(li._latin);
+  var image = new Image();
+  image.onload = function(){
+    $("#search-image-box").css({
+      "background-image": "url(" + url + ")"
+    });
+  }
+  image.src = url;
+
+  // default image in case the real one didn't load
+  $("#search-image-box").css({
+    "background-image": "url(images/no_image.jpg)"
+  });
+  $(".search-image-box-magnifier").show();
+  $(".search-image-box-magnifier").css({"display": "inline-block"});
+
+  $("#search-tool-contents").animate({
+      "width": "1175px"
+  });
 
   document.getElementById('search-initial-dropdown').style.backgroundColor = 'rgb(202, 24, 146)';
 
@@ -885,6 +915,7 @@ function fuseSearch(idx, value, expand) {
       li.innerHTML = li._latin.replace(/_/g, ' ');
       li.title = li._common.replace(/_/g, ' ');
     }
+    //Moa:: instead of this, delegation should've been used
     li.onclick = li.onkeypress = function() {
       switch(this._idx) {
         case 0:

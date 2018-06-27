@@ -125,6 +125,28 @@ window.onload = function() {
     return true;
   });
 
+  /* prepare the image modal */
+  // Get the modal
+  var modal = document.getElementById('image-modal');
+
+  // Get the image and insert it inside the modal - use its "alt" text as a caption
+  var image_box = document.getElementById('search-image-box');
+  var modalImg = document.getElementById("image-modal-image");
+  image_box.onclick = function(){
+      modal.style.display = "block";
+      var url = this.style.backgroundImage.replace("url(\"", "").replace("\")", "");
+      url = url.replace("/thumbnails", ""); // load full quality image
+      modalImg.src = url;
+  }
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() { 
+      modal.style.display = "none";
+  }
+
   $("#dropdown-initial-input").focus();
   setImageHovers();
 }
@@ -144,7 +166,10 @@ function endsWith(str, suffix) {
 /* Converts latin name to thumbnail URL */
 function getThumbnailURL(latin_name)
 {
-    return '/species_images/thumbnails/' + latin_name.toLowerCase().replace(" ", "_") + '.jpg'; 
+    if (latin_name !== undefined)
+        return '/species_images/thumbnails/' + latin_name.toLowerCase().replace(" ", "_") + '.jpg'; 
+    else
+        return '';
 }
 
 /* The setup that's needed for thumbnail image hovers */
@@ -160,13 +185,24 @@ function setImageHovers()
     });
 
     $('ul.species-list').on('mouseover', 'li', function(e){
-        $("#species-hover-thumbnail").css({display: 'block'});
-        var latin_name = whichName == 'latin' ? this.innerHTML : 'What';
-        $('#species-hover-thumbnail').attr('src', 
-            getThumbnailURL(latin_name));
+        $("#species-hover-thumbnail").css({ display: 'block' });
+        var latin_name = whichName == 'latin' ? this.innerHTML : 'No image';
+        var url = getThumbnailURL(this._latin);
+        $('#species-hover-thumbnail').attr('src', url);
+
+        // if the thumbnail is somewhere else, bring it here first
+        // then animate
+        var pos_x = $("#species-hover-thumbnail").offset().left;
+        var new_x = $(this).offset().left + $(this).parent().outerWidth(); 
+        if (Math.abs(pos_x - new_x) > 0.5)
+        {
+            $("#species-hover-thumbnail").css({
+                left: new_x + 'px'
+            }); 
+        }
         $("#species-hover-thumbnail").stop().animate({
             top: $(this).offset().top + 'px', 
-            left: $(this).offset().left + $(this).parent().outerWidth() + 'px'
+            left: new_x + 'px'
         }, 50);
     });
 

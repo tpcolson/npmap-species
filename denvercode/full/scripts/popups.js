@@ -1,4 +1,6 @@
 function createPopup(li) {
+    console.log(li._latin + '&format=geojson&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27' + li._latin + '%27)');
+    
     return L.npmap.layer.geojson({
         name: li._latin + '_observations',
         url: 'https://nps-grsm.cartodb.com/api/v2/sql?filename=' + li._latin + '&format=geojson&q=SELECT+DISTINCT+ON+(the_geom)+*+FROM+grsm_species_observations_maxent+WHERE+lower(genus_speciesmaxent)=lower(%27' + li._latin + '%27)',
