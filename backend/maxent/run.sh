@@ -3,7 +3,7 @@
 echo $(date) > start_time.txt
 echo $(date +%s) > start_secs.txt
 #. /usr/share/modules/init/bash
-module load eden
+# module load eden
 ./do_run.sh && \
 ./preprocess.sh && \
 ./maxent.sh && \

@@ -22,7 +22,7 @@ ssi: ssi.o
 	$(CC) $(CFLAGS) -o $@ ssi.o $(LIBS) $(PLANK_LIBS)
 
 summarize: summarize.o
-	$(CC) $(CFLAGS) -lm -o $@ summarize.o $(PLANK_LIBS) 
+	$(CC) $(CFLAGS) -o $@ summarize.o $(PLANK_LIBS) -lm
 
 make_folds: make_folds.o
 	$(CC) $(CFLAGS) -o $@ make_folds.o $(PLANK_LIBS)

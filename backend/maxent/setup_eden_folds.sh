@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This should be called from preprocess.sh (which is created by do_run.sh)
 # when cross-validation is needed.
@@ -17,7 +17,9 @@ while read line; do
    if test $i -eq 0; then continue; fi
    species=$line
    count=$(grep -w $species $COUNTS_FILE | cut -d',' -f2)
-   echo "cd $RUN_DIR; $TOOL_DIR/make_folds $RECORDS_DIR/$species.csv $count $CV_NUM_FOLDS" >> eden_folds/commands
+   if [[ ! -z "$count" ]]; then
+       echo "cd $RUN_DIR; $TOOL_DIR/make_folds $RECORDS_DIR/$species.csv $count $CV_NUM_FOLDS" >> eden_folds/commands
+   fi
 done < $CONFIG_FILE
 
 # Make PBS header file for eden run

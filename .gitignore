@@ -1,1 +1,5 @@
 denvercode/full/updateSite.sh
+*.asc
+*.tif
+*.tif.aux.xml
+*.o
