@@ -135,7 +135,8 @@ window.onload = function() {
   image_box.onclick = function(){
       modal.style.display = "block";
       var url = this.style.backgroundImage.replace("url(\"", "").replace("\")", "");
-      url = url.replace("/thumbnails", ""); // load full quality image
+      //url = url.replace("/thumbnails", ""); // load full quality image
+      url = url.replace('110px', '800px');
       modalImg.src = url;
   }
 
@@ -166,10 +167,14 @@ function endsWith(str, suffix) {
 /* Converts latin name to thumbnail URL */
 function getThumbnailURL(latin_name)
 {
-    if (latin_name !== undefined)
-        return '/species_images/thumbnails/' + latin_name.toLowerCase().replace(" ", "_") + '.jpg'; 
-    else
-        return '';
+  var url = '';
+  if (latin_name !== undefined) {
+//    let latinURL = '/species_images/thumbnails/' + latin_name.toLowerCase().replace(" ", "_") + '.jpg';
+    if (tax_json[latin_name] !== undefined) {
+      url = 'images/' + tax_json[latin_name] + '_110px.jpg'
+    }
+  }
+  return url;
 }
 
 /* The setup that's needed for thumbnail image hovers */
