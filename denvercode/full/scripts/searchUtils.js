@@ -355,7 +355,8 @@ function clearSearch() {
   $('#color-legend').hide();
 
   $("#search-image-box").css({
-      "background-image": "none"
+      "background-image": "none",
+      "pointer-events": "none"
   });
   $(".search-image-box-magnifier").hide();
 

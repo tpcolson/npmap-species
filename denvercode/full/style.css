@@ -1277,6 +1277,8 @@ body.dragging, body.dragging * {
 }
 
 #search-image-box {
+  pointer-events: none;
+
   float: left;
 
   width: 110px;
