@@ -2305,3 +2305,8 @@ button.polygon, button.rectangle
         background-size: 80% !important;
     }
 }
+
+/* Fix for the dark/light 404 tiles */
+[src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='] {
+    width: 0 !important;
+}
