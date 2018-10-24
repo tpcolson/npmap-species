@@ -32,14 +32,15 @@ def separate():
         contents = response.read()
         lines = contents.splitlines()
         with open(files_dir + '/' + name + '.csv', 'w') as f:
-            #f.write('genus_speciesmaxent,genus_speciesirma,grsm_speciesid,commonname,taxagroup,subjectcategory,lon,lat\n')
+            f.write('genus_speciesmaxent,genus_speciesirma,grsm_speciesid,commonname,taxagroup,subjectcategory,lon,lat\n')
             counts = 0
             for sp_line in lines[1:]:
                 words = sp_line.split(',')
                 if float(words[17]) == 0.0 or float(words[16]) == 0.0:
                     continue
                 counts += 1
-                #f.write(','.join(words[41:47] + words[17:15:-1]) + '\n')
+                f.write(','.join(words[41:47] + words[17:15:-1]) + '\n')
+                #f.write(','.join([words[41]] + words[17:15:-1]) + '\n')
             if counts >= 30:
                 count_file.write(name + ',' + str(counts) + ',' + words[43] + '\n')
     

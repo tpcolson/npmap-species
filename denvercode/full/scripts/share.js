@@ -130,6 +130,8 @@ function showShareModal() {
   showModal('#share-modal');
 }
 
+
+
 var shareButton = document.getElementById('search-banner-help-share-button');
 (new Clipboard(shareButton, {
   text: function(trigger) {
@@ -146,11 +148,11 @@ var shareButton = document.getElementById('search-banner-help-share-button');
   $('.messages').toggleClass('hide show');
 
   // Hide share icon
-  $('.fa-share-alt', shareButton).toggleClass('hide show');
+  $('.fa-share-square', shareButton).toggleClass('hide show');
 
   // Show success icon
   window.setTimeout(function () {
-    $('.fa-share-alt', shareButton).hide();
+    $('.fa-share-square', shareButton).hide();
     $('.fa-check-circle', shareButton).show().toggleClass('hide show');
   }, 310);
 
@@ -162,7 +164,7 @@ var shareButton = document.getElementById('search-banner-help-share-button');
   // Show share icon
   window.setTimeout(function () {
     $('.fa-check-circle', shareButton).hide();
-    $('.fa-share-alt', shareButton).show().toggleClass('hide show');
+    $('.fa-share-square', shareButton).show().toggleClass('hide show');
     $('.messages').toggleClass('hide show');
     //$('.messages').text('');
   }, 310 + 1000 + 310);
@@ -178,3 +180,5 @@ function hideAllModals() {
   $('.modal').hide();
   $('#modals').hide();
 }
+
+

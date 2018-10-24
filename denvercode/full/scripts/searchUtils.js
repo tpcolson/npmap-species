@@ -153,6 +153,7 @@ function populateResults() {
         toggleSearchList(2);
         selectThirdSpecies(this);
       }
+
       document.getElementById('search-initial-dropdown-select').appendChild(li);
       document.getElementById('search-compare-one-dropdown-select').appendChild(li1);
       document.getElementById('search-compare-two-dropdown-select').appendChild(li2);
@@ -205,6 +206,7 @@ function populateResults() {
         toggleSearchList(2);
         selectThirdSpecies(this);
       }
+
       document.getElementById('search-initial-dropdown-select').appendChild(li);
       document.getElementById('search-compare-one-dropdown-select').appendChild(li1);
       document.getElementById('search-compare-two-dropdown-select').appendChild(li2);
@@ -323,11 +325,11 @@ function clearSearch() {
   });
   $('.subhead2', '#search-compare-lexical').css({
     top:'5px',
-    fontSize:'14pt',
+    fontSize:'14px',
     color:'rgb(144, 144, 144)',
     width:'200px'
   });
-  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES IN THE PARK');
+  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES');
 
   $('#search-compare-distribution').stop();
   $('#search-compare-distribution').animate({'width': '240px'});
@@ -339,7 +341,7 @@ function clearSearch() {
   });
   $('.subhead2', '#search-compare-distribution').css({
     top:'5px',
-    fontSize:'14pt',
+    fontSize:'14px',
     color:'rgb(144, 144, 144)',
     width:'200px'
   });
@@ -350,12 +352,43 @@ function clearSearch() {
 
   $('#search-initial-image').css({'opacity':0.0});
 
-  //$('#color-legend').animate({height: '0px'});
+  $('#color-legend').hide();
+
+  $("#search-image-box").css({
+      "background-image": "none",
+      "pointer-events": "none"
+  });
+  $(".search-image-box-magnifier").hide();
+
+  $("#search-tool-contents").animate({
+      "width": "1330px"
+  });
 }
 
 function selectInitialSpecies(li) {
   recordAction('added species', li._latin.replace(/_/g, ' '));
   clearComparisons();
+
+  // change the main thumbnail
+  var url = getThumbnailURL(li._latin);
+  var image = new Image();
+  image.onload = function(){
+    $("#search-image-box").css({
+      "background-image": "url(" + url + ")"
+    });
+  }
+  image.src = url;
+
+  // default image in case the real one didn't load
+  $("#search-image-box").css({
+    "background-image": "url(images/no_image.jpg)"
+  });
+  $(".search-image-box-magnifier").show();
+  $(".search-image-box-magnifier").css({"display": "inline-block"});
+
+  $("#search-tool-contents").animate({
+      "width": "1175px"
+  });
 
   document.getElementById('search-initial-dropdown').style.backgroundColor = 'rgb(202, 24, 146)';
 
@@ -408,7 +441,7 @@ function selectInitialSpecies(li) {
 
   findAUC(0, li._latin);
 
-  //$('#color-legend').animate({height: '100px'});
+  $('#color-legend').show();
   $('input', '#legend-pink-controls').prop('checked', true);
 
   $('.subhead').css({
@@ -883,6 +916,7 @@ function fuseSearch(idx, value, expand) {
       li.innerHTML = li._latin.replace(/_/g, ' ');
       li.title = li._common.replace(/_/g, ' ');
     }
+    //Moa:: instead of this, delegation should've been used
     li.onclick = li.onkeypress = function() {
       switch(this._idx) {
         case 0:
@@ -906,8 +940,8 @@ function fuseSearch(idx, value, expand) {
 function clearComparisons() {
   clearCompareOne();
   clearCompareTwo();
-  //$('#color-legend').stop();
-  //$('#color-legend').animate({height:'100px'});
+  $('#color-legend').stop();
+  $('#color-legend').show(); 
   populateDistributionLists();
 }
 
@@ -916,23 +950,21 @@ var distFocussed = false;
 function lexFocus() {
   clearComparisons();
 
-  $('#search-compare-lexical').animate({width:'481px'});
+  $('#search-compare-lexical').animate({width:'440px'});
   $('.subhead', '#search-compare-lexical').css({display:'block'});
   $('.subhead2', '#search-compare-lexical').css({
     top:'5px',
-    fontSize:'14pt',
+    fontSize:'14px',
     color:'#f5faf2',
     width:'200px'
   });
-  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES IN THE PARK');
+  $('.subhead2', '#search-compare-lexical').html('ANOTHER SPECIES');
   $('#search-compare-one-box').css({display:'block'});
   $('#search-compare-two-box').css({display:'block'});
 
   $('#search-compare-distribution').animate({width:'120px'});
   $('.subhead', '#search-compare-distribution').css({display:'none'});
   $('.subhead2', '#search-compare-distribution').css({
-    top:'25px',
-    fontSize:'9pt',
     color:'#909090',
     width:'80px'
   });
@@ -954,8 +986,6 @@ function distFocus() {
   $('#search-compare-lexical').animate({width:'121px'});
   $('.subhead', '#search-compare-lexical').css({display:'none'});
   $('.subhead2', '#search-compare-lexical').css({
-    top:'25px',
-    fontSize:'9pt',
     color:'#909090',
     width:'80px'
   });
@@ -963,11 +993,11 @@ function distFocus() {
   $('#search-compare-one-box').css({display:'none'});
   $('#search-compare-two-box').css({display:'none'});
 
-  $('#search-compare-distribution').animate({width:'480px'});
+  $('#search-compare-distribution').animate({width:'440px'});
   $('.subhead', '#search-compare-distribution').css({display:'block'});
   $('.subhead2', '#search-compare-distribution').css({
     top:'5px',
-    fontSize:'14pt',
+    fontSize:'14px',
     color:'#f5faf2',
     width:'200px'
   });

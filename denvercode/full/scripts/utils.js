@@ -46,36 +46,6 @@ window.onload = function() {
     return true;
   });
 
-  /* move annotation tools to tophat */
-  attemptExecute(function() {
-    if(document.getElementsByClassName('leaflet-control-edit')[0] === undefined) {
-      return false;
-    }
-
-    var editControls = document.getElementsByClassName('leaflet-control-edit')[0];
-    editControls.style.boxShadow = '0px';
-    editControls.style.width = '84px';
-    editControls.style.height = '26px';
-    editControls.style.webkitBoxShadow = 'none';
-    editControls.style.mozBoxShadow = 'none';
-    editControls.style.msBoxShadow = 'none';
-    editControls.style.oBoxShadow = 'none';
-    editControls.style.boxShadow = 'none';
-    $(editControls.children[2]).remove();
-    $(editControls.children[2]).remove();
-    editControls.children[0].style.borderTop = '0px';
-    editControls.children[0].style.borderRadius = '4px 0px 0px 4px';
-    editControls.children[2].style.borderRadius = '0px 4px 4px 0px';
-    for(var i = 0; i < editControls.children.length; i++) {
-      editControls.children[i].style.boxSizing = 'border-box';
-      editControls.children[i].style.height = '28px';
-      editControls.children[i].style.width = '28px';
-      editControls.children[i].style.float = 'left';
-    }
-    document.getElementById('options-annotations-buttons').appendChild(editControls);
-
-    return true;
-  });
 
   /* prepare print tool */
   attemptExecute(function() {
@@ -84,7 +54,7 @@ window.onload = function() {
     }
 
     var printContainer = L.DomUtil.create('div', 'leaflet-bar leaflet-control npmap-control-print'),
-      bg = $('.npmap-toolbar .right li button').css('background-image');
+      bg = $('.npmap-toolbar .right li button.print').css('background-image');
 
     $('.leaflet-top.leaflet-left').append($(printContainer));
     $(printContainer).append($('.npmap-toolbar .right li button'));
@@ -154,6 +124,32 @@ window.onload = function() {
     $('.leaflet-control-attribution').get(0).innerHTML = '<a href="https://github.com/nationalparkservice/npmap-species/issues?q=is%3Aissue+is%3Aopen+-label%3A508+-label%3Adeployment+-label%3Aduplicate+-label%3Awontfix" target="_blank">Report an Issue</a> | ' + $('.leaflet-control-attribution').get(0).innerHTML;
     return true;
   });
+
+  /* prepare the image modal */
+  // Get the modal
+  var modal = document.getElementById('image-modal');
+
+  // Get the image and insert it inside the modal - use its "alt" text as a caption
+  var image_box = document.getElementById('search-image-box');
+  var modalImg = document.getElementById("image-modal-image");
+  image_box.onclick = function(){
+      modal.style.display = "block";
+      var url = this.style.backgroundImage.replace("url(\"", "").replace("\")", "");
+      //url = url.replace("/thumbnails", ""); // load full quality image
+      url = url.replace('110px', '800px');
+      modalImg.src = url;
+  }
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() { 
+      modal.style.display = "none";
+  }
+
+  $("#dropdown-initial-input").focus();
+  setImageHovers();
 }
 
 var processed = false;
@@ -166,6 +162,67 @@ function attemptExecute(fn) {
 
 function endsWith(str, suffix) {
   return str.indexOf(suffix, str.length-suffix.length) !== -1;
+}
+
+/* Converts latin name to thumbnail URL */
+function getThumbnailURL(latin_name)
+{
+  var url = '';
+  if (latin_name !== undefined) {
+//    let latinURL = '/species_images/thumbnails/' + latin_name.toLowerCase().replace(" ", "_") + '.jpg';
+    if (tax_json[latin_name] !== undefined) {
+      url = 'images/' + tax_json[latin_name] + '_110px.jpg'
+    }
+  }
+  return url;
+}
+
+/* The setup that's needed for thumbnail image hovers */
+function setImageHovers()
+{
+    // add the image thumbnail tag
+    var img = $('<img>').attr('id', 'species-hover-thumbnail')
+        .appendTo('body');
+
+    // if the image doesn't load, show a fallback image
+    img.on('error', function(){
+        $(this).attr('src', 'images/no_image.jpg');
+    });
+
+    $('ul.species-list').on('mouseover', 'li', function(e){
+        if (this.innerText == 'Clear selection') return;
+        $("#species-hover-thumbnail").css({ display: 'block' });
+        var latin_name = whichName == 'latin' ? this.innerHTML : 'No image';
+        var url = getThumbnailURL(this._latin);
+        $('#species-hover-thumbnail').attr('src', url);
+
+        // if the thumbnail is somewhere else, bring it here first
+        // then animate
+        var pos_x = $("#species-hover-thumbnail").offset().left;
+        var new_x = $(this).offset().left + $(this).parent().outerWidth(); 
+        if (Math.abs(pos_x - new_x) > 0.5)
+        {
+            $("#species-hover-thumbnail").css({
+                left: new_x + 'px'
+            }); 
+        }
+        $("#species-hover-thumbnail").stop().animate({
+            top: $(this).offset().top + 'px', 
+            left: new_x + 'px'
+        }, 50);
+    });
+
+    $('ul.species-list').on('mouseout', function(){
+        $("#species-hover-thumbnail").css({display: 'none'});
+    });
+    $('ul.species-list').on('click', function(e){
+        $("#species-hover-thumbnail").css({display: 'none'});
+        if (e.toElement.innerHTML == 'Clear selection') return;
+        $("#search-image-box").css({
+          "pointer-events": "auto"
+      });
+    });
+
 }
 
 var tooltipsEnabled = true;
@@ -202,27 +259,27 @@ function showHelp() {
 }
 
 var minimized = false,
-  currentBaseLayer = undefined;
+currentBaseLayer = undefined;
 function toggleMinimized() {
   var minButton = document.getElementById('search-banner-help-minimizer-button');
   if(!minimized) {
     recordAction('minimized toolbar');
     $('body').chardinJs('stop');
-    minButton.innerHTML = '+';
+    minButton.innerHTML = 'Expand';
     $('#search-tool').css({overflow: 'hidden'});
     $('#search-tool').stop();
     $('.leaflet-top.leaflet-left').stop();
-    $('#search-tool').animate({height:'40px'});
+    $('#search-tool').animate({height:'0px'});
     $('.leaflet-top.leaflet-left').animate({top: '40px'});
   } else {
     recordAction('expanded toolbar');
-    minButton.innerHTML = '\u2014';
+    minButton.innerHTML = 'Collapse';
     $('#search-tool').stop();
     $('.leaflet-top.leaflet-left').stop();
-    $('#search-tool').animate({height:'189px'}, function() {
+    $('#search-tool').animate({height:'127px'}, function() {
       $('#search-tool').css({overflow: 'visible'});
     });
-    $('.leaflet-top.leaflet-left').animate({top: '189px'});
+    $('.leaflet-top.leaflet-left').animate({top: '127px'});
   }
 
   minimized = !minimized;

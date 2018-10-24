@@ -50,28 +50,26 @@ body.dragging, body.dragging * {
 }
 
 #search-tool {
-  top: 100px;
+  top: 90px;
   position: relative;
 
   width: 100%;
   min-width: 1246px;
-  height: 189px;
+  height: 110px;
   margin: 0px;
   padding: 0px;
 
   opacity: 1.0;
   background-color: black;
   z-index: 2;
+
+  border-top: 1px solid #40403d;
 }
 
 #search-tool-contents {
-  width: 1234px;
+  width: 1300px;
   height: 100%;
   margin: 0 auto;
-
-  border-right: 1px solid #40403d;
-  border-left: 1px solid #40403d;
-  border-top: 1px solid #40403d;
 
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -96,14 +94,20 @@ body.dragging, body.dragging * {
   font-weight: 700;
 }
 
+#search-tool-extra-controls
+{
+    float: left;
+
+    border-left: 1px solid #40403d;
+    margin: 10px;
+    padding-top: 22px;
+    height: 60px;
+}
+
 #search-banner-help-share,
 #search-banner-help-link {
-  float: left;
-
   width: 30px;
   height: 30px;
-
-  border-right: 1px solid #40403d;
 }
 
 #search-banner-help-share-button,
@@ -116,13 +120,12 @@ body.dragging, body.dragging * {
   cursor: pointer;
   letter-spacing: .001em;
 
-  color: #f5faf2;
+  color: #969696;
   border:none;
   outline: none;  text-align: center;
   background:none;
 
-  font-size: 10pt;
-  font-weight: bold;
+  font-size: 1.4em;
   line-height: 30px;
 }
 
@@ -215,10 +218,16 @@ body.dragging, body.dragging * {
 }
 
 #search-banner-help-minimizer {
-  float: left;
+  position: absolute;
 
-  width: 30px;
+  width: 100px;
   height: 30px;
+
+  text-align: center;
+  margin-top: 127px;
+  margin-left: 1087px;
+  border-radius: 0 0 7px 7px;
+  background-color: #000;
 }
 
 #search-banner-help-minimizer-button {
@@ -238,7 +247,6 @@ body.dragging, body.dragging * {
   text-align: center;
 
   font-size: 10pt;
-  font-weight: bold;
   line-height: 30px;
 }
 
@@ -274,7 +282,7 @@ body.dragging, body.dragging * {
   padding-left: 10px;
 
   color: #f5faf2;
-  font-size: 12pt;
+  font-size: 14px;
 }
 
 #search-initial-lexical {
@@ -309,6 +317,12 @@ body.dragging, body.dragging * {
   color: #f5faf2;
   background-color: #40403d;
   outline: none;
+}
+
+.dropdown-input::-webkit-input-placeholder, .dropdown-input::placeholder
+{
+  font-style: normal;
+  color: #eee;
 }
 
 .dropdown-button {
@@ -387,8 +401,8 @@ body.dragging, body.dragging * {
 #search-compare-one-dropdown {
   width: 255px;
   position: relative;
-  top: -57px;
-  left: 210px;
+  top: -37px;
+  left: 170px;
   display: none;
 }
 
@@ -483,8 +497,8 @@ body.dragging, body.dragging * {
 #search-compare-two-dropdown {
   width: 255px;
   position: relative;
-  top: -47px;
-  left: 210px;
+  top: -27px;
+  left: 170px;
   display: none;
 }
 
@@ -587,7 +601,7 @@ body.dragging, body.dragging * {
 
 #search-initial-altname {
   position: relative;
-  top: -5px;
+  top: 10px;
   color: rgb(144, 144, 144);
   font-style: italic;
   font-weight: semi-bold;
@@ -596,13 +610,11 @@ body.dragging, body.dragging * {
 
 #search-initial-switch {
   position: relative;
-  top: 72px;
 
-  width: 150px;
+  width: 250px;
   height: 20px;
 
-  border-radius: 4px;
-  background-color: #202020;
+  font-style: italic;
 }
 
 #search-initial-switch-button {
@@ -645,12 +657,6 @@ body.dragging, body.dragging * {
 }
 
 .search-initial-switch-sides {
-  float: left;
-
-  width: 50%;
-
-  text-align: center;
-
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -724,8 +730,8 @@ body.dragging, body.dragging * {
 #search-compare {
   float: left;
 
-  width: 602px;
-  height: 128px;
+  width: 570px;
+  height: 80px;
   margin: 10px 0px 10px 0px;
   padding: inherit;
 
@@ -755,7 +761,7 @@ body.dragging, body.dragging * {
 
   box-sizing: border-box;
   width: 241px;
-  height: 128px;
+  height: 80px;
 
   border-right: 1px dotted #40403d;
 }
@@ -980,7 +986,7 @@ body.dragging, body.dragging * {
   position: absolute;
   z-index: 1000;
   top: 25px;
-  left: 225px;
+  left: 190px;
 
   display: none;
 
@@ -1041,7 +1047,7 @@ body.dragging, body.dragging * {
 #compare-dist-two {
   position: absolute;
   top: 57px;
-  left: 225px;
+  left: 190px;
 
   display: none;
 
@@ -1231,26 +1237,29 @@ body.dragging, body.dragging * {
 
 #search-compare-contents input[type='radio'] {
   position: relative;
-  top: 45px;
+  top: 3px;
   left: 5px;
 }
 
 #search-compare-contents .subhead {
+  display: block;
   position: relative;
   left: 30px;
+  margin-top: -15px;
 
-  height: 20px;
+  height: 15px;
 
   letter-spacing: .001em;
 
   color: rgb(144, 144, 144);
 
-  font-size: 12pt;
+  font-size: 14px;
   font-weight: semi-bold;
   line-height: 20px;
 }
 
 #search-compare-contents .subhead2 {
+  display: block;
   position: relative;
   top: 5px;
   left: 30px;
@@ -1262,16 +1271,44 @@ body.dragging, body.dragging * {
 
   color: rgb(144, 144, 144);
 
-  font-size: 14pt;
-  font-weight: bold;
+  font-size: 14px;
   line-height: 20px;
+}
+
+#search-image-box {
+  pointer-events: none;
+
+  float: left;
+
+  width: 110px;
+  height: 110px;
+  margin: 0px 0px 10px 0px;
+
+  /*background-image: url('images/no_image.jpg');*/
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  cursor: pointer;
+}
+
+.search-image-box-magnifier
+{
+    color: white;
+    margin-top: 88px;
+    margin-left: 89px;
+    background-color: black;
+    padding: 3px;
+    border-radius: 3px 0 0 0;
+    padding-left: 4px;
+    opacity: 0.5;
+    display: none;
 }
 
 #search-options {
   float: left;
 
-  width: 342px;
-  height: 128px;
+  width: 150px;
+  height: 80px;
   margin: 10px 0px 10px 0px;
   padding: 0px 5px 0px 10px;
 
@@ -1279,7 +1316,7 @@ body.dragging, body.dragging * {
 }
 
 #search-options-left {
-  width: 180px;
+  width: 140px;
   float: left;
 }
 
@@ -1291,13 +1328,13 @@ body.dragging, body.dragging * {
 
   color: #f5faf2;
 
-  font-size: 12pt;
+  font-size: 14px;
   font-weight: semi-bold;
 }
 
 #options-background {
   height: 22px;
-  width: 175px;
+  width: 120px;
   padding-bottom: 10px;
 }
 
@@ -1312,7 +1349,7 @@ body.dragging, body.dragging * {
 
 #options-background-dropdown > .triangle {
   top: -12px;
-  left: 160px;
+  left: 105px;
 }
 
 #options-background-dropdown-ul {
@@ -1330,7 +1367,7 @@ body.dragging, body.dragging * {
 
 #options-overlays {
   height: 22px;
-  width: 175px;
+  width: 120px;
   padding-bottom: 10px;
 }
 
@@ -1345,7 +1382,7 @@ body.dragging, body.dragging * {
 
 #options-overlays-dropdown > .triangle {
   top: -12px;
-  left: 160px;
+  left: 105px;
 }
 
 #options-overlays-dropdown-ul {
@@ -1362,12 +1399,11 @@ body.dragging, body.dragging * {
 }
 
 #checkbox-container {
-  width: 150px;
   height: 35px;
 }
 
 #options-predicted {
-  padding-bottom: 5px;
+  margin-top: 20px;
 }
 
 #options-predicted > label {
@@ -1454,6 +1490,7 @@ body.dragging, body.dragging * {
 }
 
 #color-legend {
+  display: none; /* it should be hidden initially */
   position: absolute;
   z-index: 1000;
   right: 5px;
@@ -2149,4 +2186,138 @@ button {
 
 .messages {
   color: white;
+}
+
+.npmap-toolbar button.share
+{
+    background-image: url('images/font-awesome/share.png');
+}
+.npmap-retina .npmap-toolbar button.share
+{
+    background-image: url('images/font-awesome/share@2x.png');
+}
+
+/* for the editControls */
+button.polygon, button.rectangle
+{
+    display: none !important;
+}
+
+#species-hover-thumbnail
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    z-index: 10000;
+    display: none;
+}
+
+/*********************************************/
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2000; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 5px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+/*********************************************/
+
+/* Printer issue fixed */
+@media(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution 120dpi)
+{
+    .print
+    {
+        background-size: 80% !important;
+    }
+}
+
+/* Fix for the dark/light 404 tiles */
+[src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='] {
+    width: 0 !important;
+}
+
+/* Small adjustments to chardin positions */
+div[data-id='search-compare-distribution'] {
+    height: 90px !important;
+}
+div[data-id='search-compare-lexical'] {
+    height: 90px !important;
+    margin-left: -10px !important;
+}
+div[data-id='search-initial-switch'] {
+    top: 170px !important;
 }
