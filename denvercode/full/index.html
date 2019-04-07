@@ -64,7 +64,7 @@
             </div>
 
             <div id='search-initial-altname'></div>
-            <div id='checkbox-container' tooltip='Toggle the visibility of the predicted habitat' data-intro='Toggle visibility of predicted and observed data' data-position='bottom'>
+            <div id='checkbox-container' tooltip='Toggle the visibility of the predicted habitat' data-intro='Toggle visibility of predicted and observed data' data-position='top'>
               <div id='options-predicted' class='search-checkbox'>
                 View:&nbsp; 
                 <input type='checkbox' id='options-predicted-checkbox' onkeypress='togglePredicted();' onclick='togglePredicted();' checked disabled></input>
@@ -86,12 +86,12 @@
           <div id='search-compare-contents'>
               <fieldset>
                   <legend style="display:none">Select Species to Compare</legend>
-                <div id='search-compare-lexical' tooltip='Select another species that is known to exist in the park'>
+                <div id='search-compare-lexical' data-position='bottom' data-intro='Select another species that is known to exist in the park' tooltip='Select another species that is known to exist in the park'>
                     <label for='lexical-radio' class='hidden-label'>Select Species by Name</label>
                     <input id='lexical-radio' type='radio' name='comparator' value='lexical' onkeypress='lexFocus();' onclick='lexFocus();' disabled></input>
                     <label class='subhead' for='lexical-radio'>COMPARE WITH </label>
                     <label class='subhead2' for='lexical-radio'>ANOTHER SPECIES</label>
-                  <div id='search-compare-one-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+                  <div id='search-compare-one-dropdown' class='species-dropdown' tooltip='Select a species from the full list' >
                       <label for='dropdown-one-input' class='hidden-label'>Species Name</label>
                     <input id='dropdown-one-input' class='dropdown-input' oninput='fuseSearch(1, this.value);'></input>
                     <div class='dropdown-button' onkeypress='toggleSearchList(1);' onclick='toggleSearchList(1);'>
@@ -100,7 +100,7 @@
                     <ul id='search-compare-one-dropdown-select' class='species-list'></ul>
                     <ul id='search-compare-one-dropdown-lex'></ul>
                   </div>
-                  <div id='search-compare-two-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
+                  <div id='search-compare-two-dropdown' class='species-dropdown' tooltip='Select a species from the full list' >
                       <label for='dropdown-two-input' class='hidden-label'>Species Name</label>
                     <input id='dropdown-two-input' class='dropdown-input' oninput='fuseSearch(2, this.value);'></input>
                     <div class='dropdown-button' onkeypress='toggleSearchList(2);' onclick='toggleSearchList(2);'>
@@ -110,7 +110,7 @@
                     <ul id='search-compare-two-dropdown-lex'></ul>
                   </div>
                 </div>
-                <div id='search-compare-distribution' tooltip='Select another species with similar habitat requirements across the park'>
+                <div id='search-compare-distribution' data-position="bottom" data-intro='Select another species with similar habitat requirements across the park' tooltip='Select another species with similar habitat requirements across the park'>
                     <label for='dist-radio' class='hidden-label'>Select Species with Similar Distribution</label>
                   <input id='dist-radio' type='radio' name='comparator' value='distribution' onkeypress='distFocus();' onclick='distFocus();' disabled></input>
                   <label class='subhead' for='dist-radio'>COMPARE WITH</label>
@@ -165,12 +165,14 @@
         <div id='search-tool-extra-controls'>
           <div id='search-banner-help-share' class='bordered' tooltip='Get a shareable link'>
             <button id='search-banner-help-share-button' alt='Get a shareable link.'>
-              <i class="fa fa-share-alt fades show"></i>
+              <i class="fa fa-share-square fades show"></i>
               <i class="fa fa-check-circle fades hide"></i>
             </button>
           </div>
           <div id='search-banner-help-link' class='bordered' tooltip='Get help using the tool'>
-            <button id='search-banner-help-link-button' onkeypress='showHelp();' onclick='showHelp();' alt='Show the help overlay.'>?</button>
+            <button id='search-banner-help-link-button' onkeypress='showHelp();' onclick='showHelp();' alt='Show the help overlay.'>
+              <i class="fa fa-question-circle"></i>
+            </button>
           </div>
         </div>
 
@@ -240,7 +242,8 @@
         </div>
       </div>
     </div>
-    <div class='color-legend-demo' data-intro='Reorder species, view predicted data colormaps, and view data quality metrics' data-position='left'>
+    <!--<div class='color-legend-demo hide' data-intro='Reorder species, view predicted data colormaps, and view data quality metrics' data-position='left'>-->
+    <div class='color-legend-demo hide'>
       <div id='legend-demo-banner'>
         <div id='legend-demo-banner-left'>SPECIES DENSITY</div>
         <div id='legend-demo-banner-right'>MODEL CONFIDENCE</div>
@@ -323,6 +326,7 @@
       <span class="tag-line ir">Experience Your America</span>
     </footer>
     <script data-main="scripts/main" src="scripts/require.js"></script>
+    <script src="scripts/taxonomy.js"></script>
     <script src="scripts/mapping.js"></script>
     <script src="https://www.nps.gov/lib/npmap.js/3.0.18/npmap-bootstrap.min.js"></script>
     <script src="scripts/request.js"></script>

@@ -120,13 +120,12 @@ body.dragging, body.dragging * {
   cursor: pointer;
   letter-spacing: .001em;
 
-  color: #f5faf2;
+  color: #969696;
   border:none;
   outline: none;  text-align: center;
   background:none;
 
-  font-size: 10pt;
-  font-weight: bold;
+  font-size: 1.4em;
   line-height: 30px;
 }
 
@@ -1277,6 +1276,8 @@ body.dragging, body.dragging * {
 }
 
 #search-image-box {
+  pointer-events: none;
+
   float: left;
 
   width: 110px;
@@ -2302,4 +2303,21 @@ button.polygon, button.rectangle
     {
         background-size: 80% !important;
     }
+}
+
+/* Fix for the dark/light 404 tiles */
+[src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='] {
+    width: 0 !important;
+}
+
+/* Small adjustments to chardin positions */
+div[data-id='search-compare-distribution'] {
+    height: 90px !important;
+}
+div[data-id='search-compare-lexical'] {
+    height: 90px !important;
+    margin-left: -10px !important;
+}
+div[data-id='search-initial-switch'] {
+    top: 170px !important;
 }
