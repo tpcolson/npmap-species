@@ -11,10 +11,13 @@ import urllib2
     Makes individual files for each species having at least 30 records.
 
     Usage:
-        python separate.py
+        python separate.py <JUST_COORDS>
 
 """
 
+JUST_COORDS = False
+if 'JUST_COORDS' in sys.argv:
+    JUST_COORDS = True
 
 def separate():
     # Create directory for individual species files
@@ -39,13 +42,13 @@ def separate():
                 if float(words[17]) == 0.0 or float(words[16]) == 0.0:
                     continue
                 counts += 1
-                f.write(','.join(words[41:47] + words[17:15:-1]) + '\n')
-                #f.write(','.join([words[41]] + words[17:15:-1]) + '\n')
+
+                if JUST_COORDS:
+                    f.write(','.join([words[41]] + words[17:15:-1]) + '\n')
+                else:
+                    f.write(','.join(words[41:47] + words[17:15:-1]) + '\n')
             if counts >= 30:
                 count_file.write(name + ',' + str(counts) + ',' + words[43] + '\n')
     
 if __name__ == "__main__":
-    if len(sys.argv) != 1:
-        print 'usage: python separate.py'
-    else:
-        separate()
+    separate()

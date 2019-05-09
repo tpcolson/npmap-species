@@ -14,14 +14,14 @@ JOBID_FILE=current_eden_job.txt
 
 #------------------------------------------------------------------------
 # Configuration settings--SET APPROPRIATE PATHS HERE FOR YOUR ENVIRONMENT
-TOOL_DIR=~/repos/npmap-species/backend/maxent
+TOOL_DIR=/app/npmap-species/backend/maxent
 MAXENT_JAR=$TOOL_DIR/maxent.jar
-CONFIG_FILE=~/repos/npmap-species/twincreekscode/maxent_config/config_all.txt
+CONFIG_FILE=/app/npmap-species/twincreekscode/maxent_config/config_8.txt
 CV_NUM_FOLDS=$(head $CONFIG_FILE -n 1)
 CV=true
-COUNTS_FILE=~/repos/npmap-species/atbirecords/ATBI_counts.txt
-RECORDS_DIR=~/repos/npmap-species/atbirecords/ATBI_files
-ENV_DIR=~/repos/npmap-species/environmentallayers/mxe
+COUNTS_FILE=/app/npmap-species/atbirecords/ATBI_counts.txt
+RECORDS_DIR=/app/npmap-species/atbirecords/ATBI_files
+ENV_DIR=/app/npmap-species/environmentallayers/mxe
 ENV_PICK=all
 GDAL_BIN=/usr/bin
 GEOTIFF_DIR=$RUN_DIR/geotiffs
