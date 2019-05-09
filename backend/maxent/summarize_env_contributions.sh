@@ -14,6 +14,6 @@ for i in `cat tmp/layers.txt`; do
         fi
         echo $i $sp $contrib
     done;
-    )" | sort -g -k 3 -r | head -n 10;
+    )" | sort -g -k 3 -r | head -n 20;
     counter=$(( counter+1 ))
 done;
