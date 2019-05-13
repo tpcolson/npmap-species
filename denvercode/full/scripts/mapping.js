@@ -9,7 +9,7 @@ var subNavZ, headerZ, divHeader, divSubNav,
     ],
     overlays: [{
       name: 'Trails',
-      url: 'https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=NAME',
+      url: 'https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/GRSM_TRAILS/FeatureServer/0/query?f=geojson&outSR=4326&where=OBJECTID%20IS%20NOT%20NULL&outFields=TRAILNAME',
       type: 'geojson',
       popup: {
         description: '<div style="text-align: center">{{TRAILNAME}}</div>'
