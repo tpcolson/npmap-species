@@ -3,3 +3,4 @@ denvercode/full/updateSite.sh
 *.tif
 *.tif.aux.xml
 *.o
+.DS_Store

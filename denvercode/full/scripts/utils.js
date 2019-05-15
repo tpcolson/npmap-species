@@ -400,6 +400,22 @@ function toggleOverlayList() {
   }
 }
 
+var showSelectBackground = false;
+function toggleSelectBackgroundList() {
+
+  showSelectBackground = !showSelectBackground;
+
+  if(showSelectBackground) {
+    $('#options-selectbackground-dropdown').stop();
+    $('#options-selectbackground-dropdown').animate({'height': '60px'});
+    $('#options-selectbackground-dropdown-ul').css({'display':'block'});
+  } else {
+    $('#options-selectbackground-dropdown').stop();
+    $('#options-selectbackground-dropdown').animate({'height': '20px'});
+    $('#options-selectbackground-dropdown-ul').css({'display':'none'});
+  }
+}
+
 var whichName = 'common';
 function toggleName() {
   if(whichName === 'common') {

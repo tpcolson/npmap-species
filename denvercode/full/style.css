@@ -16,6 +16,82 @@ body.dragging, body.dragging * {
   cursor: move !important;
 }
 
+/*****************************************
+* ATLAS OF THE SMOKIES: Selector         *
+*****************************************/
+
+.atlas-select-area {
+  position: relative;
+}
+
+.selector-head-text {
+  font-size: 19px;
+  color: rgb(189, 189, 189);
+  letter-spacing: 1px;
+  display: inline-block;
+  font-family: 'Source Sans Pro', sans-serif;
+  text-transform: uppercase;
+}
+
+.atlas-selector-dropdown {
+  position: absolute;
+  left: 225px;
+  top: -25px;
+  width: 170px;
+  height: 20px;
+  padding-left: 5px;
+
+  cursor: pointer;
+  letter-spacing: .001em;
+
+  color: #f5faf2;
+  border-radius: 4px;
+  background-color: #40403d;
+
+  font-size: 10pt;
+  line-height: 20px;
+
+  margin-top: 5px;
+  margin-bottom: auto;
+}
+
+.atlas-selector-triangle {
+  left: unset !important;
+  position: absolute !important;
+  top: 3px !important;
+  right: 10px !important;
+}
+
+#options-selectbackground {
+  height: 22px;
+  width: 120px;
+  padding-bottom: 10px;
+}
+
+#options-selectbackground-dropdown {
+  position: relative;
+  z-index: 50;
+  font-style: italic;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+#options-selectbackground-dropdown > .triangle {
+  top: -12px;
+  left: 105px;
+}
+
+#options-selectbackground-dropdown-ul {
+  position: relative;
+  top: -5px;
+  width: calc(100% - 5px);
+  padding-right: 5px;
+}
+
+.select-atlas-link {
+  all: unset;
+}
+
 .dragged {
   position: absolute;
   z-index: 2000;

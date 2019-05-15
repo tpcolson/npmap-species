@@ -1,51 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="NPS Maps">
-    <meta name="application-name" content="NPS Maps">
-    <meta name="author" content="National Park Service">
-    <meta name="keywords" content="US federal government, Department of Interior, National Park Service, map, digital, web, mobile, Harpers Ferry Center, NPMap, national park, Leaflet, CartoDB, Mapbox, Bing, Google, MapQuest, Esri">
-    <meta name="msapplication-TileColor" content="#222222">
-    <meta name="msapplication-TileImage" content="https://www.nps.gov/npmap/assets/img/windows-8-tile.png">
-    <!--<base target="_parent">--><base href="." target="_parent">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link href="https://www.nps.gov/lib/assets/img/favicon.ico" rel="shortcut icon">
-    <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-144x144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144">
-    <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-114x114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">
-    <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-72x72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
-    <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-57x57-precomposed.png" rel="apple-touch-icon-precomposed">
-    <title>Great Smoky Mountains National Park</title>
-    <link rel="stylesheet" href="reset.css"></link>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://www.nps.gov/maps/assets/css/full.min.css"></link>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chardin.js/0.1.3/chardinjs.css"></link>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="style.css"></link>
-    <link rel="stylesheet" href="wireframe.css"></link>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.0.4/fuse.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sortable/0.9.13/jquery-sortable-min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chardin.js/0.1.3/chardinjs.min.js"></script>
-    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-40939451-4', 'auto');ga('send', 'pageview');</script>
-  </head>
-  <body>
-    <header>
-      <div class="left">
-        <a id="title" href = "https://www.nps.gov/grsm/learn/nature/index.htm" style="text-decoration: none" target="_blank"> 
-        <h1> Great Smoky Mountains National Park</h1>
-        </a>
-        <div id="description">Species Mapper</div>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NPS Maps">
+  <meta name="application-name" content="NPS Maps">
+  <meta name="author" content="National Park Service">
+  <meta name="keywords"
+    content="US federal government, Department of Interior, National Park Service, map, digital, web, mobile, Harpers Ferry Center, NPMap, national park, Leaflet, CartoDB, Mapbox, Bing, Google, MapQuest, Esri">
+  <meta name="msapplication-TileColor" content="#222222">
+  <meta name="msapplication-TileImage" content="https://www.nps.gov/npmap/assets/img/windows-8-tile.png">
+  <!--<base target="_parent">-->
+  <base href="." target="_parent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link href="https://www.nps.gov/lib/assets/img/favicon.ico" rel="shortcut icon">
+  <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-144x144-precomposed.png"
+    rel="apple-touch-icon-precomposed" sizes="144x144">
+  <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-114x114-precomposed.png"
+    rel="apple-touch-icon-precomposed" sizes="114x114">
+  <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-72x72-precomposed.png"
+    rel="apple-touch-icon-precomposed" sizes="72x72">
+  <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-57x57-precomposed.png"
+    rel="apple-touch-icon-precomposed">
+  <title>Great Smoky Mountains National Park</title>
+  <link rel="stylesheet" href="reset.css">
+  </link>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://www.nps.gov/maps/assets/css/full.min.css">
+  </link>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chardin.js/0.1.3/chardinjs.css">
+  </link>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic"
+    rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="style.css">
+  </link>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.0.4/fuse.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sortable/0.9.13/jquery-sortable-min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/chardin.js/0.1.3/chardinjs.min.js"></script>
+  <script>(function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40939451-4', 'auto'); ga('send', 'pageview');</script>
+</head>
+
+<body>
+  <header>
+    <div class="left">
+      <a id="title" href="https://www.nps.gov/grsm/learn/nature/index.htm" style="text-decoration: none"
+        target="_blank">
+        <h1 style="margin-bottom: 3px; padding-bottom: 2px;"> Great Smoky Mountains National Park</h1>
+      </a>
+
+      <div class="atlas-select-area">
+        <div class="selector-head-text">Atlas of the Smokies:</div>
+        <!--<select class="atlas-selector-dropdown">
+          <option value="Enviromapper">Enviromapper</option>
+          <option value="Species Mapper" class="species-list">Species Mapper</option>
+        </select>-->
+        <div id="options-selectbackground-dropdown" class="atlas-selector-dropdown" data-position="left" onkeypress="toggleSelectBackgroundList();"
+          onclick="toggleSelectBackgroundList();" style="z-index: 50;">
+          Species Mapper
+          <div class="atlas-selector-triangle triangle"></div>
+          <ul id="options-selectbackground-dropdown-ul" style="display: none;">
+            <li>✔ Species Mapper</li>
+            <li><a href="https://maps.nps.gov/enviromapper/" class="select-atlas-link">Enviromapper</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="right">
-        <h2>National Park Service<br>U.S. Department of the Interior</h2>
-        <span class="arrowhead"></span>
-      </div>
-    </header>
-    <rest>
+    </div>
+    <div class="right">
+      <h2>National Park Service<br>U.S. Department of the Interior</h2>
+      <span class="arrowhead"></span>
+    </div>
+  </header>
+  <rest>
     <div id='map'></div>
     <div id='search-tool'>
       <div id='search-tool-contents'>
@@ -53,9 +86,11 @@
         <div id='search-image-box'><i class="fa fa-search-plus search-image-box-magnifier" aria-hidden="true"></i></div>
         <div id='search-initial'>
           <div id='search-initial-controls'>
-            <div id='search-initial-dropdown' class='species-dropdown' tooltip='Select a species from the full list' data-intro='Select a species' data-position='right'>
-                <label for='dropdown-initial-input' class='hidden-label'>Species Name</label>
-              <input id='dropdown-initial-input' class='dropdown-input' placeholder="SELECT OR TYPE A SPECIES" oninput='fuseSearch(0, this.value);'></input>
+            <div id='search-initial-dropdown' class='species-dropdown' tooltip='Select a species from the full list'
+              data-intro='Select a species' data-position='right'>
+              <label for='dropdown-initial-input' class='hidden-label'>Species Name</label>
+              <input id='dropdown-initial-input' class='dropdown-input' placeholder="SELECT OR TYPE A SPECIES"
+                oninput='fuseSearch(0, this.value);'></input>
               <div class='dropdown-button' onkeypress='toggleSearchList(0);' onclick='toggleSearchList(0);'>
                 <div class='triangle'></div>
               </div>
@@ -64,68 +99,82 @@
             </div>
 
             <div id='search-initial-altname'></div>
-            <div id='checkbox-container' tooltip='Toggle the visibility of the predicted habitat' data-intro='Toggle visibility of predicted and observed data' data-position='top'>
+            <div id='checkbox-container' tooltip='Toggle the visibility of the predicted habitat'
+              data-intro='Toggle visibility of predicted and observed data' data-position='top'>
               <div id='options-predicted' class='search-checkbox'>
-                View:&nbsp; 
-                <input type='checkbox' id='options-predicted-checkbox' onkeypress='togglePredicted();' onclick='togglePredicted();' checked disabled></input>
+                View:&nbsp;
+                <input type='checkbox' id='options-predicted-checkbox' onkeypress='togglePredicted();'
+                  onclick='togglePredicted();' checked disabled></input>
                 <label for='options-predicted-checkbox'>Predictions</label>&nbsp;&nbsp;
-                <input type='checkbox' id='options-observed-checkbox' onkeypress='toggleObserved();' onclick='toggleObserved();' disabled></input>
+                <input type='checkbox' id='options-observed-checkbox' onkeypress='toggleObserved();'
+                  onclick='toggleObserved();' disabled></input>
                 <label for='options-observed-checkbox'>Observations</label>
               </div>
-            <div id='search-initial-switch' tooltip='Choose to show latin or common species names' data-intro='Choose to show common or latin names' data-position='bottom'>
-              Name convention:&nbsp; 
-              <input type='radio' class='search-initial-switch-sides' id='search-name-convention-common' name='search-name-convention' onkeypress='toggleName();' onclick='toggleName();' checked></input>
-              <label for='search-name-convention-common'>Common</label>&nbsp;&nbsp;
-              <input type='radio' class='search-initial-switch-sides' id='search-name-convention-latin' name='search-name-convention' onkeypress='toggleName();' onclick='toggleName();' ></input>
-              <label for='search-name-convention-latin'>Latin</label>
-            </div>
+              <div id='search-initial-switch' tooltip='Choose to show latin or common species names'
+                data-intro='Choose to show common or latin names' data-position='bottom'>
+                Name convention:&nbsp;
+                <input type='radio' class='search-initial-switch-sides' id='search-name-convention-common'
+                  name='search-name-convention' onkeypress='toggleName();' onclick='toggleName();' checked></input>
+                <label for='search-name-convention-common'>Common</label>&nbsp;&nbsp;
+                <input type='radio' class='search-initial-switch-sides' id='search-name-convention-latin'
+                  name='search-name-convention' onkeypress='toggleName();' onclick='toggleName();'></input>
+                <label for='search-name-convention-latin'>Latin</label>
+              </div>
             </div>
           </div>
         </div>
         <div id='search-compare' class='bordered'>
           <div id='search-compare-contents'>
-              <fieldset>
-                  <legend style="display:none">Select Species to Compare</legend>
-                <div id='search-compare-lexical' data-position='bottom' data-intro='Select another species that is known to exist in the park' tooltip='Select another species that is known to exist in the park'>
-                    <label for='lexical-radio' class='hidden-label'>Select Species by Name</label>
-                    <input id='lexical-radio' type='radio' name='comparator' value='lexical' onkeypress='lexFocus();' onclick='lexFocus();' disabled></input>
-                    <label class='subhead' for='lexical-radio'>COMPARE WITH </label>
-                    <label class='subhead2' for='lexical-radio'>ANOTHER SPECIES</label>
-                  <div id='search-compare-one-dropdown' class='species-dropdown' tooltip='Select a species from the full list' >
-                      <label for='dropdown-one-input' class='hidden-label'>Species Name</label>
-                    <input id='dropdown-one-input' class='dropdown-input' oninput='fuseSearch(1, this.value);'></input>
-                    <div class='dropdown-button' onkeypress='toggleSearchList(1);' onclick='toggleSearchList(1);'>
-                      <div class='triangle'></div>
-                    </div>
-                    <ul id='search-compare-one-dropdown-select' class='species-list'></ul>
-                    <ul id='search-compare-one-dropdown-lex'></ul>
-                  </div>
-                  <div id='search-compare-two-dropdown' class='species-dropdown' tooltip='Select a species from the full list' >
-                      <label for='dropdown-two-input' class='hidden-label'>Species Name</label>
-                    <input id='dropdown-two-input' class='dropdown-input' oninput='fuseSearch(2, this.value);'></input>
-                    <div class='dropdown-button' onkeypress='toggleSearchList(2);' onclick='toggleSearchList(2);'>
-                      <div class='triangle'></div>
-                    </div>
-                    <ul id='search-compare-two-dropdown-select' class='species-list'></ul>
-                    <ul id='search-compare-two-dropdown-lex'></ul>
-                  </div>
-                </div>
-                <div id='search-compare-distribution' data-position="bottom" data-intro='Select another species with similar habitat requirements across the park' tooltip='Select another species with similar habitat requirements across the park'>
-                    <label for='dist-radio' class='hidden-label'>Select Species with Similar Distribution</label>
-                  <input id='dist-radio' type='radio' name='comparator' value='distribution' onkeypress='distFocus();' onclick='distFocus();' disabled></input>
-                  <label class='subhead' for='dist-radio'>COMPARE WITH</label>
-                  <label class='subhead2' for='dist-radio'>SPECIES WITH SIMILAR DISTRIBUTION</label>
-                  <div id='compare-dist-one' onkeypress='toggleCompareDistOne();' onclick='toggleCompareDistOne();'>
-                    <div id='compare-dist-one-name'></div>
+            <fieldset>
+              <legend style="display:none">Select Species to Compare</legend>
+              <div id='search-compare-lexical' data-position='bottom'
+                data-intro='Select another species that is known to exist in the park'
+                tooltip='Select another species that is known to exist in the park'>
+                <label for='lexical-radio' class='hidden-label'>Select Species by Name</label>
+                <input id='lexical-radio' type='radio' name='comparator' value='lexical' onkeypress='lexFocus();'
+                  onclick='lexFocus();' disabled></input>
+                <label class='subhead' for='lexical-radio'>COMPARE WITH </label>
+                <label class='subhead2' for='lexical-radio'>ANOTHER SPECIES</label>
+                <div id='search-compare-one-dropdown' class='species-dropdown'
+                  tooltip='Select a species from the full list'>
+                  <label for='dropdown-one-input' class='hidden-label'>Species Name</label>
+                  <input id='dropdown-one-input' class='dropdown-input' oninput='fuseSearch(1, this.value);'></input>
+                  <div class='dropdown-button' onkeypress='toggleSearchList(1);' onclick='toggleSearchList(1);'>
                     <div class='triangle'></div>
-                    <ul class='species-list'></ul>
                   </div>
-                  <div id='compare-dist-two' onkeypress='toggleCompareDistTwo();' onclick='toggleCompareDistTwo();'>
-                    <div id='compare-dist-two-name'></div>
-                    <div class='triangle'></div>
-                    <ul class='species-list'></ul>
-                  </div>
+                  <ul id='search-compare-one-dropdown-select' class='species-list'></ul>
+                  <ul id='search-compare-one-dropdown-lex'></ul>
                 </div>
+                <div id='search-compare-two-dropdown' class='species-dropdown'
+                  tooltip='Select a species from the full list'>
+                  <label for='dropdown-two-input' class='hidden-label'>Species Name</label>
+                  <input id='dropdown-two-input' class='dropdown-input' oninput='fuseSearch(2, this.value);'></input>
+                  <div class='dropdown-button' onkeypress='toggleSearchList(2);' onclick='toggleSearchList(2);'>
+                    <div class='triangle'></div>
+                  </div>
+                  <ul id='search-compare-two-dropdown-select' class='species-list'></ul>
+                  <ul id='search-compare-two-dropdown-lex'></ul>
+                </div>
+              </div>
+              <div id='search-compare-distribution' data-position="bottom"
+                data-intro='Select another species with similar habitat requirements across the park'
+                tooltip='Select another species with similar habitat requirements across the park'>
+                <label for='dist-radio' class='hidden-label'>Select Species with Similar Distribution</label>
+                <input id='dist-radio' type='radio' name='comparator' value='distribution' onkeypress='distFocus();'
+                  onclick='distFocus();' disabled></input>
+                <label class='subhead' for='dist-radio'>COMPARE WITH</label>
+                <label class='subhead2' for='dist-radio'>SPECIES WITH SIMILAR DISTRIBUTION</label>
+                <div id='compare-dist-one' onkeypress='toggleCompareDistOne();' onclick='toggleCompareDistOne();'>
+                  <div id='compare-dist-one-name'></div>
+                  <div class='triangle'></div>
+                  <ul class='species-list'></ul>
+                </div>
+                <div id='compare-dist-two' onkeypress='toggleCompareDistTwo();' onclick='toggleCompareDistTwo();'>
+                  <div id='compare-dist-two-name'></div>
+                  <div class='triangle'></div>
+                  <ul class='species-list'></ul>
+                </div>
+              </div>
             </fieldset>
           </div>
         </div>
@@ -133,7 +182,8 @@
           <div id='search-options-left'>
             <div id='options-label'>MAP CONTROLS</div>
             <div id='options-background' tooltip='Change the background map'>
-              <div id='options-background-dropdown' class='species-dropdown' onkeypress='toggleBackgroundList();' onclick='toggleBackgroundList();' data-intro="Change map background" data-position='left'>
+              <div id='options-background-dropdown' class='species-dropdown' onkeypress='toggleBackgroundList();'
+                onclick='toggleBackgroundList();' data-intro="Change map background" data-position='left'>
                 Map Background
                 <div class='triangle'></div>
                 <ul id='options-background-dropdown-ul'>
@@ -145,7 +195,8 @@
               </div>
             </div>
             <div id='options-overlays' tooltip='Turn or off extra map features'>
-              <div id='options-overlays-dropdown' class='species-dropdown' data-intro='Show extra map features' data-position='left'>
+              <div id='options-overlays-dropdown' class='species-dropdown' data-intro='Show extra map features'
+                data-position='left'>
                 <div onkeypress='toggleOverlayList();' onclick='toggleOverlayList();'>Map Overlays</div>
                 <div onkeypress='toggleOverlayList();' onclick='toggleOverlayList();' class='triangle'></div>
                 <ul id='options-overlays-dropdown-ul'>
@@ -170,7 +221,8 @@
             </button>
           </div>
           <div id='search-banner-help-link' class='bordered' tooltip='Get help using the tool'>
-            <button id='search-banner-help-link-button' onkeypress='showHelp();' onclick='showHelp();' alt='Show the help overlay.'>
+            <button id='search-banner-help-link-button' onkeypress='showHelp();' onclick='showHelp();'
+              alt='Show the help overlay.'>
               <i class="fa fa-question-circle"></i>
             </button>
           </div>
@@ -186,11 +238,15 @@
       <ol id='legend-species'>
         <li id='legend-species-pink'>
           <div id='legend-pink-controls'>
-            <div alt='Reorder species layers' class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
+            <div alt='Reorder species layers' class='drag-handle'
+              tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>
+              ::</div>
             <label for='toggle-species-one' class='hidden-label'>Toggle Species Visibility</label>
-            <input id='toggle-species-one' type='checkbox' onkeypress='toggleSpecies(0);' onclick='toggleSpecies(0);' checked tooltip='Use this to toggle the visibility of this species'></input>
+            <input id='toggle-species-one' type='checkbox' onkeypress='toggleSpecies(0);' onclick='toggleSpecies(0);'
+              checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
-          <div id='legend-pink-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
+          <div id='legend-pink-contents'
+            tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-pink-contents-name'>Species 1</div>
             <div id='legend-pink-contents-colormap'>
               <div id='legend-pink-100'>100-75%</div>
@@ -198,15 +254,20 @@
               <div id='legend-pink-50'>50-25%</div>
             </div>
           </div>
-          <div id='legend-pink-quality' tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
+          <div id='legend-pink-quality'
+            tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
         </li>
         <li id='legend-species-orange'>
           <div id='legend-orange-controls'>
-            <div alt='Reorder species layers' class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
+            <div alt='Reorder species layers' class='drag-handle'
+              tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>
+              ::</div>
             <label for='toggle-species-two' class='hidden-label'>Toggle Species Visibility</label>
-            <input id='toggle-species-two' type='checkbox' onkeypress='toggleSpecies(1);' onclick='toggleSpecies(1);' checked tooltip='Use this to toggle the visibility of this species'></input>
+            <input id='toggle-species-two' type='checkbox' onkeypress='toggleSpecies(1);' onclick='toggleSpecies(1);'
+              checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
-          <div id='legend-orange-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
+          <div id='legend-orange-contents'
+            tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-orange-contents-name'>Species 1</div>
             <div id='legend-orange-contents-colormap'>
               <div id='legend-orange-100'>100-75%</div>
@@ -214,15 +275,20 @@
               <div id='legend-orange-50'>50-25%</div>
             </div>
           </div>
-          <div id='legend-orange-quality' tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
+          <div id='legend-orange-quality'
+            tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
         </li>
         <li id='legend-species-blue'>
           <div id='legend-blue-controls'>
-            <div alt='Reorder species layers' class='drag-handle' tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>::</div>
+            <div alt='Reorder species layers' class='drag-handle'
+              tooltip='Drag this to reorder the layers. To bring this layer to the front, drag this row to the top of the legend'>
+              ::</div>
             <label for='toggle-species-three' class='hidden-label'>Toggle Species Visibility</label>
-            <input id='toggle-species-three' type='checkbox' onkeypress='toggleSpecies(2);' onclick='toggleSpecies(2);' checked tooltip='Use this to toggle the visibility of this species'></input>
+            <input id='toggle-species-three' type='checkbox' onkeypress='toggleSpecies(2);' onclick='toggleSpecies(2);'
+              checked tooltip='Use this to toggle the visibility of this species'></input>
           </div>
-          <div id='legend-blue-contents' tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
+          <div id='legend-blue-contents'
+            tooltip='Percentages correspond to the predicted likelihood of the species living in an area'>
             <div id='legend-blue-contents-name'>Species 1</div>
             <div id='legend-blue-contents-colormap'>
               <div id='legend-blue-100'>100-75%</div>
@@ -230,15 +296,23 @@
               <div id='legend-blue-50'>50-25%</div>
             </div>
           </div>
-          <div id='legend-blue-quality' tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
+          <div id='legend-blue-quality'
+            tooltip='Model confidence represents how correct the shown prediction layer is believed to be'></div>
         </li>
       </ol>
-      <div id='legend-blend' tooltip='When on, predicted data layers are shown at 50% opacity to show areas of overlap. When off, predicted layers are shown at 100% opacity'>
+      <div id='legend-blend'
+        tooltip='When on, predicted data layers are shown at 50% opacity to show areas of overlap. When off, predicted layers are shown at 100% opacity'>
         <div id='legend-blend-text'>COLOR BLEND:</div>
         <div id='legend-blend-switch'>
-          <div class='legend-blend-switch-sides'><div onkeypress='toggleBlending();' onclick='toggleBlending();'>ON</div></div>
-          <div class='legend-blend-switch-sides'><div onkeypress='toggleBlending();' onclick='toggleBlending();'>OFF</div></div>
-          <div id='legend-blend-switch-button'><div onkeypress='toggleBlending();' onclick='toggleBlending();'><span>...</span></div></div>
+          <div class='legend-blend-switch-sides'>
+            <div onkeypress='toggleBlending();' onclick='toggleBlending();'>ON</div>
+          </div>
+          <div class='legend-blend-switch-sides'>
+            <div onkeypress='toggleBlending();' onclick='toggleBlending();'>OFF</div>
+          </div>
+          <div id='legend-blend-switch-button'>
+            <div onkeypress='toggleBlending();' onclick='toggleBlending();'><span>...</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -301,9 +375,19 @@
       <div id='legend-demo-blend'>
         <div id='legend-demo-blend-text'>COLOR BLEND:</div>
         <div id='legend-demo-blend-switch'>
-          <div><div style="text-align: center"><div>ON</div></div></div>
-          <div><div style="text-align: center"><div>OFF</div></div></div>
-          <div id='legend-demo-blend-switch-button'><div><span>...</span></div></div>
+          <div>
+            <div style="text-align: center">
+              <div>ON</div>
+            </div>
+          </div>
+          <div>
+            <div style="text-align: center">
+              <div>OFF</div>
+            </div>
+          </div>
+          <div id='legend-demo-blend-switch-button'>
+            <div><span>...</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -314,28 +398,29 @@
       <img class="modal-content" id="image-modal-image">
     </div>
 
-    </rest>
+  </rest>
 
-    <footer>
-      <ul>
-        <li class="home-link"><a href="https://www.nps.gov/" id="anch_0">Home</a></li>
-        <li><a href="https://www.nps.gov/faqs.htm" id="anch_1">Frequently Asked Questions</a></li>
-        <li><a href="https://www.nps.gov/aboutus/website-policies.htm" id="anch_2">Website Policies</a></li>
-        <li><a href="https://www.nps.gov/contacts.htm" id="anch_3">Contact Us</a></li>
-      </ul>
-      <span class="tag-line ir">Experience Your America</span>
-    </footer>
-    <script data-main="scripts/main" src="scripts/require.js"></script>
-    <script src="scripts/taxonomy.js"></script>
-    <script src="scripts/mapping.js"></script>
-    <script src="https://www.nps.gov/lib/npmap.js/3.0.18/npmap-bootstrap.min.js"></script>
-    <script src="scripts/request.js"></script>
-    <script src="scripts/colorLegend.js"></script>
-    <script src="scripts/drawUtils.js"></script>
-    <script src="scripts/popups.js"></script>
-    <script src="scripts/searchUtils.js"></script>
-    <script src="scripts/tooltips.js"></script>
-    <script src="scripts/utils.js"></script>
-    <script src="scripts/share.js"></script>
-  </body>
+  <footer>
+    <ul>
+      <li class="home-link"><a href="https://www.nps.gov/" id="anch_0">Home</a></li>
+      <li><a href="https://www.nps.gov/faqs.htm" id="anch_1">Frequently Asked Questions</a></li>
+      <li><a href="https://www.nps.gov/aboutus/website-policies.htm" id="anch_2">Website Policies</a></li>
+      <li><a href="https://www.nps.gov/contacts.htm" id="anch_3">Contact Us</a></li>
+    </ul>
+    <span class="tag-line ir">Experience Your America</span>
+  </footer>
+  <script data-main="scripts/main" src="scripts/require.js"></script>
+  <script src="scripts/taxonomy.js"></script>
+  <script src="scripts/mapping.js"></script>
+  <script src="https://www.nps.gov/lib/npmap.js/3.0.18/npmap-bootstrap.min.js"></script>
+  <script src="scripts/request.js"></script>
+  <script src="scripts/colorLegend.js"></script>
+  <script src="scripts/drawUtils.js"></script>
+  <script src="scripts/popups.js"></script>
+  <script src="scripts/searchUtils.js"></script>
+  <script src="scripts/tooltips.js"></script>
+  <script src="scripts/utils.js"></script>
+  <script src="scripts/share.js"></script>
+</body>
+
 </html>
