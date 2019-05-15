@@ -2,6 +2,7 @@ $(document).ready(function() {
   document.getElementById('options-predicted-checkbox').checked = true;
   document.getElementById('options-observed-checkbox').checked = false;
   $('#search-tool').one('loaded', function () { loadSettings(); });
+  setTimeout(hacks, 2000);
 });
 
 window.onload = function() {
@@ -175,6 +176,23 @@ function getThumbnailURL(latin_name)
     }
   }
   return url;
+}
+
+/* quick hacks by Moa for the mockup versions */
+function hacks()
+{
+    $(".leaflet-control-edit button").each(function(){
+        $(this).addClass("hidden-buttons");
+    });
+    var edit_button = $("<button>")
+        .addClass("fa fa-pencil edit-pencil hack-round")
+        .prependTo(".leaflet-control-edit");
+
+    edit_button.on("click", function(){
+        $(".hidden-buttons").slideToggle();
+        $(this).toggleClass("hack-round");
+    });
+    $(".hidden-buttons").slideToggle();
 }
 
 /* The setup that's needed for thumbnail image hovers */

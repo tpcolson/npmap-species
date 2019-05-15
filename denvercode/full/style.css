@@ -62,6 +62,19 @@ body.dragging, body.dragging * {
   right: 10px !important;
 }
 
+/******************************
+* Moa's CSS for his hacks     *
+******************************/
+
+.npmap .leaflet-control-edit button.edit-pencil {
+  background-image: none !important;
+  font-family: FontAwesome;
+}
+
+.hack-round {
+  border-radius: 3px;
+}
+
 #options-selectbackground {
   height: 22px;
   width: 120px;
