@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 rm -rf eden_aggregate/
 rm -rf eden_folds/
