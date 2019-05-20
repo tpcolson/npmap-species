@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash
 
 echo $(date) > start_time.txt
 echo $(date +%s) > start_secs.txt
