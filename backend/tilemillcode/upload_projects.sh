@@ -12,12 +12,12 @@ upload_cmd="mapbox --access-token $access_token upload"
 geotiff_dir="./geotiffs"
 outgeos_dir="./geotiffs/out"
 uploadcmnds="./uploadcommands.sh"
-ids_file="./ATBI_ids.txt"
+ids_file="/app/npmap-species/atbirecords/ATBI_ids.txt"
 ext="tif"
 
-mkdir $outgeos_dir
+mkdir $geotiff_dir/out
 
-echo "" > $uploadcmnds
+echo "#!/bin/bash" > $uploadcmnds
 
 while read line; do
 	for sp in $line; do
