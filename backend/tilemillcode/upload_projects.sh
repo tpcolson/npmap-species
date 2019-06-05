@@ -1,12 +1,9 @@
 #!/bin/bash
 
-echo "Enter mapbox user name:"
-read mapbox_user
+[[ -z "${MB_USER_ENV}" ]] && mapbox_user='default' || mapbox_user="${MB_USER_ENV}"
+[[ -z "${MB_TOKEN_ENV}" ]] && access_token='default' || access_token="${MB_TOKEN_ENV}"
+
 dataset_prefix="GRSM"
-# access_file="secret.txt"
-# access_token=$(cat $access_file)
-echo "Enter mapbox auth key for user $mapbox_user:"
-read access_token
 gdal_cmd="gdal_translate -of GTiff -a_nodata 0"
 upload_cmd="mapbox --access-token $access_token upload"
 geotiff_dir="./geotiffs"
