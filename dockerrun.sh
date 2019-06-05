@@ -2,6 +2,8 @@
 
 mv /app/data/ENVIRONMENTS.zip /app/npmap-species/ && cd /app/npmap-species/ && unzip ENVIRONMENTS.zip -d environmentallayers/
 
+cd /app/npmap-species/environmentallayers && ./convert_asc_to_mxe.sh
+
 cd /app/npmap-species/backend/maxent/ && ./clean.sh
 
 cd /app/npmap-species/backend/maxent/ && ./run.sh
