@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mv /app/data/ENVIRONMENTS.zip /app/npmap-species/ && cd /app/npmap-species/ && unzip ENVIRONMENTS.zip -d environmentallayers/
+cp /app/data/ENVIRONMENTS.zip /app/npmap-species/ && cd /app/npmap-species/ && unzip ENVIRONMENTS.zip -d environmentallayers/
 
 cd /app/npmap-species/environmentallayers && ./convert_asc_to_mxe.sh
 
