@@ -1,7 +1,12 @@
 #!/bin/sh
 export RUN_DIR=/app/npmap-species/backend/maxent
 export TOOL_DIR=/app/npmap-species/backend/maxent
-export CONFIG_FILE=/app/npmap-species/twincreekscode/maxent_config/config_8.txt
+export CONFIG_FILE=/app/npmap-species/twincreekscode/maxent_config/config_full.txt 
+if [[ -z "${CONFIG_ENV}" ]]; then
+	export CONFIG_FILE=/app/npmap-species/twincreekscode/maxent_config/config_full.txt
+else
+	export CONFIG_FILE=/app/data/config.txt
+fi
 export MAXENT_JAR=/app/npmap-species/backend/maxent/maxent.jar
 export ENV_DIR=/app/npmap-species/environmentallayers/mxe
 export GDAL_BIN=/usr/bin
