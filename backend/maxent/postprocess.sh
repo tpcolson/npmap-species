@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 export RUN_DIR=/app/npmap-species/backend/maxent
 export TOOL_DIR=/app/npmap-species/backend/maxent
 export CONFIG_FILE=/app/npmap-species/twincreekscode/maxent_config/config_full.txt 

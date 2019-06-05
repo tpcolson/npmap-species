@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 export RUN_DIR=/app/npmap-species/backend/maxent
 export TOOL_DIR=/app/npmap-species/backend/maxent
 if [[ -z "${CONFIG_ENV}" ]]; then
