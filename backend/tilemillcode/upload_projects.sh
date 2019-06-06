@@ -12,7 +12,7 @@ uploadcmnds="./uploadcommands.sh"
 ids_file="/app/npmap-species/atbirecords/ATBI_ids.txt"
 ext="tif"
 
-cp /app/npmap-species/environtmentallayers/*.asc ./geotiffs/
+cp /app/npmap-species/environmentallayers/*.asc ./geotiffs/
 /app/npmap-species/backend/tilemillcode/convert_all_to_tiff.sh
 rm ./geotiffs/*.asc
 
