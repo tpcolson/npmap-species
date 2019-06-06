@@ -1,7 +1,7 @@
 #!/bin/bash
 
-[[ -z "${MB_USER_ENV}" ]] && mapbox_user='default' || mapbox_user="${MB_USER_ENV}"
-[[ -z "${MB_TOKEN_ENV}" ]] && access_token='default' || access_token="${MB_TOKEN_ENV}"
+mapbox_user="${MB_USER_ENV}"
+access_token="${MB_TOKEN_ENV}"
 
 dataset_prefix="GRSM"
 gdal_cmd="gdal_translate -of GTiff -a_nodata 0"
@@ -23,7 +23,9 @@ while read line; do
 		species_name=${sp%_*}
 		id=$(printf "%07i" $(grep -iw $species_name $ids_file | cut -d' ' -f2))
 		echo $gdal_cmd $geotiff_dir/$sp\.$ext $outgeos_dir/$sp\.$ext >> $uploadcmnds
-		echo $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $outgeos_dir/$sp\.$ext >> $uploadcmnds
+		if [[ ! -z "${MB_USER_ENV}" ]]; then
+			echo $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $outgeos_dir/$sp\.$ext >> $uploadcmnds
+		fi
 	done
 done <<< $(ls $geotiff_dir)
 
