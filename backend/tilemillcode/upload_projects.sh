@@ -12,6 +12,10 @@ uploadcmnds="./uploadcommands.sh"
 ids_file="/app/npmap-species/atbirecords/ATBI_ids.txt"
 ext="tif"
 
+cp /app/npmap-species/environtmentallayers/*.asc ./geotiffs/
+/app/npmap-species/backend/tilemillcode/convert_all_to_tiff.sh
+rm ./geotiffs/*.asc
+
 mkdir $geotiff_dir/out
 
 echo "#!/bin/bash" > $uploadcmnds
