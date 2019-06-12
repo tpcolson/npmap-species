@@ -24,6 +24,6 @@ if [[ ! -z ${DUMP_ENV} ]]; then
 	mkdir ${output_dir}/geotiffs
 	cp ${maxent_dir}/geotiffs/out/*.tif ${output_dir}/geotiffs
 
-	mkdir ${output_dir}/maxentresults
+	mkdir ${output_dir}/maxent_results
 	cp -r ${maxent_dir}/maxent_results/* ${output_dir}/maxent_results
 fi
