@@ -1,4 +1,7 @@
 #!/bin/bash
+cd /app/npmap-species/atbirecords && python separate.py JUST_COORDS
+
+cd /app/npmap-species/backend/maxent/ && ./clean.sh
 
 cp /app/data/ENVIRONMENTS.zip /app/npmap-species/ && cd /app/npmap-species/ && unzip ENVIRONMENTS.zip -d environmentallayers/
 
