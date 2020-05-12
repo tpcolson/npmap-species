@@ -56,20 +56,35 @@
         <h1 style="margin-bottom: 3px; padding-bottom: 2px;"> Great Smoky Mountains National Park</h1>
       </a>
 
-      <div class="atlas-select-area">
+      <div class="atlas-select-area" style='overflow: visible;'>
         <div class="selector-head-text">Atlas of the Smokies:</div>
         <!--<select class="atlas-selector-dropdown">
           <option value="Enviromapper">Enviromapper</option>
           <option value="Species Mapper" class="species-list">Species Mapper</option>
         </select>-->
-        <div id="options-selectbackground-dropdown" class="atlas-selector-dropdown" data-position="left" onkeypress="toggleSelectBackgroundList();"
-          onclick="toggleSelectBackgroundList();" style="z-index: 50;">
-          Species Mapper
-          <div class="atlas-selector-triangle triangle"></div>
-          <ul id="options-selectbackground-dropdown-ul" style="display: none;">
-            <li>✔ Species Mapper</li>
-            <li><a href="https://maps.nps.gov/enviromapper/" class="select-atlas-link">Enviromapper</a></li>
-          </ul>
+        <div id='selector-container' class='selector-container'>
+          <div id="options-selectbackground-dropdown" class="atlas-selector-dropdown" data-position="left"
+            onkeypress="toggleSelectBackgroundList();" onclick="toggleSelectBackgroundList();" style="z-index: 50;">
+            Species Mapper
+            <div class="atlas-selector-triangle triangle"></div>
+            <ul id="options-selectbackground-dropdown-ul" style="display: none;">
+              <li>✔ Species Mapper</li>
+              <li><a href="https://maps.nps.gov/enviromapper/" class="select-atlas-link">Enviromapper</a></li>
+            </ul>
+          </div>
+          <div id='viewing-option-text' class='view-as-text'>
+            view species as
+          </div>
+          <div id="options-selectviewing-dropdown" class="grouping-selector-dropdown" data-position="right"
+            onkeypress="toggleSelectViewingList();" onclick="toggleSelectViewingList();" style="z-index: 50;">
+            <p id='viewselecttext'>Single Species</p>
+            <div class="grouping-selector-triangle triangle"></div>
+            <ul id="options-selectviewing-dropdown-ul" style="display: none;">
+              <li id='single-spec-view' onkeypress="swapViewPress(this.id);" onclick="swapViewPress(this.id);" datavalue='Single Species'>✔
+                Single Species</li>
+              <li id='group-spec-view' onkeypress="swapViewPress(this.id);" onclick="swapViewPress(this.id);" datavalue='Groupped Species'>Groupped Species</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -82,7 +97,6 @@
     <div id='map'></div>
     <div id='search-tool'>
       <div id='search-tool-contents'>
-
         <div id='search-image-box'><i class="fa fa-search-plus search-image-box-magnifier" aria-hidden="true"></i></div>
         <div id='search-initial'>
           <div id='search-initial-controls'>
