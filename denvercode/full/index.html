@@ -56,20 +56,37 @@
         <h1 style="margin-bottom: 3px; padding-bottom: 2px;"> Great Smoky Mountains National Park</h1>
       </a>
 
-      <div class="atlas-select-area">
+      <div class="atlas-select-area" style='overflow: visible;'>
         <div class="selector-head-text">Atlas of the Smokies:</div>
         <!--<select class="atlas-selector-dropdown">
           <option value="Enviromapper">Enviromapper</option>
           <option value="Species Mapper" class="species-list">Species Mapper</option>
         </select>-->
-        <div id="options-selectbackground-dropdown" class="atlas-selector-dropdown" data-position="left" onkeypress="toggleSelectBackgroundList();"
-          onclick="toggleSelectBackgroundList();" style="z-index: 50;">
-          Species Mapper
-          <div class="atlas-selector-triangle triangle"></div>
-          <ul id="options-selectbackground-dropdown-ul" style="display: none;">
-            <li>✔ Species Mapper</li>
-            <li><a href="https://maps.nps.gov/enviromapper/" class="select-atlas-link">Enviromapper</a></li>
-          </ul>
+        <div id='selector-container' class='selector-container'>
+          <div id="options-selectbackground-dropdown" class="atlas-selector-dropdown" data-position="left"
+            onkeypress="toggleSelectBackgroundList();" onclick="toggleSelectBackgroundList();" style="z-index: 50;">
+            Species Mapper
+            <div class="atlas-selector-triangle triangle"></div>
+            <ul id="options-selectbackground-dropdown-ul" style="display: none;">
+              <li>✔ Species Mapper</li>
+              <li><a href="https://maps.nps.gov/enviromapper/" class="select-atlas-link">Enviromapper</a></li>
+            </ul>
+          </div>
+          <div id='viewing-option-text' class='view-as-text'>
+            view as
+          </div>
+          <div id="options-selectviewing-dropdown" class="grouping-selector-dropdown" data-position="left"
+            onkeypress="toggleSelectViewingList();" onclick="toggleSelectViewingList();" style="z-index: 50;">
+            <p id='viewselecttext'>Single Species</p>
+            <div class="grouping-selector-triangle triangle"></div>
+            <ul id="options-selectviewing-dropdown-ul" style="display: none;">
+              <li id='single-spec-view' onkeypress="swapViewPress(this.id);" onclick="swapViewPress(this.id);"
+                datavalue='Single Species'>✔
+                Single Species</li>
+              <li id='group-spec-view' onkeypress="swapViewPress(this.id);" onclick="swapViewPress(this.id);"
+                datavalue='Common Groupping'>Common Groupping</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -82,7 +99,6 @@
     <div id='map'></div>
     <div id='search-tool'>
       <div id='search-tool-contents'>
-
         <div id='search-image-box'><i class="fa fa-search-plus search-image-box-magnifier" aria-hidden="true"></i></div>
         <div id='search-initial'>
           <div id='search-initial-controls'>
@@ -92,7 +108,7 @@
               <input id='dropdown-initial-input' class='dropdown-input' placeholder="SELECT OR TYPE A SPECIES"
                 oninput='fuseSearch(0, this.value);'></input>
               <div class='dropdown-button' onkeypress='toggleSearchList(0);' onclick='toggleSearchList(0);'>
-                <div class='triangle'></div>
+                <div class='triangle' style="left: 235px;"></div>
               </div>
               <ul id='search-initial-dropdown-select' class='species-list'></ul>
               <ul id='search-initial-dropdown-lex'></ul>
@@ -422,5 +438,191 @@
   <script src="scripts/utils.js"></script>
   <script src="scripts/share.js"></script>
 </body>
+
+<template id='search-initial-ss-template'>
+  <div id='search-initial-controls'>
+    <div id='search-initial-dropdown' class='species-dropdown' tooltip='Select a species from the full list'
+      data-intro='Select a species' data-position='right'>
+      <label for='dropdown-initial-input' class='hidden-label'>Species Name</label>
+      <input id='dropdown-initial-input' class='dropdown-input' placeholder="SELECT OR TYPE A SPECIES"
+        oninput='fuseSearch(0, this.value);'></input>
+      <div class='dropdown-button' style="left: 235px;" onkeypress='toggleSearchList(0);'
+        onclick='toggleSearchList(0);'>
+        <div class='triangle' style="left: 235px;"></div>
+      </div>
+      <ul id='search-initial-dropdown-select' class='species-list'></ul>
+      <ul id='search-initial-dropdown-lex'></ul>
+    </div>
+
+    <div id='search-initial-altname'></div>
+    <div id='checkbox-container' tooltip='Toggle the visibility of the predicted habitat'
+      data-intro='Toggle visibility of predicted and observed data' data-position='top'>
+      <div id='options-predicted' class='search-checkbox'>
+        View:&nbsp;
+        <input type='checkbox' id='options-predicted-checkbox' onkeypress='togglePredicted();'
+          onclick='togglePredicted();' checked disabled></input>
+        <label for='options-predicted-checkbox'>Predictions</label>&nbsp;&nbsp;
+        <input type='checkbox' id='options-observed-checkbox' onkeypress='toggleObserved();' onclick='toggleObserved();'
+          disabled></input>
+        <label for='options-observed-checkbox'>Observations</label>
+      </div>
+      <div id='search-initial-switch' tooltip='Choose to show latin or common species names'
+        data-intro='Choose to show common or latin names' data-position='bottom'>
+        Name convention:&nbsp;
+        <input type='radio' class='search-initial-switch-sides' id='search-name-convention-common'
+          name='search-name-convention' onkeypress='toggleName();' onclick='toggleName();' checked></input>
+        <label for='search-name-convention-common'>Common</label>&nbsp;&nbsp;
+        <input type='radio' class='search-initial-switch-sides' id='search-name-convention-latin'
+          name='search-name-convention' onkeypress='toggleName();' onclick='toggleName();'></input>
+        <label for='search-name-convention-latin'>Latin</label>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id='search-initial-gv-template'>
+  
+  <div id='search-initial-controls'>
+    <div class="subhead group-sel-head">
+      GROUP CONTROL
+    </div>
+    <div id='grp-initial-dropdown' class='species-dropdown' tooltip='Select a group from the full list'
+      data-intro='Select a species' data-position='right'>
+      <label for='dropdown-grp-input' class='hidden-label'>Species Name</label>
+      <input id='dropdown-grp-input' class='dropdown-input' placeholder="SELECT A COMMON GROUPING"
+        oninput='fuseSearch(3, this.value);'></input>
+      <div class='dropdown-button' onkeypress='toggleSearchList(3);' onclick='toggleSearchList(3);'>
+        <div class='triangle' style="left: 235px;"></div>
+      </div>
+      <ul id='grp-initial-dropdown-select' class='species-list' onkeypress='toggleSearchList(3);' onclick='toggleSearchList(3);'>
+        <li onkeypress='selectGroup(this)' onclick='selectGroup(this)'>Spring Flowers</li>
+        <li>Common Birds</li>
+        <li>Sparrows</li>
+        <li>Salamanders</li>
+        <li>Snakes</li>
+      </ul>
+      <ul id='grp-initial-dropdown-lex'></ul>
+    </div>
+    <br>
+    <div id='subgrp-initial-dropdown' class='species-dropdown' tooltip='Select a group from the full list'
+      data-intro='Select a species' data-position='right' style="visibility: hidden;">
+      <label for='dropdown-subgrp-input' class='hidden-label'>Species Name</label>
+      <input id='dropdown-subgrp-input' class='dropdown-input' placeholder="SELECT OR TYPE SUB GROUP"
+        oninput='fuseSearch(4, this.value);'></input>
+      <div class='dropdown-button' onkeypress='toggleSearchList(4);' onclick='toggleSearchList(4);'>
+        <div class='triangle' style="left: 235px;"></div>
+      </div>
+      <ul id='subgrp-initial-dropdown-select' class='species-list' onkeypress='toggleSearchList(4);' onclick='toggleSearchList(4);'>
+        <li onkeypress='selectSubGroup(this)' onclick='selectSubGroup(this)'>March</li>
+        <li>April</li>
+        <li>May</li>
+      </ul>
+      <ul id='subgrp-initial-dropdown-lex'></ul>
+    </div>
+  </div>
+</template>
+
+<template id='search-compare-ss-template'>
+  <div id='search-compare-contents'>
+    <fieldset>
+      <legend style="display:none">Select Species to Compare</legend>
+      <div id='search-compare-lexical' data-position='bottom'
+        data-intro='Select another species that is known to exist in the park'
+        tooltip='Select another species that is known to exist in the park'>
+        <label for='lexical-radio' class='hidden-label'>Select Species by Name</label>
+        <input id='lexical-radio' type='radio' name='comparator' value='lexical' onkeypress='lexFocus();'
+          onclick='lexFocus();' disabled></input>
+        <label class='subhead' for='lexical-radio'>COMPARE WITH </label>
+        <label class='subhead2' for='lexical-radio'>ANOTHER SPECIES</label>
+        <div id='search-compare-one-dropdown' class='species-dropdown' tooltip='Select a species from the full list'>
+          <label for='dropdown-one-input' class='hidden-label'>Species Name</label>
+          <input id='dropdown-one-input' class='dropdown-input' oninput='fuseSearch(1, this.value);'></input>
+          <div class='dropdown-button' onkeypress='toggleSearchList(1);' onclick='toggleSearchList(1);'>
+            <div class='triangle'></div>
+          </div>
+          <ul id='search-compare-one-dropdown-select' class='species-list'></ul>
+          <ul id='search-compare-one-dropdown-lex'></ul>
+        </div>
+        <div id='search-compare-two-dropdown' class='species-dropdown' tooltip='Select a species from the full list'>
+          <label for='dropdown-two-input' class='hidden-label'>Species Name</label>
+          <input id='dropdown-two-input' class='dropdown-input' oninput='fuseSearch(2, this.value);'></input>
+          <div class='dropdown-button' onkeypress='toggleSearchList(2);' onclick='toggleSearchList(2);'>
+            <div class='triangle'></div>
+          </div>
+          <ul id='search-compare-two-dropdown-select' class='species-list'></ul>
+          <ul id='search-compare-two-dropdown-lex'></ul>
+        </div>
+      </div>
+      <div id='search-compare-distribution' data-position="bottom"
+        data-intro='Select another species with similar habitat requirements across the park'
+        tooltip='Select another species with similar habitat requirements across the park'>
+        <label for='dist-radio' class='hidden-label'>Select Species with Similar Distribution</label>
+        <input id='dist-radio' type='radio' name='comparator' value='distribution' onkeypress='distFocus();'
+          onclick='distFocus();' disabled></input>
+        <label class='subhead' for='dist-radio'>COMPARE WITH</label>
+        <label class='subhead2' for='dist-radio'>SPECIES WITH SIMILAR DISTRIBUTION</label>
+        <div id='compare-dist-one' onkeypress='toggleCompareDistOne();' onclick='toggleCompareDistOne();'>
+          <div id='compare-dist-one-name'></div>
+          <div class='triangle'></div>
+          <ul class='species-list'></ul>
+        </div>
+        <div id='compare-dist-two' onkeypress='toggleCompareDistTwo();' onclick='toggleCompareDistTwo();'>
+          <div id='compare-dist-two-name'></div>
+          <div class='triangle'></div>
+          <ul class='species-list'></ul>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</template>
+
+<template id='search-compare-gv-template'>
+  <div id='search-compare-gv-contents' style="visibility: hidden;">
+    <div class="subhead group-sel-head" style="padding-left: 10px; padding-bottom: 5px;">
+      INDIVIDUAL SPECIES FROM GROUP
+    </div>
+    <div class="search-compare-gv-sub-cont">
+      <div id='search-compare-grp1-dropdown' class='grp-species-dropdown' tooltip='Select a species from the full list'>
+        <label for='dropdown-grp1-input' class='hidden-label'>Species Name</label>
+        <input id='dropdown-grp1-input' class='grp-dropdown-input' oninput='fuseSearch(1, this.value);' placeholder='SELECT SPECIES'></input>
+        <div class='dropdown-button' onkeypress='toggleSearchList(5);' onclick='toggleSearchList(5);'>
+          <div class='triangle'></div>
+        </div>
+        <ul id='search-compare-grp1-dropdown-select' class='species-list grp-species-dropdown-select'>
+          <li onkeypress='selectSpeciesOfGroup(this, 1);' onclick='selectSpeciesOfGroup(this, 1);'>Iris</li>
+          <li>Peony</li>
+          <li>Great White Trillium</li>
+        </ul>
+        <ul id='search-compare-grp1-dropdown-lex' class="grp-species-dropdown-lex"></ul>
+      </div>
+      <div id='search-compare-grp2-dropdown' class='grp-species-dropdown' tooltip='Select a species from the full list'>
+        <label for='dropdown-grp2-input' class='hidden-label'>Species Name</label>
+        <input id='dropdown-grp2-input' class='grp-dropdown-input' oninput='fuseSearch(1, this.value);' placeholder='SELECT SPECIES'></input>
+        <div class='dropdown-button' onkeypress='toggleSearchList(6);' onclick='toggleSearchList(6);'>
+          <div class='triangle'></div>
+        </div>
+        <ul id='search-compare-grp2-dropdown-select' class='species-list grp-species-dropdown-select'>
+          <li>Iris</li>
+          <li onkeypress='selectSpeciesOfGroup(this, 2);' onclick='selectSpeciesOfGroup(this, 2);'>Peony</li>
+          <li>Great White Trillium</li>
+        </ul>
+        <ul id='search-compare-grp2-dropdown-lex'></ul>
+      </div>
+      <div id='search-compare-grp3-dropdown' class='grp-species-dropdown' tooltip='Select a species from the full list'>
+        <label for='dropdown-grp3-input' class='hidden-label'>Species Name</label>
+        <input id='dropdown-grp3-input' class='grp-dropdown-input' oninput='fuseSearch(1, this.value);' placeholder='SELECT SPECIES'></input>
+        <div class='dropdown-button' onkeypress='toggleSearchList(7);' onclick='toggleSearchList(7);'>
+          <div class='triangle'></div>
+        </div>
+        <ul id='search-compare-grp3-dropdown-select' class='species-list grp-species-dropdown-select'>
+          <li>Iris</li>
+          <li>Peony</li>
+          <li onkeypress='selectSpeciesOfGroup(this, 3);' onclick='selectSpeciesOfGroup(this, 3);'>Great White Trillium</li>
+        </ul>
+        <ul id='search-compare-grp3-dropdown-lex'></ul>
+      </div>
+    </div>
+  </div>
+</template>
 
 </html>

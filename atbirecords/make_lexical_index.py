@@ -1,13 +1,15 @@
 # I run this as follows, but do what you want
 # python make_index.py > index.json
 
-import sys, json, csv
+import sys
+import json
+import csv
 
 value_list = []
 encountered = {}
 csvfile = open('ATBI_records.csv', 'rb')
 csvreader = csv.reader(csvfile)
-csvreader.next()
+next(csvreader)
 for line in csvreader:
     if len(line) != 8:
         sys.stderr.write('error: invalid CSV file\n')
@@ -17,7 +19,7 @@ for line in csvreader:
         common_name = line[3]
         id_num = line[2].replace(',', '').zfill(7)
 
-        if not latin_name in encountered:
+        if latin_name not in encountered:
             encountered[latin_name] = 1
         else:
             encountered[latin_name] += 1
@@ -30,6 +32,6 @@ for line in csvreader:
                 }
 
                 value_list.append(index)
-                encountered[latin_name] = -sys.maxint-1
+                encountered[latin_name] = -sys.maxsize-1
 
-print json.dumps({'items': value_list})
+print(json.dumps({'items': value_list}))

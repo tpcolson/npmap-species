@@ -107,8 +107,8 @@ var subNavZ, headerZ, divHeader, divSubNav,
     measureControl: true,
     scaleControl: { metric: true },
     events: [{
-      fn: function(evt) {
-        if(currentBaseLayer && evt.layer._leaflet_id === currentBaseLayer._leaflet_id) {
+      fn: function (evt) {
+        if (currentBaseLayer && evt.layer._leaflet_id === currentBaseLayer._leaflet_id) {
           drawData();
         }
       },

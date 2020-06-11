@@ -1,13 +1,15 @@
 # I run this as follows, but do what you want
 # python make_index.py > index.json
 
-import sys, json, csv
+import sys
+import json
+import csv
 
 counts = {}
 encountered = {}
 csvfile = open('ATBI_records.csv', 'rb')
 csvreader = csv.reader(csvfile)
-csvreader.next()
+next(csvreader)
 for line in csvreader:
     if len(line) != 8:
         sys.stderr.write('error: invalid CSV file\n')
@@ -17,7 +19,7 @@ for line in csvreader:
         common_name = line[3].lstrip()
         id_num = int(line[2].replace(',', ''))
 
-        if not latin_name in counts:
+        if latin_name not in counts:
             counts[latin_name] = 0
         counts[latin_name] += 1
         if counts[latin_name] >= 30:
@@ -26,4 +28,4 @@ for line in csvreader:
                 'id': str(id_num).zfill(7)
             }
 
-print json.dumps(encountered)
+print(json.dumps(encountered))
