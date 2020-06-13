@@ -63,6 +63,7 @@ def generate_groups():
     grpname = 'grp_spring_flowers'
     grpfile = open('{}/{}.csv'.format(file_dir, grpname), 'w')
     print('genus_speciesmaxent,genus_speciesirma,grsm_speciesid,commonname,taxagroup,subjectcategory,lon,lat', file=grpfile)
+    recordcount = 0
     for specie in goodspecies:
         specie_file = '{}/{}.csv'.format(file_dir, specie)
         with open(specie_file, 'r') as file_contents:
@@ -76,9 +77,10 @@ def generate_groups():
                 lat = linecontents[2]
                 print('{},{},{}'.format(grpname, lon, lat), file=grpfile)
                 i += 1
+                recordcount += 1
             # 1756 <- this is the id of Amelanchier_arborea taken from ATBI_counts.txt
-            subprocess.call(['sed', '-i', '$ a\\{},{},{}'.format(specie, i-1, 1756), 'ATBI_counts.txt'])
-            subprocess.call(['sed', '-i', '$ a\\{} {}'.format(specie, 1756), 'ATBI_ids.txt'])
+    subprocess.call(['sed', '-i', '$ a\\{},{},{}'.format(grpname, recordcount, 1756), 'ATBI_counts.txt'])
+    subprocess.call(['sed', '-i', '$ a\\{} {}'.format(grpname, 1756), 'ATBI_ids.txt'])
 
 
 if __name__ == "__main__":
