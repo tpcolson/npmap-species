@@ -37,7 +37,6 @@ def separate():
     contents = str(response.read().decode())
     contents = contents.replace('"', '')
     counts = contents.splitlines()
-    print(counts)
     for line in counts[1:]:
         print(line)
         name = line.split(',')[0]

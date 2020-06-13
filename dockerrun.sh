@@ -1,6 +1,8 @@
 #!/bin/bash
 cd /app/npmap-species/atbirecords && python3 separate.py JUST_COORDS
 
+cd /app/npmap-species/atbirecords && python3 makegroups.py
+
 cd /app/npmap-species/backend/maxent/ && ./clean.sh
 
 cp /app/data/ENVIRONMENTS.zip /app/npmap-species/ && cd /app/npmap-species/ && unzip ENVIRONMENTS.zip -d environmentallayers/
@@ -22,11 +24,11 @@ cd /app/npmap-species/backend/maxent && /app/npmap-species/backend/tilemillcode/
 output_dir=/app/data/output
 maxent_dir=/app/npmap-species/backend/maxent
 if [[ ! -z ${DUMP_ENV} ]]; then
-	mkdir ${output_dir}
+	mkdir -p ${output_dir}
 
-	mkdir ${output_dir}/geotiffs
+	mkdir -p ${output_dir}/geotiffs
 	cp ${maxent_dir}/geotiffs/out/*.tif ${output_dir}/geotiffs
 
-	mkdir ${output_dir}/maxent_results
+	mkdir -p ${output_dir}/maxent_results
 	cp -r ${maxent_dir}/maxent_results/* ${output_dir}/maxent_results
 fi
