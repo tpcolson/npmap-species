@@ -1,4 +1,5 @@
 import sys
+import subprocess
 import os
 import re
 import csv
@@ -75,6 +76,9 @@ def generate_groups():
                 lat = linecontents[2]
                 print('{},{},{}'.format(grpname, lon, lat), file=grpfile)
                 i += 1
+            # 1756 <- this is the id of Amelanchier_arborea taken from ATBI_counts.txt
+            subprocess.call(['sed', '-i', '$ a\\{},{},{}'.format(specie, i-1, 1756), 'ATBI_counts.txt'])
+            subprocess.call(['sed', '-i', '$ a\\{} {}'.format(specie, 1756), 'ATBI_ids.txt'])
 
 
 if __name__ == "__main__":
