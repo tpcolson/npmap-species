@@ -48,12 +48,10 @@ while read line; do
 			echo $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		fi
 		if [[ ! -z "${ATLAS_UPL_ENV}" ]]; then
-			echo "echo" $on_prem_upload $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb $on_prem_dest >> $uploadcmnds
+			echo $on_prem_upload $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb $on_prem_dest >> $uploadcmnds
 		fi
 	done
 done <<< $(ls $geotiff_dir)
-
-echo "echo" $atlas_mv >> $uploadcmnds
 
 chmod +x $uploadcmnds
 ./$uploadcmnds
