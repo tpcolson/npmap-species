@@ -16,8 +16,10 @@ uploadcmnds="./uploadcommands.sh"
 ids_file="/app/npmap-species/atbirecords/ATBI_ids.txt"
 ext="tif"
 ext_mb="mbtiles"
-on_prem_upload="scp -i ~/.ssh/to_mbgov_rsa.pem -o \"ProxyCommand ssh -i ~/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\""
-on_prem_dest="preston.provins@10.112.30.133:/data/atlas-server/mbtiles/"
+on_prem_upload='scp -i /root/.ssh/to_mbgov_rsa.pem -o \"ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\"'
+on_prem_dest="preston.provins@10.112.30.133:/data/preston.provins-data-dump"
+atlas_mv='ssh -i /root/.ssh/to_mbgov_rsa.pem -o \"ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\" sudo mv /data/preston.provins-data-dump/* /data/atlas-server/mbtiles/'
+perms="chmod 755"
 
 cp /app/npmap-species/environmentallayers/*.asc $geotiff_dir
 ( cd $geotiff_dir && /app/npmap-species/backend/tilemillcode/convert_all_to_tiff.sh && rm $geotiff_dir/*.asc )
@@ -36,11 +38,12 @@ while read line; do
 		color=${sp##*@}
 		species_name=${sp%@*}
 		id=$(printf "%07i" $(grep -iw $species_name $ids_file | cut -d' ' -f2))
-		if [ "$sp" == "grp_spring_flowers" ]; then
+		if [ "$species_name" == "grp_spring_flowers" ]; then
 			id="G1"
 		fi
 		echo $gdal_cmd $geotiff_dir/$sp\.$ext $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		echo $tile_cmd $geotiff_dir/$sp\.$ext $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
+		echo $perms $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
 		if [[ ! -z "${MB_USER_ENV}" ]]; then
 			echo $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		fi
@@ -49,6 +52,8 @@ while read line; do
 		fi
 	done
 done <<< $(ls $geotiff_dir)
+
+echo "echo" $atlas_mv >> $uploadcmnds
 
 chmod +x $uploadcmnds
 ./$uploadcmnds
