@@ -25,13 +25,16 @@ cp /app/npmap-species/environmentallayers/*.asc $geotiff_dir
 mkdir $geotiff_dir/out
 mkdir -p $outtile_dir
 
+rm $geotiff_dir/*.asc
+rm $geotiff_dir/*.tif.aux.xml
+
 echo "#!/bin/bash" > $uploadcmnds
 
 while read line; do
 	for sp in $line; do
 		sp=${sp%.tif}
-		color=${sp##*_}
-		species_name=${sp%_*}
+		color=${sp##*@}
+		species_name=${sp%@*}
 		id=$(printf "%07i" $(grep -iw $species_name $ids_file | cut -d' ' -f2))
 		if [ "$sp" == "grp_spring_flowers" ]; then
 			id="G1"
