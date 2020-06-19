@@ -7,6 +7,7 @@ atlas_usr="atlas-user"
 dataset_prefix="GRSM"
 gdal_cmd="gdal_translate -of GTiff -a_nodata 0"
 tile_cmd="gdal_translate -of MBTiles -a_nodata 0 -oo ZOOM_LEVEL=16"
+post_cmd="gdaladdo -r nearest"
 upload_cmd="mapbox --access-token $access_token upload"
 geotiff_dir="./geotiffs"
 outgeos_dir="./geotiffs/out"
@@ -45,12 +46,13 @@ while read line; do
 		fi
 		echo $gdal_cmd $geotiff_dir/$sp\.$ext $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		echo $tile_cmd $geotiff_dir/$sp\.$ext $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
+		echo $post_cmd $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb "2 4 8 16" >> $uploadcmnds
 		echo $perms $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
 		if [[ ! -z "${MB_USER_ENV}" ]]; then
 			echo $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		fi
 		if [[ ! -z "${ATLAS_UPL_ENV}" ]]; then
-			echo -e "$on_prem_upload $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb $on_prem_dest" >> $uploadcmnds
+			echo -e $on_prem_upload $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb $on_prem_dest >> $uploadcmnds
 		fi
 	done
 done <<< $(ls $geotiff_dir)
