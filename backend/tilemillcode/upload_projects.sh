@@ -6,7 +6,7 @@ atlas_usr="atlas-user"
 
 dataset_prefix="GRSM"
 gdal_cmd="gdal_translate -of GTiff -a_nodata 0"
-tile_cmd="gdal_translate -of MBTiles -a_nodata 0"
+tile_cmd="gdal_translate -of MBTiles -a_nodata 0 -oo ZOOM_LEVEL=16"
 upload_cmd="mapbox --access-token $access_token upload"
 geotiff_dir="./geotiffs"
 outgeos_dir="./geotiffs/out"
@@ -16,13 +16,10 @@ uploadcmnds="./uploadcommands.sh"
 ids_file="/app/npmap-species/atbirecords/ATBI_ids.txt"
 ext="tif"
 ext_mb="mbtiles"
-on_prem_upload='scp -i /root/.ssh/to_mbgov_rsa.pem -o \"ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\"'
+on_prem_upload="scp -i /root/.ssh/to_mbgov_rsa.pem -o \x22ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\x22"
 on_prem_dest="preston.provins@10.112.30.133:/data/preston.provins-data-dump"
-atlas_mv='ssh -i /root/.ssh/to_mbgov_rsa.pem -o \"ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\" sudo mv /data/preston.provins-data-dump/* /data/atlas-server/mbtiles/'
+atlas_mv="ssh -i /root/.ssh/to_mbgov_rsa.pem -o \x22ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\x22 sudo mv /data/preston.provins-data-dump/* /data/atlas-server/mbtiles/"
 perms="chmod 755"
-
-cp /app/npmap-species/environmentallayers/*.asc $geotiff_dir
-( cd $geotiff_dir && /app/npmap-species/backend/tilemillcode/convert_all_to_tiff.sh && rm $geotiff_dir/*.asc )
 
 mkdir $geotiff_dir/out
 mkdir -p $outtile_dir
@@ -31,6 +28,11 @@ rm $geotiff_dir/*.asc
 rm $geotiff_dir/*.tif.aux.xml
 
 echo "#!/bin/bash" > $uploadcmnds
+
+echo "Host *" > ~/.ssh/config
+echo "	StrictHostKeyChecking no" >> ~/.ssh/config
+echo "	UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+chmod 400 ~/.ssh/config
 
 while read line; do
 	for sp in $line; do
@@ -48,10 +50,14 @@ while read line; do
 			echo $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		fi
 		if [[ ! -z "${ATLAS_UPL_ENV}" ]]; then
-			echo $on_prem_upload $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb $on_prem_dest >> $uploadcmnds
+			echo -e "$on_prem_upload $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb $on_prem_dest" >> $uploadcmnds
 		fi
 	done
 done <<< $(ls $geotiff_dir)
 
 chmod +x $uploadcmnds
 ./$uploadcmnds
+
+
+# on_prem_upload='scp -i /root/.ssh/to_mbgov_rsa.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o \"ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null preston.provins@52.204.73.74 -W %h:%p\"'
+# on_prem_dest="preston.provins@10.112.30.133:/data/preston.provins-data-dump"
