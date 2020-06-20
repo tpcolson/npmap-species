@@ -46,7 +46,7 @@ while read line; do
 		fi
 		echo $gdal_cmd $geotiff_dir/$sp\.$ext $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		echo $tile_cmd $geotiff_dir/$sp\.$ext $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
-		echo $post_cmd $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb "2 4 8 16" >> $uploadcmnds
+		echo $post_cmd $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb "9 10 11 12 13 14 15 16" >> $uploadcmnds
 		echo $perms $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
 		if [[ ! -z "${MB_USER_ENV}" ]]; then
 			echo $upload_cmd $mapbox_user\.$dataset_prefix\_$id\_$color $outgeos_dir/$sp\.$ext >> $uploadcmnds
