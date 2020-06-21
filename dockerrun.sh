@@ -1,7 +1,7 @@
 #!/bin/bash
-cd /app/npmap-species/atbirecords && python3 separate.py JUST_COORDS
+# cd /app/npmap-species/atbirecords && python3 separate.py JUST_COORDS
 
-cd /app/npmap-species/atbirecords && python3 makegroups.py
+# cd /app/npmap-species/atbirecords && python3 makegroups.py
 
 cd /app/npmap-species/backend/maxent/ && ./clean.sh
 

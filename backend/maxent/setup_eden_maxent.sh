@@ -42,7 +42,7 @@ removeduplicates=false \
 autorun"
 
    dir_num=$(eval "printf \"%0${pad}d\" \$i")
-	maxent_cmd="java -Xms2048m -Xmx2048m -XX:-UsePerfData -jar $MAXENT_JAR environmentallayers=$ENV_DIR samplesfile=$samples_dir/${species}.csv outputdirectory=$output_dir/$dir_num $flags"
+	maxent_cmd="java -Xms4096m -Xmx4096m -XX:-UsePerfData -jar $MAXENT_JAR environmentallayers=$ENV_DIR samplesfile=$samples_dir/${species}.csv outputdirectory=$output_dir/$dir_num $flags"
    echo "mkdir -p $output_dir/$dir_num && $maxent_cmd && cd $output_dir/$dir_num && $TOOL_DIR/asc2bov $species.asc $species && rm $species.asc" >> eden_maxent/commands
 
    i=$(( $i + 1))
