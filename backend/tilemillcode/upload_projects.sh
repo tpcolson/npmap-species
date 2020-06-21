@@ -44,8 +44,9 @@ while read line; do
 		if [ "$species_name" == "grp_spring_flowers" ]; then
 			id="G1"
 		fi
-		echo $gdal_cmd $geotiff_dir/$sp\.$ext $outgeos_dir/$sp\.$ext >> $uploadcmnds
+		# echo $gdal_cmd $geotiff_dir/$sp\.$ext $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		echo $tile_cmd $geotiff_dir/$sp\.$ext $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
+		echo "rm -rf " $geotiff_dir/$sp\.$ext >> $uploadcmnds
 		echo $post_cmd $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb "2 4 8 16" >> $uploadcmnds
 		echo $perms $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
 		if [[ ! -z "${MB_USER_ENV}" ]]; then
@@ -54,6 +55,7 @@ while read line; do
 		if [[ ! -z "${ATLAS_UPL_ENV}" ]]; then
 			echo -e $on_prem_upload $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb $on_prem_dest >> $uploadcmnds
 		fi
+		echo "rm -rf " $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
 	done
 done <<< $(ls $geotiff_dir)
 
