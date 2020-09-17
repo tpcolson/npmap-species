@@ -41,8 +41,8 @@ while read line; do
 		color=${sp##*@}
 		species_name=${sp%@*}
 		id=$(printf "%07i" $(grep -iw $species_name $ids_file | cut -d' ' -f2))
-		if [ "$species_name" == "grp_spring_flowers" ]; then
-			id="G1"
+		if [ {$species_name:0:3} == "grp" ]; then
+			id="$species_name"
 		fi
 		echo $gdal_cmd $geotiff_dir/$sp\.$ext $outgeos_dir/$sp\.$ext >> $uploadcmnds
 		echo $tile_cmd $geotiff_dir/$sp\.$ext $outtile_dir/$atlas_usr\.$id\_$color\.$ext_mb >> $uploadcmnds
