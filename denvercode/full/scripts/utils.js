@@ -138,6 +138,7 @@ window.onload = function () {
     var url = this.style.backgroundImage.replace("url(\"", "").replace("\")", "");
     //url = url.replace("/thumbnails", ""); // load full quality image
     url = url.replace('110px', '800px');
+    url = url.replace('thumbmedium.png?', 'original.jpg?');
     modalImg.src = url;
   }
 
@@ -438,10 +439,10 @@ function toggleSelectViewingList() {
   if (showSelectViewing) {
     $('#options-selectviewing-dropdown').stop();
     $('#options-selectviewing-dropdown').animate({ 'height': '60px' });
-    $('#options-selectviewing-dropdown-ul').css({ 'display': 'block', 'z-order': '52' });
+    $('#options-selectviewing-dropdown-ul').css({ 'display': 'block' });
   } else {
     $('#options-selectviewing-dropdown').stop();
-    $('#options-selectviewing-dropdown').animate({ 'height': '20px', 'z-order': '52' });
+    $('#options-selectviewing-dropdown').animate({ 'height': '20px' });
     $('#options-selectviewing-dropdown-ul').css({ 'display': 'none' });
   }
 }
@@ -451,22 +452,43 @@ function swapViewPress(elemID) {
   if (elemID != activeViewElemID) {
     // View Changed!
     let selected = document.getElementById(elemID);
-    console.log(selected);
     let selectTextHead = document.getElementById('viewselecttext');
     let selText = selected.getAttribute('datavalue');
-    console.log(selText);
     selectTextHead.innerText = selText;
 
-    if(selText == 'Single Species') {
+    if (selText == 'Single Species') {
       selected.innerText = '✔ Single Species';
-      document.getElementById('group-spec-view').innerText = 'Groupped Species';
+      document.getElementById('group-spec-view').innerText = 'Common Grouping';
     } else {
-      selected.innerText = '✔ Groupped Species';
+      selected.innerText = '✔ Common Grouping';
       document.getElementById('single-spec-view').innerText = 'Single Species';
     }
   }
   activeViewElemID = elemID;
-  console.log(elemID);
+  swapInitControls();
+}
+
+function swapInitControls() {
+  clearSearch();
+  let controlDiv = document.getElementById('search-initial');
+  let specifyDiv = document.getElementById('search-compare');
+  let controlTemplate = undefined;
+  let specifyTemplate = undefined;
+  if (activeViewElemID == 'single-spec-view') {
+    controlTemplate = document.getElementById('search-initial-ss-template').content.cloneNode(true);
+    specifyTemplate = document.getElementById('search-compare-ss-template').content.cloneNode(true);
+  } else {
+    controlTemplate = document.getElementById('search-initial-gv-template').content.cloneNode(true);
+    specifyTemplate = document.getElementById('search-compare-gv-template').content.cloneNode(true);
+  }
+
+  if (controlTemplate && specifyTemplate) {
+    controlDiv.innerHTML = '';
+    controlDiv.appendChild(controlTemplate);
+    specifyDiv.innerHTML = '';
+    specifyDiv.appendChild(specifyTemplate);
+  }
+  populateResults();
 }
 
 var whichName = 'common';

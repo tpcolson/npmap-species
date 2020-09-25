@@ -93,10 +93,10 @@ var subNavZ, headerZ, divHeader, divSubNav,
         }
       }
     }],
-    zoom: 10,
+    zoom: 11,
     center: { lat: 35.6, lng: -83.52 },
-    minZoom: 10,
-    maxZoom: 16,
+    minZoom: 11,
+    maxZoom: 15,
     maxBounds: [
       { lat: 35, lng: -84.5 },
       { lat: 36.25, lng: -82.5 }
@@ -107,8 +107,8 @@ var subNavZ, headerZ, divHeader, divSubNav,
     measureControl: true,
     scaleControl: { metric: true },
     events: [{
-      fn: function(evt) {
-        if(currentBaseLayer && evt.layer._leaflet_id === currentBaseLayer._leaflet_id) {
+      fn: function (evt) {
+        if (currentBaseLayer && evt.layer._leaflet_id === currentBaseLayer._leaflet_id) {
           drawData();
         }
       },
