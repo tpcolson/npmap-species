@@ -10,10 +10,10 @@ function Request(options) {
 	this.retryCount = options.retryCount || this.defaults.retryCount;
 	this.retryTimeout = options.retryTimeout || this.defaults.retryTimeout;
 
-	var old_success = options.success || function () {};
+	var old_success = options.success || function () { };
 	options.success = this.success();
 
-	var old_error = options.error || function () {};
+	var old_error = options.error || function () { };
 	options.error = this.error();
 
 	this.deferred = $.Deferred().done(old_success).fail(old_error);

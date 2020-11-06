@@ -138,6 +138,7 @@ window.onload = function () {
     var url = this.style.backgroundImage.replace("url(\"", "").replace("\")", "");
     //url = url.replace("/thumbnails", ""); // load full quality image
     url = url.replace('110px', '800px');
+    url = url.replace('thumbmedium.png?', 'original.jpg?');
     modalImg.src = url;
   }
 
@@ -457,9 +458,9 @@ function swapViewPress(elemID) {
 
     if (selText == 'Single Species') {
       selected.innerText = '✔ Single Species';
-      document.getElementById('group-spec-view').innerText = 'Common Groupping';
+      document.getElementById('group-spec-view').innerText = 'Common Grouping';
     } else {
-      selected.innerText = '✔ Common Groupping';
+      selected.innerText = '✔ Common Grouping';
       document.getElementById('single-spec-view').innerText = 'Single Species';
     }
   }
@@ -468,6 +469,7 @@ function swapViewPress(elemID) {
 }
 
 function swapInitControls() {
+  clearSearch();
   let controlDiv = document.getElementById('search-initial');
   let specifyDiv = document.getElementById('search-compare');
   let controlTemplate = undefined;

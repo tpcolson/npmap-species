@@ -19,6 +19,10 @@ body.dragging * {
   cursor: move !important;
 }
 
+*:focus {
+  outline: none;
+}
+
 /*****************************************
 * ATLAS OF THE SMOKIES: Selector         *
 *****************************************/
@@ -760,6 +764,7 @@ body.dragging * {
   left: -5px;
   z-index: 60;
   overflow: hidden;
+  overflow-y: scroll;
   width: 100%;
   height: 0px;
 
@@ -2591,8 +2596,7 @@ button {
 .triangle {
   position: relative;
   top: 8px;
-  left: 145px;
-
+  left: 10px;
   width: 0;
   height: 0;
 
@@ -2601,10 +2605,13 @@ button {
   border-left: 5px solid transparent;
 }
 
+.triangle.lefter{
+  left: 145px;
+}
+
 .drag-handle {
   width: 100%;
   height: 50%;
-  cursor: move;
   text-align: center;
   letter-spacing: 0.1em;
 
@@ -2761,7 +2768,7 @@ button.rectangle {
 /*********************************************/
 
 /* Printer issue fixed */
-@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution 120dpi) {
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
   .print {
     background-size: 80% !important;
   }
