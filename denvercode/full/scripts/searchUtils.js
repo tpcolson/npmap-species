@@ -68,9 +68,7 @@ function prepareSearchTool() {
 
 
 function populateGroupResults() {
-  console.log('populating group results');
   let dropper = document.getElementById('grp-initial-dropdown-select');
-  console.log('Here:', Object.keys(group_mappings));
   dropper.innerHTML = '';
 
   var readable = {
@@ -86,14 +84,11 @@ function populateGroupResults() {
 
   for (const key in group_mappings) {
     let readkey = key;
-    console.log(readkey);
     if (key in readable) {
       readkey = readable[key];
-      console.log(readable, readkey, key);
     } else {
       continue;
     }
-    console.log(key);
     let li = document.createElement('li');
     li.onclick = li.onkeypress = function () {
       selectGroup(this);
@@ -1316,7 +1311,6 @@ function clearSubGroupSelect() {
   selectSubGroup({ innerHTML: 'clear-selection' });
   last_grp = undefined;
   last_sub = undefined;
-  console.log('clear sub select called');
   populateSpeciesSelect(undefined);
 }
 
@@ -1437,7 +1431,6 @@ function selectSubGroup(li) {
   }
   $('#search-compare-gv-contents').css({ visibility: 'hidden' });
   grpSelect.val("");
-  console.log('Removing sub species...');
 }
 
 var group_name_convention = 'common';
@@ -1517,6 +1510,13 @@ function toggleNameGroup() {
 }
 
 function selectSpeciesOfGroup(li, idx) {
+  for (let i = 0; i < 3; ++i) {
+    let lat_name = $(li).attr('data-name');
+    if (control._selectedSpecies[i] && lat_name && control._selectedSpecies[i]._latin == lat_name){
+      return;
+    }
+  }
+
   let name = li.innerHTML;
   let spcString = '#dropdown-grp' + idx + '-input';
   let prntString = '#search-compare-grp' + idx + '-dropdown';
@@ -1544,46 +1544,41 @@ function selectSpeciesOfGroup(li, idx) {
     default:
       break;
   }
-  if (name != 'clear-selection') {
-    console.log(color);
-    spcSelect.val(li.innerHTML);
-    spcSelect.css({ backgroundColor: color });
-    prntDiv.css({ backgroundColor: color });
-    toggleSearchList(idx + 4);
-
-    const id = idx - 1;
-
-    if (control._selectedSpecies[id] !== undefined && control._selectedSpecies[id].visible) {
-      recordAction('removed species', control._selectedSpecies[id]._latin.replace(/_/g, ' '));
-
-      if (showPredicted) {
-        NPMap.config.L.removeLayer(control._selectedSpecies[id].predicted);
-      }
-
-      if (showObserved) {
-        NPMap.config.L.removeLayer(control._selectedSpecies[id].observed);
-      }
-    }
-
-    let lat_name = $(li).attr('data-name');
-    let cmn_name = li.innerHTML;
-    let specid = specie_id_map[lat_name].padStart(7, '0');
-    control._selectedSpecies[id] = {};
-    control._selectedSpecies[id]._id = specid;
-    control._selectedSpecies[id]._latin = lat_name;
-    control._selectedSpecies[id]._common = cmn_name;
-    control._selectedSpecies[id].visible = true;
-    $(nametag).html(name);
-    $(colortag).addClass('populated');
-
-    console.log($(colortag));
-    drawData();
-
+  if (name == 'clear-selection') {
+    spcSelect.css({ backgroundColor: '#40403d' });
+    prntDiv.css({ backgroundColor: '#40403d' });
+    $(colortag).removeClass('populated');
+    spcSelect.val("");
     return;
   }
-  spcSelect.css({ backgroundColor: '#40403d' });
-  prntDiv.css({ backgroundColor: '#40403d' });
-  $(colortag).removeClass('populated');
-  spcSelect.val("");
-  console.log('Clearing Species');
+  spcSelect.val(li.innerHTML);
+  spcSelect.css({ backgroundColor: color });
+  prntDiv.css({ backgroundColor: color });
+
+  const id = idx - 1;
+
+  if (control._selectedSpecies[id] !== undefined && control._selectedSpecies[id].visible) {
+    recordAction('removed species', control._selectedSpecies[id]._latin.replace(/_/g, ' '));
+
+    if (showPredicted) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[id].predicted);
+    }
+
+    if (showObserved) {
+      NPMap.config.L.removeLayer(control._selectedSpecies[id].observed);
+    }
+  }
+
+  let lat_name = $(li).attr('data-name');
+  let cmn_name = li.innerHTML;
+  let specid = specie_id_map[lat_name].padStart(7, '0');
+  control._selectedSpecies[id] = {};
+  control._selectedSpecies[id]._id = specid;
+  control._selectedSpecies[id]._latin = lat_name;
+  control._selectedSpecies[id]._common = cmn_name;
+  control._selectedSpecies[id].visible = true;
+  $(nametag).html(name);
+  $(colortag).addClass('populated');
+  toggleSearchList(idx + 4);
+  drawData();
 }
