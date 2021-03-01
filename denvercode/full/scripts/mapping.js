@@ -3,9 +3,9 @@ var subNavZ, headerZ, divHeader, divSubNav,
     div: 'map',
     baseLayers: [
       'nps-parkTiles3',
-      'mapbox-terrain',
       'esri-topographic',
-      'esri-imagery'
+      'nps-parkTiles3Imagery',
+      'nps-parkTiles3Slate',
     ],
     overlays: [{
       name: 'Trails',
