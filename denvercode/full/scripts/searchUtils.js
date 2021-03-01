@@ -468,7 +468,6 @@ function closeSearchList(idx, callback) {
       $('#search-compare-grp3-dropdown-select').animate({ height: '0px' }, callback);
       list7Shown = false;
       break;
->>>>>>> d4330614824b81233bdb6cf66b2ce14474bfada4
     default:
       break;
   }
