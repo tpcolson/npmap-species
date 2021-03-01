@@ -74,12 +74,12 @@ function populateGroupResults() {
   dropper.innerHTML = '';
 
   var readable = {
-    "abundance": "Abundance",
+    // Not a good overlay... "abundance": "Abundance",
     "bloomtime": "Bloomtime",
     "elevationrange": "Elevation Range",
     "lifeform": "Lifeform",
-    "nativeness": "Nativeness",
-    "speciesrecordstatus": "Species Record Status",
+    // Not a good overlay... "nativeness": "Nativeness",
+    // Not a good overlay... "speciesrecordstatus": "Species Record Status",
     "taxagroup": "Taxagroup",
     "taxasubcategory": "Taxa Subgroup"
   }
@@ -90,6 +90,8 @@ function populateGroupResults() {
     if (key in readable) {
       readkey = readable[key];
       console.log(readable, readkey, key);
+    } else {
+      continue;
     }
     console.log(key);
     let li = document.createElement('li');
