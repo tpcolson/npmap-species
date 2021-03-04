@@ -3,7 +3,7 @@ django==1.10
 # Django apps and extensions
 django-extensions==1.6.5  # extra commands for manage.py
 django-impersonate==1.0.1 # superusers can impersonate other users to better identify user-specific problems
-Werkzeug==0.11.15
+Werkzeug==0.15.3
 
 # For a REST-like interface in Django
 django-tastypie==0.13.3
