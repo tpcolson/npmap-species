@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This should be called from postprocess.sh (which is created by do_run.sh)
 # when you have cross-validated maxent results
@@ -18,10 +18,10 @@ while read line; do
    species=$line
    aggregate_cmd="cd $RUN_DIR; export TOOL_DIR=$TOOL_DIR; export CV_NUM_FOLDS=$CV_NUM_FOLDS; $TOOL_DIR/aggregate.sh $species"
    bov2asc_cmd="$TOOL_DIR/bov2asc $input_dir/$species/${species}_avg > $input_dir/$species/${species}_avg.asc"
-   gdal_translate_cmd="$GDAL_BIN/gdal_translate -a_srs EPSG:4326 $input_dir/$species/${species}_avg.asc $GEOTIFF_DIR/$species.tif"
-   gdaldem_cmd_blue="$GDAL_BIN/gdaldem color-relief -alpha $GEOTIFF_DIR/$species.tif $TOOL_DIR/color_ramp_blue.txt $GEOTIFF_DIR/${species}_blue.tif"
-   gdaldem_cmd_pink="$GDAL_BIN/gdaldem color-relief -alpha $GEOTIFF_DIR/$species.tif $TOOL_DIR/color_ramp_pink.txt $GEOTIFF_DIR/${species}_pink.tif"
-   gdaldem_cmd_orange="$GDAL_BIN/gdaldem color-relief -alpha $GEOTIFF_DIR/$species.tif $TOOL_DIR/color_ramp_orange.txt $GEOTIFF_DIR/${species}_orange.tif"
+   gdal_translate_cmd="$GDAL_BIN/gdal_translate -outsize 25536 0 -a_srs EPSG:4326 $input_dir/$species/${species}_avg.asc $GEOTIFF_DIR/$species.tif"
+   gdaldem_cmd_blue="$GDAL_BIN/gdaldem color-relief -alpha $GEOTIFF_DIR/$species.tif $TOOL_DIR/color_ramp_blue.txt $GEOTIFF_DIR/${species}@blue.tif"
+   gdaldem_cmd_pink="$GDAL_BIN/gdaldem color-relief -alpha $GEOTIFF_DIR/$species.tif $TOOL_DIR/color_ramp_pink.txt $GEOTIFF_DIR/${species}@pink.tif"
+   gdaldem_cmd_orange="$GDAL_BIN/gdaldem color-relief -alpha $GEOTIFF_DIR/$species.tif $TOOL_DIR/color_ramp_orange.txt $GEOTIFF_DIR/${species}@orange.tif"
    echo "$aggregate_cmd && $bov2asc_cmd && $gdal_translate_cmd && $gdaldem_cmd_blue; $gdaldem_cmd_pink; $gdaldem_cmd_orange" >> eden_aggregate/commands
 done < $CONFIG_FILE
 

@@ -1,7 +1,7 @@
 # Visit 2.4.0 log file
 ScriptVersion = "2.4.0"
 if ScriptVersion != Version():
-    print "This script is for VisIt %s. It may not work with version %s" % (ScriptVersion, Version())
+    print("This script is for VisIt %s. It may not work with version %s" % (ScriptVersion, Version()))
 ShowAllWindows()
 OpenDatabase("localhost:../maxent_results/Anorthodes_tarda/avg.bov", 0)
 # The UpdateDBPluginInfo RPC is not supported in the VisIt module so it will not be logged.

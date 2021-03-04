@@ -6,7 +6,7 @@ speciesList = {}
 similarities = {}
 lines = f.readlines()
 for line in lines:
-    species, env = map(str.strip, line.split(':'))
+    species, env = list(map(str.strip, line.split(':')))
     env = env.split(',')
     speciesList[species] = env
 
@@ -19,4 +19,4 @@ for species in speciesList:
 
         similarities[species][compSpecies] = '{:.4f}'.format(summation)
 
-print json.dumps(similarities)
+print(json.dumps(similarities))

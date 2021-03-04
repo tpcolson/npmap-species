@@ -1,5 +1,6 @@
-body, html {
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+body,
+html {
+  font-family: "Source Sans Pro", Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -8,12 +9,18 @@ h1 {
   font-size: 36px;
 }
 
-header, footer {
-    min-width: 1246px;
+header,
+footer {
+  min-width: 1246px;
 }
 
-body.dragging, body.dragging * {
+body.dragging,
+body.dragging * {
   cursor: move !important;
+}
+
+*:focus {
+  outline: none;
 }
 
 /*****************************************
@@ -29,20 +36,41 @@ body.dragging, body.dragging * {
   color: rgb(189, 189, 189);
   letter-spacing: 1px;
   display: inline-block;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   text-transform: uppercase;
 }
 
-.atlas-selector-dropdown {
+.selector-container {
+  z-index: 51;
   position: absolute;
+  display: flex;
+  top: -1px;
   left: 225px;
-  top: -25px;
+  padding-left: 5px;
+  overflow: auto;
+
+  cursor: pointer;
+  letter-spacing: 0.001em;
+
+  color: #f5faf2;
+  border-radius: 4px;
+  font-size: 10pt;
+  line-height: 20px;
+
+  margin-top: 5px;
+  margin-bottom: auto;
+}
+
+.atlas-selector-dropdown {
+  position: relative;
+  top: -5px;
+  left: -5px;
   width: 170px;
   height: 20px;
   padding-left: 5px;
 
   cursor: pointer;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-radius: 4px;
@@ -52,10 +80,56 @@ body.dragging, body.dragging * {
   line-height: 20px;
 
   margin-top: 5px;
-  margin-bottom: auto;
+}
+
+.view-as-text {
+  position: relative;
+  top: -5px;
+  height: 20px;
+  padding-left: 5px;
+  padding-right: 10px;
+
+  cursor: pointer;
+  letter-spacing: 0.001em;
+
+  color: #f5faf2;
+  border-radius: 4px;
+
+  font-size: 10pt;
+  line-height: 20px;
+
+  margin-top: 5px;
+}
+
+.grouping-selector-dropdown {
+  position: relative;
+  top: -5px;
+  width: 170px;
+  height: 20px;
+  padding-left: 5px;
+
+  cursor: pointer;
+  letter-spacing: 0.001em;
+  top: -5px;
+
+  color: #f5faf2;
+  border-radius: 4px;
+  background-color: #40403d;
+
+  font-size: 10pt;
+  line-height: 20px;
+
+  margin-top: 5px;
 }
 
 .atlas-selector-triangle {
+  left: unset !important;
+  position: absolute !important;
+  top: 3px !important;
+  right: 10px !important;
+}
+
+.grouping-selector-triangle {
   left: unset !important;
   position: absolute !important;
   top: 3px !important;
@@ -95,6 +169,30 @@ body.dragging, body.dragging * {
 }
 
 #options-selectbackground-dropdown-ul {
+  top: -5px;
+  width: calc(100% - 5px);
+  padding-right: 5px;
+}
+
+#options-selectviewing {
+  height: 22px;
+  width: 120px;
+  padding-bottom: 10px;
+}
+
+#options-selectviewing-dropdown {
+  z-index: 50;
+  font-style: italic;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+#options-selectviewing-dropdown > .triangle {
+  top: -12px;
+  left: 105px;
+}
+
+#options-selectviewing-dropdown-ul {
   position: relative;
   top: -5px;
   width: calc(100% - 5px);
@@ -112,17 +210,17 @@ body.dragging, body.dragging * {
 }
 
 .leaflet-popup {
-  font-family: 'Source Sans Pro', sans-serif;
-  letter-spacing: .001em;
+  font-family: "Source Sans Pro", sans-serif;
+  letter-spacing: 0.001em;
 }
 
 .leaflet-tooltip {
-  font-family: 'Source Sans Pro', sans-serif;
-  letter-spacing: .001em;
+  font-family: "Source Sans Pro", sans-serif;
+  letter-spacing: 0.001em;
 }
 
 .hidden-label {
-    display: none;
+  display: none;
 }
 
 #map {
@@ -148,7 +246,7 @@ body.dragging, body.dragging * {
   margin: 0px;
   padding: 0px;
 
-  opacity: 1.0;
+  opacity: 1;
   background-color: black;
   z-index: 2;
 
@@ -160,7 +258,7 @@ body.dragging, body.dragging * {
   height: 100%;
   margin: 0 auto;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 #search-banner {
@@ -183,14 +281,13 @@ body.dragging, body.dragging * {
   font-weight: 700;
 }
 
-#search-tool-extra-controls
-{
-    float: left;
+#search-tool-extra-controls {
+  float: left;
 
-    border-left: 1px solid #40403d;
-    margin: 10px;
-    padding-top: 22px;
-    height: 60px;
+  border-left: 1px solid #40403d;
+  margin: 10px;
+  padding-top: 22px;
+  height: 60px;
 }
 
 #search-banner-help-share,
@@ -207,12 +304,13 @@ body.dragging, body.dragging * {
   padding: 0;
 
   cursor: pointer;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #969696;
-  border:none;
-  outline: none;  text-align: center;
-  background:none;
+  border: none;
+  outline: none;
+  text-align: center;
+  background: none;
 
   font-size: 1.4em;
   line-height: 30px;
@@ -250,15 +348,15 @@ body.dragging, body.dragging * {
 #search-banner-tooltips-button {
   width: 100%;
   height: 20px;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 
-  cursor:pointer;
+  cursor: pointer;
 
   border: none;
   border-radius: 4px;
-  outline:none;
-  background:none;
+  outline: none;
+  background: none;
 }
 
 #search-banner-tooltips-button > div {
@@ -296,7 +394,7 @@ body.dragging, body.dragging * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   text-align: center;
 
@@ -326,12 +424,12 @@ body.dragging, body.dragging * {
   padding: 0;
 
   cursor: pointer;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
-  border:none;
+  border: none;
   outline: none;
-  background:none;
+  background: none;
 
   text-align: center;
 
@@ -354,13 +452,13 @@ body.dragging, body.dragging * {
   width: 128px;
   height: 128px;
 
-  opacity: 0.0;
+  opacity: 0;
   border-radius: 4px;
 }
 
 /* just until we have images */
 #search-initial-image > img {
-    display: none;
+  display: none;
 }
 
 #search-initial-controls {
@@ -377,15 +475,15 @@ body.dragging, body.dragging * {
 #search-initial-lexical {
   width: 15px;
   height: 15px;
-  margin:0;
+  margin: 0;
   padding: 2.5px;
 
-  cursor:pointer;
+  cursor: pointer;
 
   border: none;
   border-radius: 4px;
-  outline:none;
-  background:none;
+  outline: none;
+  background: none;
   background-color: #40403d;
 }
 
@@ -393,6 +491,31 @@ body.dragging, body.dragging * {
   width: 255px;
   position: relative;
   top: 5px;
+}
+
+#grp-initial-dropdown {
+	width: 255px;
+	position: relative;
+	top: 5px;
+}
+
+#subgrp-initial-dropdown {
+	width: 255px;
+	position: relative;
+	top: 5px;
+}
+
+.grp-dropdown-input {
+  height: 100%;
+  width: 100%;
+  float: left;
+  border: none;
+  padding: 0;
+
+  font-style: italic;
+  color: #f5faf2;
+  background-color: #40403d;
+  outline: none;
 }
 
 .dropdown-input {
@@ -408,15 +531,14 @@ body.dragging, body.dragging * {
   outline: none;
 }
 
-.dropdown-input::-webkit-input-placeholder, .dropdown-input::placeholder
-{
+.dropdown-input::-webkit-input-placeholder,
+.dropdown-input::placeholder {
   font-style: normal;
   color: #eee;
 }
 
 .dropdown-button {
   width: 30px;
-  float: left;
   height: 100%;
 }
 
@@ -472,6 +594,222 @@ body.dragging, body.dragging * {
 }
 
 #search-initial-dropdown-lex > li {
+  width: 250px;
+
+  height: 20px;
+  margin: 0px;
+
+  cursor: pointer;
+
+  color: #f5faf2;
+  border-top: 1px dotted #f5faf2;
+
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+#grp-initial-dropdown-select {
+  position: relative;
+  left: -5px;
+  z-index: 60;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  width: 250px;
+  height: 0px;
+  margin: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  border-radius: 0px 0px 4px 4px;
+  background-color: #40403d;
+}
+
+#grp-initial-dropdown-select > li {
+  width: 250px;
+  height: 20px;
+  margin: 0px;
+
+  cursor: pointer;
+
+  color: #f5faf2;
+  border-top: 1px dotted #f5faf2;
+
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+#grp-initial-dropdown-select-lex {
+  position: relative;
+  left: -5px;
+  z-index: 60;
+
+  overflow-x: hidden;
+
+  width: 250px;
+
+  height: 0px;
+  margin: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  border-radius: 0px 0px 4px 4px;
+  background-color: #40403d;
+}
+
+#grp-initial-dropdown-select-lex > li {
+  width: 250px;
+
+  height: 20px;
+  margin: 0px;
+
+  cursor: pointer;
+
+  color: #f5faf2;
+  border-top: 1px dotted #f5faf2;
+
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+#subgrp-initial-dropdown-select {
+  position: relative;
+  left: -5px;
+  z-index: 60;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  width: 250px;
+  height: 0px;
+  margin: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  border-radius: 0px 0px 4px 4px;
+  background-color: #40403d;
+}
+
+#subgrp-initial-dropdown-select > li {
+  width: 250px;
+  height: 20px;
+  margin: 0px;
+
+  cursor: pointer;
+
+  color: #f5faf2;
+  border-top: 1px dotted #f5faf2;
+
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+#subgrp-initial-dropdown-select-lex {
+  position: relative;
+  left: -5px;
+  z-index: 60;
+
+  overflow-x: hidden;
+
+  width: 250px;
+
+  height: 0px;
+  margin: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  border-radius: 0px 0px 4px 4px;
+  background-color: #40403d;
+}
+
+#subgrp-initial-dropdown-select-lex > li {
+  width: 250px;
+
+  height: 20px;
+  margin: 0px;
+
+  cursor: pointer;
+
+  color: #f5faf2;
+  border-top: 1px dotted #f5faf2;
+
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+
+.grp-species-dropdown {
+  position: relative;
+  left: -5px;
+  z-index: 60;
+
+  width: 250px;
+  height: 0px;
+  margin: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  border-radius: 0px 0px 4px 4px;
+  background-color: #40403d;
+}
+
+.grp-species-dropdown-select {
+  position: relative;
+  left: -5px;
+  z-index: 60;
+  overflow: hidden;
+  overflow-y: scroll;
+  width: 100%;
+  height: 0px;
+
+  margin: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  border-radius: 0px 0px 4px 4px;
+  background-color: #40403d;
+}
+
+.grp-species-dropdown-select > li {
+  width: 250px;
+  height: 20px;
+  margin: 0px;
+
+  cursor: pointer;
+
+  color: #f5faf2;
+  border-top: 1px dotted #f5faf2;
+
+  font-size: 10pt;
+  font-style: italic;
+  line-height: 20px;
+}
+
+.grp-species-dropdown-select-lex {
+  position: relative;
+  left: -5px;
+  z-index: 60;
+
+  overflow-x: hidden;
+
+  width: 250px;
+
+  height: 0px;
+  margin: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  border-radius: 0px 0px 4px 4px;
+  background-color: #40403d;
+}
+
+.grp-species-dropdown-select-lex > li {
   width: 250px;
 
   height: 20px;
@@ -709,15 +1047,15 @@ body.dragging, body.dragging * {
 #search-initial-switch-button {
   width: 100%;
   height: 20px;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 
-  cursor:pointer;
+  cursor: pointer;
 
   border: none;
   border-radius: 4px;
-  outline:none;
-  background:none;
+  outline: none;
+  background: none;
 }
 
 #search-initial-switch-button > div {
@@ -750,7 +1088,7 @@ body.dragging, body.dragging * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -781,7 +1119,7 @@ body.dragging, body.dragging * {
   margin: 0;
   padding: 0px 0px 0px 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border: 0;
@@ -789,7 +1127,7 @@ body.dragging, body.dragging * {
   outline: 0;
   background-color: #40403d;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 10pt;
   font-style: italic;
   line-height: 20px;
@@ -843,6 +1181,24 @@ body.dragging, body.dragging * {
   height: 128px;
 }
 
+#search-compare-gv-contents {
+  width: 100%;
+  height: 128px;
+}
+
+.search-compare-gv-sub-cont {
+  width: 100%;
+  height: 128px;
+  display: flex;
+}
+
+.group-sel-head {
+  height: 20px;
+  letter-spacing: 0.001em;
+  color: #f5faf2;
+  font-size: 14px;
+}
+
 #search-compare-lexical {
   position: relative;
 
@@ -878,7 +1234,7 @@ body.dragging, body.dragging * {
   margin: 0;
   padding: 0px 0px 0px 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border: 0;
@@ -886,7 +1242,7 @@ body.dragging, body.dragging * {
   outline: 0;
   background-color: #40403d;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 10pt;
   font-style: italic;
   line-height: 20px;
@@ -903,7 +1259,7 @@ body.dragging, body.dragging * {
   margin: 0;
   padding: 0px 0px 0px 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border: 0;
@@ -911,7 +1267,7 @@ body.dragging, body.dragging * {
   outline: 0;
   background-color: rgb(242, 142, 67);
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 10pt;
   font-style: italic;
   line-height: 20px;
@@ -928,12 +1284,12 @@ body.dragging, body.dragging * {
   height: 20px;
 
   cursor: pointer;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-radius: 4px;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 10pt;
   font-style: italic;
   line-height: 20px;
@@ -982,7 +1338,7 @@ body.dragging, body.dragging * {
   margin: 0;
   padding: 0px 0px 0px 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border: 0;
@@ -990,7 +1346,7 @@ body.dragging, body.dragging * {
   outline: 0;
   background-color: #40403d;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 10pt;
   font-style: italic;
   line-height: 20px;
@@ -1006,13 +1362,13 @@ body.dragging, body.dragging * {
   height: 20px;
   padding: 0px 0px 0px 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-radius: 4px;
   background-color: rgb(29, 144, 156);
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 10pt;
   font-style: italic;
   line-height: 20px;
@@ -1029,12 +1385,12 @@ body.dragging, body.dragging * {
   height: 20px;
 
   cursor: pointer;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-radius: 4px;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 10pt;
   font-style: italic;
   line-height: 20px;
@@ -1324,7 +1680,7 @@ body.dragging, body.dragging * {
   left: 225px;
 }
 
-#search-compare-contents input[type='radio'] {
+#search-compare-contents input[type="radio"] {
   position: relative;
   top: 3px;
   left: 5px;
@@ -1338,7 +1694,7 @@ body.dragging, body.dragging * {
 
   height: 15px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: rgb(144, 144, 144);
 
@@ -1356,7 +1712,7 @@ body.dragging, body.dragging * {
   width: 200px;
   height: 40px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: rgb(144, 144, 144);
 
@@ -1380,17 +1736,16 @@ body.dragging, body.dragging * {
   cursor: pointer;
 }
 
-.search-image-box-magnifier
-{
-    color: white;
-    margin-top: 88px;
-    margin-left: 89px;
-    background-color: black;
-    padding: 3px;
-    border-radius: 3px 0 0 0;
-    padding-left: 4px;
-    opacity: 0.5;
-    display: none;
+.search-image-box-magnifier {
+  color: white;
+  margin-top: 88px;
+  margin-left: 89px;
+  background-color: black;
+  padding: 3px;
+  border-radius: 3px 0 0 0;
+  padding-left: 4px;
+  opacity: 0.5;
+  display: none;
 }
 
 #search-options {
@@ -1413,7 +1768,7 @@ body.dragging, body.dragging * {
   height: 20px;
   padding-bottom: 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1511,7 +1866,7 @@ body.dragging, body.dragging * {
   height: 20px;
   padding-bottom: 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1524,7 +1879,7 @@ body.dragging, body.dragging * {
   height: 75px;
   padding: 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #a5aaa2;
   border: 1px solid #40403d;
@@ -1554,18 +1909,18 @@ body.dragging, body.dragging * {
 #options-annotations > button {
   height: 27px;
   width: 50px;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
   padding-bottom: 5px;
   border-radius: 4px;
 
   text-align: center;
 
   cursor: pointer;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
-  border:none;
+  border: none;
   outline: none;
 
   background-color: #74746a;
@@ -1592,7 +1947,7 @@ body.dragging, body.dragging * {
   border-radius: 10px;
   background-color: #000000;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   transition: height 0.3s;
 }
 
@@ -1608,7 +1963,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1624,7 +1979,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1652,7 +2007,7 @@ body.dragging, body.dragging * {
   height: 100%;
 }
 
-#legend-blue-controls > input[type='checkbox'] {
+#legend-blue-controls > input[type="checkbox"] {
   position: relative;
   top: 3px;
   left: 19px;
@@ -1680,7 +2035,7 @@ body.dragging, body.dragging * {
   height: 50%;
   padding-left: 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1701,7 +2056,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-top-left-radius: 4px;
@@ -1720,7 +2075,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   background-color: #1d909b;
@@ -1737,7 +2092,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-top-right-radius: 4px;
@@ -1756,7 +2111,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1784,7 +2139,7 @@ body.dragging, body.dragging * {
   height: 100%;
 }
 
-#legend-pink-controls > input[type='checkbox'] {
+#legend-pink-controls > input[type="checkbox"] {
   position: relative;
   top: 3px;
   left: 19px;
@@ -1812,7 +2167,7 @@ body.dragging, body.dragging * {
   height: 50%;
   padding-left: 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1833,7 +2188,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-top-left-radius: 4px;
@@ -1852,7 +2207,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   background-color: #c31d8e;
@@ -1869,7 +2224,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-top-right-radius: 4px;
@@ -1888,7 +2243,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1907,7 +2262,7 @@ body.dragging, body.dragging * {
 
   border-radius: 4px;
   background-color: #40403d;
-  transition: height .3s, opacity .3s, margin .3s;
+  transition: height 0.3s, opacity 0.3s, margin 0.3s;
 }
 
 #color-legend .populated {
@@ -1923,7 +2278,7 @@ body.dragging, body.dragging * {
   height: 100%;
 }
 
-#legend-orange-controls > input[type='checkbox'] {
+#legend-orange-controls > input[type="checkbox"] {
   position: relative;
   top: 3px;
   left: 19px;
@@ -1951,7 +2306,7 @@ body.dragging, body.dragging * {
   height: 50%;
   padding-left: 5px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -1972,7 +2327,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-top-left-radius: 4px;
@@ -1991,7 +2346,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   background-color: #f78e24;
@@ -2008,7 +2363,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-top-right-radius: 4px;
@@ -2027,7 +2382,7 @@ body.dragging, body.dragging * {
   height: 100%;
 
   text-align: center;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -2049,7 +2404,7 @@ body.dragging, body.dragging * {
   padding-right: 10px;
 
   text-align: right;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -2074,15 +2429,15 @@ body.dragging, body.dragging * {
 #legend-blend-switch-button {
   width: 100%;
   height: 20px;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 
-  cursor:pointer;
+  cursor: pointer;
 
   border: none;
   border-radius: 4px;
-  outline:none;
-  background:none;
+  outline: none;
+  background: none;
 }
 
 #legend-blend-switch-button > div {
@@ -2119,7 +2474,7 @@ body.dragging, body.dragging * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   text-align: center;
 
@@ -2130,7 +2485,7 @@ body.dragging, body.dragging * {
 }
 
 button {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 .bordered {
@@ -2159,7 +2514,7 @@ button {
 }
 
 .dropdown-text {
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -2169,7 +2524,7 @@ button {
 .search-checkbox {
   height: 17px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
 
@@ -2177,7 +2532,7 @@ button {
   font-style: italic;
 }
 
-.search-checkbox > input[type='checkbox'] {
+.search-checkbox > input[type="checkbox"] {
   margin: 0px;
 
   cursor: pointer;
@@ -2187,18 +2542,18 @@ button {
 .search-dropdown {
   width: 160px;
 
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
   border-radius: 4px;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-style: italic;
 }
 
 .search-dropdown > option {
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
 
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-style: italic;
 }
 
@@ -2208,7 +2563,27 @@ button {
   padding-left: 5px;
 
   cursor: pointer;
-  letter-spacing: .001em;
+  letter-spacing: 0.001em;
+
+  color: #f5faf2;
+  border-radius: 4px;
+  background-color: #40403d;
+
+  font-size: 10pt;
+  line-height: 20px;
+}
+
+.grp-species-dropdown {
+  width: 28%;
+  height: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 17px;
+
+  cursor: pointer;
+  letter-spacing: 0.001em;
 
   color: #f5faf2;
   border-radius: 4px;
@@ -2222,7 +2597,6 @@ button {
   position: relative;
   top: 8px;
   left: 10px;
-
   width: 0;
   height: 0;
 
@@ -2231,12 +2605,15 @@ button {
   border-left: 5px solid transparent;
 }
 
+.triangle.lefter{
+  left: 145px;
+}
+
 .drag-handle {
   width: 100%;
   height: 50%;
-  cursor: move;
   text-align: center;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
 
   color: #a5aaa2;
 
@@ -2262,7 +2639,7 @@ button {
 }
 
 .fades {
-  transition: opacity .3s;
+  transition: opacity 0.3s;
 }
 
 .fades.hide {
@@ -2277,136 +2654,139 @@ button {
   color: white;
 }
 
-.npmap-toolbar button.share
-{
-    background-image: url('images/font-awesome/share.png');
+.npmap-toolbar button.share {
+  background-image: url("images/font-awesome/share.png");
 }
-.npmap-retina .npmap-toolbar button.share
-{
-    background-image: url('images/font-awesome/share@2x.png');
+.npmap-retina .npmap-toolbar button.share {
+  background-image: url("images/font-awesome/share@2x.png");
 }
 
 /* for the editControls */
-button.polygon, button.rectangle
-{
-    display: none !important;
+button.polygon,
+button.rectangle {
+  display: none !important;
 }
 
-#species-hover-thumbnail
-{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100px;
-    height: 100px;
-    z-index: 10000;
-    display: none;
+#species-hover-thumbnail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  z-index: 10000;
+  display: none;
 }
 
 /*********************************************/
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 2000; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2000; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
 }
 
 /* Modal Content (image) */
 .modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    border-radius: 5px;
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  border-radius: 5px;
 }
 
 /* Caption of Modal Image */
 #caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: #ccc;
-    padding: 10px 0;
-    height: 150px;
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
 }
 
 /* Add Animation */
-.modal-content, #caption {    
-    -webkit-animation-name: zoom;
-    -webkit-animation-duration: 0.6s;
-    animation-name: zoom;
-    animation-duration: 0.6s;
+.modal-content,
+#caption {
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
 }
 
 @-webkit-keyframes zoom {
-    from {-webkit-transform:scale(0)} 
-    to {-webkit-transform:scale(1)}
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes zoom {
-    from {transform:scale(0)} 
-    to {transform:scale(1)}
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* The Close Button */
 .close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 .close:hover,
 .close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
-    .modal-content {
-        width: 100%;
-    }
+@media only screen and (max-width: 700px) {
+  .modal-content {
+    width: 100%;
+  }
 }
 /*********************************************/
 
 /* Printer issue fixed */
-@media(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution 120dpi)
-{
-    .print
-    {
-        background-size: 80% !important;
-    }
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  .print {
+    background-size: 80% !important;
+  }
 }
 
 /* Fix for the dark/light 404 tiles */
-[src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='] {
-    width: 0 !important;
+[src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="] {
+  width: 0 !important;
 }
 
 /* Small adjustments to chardin positions */
-div[data-id='search-compare-distribution'] {
-    height: 90px !important;
+div[data-id="search-compare-distribution"] {
+  height: 90px !important;
 }
-div[data-id='search-compare-lexical'] {
-    height: 90px !important;
-    margin-left: -10px !important;
+div[data-id="search-compare-lexical"] {
+  height: 90px !important;
+  margin-left: -10px !important;
 }
-div[data-id='search-initial-switch'] {
-    top: 170px !important;
+div[data-id="search-initial-switch"] {
+  top: 170px !important;
 }

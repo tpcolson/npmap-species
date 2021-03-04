@@ -23,8 +23,8 @@ def separate(input_file):
     result = re.match('.*/ATBI_records_(20[0-9][0-9]-[0-1][0-9]-[0-3][0-9])\.csv',
             input_file)
     if result == None:
-        print 'Please use the following format for input filenames:'
-        print '  ATBI_records_yyyy-mm-dd.csv'
+        print('Please use the following format for input filenames:')
+        print('  ATBI_records_yyyy-mm-dd.csv')
         return
     date_string = result.group(1)
 
@@ -53,7 +53,7 @@ def separate(input_file):
     os.mkdir(files_dir)
 
     # write individual species files
-    sorted = species.keys()
+    sorted = list(species.keys())
     sorted.sort()
     num_species = len(sorted)
     counts_list = []
@@ -73,17 +73,17 @@ def separate(input_file):
     with open(counts_file,'w') as f:
         f.writelines(counts_list)
 
-    print 'Species records processed:      ' + str(num_records)
-    print 'Total unique species:           ' + str(num_species)
-    print 'Total species with 30+ records: ' + str(len(counts_list))
-    print 'Counts file written: ' + counts_file
-    print str(len(counts_list)) + ' files created in ' + files_dir
+    print('Species records processed:      ' + str(num_records))
+    print('Total unique species:           ' + str(num_species))
+    print('Total species with 30+ records: ' + str(len(counts_list)))
+    print('Counts file written: ' + counts_file)
+    print(str(len(counts_list)) + ' files created in ' + files_dir)
    
 if __name__ == "__main__":
     import sys
     import os
     import re
     if len(sys.argv) != 2:
-        print 'usage: python separate.py input_file'
+        print('usage: python separate.py input_file')
     else:
         separate(sys.argv[1])

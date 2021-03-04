@@ -4,7 +4,7 @@ filename=$1 # the asc file
 color=$2
 output=$3
 gdal_translate -a_srs EPSG:4326 $filename $filename.tif
-gdaldem color-relief -alpha $filename.tif ../maxent/color_ramp_$color.txt $filename_$color.tif
+gdaldem color-relief -alpha $filename.tif /app/npmap-species/backend/maxent/color_ramp_$color.txt $filename_$color.tif
 gdal_translate -of GTiff -a_nodata 0 $filename_$color.tif $output
 rm $filename_$color.tif
 rm $filename.tif
