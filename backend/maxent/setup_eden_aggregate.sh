@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This should be called from postprocess.sh (which is created by do_run.sh)
 # when you have cross-validated maxent results

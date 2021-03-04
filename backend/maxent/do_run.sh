@@ -62,8 +62,8 @@ else
 	#echo "python $TOOL_DIR/separate.py $RECORDS_FILE" >> preprocess.sh
 	echo "echo 'Running setup_eden_folds.sh'" >> preprocess.sh
 	echo "$TOOL_DIR/setup_eden_folds.sh" >> preprocess.sh
-	echo "echo 'Running eden job in eden_folds/'" >> preprocess.sh
-	echo "eden eden_folds > $JOBID_FILE" >> preprocess.sh
+	# echo "echo 'Running eden job in eden_folds/'" >> preprocess.sh
+	# echo "eden eden_folds > $JOBID_FILE" >> preprocess.sh
 fi
 
 chmod u+x preprocess.sh
@@ -92,8 +92,8 @@ else
 	echo "cat eden_maxent/footer.pbs >> eden_maxent/header.pbs" >> maxent.sh
 
 fi
-echo "echo 'Running eden job in eden_maxent/'" >> maxent.sh
-echo "eden eden_maxent > $JOBID_FILE" >> maxent.sh
+# echo "echo 'Running eden job in eden_maxent/'" >> maxent.sh
+# echo "eden eden_maxent > $JOBID_FILE" >> maxent.sh
 chmod u+x maxent.sh
 
 
@@ -113,13 +113,13 @@ if test $CV = true; then
 
 	" > postprocess.sh
 
-	echo "echo 'Running setup_eden_aggregate.sh'" >> postprocess.sh
+	# echo "echo 'Running setup_eden_aggregate.sh'" >> postprocess.sh
 	echo "$TOOL_DIR/setup_eden_aggregate.sh" >> postprocess.sh
-	echo "echo -n '#PBS -W depend=afterok:' >> eden_aggregate/header.pbs" >> postprocess.sh
-	echo "cat $JOBID_FILE | grep nics.utk.edu >> eden_aggregate/header.pbs" >> postprocess.sh
+	# echo "echo -n '#PBS -W depend=afterok:' >> eden_aggregate/header.pbs" >> postprocess.sh
+	# echo "cat $JOBID_FILE | grep nics.utk.edu >> eden_aggregate/header.pbs" >> postprocess.sh
 
-	echo "echo 'Running eden job in eden_aggregate/'" >> postprocess.sh
-	echo "eden eden_aggregate > $JOBID_FILE" >> postprocess.sh
+	# echo "echo 'Running eden job in eden_aggregate/'" >> postprocess.sh
+	# echo "eden eden_aggregate > $JOBID_FILE" >> postprocess.sh
 
 	chmod u+x postprocess.sh
 fi

@@ -18,7 +18,7 @@ ids_file="/app/npmap-species/atbirecords/ATBI_ids.txt"
 ext="tif"
 ext_mb="mbtiles"
 on_prem_upload="scp -i /root/.ssh/to_mbgov_rsa.pem -o \x22ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\x22"
-on_prem_dest="preston.provins@10.112.30.133:/data/preston.provins-data-dump"
+on_prem_dest="preston.provins@10.112.30.103:/data/preston.provins-data-dump"
 atlas_mv="ssh -i /root/.ssh/to_mbgov_rsa.pem -o \x22ProxyCommand ssh -i /root/.ssh/to_mbproxy_rsa.pem preston.provins@52.204.73.74 -W %h:%p\x22 sudo mv /data/preston.provins-data-dump/* /data/atlas-server/mbtiles/"
 perms="chmod 755"
 

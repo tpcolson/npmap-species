@@ -24,9 +24,8 @@ done < $CONFIG_FILE
 
 # Make PBS header file for eden run
 echo "#!/bin/sh
-#PBS -l size=32
+#PBS -l ncpus=32
 #PBS -j oe
 #PBS -N eden_folds
 #PBS -A $ACCOUNT
 " > eden_folds/header.pbs
-
