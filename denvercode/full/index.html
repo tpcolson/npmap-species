@@ -9,7 +9,7 @@
   <meta name="application-name" content="NPS Maps">
   <meta name="author" content="National Park Service">
   <meta name="keywords"
-    content="US federal government, Department of Interior, National Park Service, map, digital, web, mobile, Harpers Ferry Center, NPMap, national park, Leaflet, CartoDB, Mapbox, Bing, Google, MapQuest, Esri">
+    content="US federal government, Department of Interior, National Park Service, map, digital, web, mobile, Harpers Ferry Center, NPMap, national park, Leaflet, CartoDB, Bing, Google, MapQuest, Esri">
   <meta name="msapplication-TileColor" content="#222222">
   <meta name="msapplication-TileImage" content="https://www.nps.gov/npmap/assets/img/windows-8-tile.png">
   <!--<base target="_parent">-->
@@ -204,9 +204,9 @@
                 <div class='triangle'></div>
                 <ul id='options-background-dropdown-ul'>
                   <li onkeypress='updateBaseLayer(0);' onclick='updateBaseLayer(0);'>&#10004; Park Tiles</li>
-                  <li onkeypress='updateBaseLayer(1);' onclick='updateBaseLayer(1);'>Mapbox Terrain</li>
-                  <li onkeypress='updateBaseLayer(2);' onclick='updateBaseLayer(2);'>Esri Topo</li>
-                  <li onkeypress='updateBaseLayer(3);' onclick='updateBaseLayer(3);'>Esri Imagery</li>
+                  <li onkeypress='updateBaseLayer(1);' onclick='updateBaseLayer(1);'>Esri Topo</li>
+                  <li onkeypress='updateBaseLayer(2);' onclick='updateBaseLayer(2);'>Satellite</li>
+                  <li onkeypress='updateBaseLayer(3);' onclick='updateBaseLayer(3);'>Slate Tiles</li>
                 </ul>
               </div>
             </div>
@@ -516,16 +516,6 @@
       </ul>
       <ul id='subgrp-initial-dropdown-lex'></ul>
     </div>
-    <div id='search-initial-switch' tooltip='Choose to show latin or common species names'
-    data-intro='Choose to show common or latin names' data-position='bottom'>
-      Name convention:&nbsp;
-      <input type='radio' class='search-initial-switch-sides' id='search-name-convention-common'
-        name='search-name-convention' onkeypress='toggleNameGroup();' onclick='toggleNameGroup();' checked></input>
-      <label for='search-name-convention-common'>Common</label>&nbsp;&nbsp;
-      <input type='radio' class='search-initial-switch-sides' id='search-name-convention-latin'
-        name='search-name-convention' onkeypress='toggleNameGroup();' onclick='toggleNameGroup();'></input>
-      <label for='search-name-convention-latin'>Latin</label>
-    </div>
   </div>
 </template>
 
@@ -586,8 +576,29 @@
 
 <template id='search-compare-gv-template'>
   <div id='search-compare-gv-contents' style="visibility: hidden;">
-    <div class="subhead group-sel-head" style="padding-left: 10px; padding-bottom: 5px;">
-      INDIVIDUAL SPECIES FROM GROUP
+    <div style="display: grid; grid-template-columns: 225px 1fr;grid-gap: 0px;">
+      <div class="subhead group-sel-head" style="padding-left: 10px; padding-bottom: 5px;">
+        INDIVIDUAL SPECIES FROM GROUP
+      </div>
+      <div id='search-initial-switch' tooltip='Choose to show latin or common species names'
+      data-intro='Choose to show common or latin names' data-position='bottom' 
+      style='
+        width: 275px;
+        color: #f5faf2;
+        height: 15px;
+        letter-spacing: 0.001em;
+        font-size: 14px;
+        padding-left: 10px;
+        border-left: 1px solid #40403d;
+      '>
+        Name convention:&nbsp;
+        <input type='radio' class='search-initial-switch-sides' id='search-name-convention-common'
+          name='search-name-convention' onkeypress='toggleNameGroup();' onclick='toggleNameGroup();' checked></input>
+        <label for='search-name-convention-common'>Common</label>&nbsp;&nbsp;
+        <input type='radio' class='search-initial-switch-sides' id='search-name-convention-latin'
+          name='search-name-convention' onkeypress='toggleNameGroup();' onclick='toggleNameGroup();'></input>
+        <label for='search-name-convention-latin'>Latin</label>
+      </div>
     </div>
     <div class="search-compare-gv-sub-cont">
       <div id='search-compare-grp1-dropdown' class='grp-species-dropdown' tooltip='Select a species from the full list' tabindex="5" onblur='closeSearchList(5);'>
