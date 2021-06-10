@@ -1,4 +1,4 @@
-django==1.10
+django==2.2.24
 
 # Django apps and extensions
 django-extensions==1.6.5  # extra commands for manage.py
