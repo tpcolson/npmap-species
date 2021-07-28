@@ -76,7 +76,7 @@
             view as
           </div>
           <div id="options-selectviewing-dropdown" class="grouping-selector-dropdown" data-position="left"
-            onkeypress="toggleSelectViewingList();" onclick="toggleSelectViewingList();" style="z-index: 50;">
+            onkeypress="toggleSelectViewingList();" onclick="toggleSelectViewingList();" style="z-index: 50;" tabindex="1" onblur="toggleSelectViewingList(false)">
             <p id='viewselecttext'>Single Species</p>
             <div class="grouping-selector-triangle triangle"></div>
             <ul id="options-selectviewing-dropdown-ul" style="display: none;">

@@ -432,9 +432,9 @@ function toggleSelectBackgroundList(state) {
 }
 
 var showSelectViewing = false;
-function toggleSelectViewingList() {
-
-  showSelectViewing = !showSelectViewing;
+function toggleSelectViewingList(state) {
+  if(state !== undefined) showSelectViewing = state;
+  else showSelectViewing = !showSelectViewing;
 
   if (showSelectViewing) {
     $('#options-selectviewing-dropdown').stop();
