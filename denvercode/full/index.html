@@ -64,7 +64,7 @@
         </select>-->
         <div id='selector-container' class='selector-container'>
           <div id="options-selectbackground-dropdown" class="atlas-selector-dropdown" data-position="left"
-            onkeypress="toggleSelectBackgroundList();" onclick="toggleSelectBackgroundList();" style="z-index: 50;">
+            onkeypress="toggleSelectBackgroundList();" onclick="toggleSelectBackgroundList();" style="z-index: 50;" tabindex="0" onblur="toggleSelectBackgroundList(false)">
             Species Mapper
             <div class="atlas-selector-triangle triangle"></div>
             <ul id="options-selectbackground-dropdown-ul" style="display: none;">

@@ -416,9 +416,9 @@ function toggleOverlayList() {
 }
 
 var showSelectBackground = false;
-function toggleSelectBackgroundList() {
-
-  showSelectBackground = !showSelectBackground;
+function toggleSelectBackgroundList(state) {
+  if(state !== undefined) showSelectBackground = state;
+  else showSelectBackground = !showSelectBackground;
 
   if (showSelectBackground) {
     $('#options-selectbackground-dropdown').stop();
