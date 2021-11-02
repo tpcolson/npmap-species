@@ -1,7 +1,0 @@
-library(vegan)
-library(MASS)
-ssi <- read.csv("matrix.csv", head=TRUE)
-ssi_m <- as.matrix(ssi)
-ssi_mds <- metaMDS(ssi_m)
-p <- plot(ssi_mds, type="t")
-write.table(p$sites, "mds_coords.txt", col.names=FALSE)
